@@ -10,7 +10,7 @@ function NavBar() {
       {/* Logo */}
       <div className="NavLeftContainer">
         <Link to="/">
-          <img src="http://localhost:3000/logo.png" alt="Duzzle Logo" />
+          <img src="logo.png" alt="Duzzle Logo" />
         </Link>
         {/* Menu */}
         <ul className="NavList">
