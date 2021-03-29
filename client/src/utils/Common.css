@@ -1,6 +1,11 @@
+/* Noto Sans Web Font */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap");
+
 #Container {
   height: 88vh;
   width: 100%;
+
+  font-family: "Noto Sans KR", sans-serif;
 
   display: flex;
   justify-content: center;
