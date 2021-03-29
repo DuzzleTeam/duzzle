@@ -6,6 +6,8 @@ import "./Sections/LandingPage.css";
 // 더 즐겁게 ~ 하라
 const textList = ["DEVELOP", "DESIGN", "WORKING", "TOGETHER"];
 
+// 처음 웹페이지 접속시 보이는 화면
+// (chohadam, 2021-03-30)
 function LandingPage() {
   // 인덱스를 통해 textList 값을 가져옴
   const [index, setIndex] = useState(0);
