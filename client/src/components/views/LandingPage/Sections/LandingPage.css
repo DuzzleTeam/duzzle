@@ -48,3 +48,8 @@
 .Text2 {
   margin-right: 10px;
 }
+
+/* 더 즐겁게, 와 ~ 하라 간격 줄이기 */
+.Text2Container {
+  margin-top: -20px;
+}
