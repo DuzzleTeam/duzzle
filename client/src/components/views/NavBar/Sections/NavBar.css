@@ -1,0 +1,51 @@
+/* 가장 상위 컨테이너 */
+#NavContainer {
+  /* Nav 총 높이 화면의 12%로 설정 */
+  height: 12vh;
+  width: 100%;
+
+  display: flex;
+  /* logo & menu, auth menu를 margin없이 양쪽 배치 */
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo, 위즐, 미즐 */
+.NavLeftContainer {
+  width: 29%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 6.8%;
+}
+
+/* Menu (위즐, 미즐) */
+.NavList {
+  margin: 0;
+  padding: 0;
+
+  width: 9.2vw;
+
+  display: flex;
+  justify-content: space-between;
+}
+.NavList a {
+  text-decoration: none;
+  color: #2d2d2d;
+  font-weight: bold;
+}
+
+/* 오른쪽 상단 로그인 or 알림창 & 프로필 */
+#AuthMenu {
+  width: 6.1%;
+  margin-right: 6.8%;
+
+  display: flex;
+  justify-content: flex-end;
+}
+/* 로그인 */
+#AuthMenu a {
+  text-decoration: none;
+  color: #2d2d2d;
+  font-weight: bold;
+}
