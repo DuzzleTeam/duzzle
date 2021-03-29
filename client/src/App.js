@@ -10,7 +10,7 @@ function App() {
       <NavBar />
 
       <Switch>
-        <Route path="/">
+        <Route exact path="/">
           <LandingPage />
         </Route>
         <Route path="/login">
