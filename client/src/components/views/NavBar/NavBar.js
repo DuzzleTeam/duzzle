@@ -6,7 +6,7 @@ import "./Sections/NavBar.css";
 function NavBar() {
   return (
     // Nav 최상위 컨테이너
-    <div id="NavContainer">
+    <nav id="NavContainer">
       {/* Logo */}
       <div className="NavLeftContainer">
         <Link to="/">
@@ -22,7 +22,7 @@ function NavBar() {
       <div id="AuthMenu">
         <Link to="login">로그인</Link>
       </div>
-    </div>
+    </nav>
   );
 }
 
