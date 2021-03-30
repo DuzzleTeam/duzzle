@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const jwt = require("jsonwebtoken");
 
 const userSchema = mongoose.Schema({
   email: {
@@ -38,8 +39,12 @@ const userSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  token: {
+    type: String,
+  },
 });
 
+// 03.29 / 회원가입 비밀번호 암호화
 userSchema.pre("save", function (next) {
   var user = this;
 
@@ -52,8 +57,30 @@ userSchema.pre("save", function (next) {
         next();
       });
     });
+  } else {
+    next();
   }
 });
+
+// 03.30 / 로그인 비밀번호 매치
+userSchema.methods.comparePassword = function (plainPassword, cb) {
+  bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
+    if (err) return cb(err);
+    cb(null, isMatch);
+  });
+};
+
+// 03.30 / 로그인 토큰 생성
+userSchema.methods.generateToken = function (cb) {
+  var user = this;
+  var token = jwt.sign(user._id.toHexString(), "secretToken");
+
+  user.token = token;
+  user.save(function (err, user) {
+    if (err) return cb(err);
+    cb(null, user);
+  });
+};
 
 const User = mongoose.model("User", userSchema);
 
