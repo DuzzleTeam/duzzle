@@ -1,0 +1,56 @@
+/* 오른쪽 상단 로그인 or 알림창 & 프로필 */
+#AuthMenu {
+  width: 116px;
+  margin-right: 6.8%;
+
+  display: flex;
+  justify-content: flex-end;
+}
+/* 로그인 */
+#AuthMenu a {
+  text-decoration: none;
+  color: #2d2d2d;
+  font-weight: bold;
+}
+
+/* Notification & Profile Image */
+.ProfileMenu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+.RightButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0;
+  border: none;
+  cursor: pointer;
+
+  background-color: transparent;
+}
+.RightButton:focus {
+  outline: none;
+}
+
+/* Notification Button */
+.NotificationButton {
+  width: 30px;
+  height: 32px;
+}
+
+/* Profile Image Button */
+.ProfileButton {
+  width: 42px;
+  height: 42px;
+}
+.ProfileButton img {
+  width: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
