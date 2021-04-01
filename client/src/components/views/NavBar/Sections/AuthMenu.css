@@ -14,7 +14,7 @@
 }
 
 /* Notification & Profile Image */
-.ProfileMenu {
+.RightMenuContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -53,4 +53,68 @@
   width: 100%;
   border-radius: 50%;
   object-fit: cover;
+}
+
+/* Profile Dropdown (mypage, logout) */
+.ProfileDropdown {
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  position: absolute;
+  z-index: 1;
+
+  /* dropdown width - profile image */
+  margin-left: -198px;
+  margin-top: 20px;
+
+  width: 240px;
+  height: 150px;
+
+  border: 1px solid #ececec;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.13);
+
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-20px);
+  transition: all 0.4s ease;
+}
+
+.OpeningDropdown {
+  opacity: 1;
+}
+
+/* list container */
+.ProfileDropdown li {
+  list-style: none;
+
+  width: 100%;
+  height: 100%;
+}
+
+/* button */
+.ProfileDropdown a {
+  width: 100%;
+  height: 100%;
+
+  box-sizing: border-box;
+  padding-left: 32px;
+
+  display: flex;
+  align-items: center;
+}
+
+/* logout button */
+.ProfileDropdown li:last-child a {
+  color: #ff6565 !important;
+}
+
+/* grey line */
+.ProfileDropdown .divider {
+  height: 0;
+  border: solid 1px #ececec;
 }

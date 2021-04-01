@@ -18,7 +18,7 @@
 
 /* Logo, 위즐, 미즐 */
 .NavLeftContainer {
-  width: 29%;
+  width: 22.2%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,12 +28,16 @@
 /* Menu (위즐, 미즐) */
 .NavList {
   margin: 0;
+  margin-top: -10px;
   padding: 0;
 
   width: 9.2vw;
 
   display: flex;
   justify-content: space-between;
+}
+.NavList li {
+  list-style: none;
 }
 .NavList a {
   text-decoration: none;

@@ -17,8 +17,12 @@ function NavBar() {
         </Link>
         {/* Menu */}
         <ul className="NavList">
-          <Link to="wezzle">위즐</Link>
-          <Link to="mezzle">미즐</Link>
+          <li>
+            <Link to="wezzle">위즐</Link>
+          </li>
+          <li>
+            <Link to="mezzle">미즐</Link>
+          </li>
         </ul>
       </div>
       {/* 로그인 or 프로필 사진 & 알림 */}
