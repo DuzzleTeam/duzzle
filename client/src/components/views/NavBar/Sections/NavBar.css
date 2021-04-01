@@ -19,6 +19,7 @@
 /* Logo, 위즐, 미즐 */
 .NavLeftContainer {
   width: 22.2%;
+  min-width: 280px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -32,6 +33,7 @@
   padding: 0;
 
   width: 9.2vw;
+  min-width: 100px;
 
   display: flex;
   justify-content: space-between;
