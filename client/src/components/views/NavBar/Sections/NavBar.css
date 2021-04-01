@@ -18,7 +18,8 @@
 
 /* Logo, 위즐, 미즐 */
 .NavLeftContainer {
-  width: 29%;
+  width: 22.2%;
+  min-width: 280px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,29 +29,19 @@
 /* Menu (위즐, 미즐) */
 .NavList {
   margin: 0;
+  margin-top: -10px;
   padding: 0;
 
   width: 9.2vw;
+  min-width: 100px;
 
   display: flex;
   justify-content: space-between;
 }
+.NavList li {
+  list-style: none;
+}
 .NavList a {
-  text-decoration: none;
-  color: #2d2d2d;
-  font-weight: bold;
-}
-
-/* 오른쪽 상단 로그인 or 알림창 & 프로필 */
-#AuthMenu {
-  width: 6.1%;
-  margin-right: 6.8%;
-
-  display: flex;
-  justify-content: flex-end;
-}
-/* 로그인 */
-#AuthMenu a {
   text-decoration: none;
   color: #2d2d2d;
   font-weight: bold;
