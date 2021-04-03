@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 
+// ref로 지정한 엘리먼트 외 다른 곳을 클릭 시 callback 실행
+// (chohadam, 2021-04-02)
 const useOutsideClick = (ref, callback) => {
   const handleClick = (e) => {
     // ref.current: 선택하고 싶은 DOM을 가르키게 됨
