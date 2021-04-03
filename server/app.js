@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 });
 
 // 03.29 / 회원가입
-app.post("/api/users/register", (req, res) => {
+app.post("/register", (req, res) => {
   const user = new User(req.body);
   user.save((err, userInfo) => {
     if (err) return res.json({ success: false, err });
@@ -42,7 +42,7 @@ app.post("/api/users/register", (req, res) => {
 });
 
 // 03.30 / 로그인
-app.post("/api/users/login", (req, res) => {
+app.post("/login", (req, res) => {
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
       return res.json({
@@ -70,7 +70,7 @@ app.post("/api/users/login", (req, res) => {
 });
 
 // 03.30 / 인증
-app.get("/api/users/auth", auth, (req, res) => {
+app.get("/auth", auth, (req, res) => {
   res.status(200).json({
     _id: req.user._id,
     email: req.user.email,
@@ -81,7 +81,7 @@ app.get("/api/users/auth", auth, (req, res) => {
 });
 
 // 03.30 / 로그아웃
-app.get("/api/users/logout", auth, (req, res) => {
+app.get("/logout", auth, (req, res) => {
   User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).send({
