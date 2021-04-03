@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "backend": "nodemon index.js",
+    "start": "node app.js",
+    "backend": "nodemon app.js",
     "dev": "concurrently \"npm run backend\" \"npm run start --prefix ../client\""
   },
   "author": "",

@@ -1,0 +1,48 @@
+/* Noto Sans Web Font */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap");
+
+/* 가장 상위 컨테이너 */
+#NavContainer {
+  /* Nav 총 높이 화면의 12%로 설정 */
+  height: 12%;
+  width: 100%;
+
+  display: flex;
+  /* logo & menu, auth menu를 margin없이 양쪽 배치 */
+  justify-content: space-between;
+  align-items: center;
+
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 1.3rem;
+}
+
+/* Logo, 위즐, 미즐 */
+.NavLeftContainer {
+  width: 22.2%;
+  min-width: 280px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 6.8%;
+}
+
+/* Menu (위즐, 미즐) */
+.NavList {
+  margin: 0;
+  margin-top: -10px;
+  padding: 0;
+
+  width: 9.2vw;
+  min-width: 100px;
+
+  display: flex;
+  justify-content: space-between;
+}
+.NavList li {
+  list-style: none;
+}
+.NavList a {
+  text-decoration: none;
+  color: #2d2d2d;
+  font-weight: bold;
+}
