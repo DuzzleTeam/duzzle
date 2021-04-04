@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+import AuthMenu from "./Sections/AuthMenu";
 import "./Sections/NavBar.css";
 
 function NavBar() {
+  const [isAuth, setIsAuth] = useState(false);
+
   return (
     // Nav 최상위 컨테이너
     <nav id="NavContainer">
@@ -14,14 +17,16 @@ function NavBar() {
         </Link>
         {/* Menu */}
         <ul className="NavList">
-          <Link to="wezzle">위즐</Link>
-          <Link to="mezzle">미즐</Link>
+          <li>
+            <Link to="/wezzle">위즐</Link>
+          </li>
+          <li>
+            <Link to="/mezzle">미즐</Link>
+          </li>
         </ul>
       </div>
       {/* 로그인 or 프로필 사진 & 알림 */}
-      <div id="AuthMenu">
-        <Link to="login">로그인</Link>
-      </div>
+      <AuthMenu isAuth={isAuth} />
     </nav>
   );
 }
