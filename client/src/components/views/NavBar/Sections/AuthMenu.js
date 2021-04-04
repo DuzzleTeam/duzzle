@@ -21,6 +21,9 @@ function AuthMenu(props) {
     setOpeningDropdown(false);
   });
 
+  // user info
+  const [user, setUser] = useState({ email: "s2019w16@e-mirim.hs.kr" });
+
   return (
     <div id="AuthMenu">
       {/* 로그인 되었는지 */}
@@ -53,18 +56,18 @@ function AuthMenu(props) {
               }}
             >
               <li>
-                <Link to="/auth/mypage">마이페이지</Link>
+                <Link to={`/users/${user.email}`}>마이페이지</Link>
               </li>
               <div className="divider"></div>
               <li>
-                <Link to="/auth/logout">로그아웃</Link>
+                <Link to="/logout">로그아웃</Link>
               </li>
             </ul>
           </div>
         </div>
       ) : (
         // login button
-        <Link to="/auth/login">로그인</Link>
+        <Link to="/login">로그인</Link>
       )}
     </div>
   );
