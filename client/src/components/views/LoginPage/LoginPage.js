@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { Link } from "react-router-dom";
 import "../../../utils/Common.css";
 import "./Sections/LoginPage.css";
 
@@ -40,6 +40,19 @@ function LoginPage() {
 		}
 	}, [inputs]);
 
+	//Login 버튼 클릭 시 작동
+	const onSubmitHandler = event => {
+		event.preventDefault();
+		/*
+		let body = {
+			email: email,
+			password: password
+		};
+
+		Axios.post('/api/user/login',body).then(resposen)
+		*/
+	};
+
 	return (
 		<div id="Container">
 			{/* Login Page Contents */}
@@ -52,8 +65,8 @@ function LoginPage() {
 				{/* input (이메일, 비밀번호, 제출버튼) */}
 				<article className="LoginContainer">
 					{/* Login from */}
-					<form>
-						{/* 이메일 */}
+					<form onSubmit={onSubmitHandler}>
+						{/* email */}
 						<div>
 							<input
 								className="InputEmail"
@@ -65,7 +78,7 @@ function LoginPage() {
 							/>
 						</div>
 
-						{/* 비밀번호 */}
+						{/* password */}
 						<div>
 							<input
 								className="InputPassword"
@@ -77,7 +90,7 @@ function LoginPage() {
 							/>
 						</div>
 
-						{/* 제출 */}
+						{/* submit */}
 						<div>
 							{/* isActive가 false일 때 버튼 비활성화(disabled=true), true일 때 활성화(disabled=false)*/}
 							<button
@@ -89,6 +102,17 @@ function LoginPage() {
 							</button>
 						</div>
 					</form>
+				</article>
+
+				{/* 회원가입, 비밀번호 찾기 */}
+				<article className="HelpContainer">
+					<div className="Join">
+						<Link to="/register">회원가입</Link>
+					</div>
+					<div className="DividingLine">|</div>
+					<div className="FindPassword">
+						<Link to="/account/password_reset">비밀번호 찾기</Link>
+					</div>
 				</article>
 			</main>
 		</div>
