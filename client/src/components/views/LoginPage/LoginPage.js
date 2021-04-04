@@ -4,57 +4,41 @@ import "../../../utils/Common.css";
 import "./Sections/LoginPage.css";
 
 function LoginPage() {
+	//email과 password를 확인하기 위함
 	const [inputs, setInputs] = useState({
 		email: "",
 		password: ""
 	});
+	//login submit 버튼의 활성화 및 비활성화 상태
 	const [isActive, setIsActive] = useState(false);
-
+	//input에서 추출
 	const { email, password } = inputs;
 
+	//input에서 입력이 이루어질 때 setInputs
 	const onChange = e => {
 		const { value, name } = e.target;
 		setInputs({
+			//이전 것은 복제하고 name과 value 해당되는 값만 변경
 			...inputs,
 			[name]: value
 		});
 	};
 
+	//inputs(email, password) state가 변경될 때마다 작동
 	useEffect(() => {
 		if (
+			//email에 @e-mirim.hs.kr이 있고, password가 8자 이상일 때
 			String(email).includes("@e-mirim.hs.kr") &&
 			String(password).length >= 8
 		) {
+			//isActive가 true -> 버튼 활성화
 			setIsActive(true);
 		} else {
+			//input에서 입력 값 삭제 시 다시 비활성화가 되어야하기 때문에 필요
+			//isActive가 false -> 버튼 비활성화
 			setIsActive(false);
 		}
 	}, [inputs]);
-
-	// const onChange = e => {
-	// 	const { value, name } = e.target;
-	// 	console.log(
-	// 		isActive,
-	// 		String([email]).includes("@e-mirim.hs.kr"),
-	// 		String([password]).length
-	// 	);
-	// 	if (
-	// 		String([email]).includes("@e-mirim.hs.kr") &&
-	// 		String([password]).length >= 8
-	// 	) {
-	// 		setInputs({
-	// 			...inputs,
-	// 			[name]: value,
-	// 			isActive: true
-	// 		});
-	// 	} else {
-	// 		setInputs({
-	// 			...inputs,
-	// 			[name]: value,
-	// 			isActive: false
-	// 		});
-	// 	}
-	// };
 
 	return (
 		<div id="Container">
@@ -67,8 +51,9 @@ function LoginPage() {
 
 				{/* input (이메일, 비밀번호, 제출버튼) */}
 				<article className="LoginContainer">
+					{/* Login from */}
 					<form>
-						{/* @e-mirim.hs.kr인 이메일 */}
+						{/* 이메일 */}
 						<div>
 							<input
 								className="InputEmail"
@@ -80,7 +65,7 @@ function LoginPage() {
 							/>
 						</div>
 
-						{/* 8자리 이상인 비밀번호 */}
+						{/* 비밀번호 */}
 						<div>
 							<input
 								className="InputPassword"
@@ -94,10 +79,11 @@ function LoginPage() {
 
 						{/* 제출 */}
 						<div>
+							{/* isActive가 false일 때 버튼 비활성화(disabled=true), true일 때 활성화(disabled=false)*/}
 							<button
 								className="InputSubmit"
 								type="submit"
-								disabled={Boolean(isActive) ? false : true}
+								disabled={isActive ? false : true}
 							>
 								LOGIN
 							</button>
