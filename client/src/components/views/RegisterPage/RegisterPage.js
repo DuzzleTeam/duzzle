@@ -20,12 +20,17 @@ function RegisterPage() {
         {/* Left Contents */}
         <div className="Description">
           <div className="TextContainer">
-            <span className="Accent">더즐과 함께</span>
-            <span className="Accent">더 즐겨보세요!</span>
+            <span className="Accent">
+              더즐과 함께
+              <br />더 즐겨보세요!
+            </span>
 
             <span>
-              더즐은 미림인이라면 개발자, 디자이너 <br />
-              상관없이 모두 모여 작품을 공유할 수 있는 <br /> 공간입니다.
+              더즐은 미림인이라면 개발자, 디자이너
+              <br />
+              상관없이 모두 모여 작품을 공유할 수 있는
+              <br />
+              공간입니다.
             </span>
           </div>
           <img
