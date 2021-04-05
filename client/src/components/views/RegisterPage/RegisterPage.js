@@ -41,8 +41,8 @@ function RegisterPage() {
         </div>
         {/* Right Contents */}
         <div className="SignUpContainer">
-          <h1>회원가입</h1>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="SignUpForm">
+            <h1>회원가입</h1>
             <label>
               이메일
               <input
@@ -50,7 +50,7 @@ function RegisterPage() {
                 placeholder="미림 계정으로만 가입 가능합니다."
                 name="email"
                 value={email}
-                onChange={(value) => setEmail(value)}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </label>
 
@@ -61,7 +61,7 @@ function RegisterPage() {
                 placeholder="8자 이상 영문, 숫자, 특수문자 포함"
                 name="password1"
                 value={password}
-                onChange={(value) => setPassword(value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </label>
 
@@ -71,18 +71,18 @@ function RegisterPage() {
                 type="password"
                 name="password2"
                 value={password2}
-                onChange={(value) => setPassword2(value)}
+                onChange={(e) => setPassword2(e.target.value)}
               />
             </label>
 
             <label>
               <input type="checkbox" name="agree" />
-              [필수] 개인정보 수집 및 이용 동의
+              <button className="AgreeLink">
+                [필수] 개인정보 수집 및 이용 동의
+              </button>
             </label>
 
-            <label>
-              <input type="submit" value="JOIN" />
-            </label>
+            <input type="submit" value="JOIN" />
           </form>
         </div>
       </main>
