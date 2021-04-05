@@ -3,8 +3,8 @@
 
 /* 가장 상위 컨테이너 */
 #NavContainer {
-  /* Nav 총 높이 화면의 12%로 설정 */
-  height: 12%;
+  /* Nav 총 높이 화면의 9.3%로 설정 */
+  height: 9.3%;
   width: 100%;
 
   display: flex;
