@@ -46,6 +46,7 @@ function RegisterPage() {
             <label>
               이메일
               <input
+                className="RegisterInput"
                 type="email"
                 placeholder="미림 계정으로만 가입 가능합니다."
                 name="email"
@@ -57,6 +58,7 @@ function RegisterPage() {
             <label>
               비밀번호
               <input
+                className="RegisterInput"
                 type="password"
                 placeholder="8자 이상 영문, 숫자, 특수문자 포함"
                 name="password1"
@@ -68,6 +70,7 @@ function RegisterPage() {
             <label>
               비밀번호 확인
               <input
+                className="RegisterInput"
                 type="password"
                 name="password2"
                 value={password2}
@@ -82,7 +85,11 @@ function RegisterPage() {
               </button>
             </label>
 
-            <input type="submit" value="JOIN" />
+            <input
+              className="RegisterInput RegisterSubmit"
+              type="submit"
+              value="JOIN"
+            />
           </form>
         </div>
       </main>

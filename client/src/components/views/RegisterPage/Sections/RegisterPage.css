@@ -109,10 +109,7 @@
 }
 
 /* 이메일, 비밀번호, 비밀번호 확인, submit button */
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="submit"] {
+.RegisterInput {
   height: 5.55vh;
   width: 71.4%;
 
@@ -124,9 +121,7 @@ input[type="submit"] {
   box-sizing: border-box;
 }
 
-input[type="text"]::placeholder,
-input[type="password"]::placeholder,
-input[type="email"]::placeholder {
+.RegisterInput::placeholder {
   color: #bcbcbc;
   font-size: 1rem;
 }
@@ -152,7 +147,7 @@ input[type="checkbox"] {
 }
 
 /* Button JOIN */
-input[type="submit"] {
+.RegisterSubmit {
   padding: 0;
 
   background-color: #2d2d2d;
