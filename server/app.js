@@ -5,6 +5,7 @@ const { User } = require("./models/User");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const { auth } = require("./middleware/auth");
+const config = require("./config/key");
 const port = 5000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -13,15 +14,12 @@ app.use(cookieParser());
 
 // 03.28 / mongoDB 연결
 mongoose
-  .connect(
-    "mongodb+srv://duzzle:duzzle2021@duzzle.55imn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    }
-  )
+  .connect(config.mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
 
