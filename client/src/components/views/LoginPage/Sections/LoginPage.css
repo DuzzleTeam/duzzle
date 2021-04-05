@@ -1,7 +1,9 @@
+/* 최상위 컨테이너 */
 #LoginPage {
 	width: 100%;
 	height: 100%;
 
+	/* navbar 높이만큼 줄임 */
 	margin-top: -9.3vh;
 	display: flex;
 	flex-direction: column;
@@ -9,16 +11,19 @@
 	align-items: center;
 }
 
+/* 로그인 */
 .LoginText {
 	margin-bottom: 45px;
 	display: flex;
 	flex-direction: column;
 }
 
+/* input, button 부분 컨테이너 */
 .LoginContainer {
 	display: flex;
 }
 
+/* e-mail, password */
 .InputEmail,
 .InputPassword {
 	width: 435px;
@@ -28,19 +33,24 @@
 	padding-left: 15px;
 	border: 1px solid #bcbcbc;
 	border-radius: 5px;
+
+	outline: 0;
 }
 
+/* LOGIN 제출 버튼 */
 .InputSubmit {
 	width: 455px;
 	height: 43px;
 	margin-bottom: 50px;
 
 	border: none;
+	outline: 0;
 	background-color: #57ecbf;
 	color: white;
 	border-radius: 5px;
 }
 
+/* LOGIN 제출 버튼 비활성화 시 */
 .InputSubmit:disabled {
 	background-color: #2d2d2d;
 	color: white;
@@ -48,11 +58,13 @@
 	cursor: pointer;
 }
 
+/* 회원가입, |, 비밀번호 찾기 부분 컨테이너*/
 .HelpContainer {
 	display: flex;
 	flex-direction: row;
 }
 
+/* 회원가입 | 비밀번호 찾기*/
 .Join a,
 .DividingLine,
 .FindPassword a {
@@ -62,6 +74,7 @@
 	font-weight: 100;
 }
 
+/* 회원가입과 비밀번호 찾기 사이, | 앞뒤로의 간격 */
 .DividingLine,
 .FindPassword a {
 	margin-left: 15px;
