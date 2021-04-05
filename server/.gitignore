@@ -61,3 +61,6 @@ web_modules/
 
 # Optional REPL history
 .n
+
+# mongodb
+dev.js
