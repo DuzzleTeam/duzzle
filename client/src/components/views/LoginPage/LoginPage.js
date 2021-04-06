@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import Axios from "axios";
+import { Link, withRouter } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../../_actions/user_action";
+
 import "../../../utils/Common.css";
 import "./Sections/LoginPage.css";
 
-function LoginPage() {
+function LoginPage(props) {
+	const dispatch = useDispatch();
+
 	//email과 password를 확인하기 위함
 	const [inputs, setInputs] = useState({
 		email: "",
@@ -43,14 +49,19 @@ function LoginPage() {
 	//Login 버튼 클릭 시 작동
 	const onSubmitHandler = event => {
 		event.preventDefault();
-		/*
+
 		let body = {
 			email: email,
 			password: password
 		};
 
-		Axios.post('/api/user/login',body).then(resposen)
-		*/
+		dispatch(loginUser(body)).then(response => {
+			if (response.payload.loginSuccess) {
+				props.history.push("/");
+			} else {
+				alert("Error");
+			}
+		});
 	};
 
 	return (
@@ -119,4 +130,4 @@ function LoginPage() {
 	);
 }
 
-export default LoginPage;
+export default withRouter(LoginPage);

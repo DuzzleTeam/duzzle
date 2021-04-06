@@ -6,23 +6,23 @@ import LoginPage from "./components/views/LoginPage/LoginPage";
 import RegisterPage from "./components/views/RegisterPage/RegisterPage";
 
 function App() {
-  return (
-    <Router>
-      <NavBar />
+	return (
+		<Router>
+			<NavBar />
 
-      <Switch>
-        <Route exact path="/">
-          <LandingPage />
-        </Route>
-        <Route path="/login">
-          <LoginPage />
-        </Route>
-        <Route path="/register">
-          <RegisterPage />
-        </Route>
-      </Switch>
-    </Router>
-  );
+			<Switch>
+				<Route exact path="/">
+					<LandingPage />
+				</Route>
+				<Route path="/login">
+					<LoginPage />
+				</Route>
+				<Route path="/register">
+					<RegisterPage />
+				</Route>
+			</Switch>
+		</Router>
+	);
 }
 
 export default App;
