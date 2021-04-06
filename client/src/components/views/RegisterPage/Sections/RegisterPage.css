@@ -93,13 +93,17 @@
 }
 
 /* 이메일, 비밀번호, 비밀번호 확인 */
-.SignUpForm label:nth-child(-n + 4) {
+.SignUpForm > label:nth-child(-n + 4) {
   width: 100%;
 
   justify-content: space-between;
 
   font-size: 1.3rem;
   color: #707070;
+}
+
+.SignUpForm > label > div {
+  width: 71.4%;
 }
 
 /* 이메일, 비밀번호, 비밀번호 확인 컨테이너 */
@@ -111,7 +115,7 @@
 /* 이메일, 비밀번호, 비밀번호 확인, submit button */
 .RegisterInput {
   height: 5.55vh;
-  width: 71.4%;
+  width: 100%;
 
   padding-left: 24px;
   border-radius: 8px;
@@ -127,6 +131,24 @@
 .RegisterInput::placeholder {
   color: #bcbcbc;
   font-size: 1rem;
+}
+
+/* 경고 문구 */
+.WarningContainer {
+  display: none;
+}
+.WarningContainer img {
+  margin-right: 8px;
+}
+.WarningContainer span {
+  color: #ff6565;
+  font-size: 0.7rem;
+}
+
+.ShowWarning {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
 }
 
 /* 개인정보 수집 및 이용 동의 체크박스 */
@@ -180,6 +202,7 @@ input[id="agree"] {
 /* Button JOIN */
 .RegisterSubmit {
   padding: 0;
+  width: 71.4%;
 
   background-color: #57ecbf;
   border: none;
