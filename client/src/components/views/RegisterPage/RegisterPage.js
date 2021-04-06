@@ -9,8 +9,9 @@ function RegisterPage() {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     // 회원가입 버튼 클릭 시
+    e.preventDefault();
   };
 
   return (
@@ -78,17 +79,19 @@ function RegisterPage() {
               />
             </label>
 
-            <label>
-              <input type="checkbox" name="agree" />
+            <div className="AgreeContainer">
+              <input type="checkbox" name="agree" id="agree" />
+              <label htmlFor="agree"></label>
               <button className="AgreeLink">
                 [필수] 개인정보 수집 및 이용 동의
               </button>
-            </label>
+            </div>
 
             <input
               className="RegisterInput RegisterSubmit"
               type="submit"
               value="JOIN"
+              disabled={true}
             />
           </form>
         </div>

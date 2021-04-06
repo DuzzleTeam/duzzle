@@ -102,7 +102,7 @@
   color: #707070;
 }
 
-/* 개인정보 수입 및 이용 동의 */
+/* 이메일, 비밀번호, 비밀번호 확인 컨테이너 */
 .SignUpForm label {
   display: flex;
   align-items: center;
@@ -117,6 +117,9 @@
   border-radius: 8px;
   border: solid 1px #bcbcbc;
 
+  font-size: 1.1rem;
+  color: #2d2d2d;
+
   padding-top: 4px;
   box-sizing: border-box;
 }
@@ -124,6 +127,12 @@
 .RegisterInput::placeholder {
   color: #bcbcbc;
   font-size: 1rem;
+}
+
+/* 개인정보 수집 및 이용 동의 체크박스 */
+.AgreeContainer {
+  display: flex;
+  align-items: center;
 }
 
 .AgreeLink {
@@ -137,23 +146,53 @@
 
   cursor: pointer;
   text-decoration: underline;
+
+  outline: none;
 }
 
-/* 개인정보 수집 및 이용 동의 체크박스 */
-input[type="checkbox"] {
+input[id="agree"] + label {
+  display: inline-block;
+
+  width: 18px !important;
+  height: 18px;
+
   margin: 0;
   margin-right: 12px;
   margin-top: 4px;
+
+  border-radius: 4px;
+  border: solid 1px #707070;
+
+  box-sizing: border-box;
+
+  cursor: pointer;
+}
+input[id="agree"]:checked + label {
+  background-image: url("http://localhost:3000/images/checkbox.png");
+  background-repeat: no-repeat;
+
+  border: none;
+}
+input[id="agree"] {
+  display: none;
 }
 
 /* Button JOIN */
 .RegisterSubmit {
   padding: 0;
 
-  background-color: #2d2d2d;
+  background-color: #57ecbf;
   border: none;
 
   font-size: 1.1rem;
   color: white;
   font-weight: 900;
+}
+
+.RegisterSubmit:disabled {
+  background-color: #2d2d2d;
+}
+
+.RegisterSubmit:focus {
+  outline: none;
 }
