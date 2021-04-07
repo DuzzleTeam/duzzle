@@ -61,10 +61,6 @@ function RegisterPage() {
   const handlePopup = () => {
     setIsPopupShowing(true);
   };
-  useEffect(() => {
-    console.log(isPopupShowing);
-    return () => {};
-  }, [isPopupShowing]);
 
   const handleSubmit = (e) => {
     // 회원가입 버튼 클릭 시
