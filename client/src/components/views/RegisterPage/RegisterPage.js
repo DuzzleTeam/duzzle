@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import Popup from "./Sections/Popup";
+
 import "../../../utils/Common.css";
 import "./Sections/RegisterPage.css";
 
@@ -29,11 +31,6 @@ function RegisterPage() {
     setIsAllPassed(isMirimEmail && pwCheck && equalPw && agreed);
   }, [isMirimEmail, pwCheck, equalPw, agreed]);
 
-  const handleSubmit = (e) => {
-    // 회원가입 버튼 클릭 시
-    e.preventDefault();
-  };
-
   // type에 email, pw1, pw2, agree가 들어와 각각 검사를 진행
   const checkAll = (type) => {
     if (type === "agree") {
@@ -58,6 +55,20 @@ function RegisterPage() {
     } else {
       setEqualPw(true);
     }
+  };
+
+  const [isPopupShowing, setIsPopupShowing] = useState(false);
+  const handlePopup = () => {
+    setIsPopupShowing(true);
+  };
+  useEffect(() => {
+    console.log(isPopupShowing);
+    return () => {};
+  }, [isPopupShowing]);
+
+  const handleSubmit = (e) => {
+    // 회원가입 버튼 클릭 시
+    e.preventDefault();
   };
 
   return (
@@ -174,7 +185,7 @@ function RegisterPage() {
                 onChange={() => checkAll("agree")}
               />
               <label htmlFor="agree"></label>
-              <button className="AgreeLink">
+              <button className="AgreeLink" onClick={handlePopup}>
                 [필수] 개인정보 수집 및 이용 동의
               </button>
             </div>
@@ -189,6 +200,8 @@ function RegisterPage() {
           </form>
         </div>
       </main>
+
+      <Popup visible={isPopupShowing} setIsPopupShowing={setIsPopupShowing} />
     </div>
   );
 }
