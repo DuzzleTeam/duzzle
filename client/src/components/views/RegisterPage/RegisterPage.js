@@ -36,29 +36,27 @@ function RegisterPage() {
 
   // type에 email, pw1, pw2, agree가 들어와 각각 검사를 진행
   const checkAll = (type) => {
-    if (type === "email") {
-      // 미림 이메일인지
-      const flag = email.includes("@e-mirim.hs.kr");
-      setIsMirimEmail(flag);
-    } else if (type === "pw1") {
-      // 알파벳, 특수문자, 숫자 포함 8자 이상
-      const checkRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^~*+=-])(?=.*[0-9]).{8,}$/;
-
-      // 정규식 테스트
-      const flag = checkRegex.test(password);
-      setPwCheck(flag);
-    } else if (type === "agree") {
+    if (type === "agree") {
       // checkbox onChange
       setAgreed(!agreed);
     }
 
-    // 비밀번호 관련이라면
-    if (type === "pw1" || type === "pw2") {
-      if (password !== password2) {
-        setEqualPw(false);
-      } else {
-        setEqualPw(true);
-      }
+    // 미림 이메일인지
+    let flag = email.includes("@e-mirim.hs.kr");
+    setIsMirimEmail(flag);
+
+    // 알파벳, 특수문자, 숫자 포함 8자 이상
+    const checkRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^~*+=-])(?=.*[0-9]).{8,}$/;
+
+    // 정규식 테스트
+    flag = checkRegex.test(password);
+    setPwCheck(flag);
+
+    // 비밀번호 같은지
+    if (password !== password2) {
+      setEqualPw(false);
+    } else {
+      setEqualPw(true);
     }
   };
 
