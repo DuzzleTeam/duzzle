@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import Popup from "./Sections/Popup";
+
 import "../../../utils/Common.css";
 import "./Sections/RegisterPage.css";
 
@@ -29,37 +31,44 @@ function RegisterPage() {
     setIsAllPassed(isMirimEmail && pwCheck && equalPw && agreed);
   }, [isMirimEmail, pwCheck, equalPw, agreed]);
 
-  const handleSubmit = (e) => {
-    // 회원가입 버튼 클릭 시
-    e.preventDefault();
-  };
-
   // type에 email, pw1, pw2, agree가 들어와 각각 검사를 진행
   const checkAll = (type) => {
-    if (type === "email") {
-      // 미림 이메일인지
-      const flag = email.includes("@e-mirim.hs.kr");
-      setIsMirimEmail(flag);
-    } else if (type === "pw1") {
-      // 알파벳, 특수문자, 숫자 포함 8자 이상
-      const checkRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^~*+=-])(?=.*[0-9]).{8,}$/;
-
-      // 정규식 테스트
-      const flag = checkRegex.test(password);
-      setPwCheck(flag);
-    } else if (type === "agree") {
+    if (type === "agree") {
       // checkbox onChange
       setAgreed(!agreed);
     }
 
-    // 비밀번호 관련이라면
-    if (type === "pw1" || type === "pw2") {
-      if (password !== password2) {
-        setEqualPw(false);
-      } else {
-        setEqualPw(true);
-      }
+    // 미림 이메일인지
+    let flag = email.includes("@e-mirim.hs.kr");
+    setIsMirimEmail(flag);
+
+    // 알파벳, 특수문자, 숫자 포함 8자 이상
+    const checkRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^~*+=-])(?=.*[0-9]).{8,}$/;
+
+    // 정규식 테스트
+    flag = checkRegex.test(password);
+    setPwCheck(flag);
+
+    // 비밀번호 같은지
+    if (password !== password2) {
+      setEqualPw(false);
+    } else {
+      setEqualPw(true);
     }
+  };
+
+  const [isPopupShowing, setIsPopupShowing] = useState(false);
+  const handlePopup = () => {
+    setIsPopupShowing(true);
+  };
+  useEffect(() => {
+    console.log(isPopupShowing);
+    return () => {};
+  }, [isPopupShowing]);
+
+  const handleSubmit = (e) => {
+    // 회원가입 버튼 클릭 시
+    e.preventDefault();
   };
 
   return (
@@ -176,7 +185,7 @@ function RegisterPage() {
                 onChange={() => checkAll("agree")}
               />
               <label htmlFor="agree"></label>
-              <button className="AgreeLink">
+              <button className="AgreeLink" onClick={handlePopup}>
                 [필수] 개인정보 수집 및 이용 동의
               </button>
             </div>
@@ -191,6 +200,8 @@ function RegisterPage() {
           </form>
         </div>
       </main>
+
+      <Popup visible={isPopupShowing} setIsPopupShowing={setIsPopupShowing} />
     </div>
   );
 }
