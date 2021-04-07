@@ -24,8 +24,8 @@ function Popup(props) {
           제한될 수 있습니다.
         </span>
 
-        <div className="MainTextContainer">
-          <span className="MainText">{text}</span>
+        <div className="AgreeMainTextContainer">
+          <span className="AgreeMainText">{text}</span>
         </div>
       </main>
     </div>
