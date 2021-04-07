@@ -70,16 +70,16 @@
 }
 
 .AgreeTextContainer::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 11px;
+  height: 11px;
 }
 .AgreeTextContainer::-webkit-scrollbar-thumb {
-  background-color: #6d6d6d;
-  border-radius: 5px;
+  background-color: #707070;
+  border-radius: 6px;
 }
 .AgreeTextContainer::-webkit-scrollbar-track {
-  background-color: #dfdfdf;
-  border-radius: 5px;
+  background-color: #ececec;
+  border-radius: 6px;
 }
 
 .AgreeText {
