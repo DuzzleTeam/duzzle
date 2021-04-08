@@ -50,6 +50,7 @@ function LoginPage(props) {
 	const onSubmitHandler = event => {
 		event.preventDefault();
 
+		console.log(email, password);
 		let body = {
 			email: email,
 			password: password
@@ -59,7 +60,7 @@ function LoginPage(props) {
 			if (response.payload.loginSuccess) {
 				props.history.push("/");
 			} else {
-				alert("Error");
+				alert("Error˝");
 			}
 		});
 	};
