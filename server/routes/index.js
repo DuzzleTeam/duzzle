@@ -20,7 +20,7 @@ router.post("/register", (req, res) => {
 });
 
 // 03.30 / 로그인
-router.post("/login", (req, res) => {
+router.post("/api/login", (req, res) => {
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
       return res.json({
