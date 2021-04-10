@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../../_actions/user_action";
+import { useHistory } from "react-router-dom";
 
 import Popup from "./Sections/Popup";
 
@@ -6,7 +9,7 @@ import "../../../utils/Common.css";
 import "./Sections/RegisterPage.css";
 
 // 회원가입 페이지 (chohadam, 2021-04-05)
-function RegisterPage() {
+function RegisterPage(props) {
   // 이메일
   const [email, setEmail] = useState("");
   // 비밀번호
@@ -17,9 +20,9 @@ function RegisterPage() {
   // 미림 이메일인지
   const [isMirimEmail, setIsMirimEmail] = useState(true);
   // 비밀번호 요구 조건 충족하는지
-  const [pwCheck, setPwCheck] = useState(true);
+  const [isCheckingPw, setIsCheckingPw] = useState(true);
   // 비밀번호와 확인이 일치한지
-  const [equalPw, setEqualPw] = useState(true);
+  const [isEqualPw, setIsEqualPw] = useState(true);
   // 개인정보 수집에 동의했는지
   const [agreed, setAgreed] = useState(false);
 
@@ -28,43 +31,65 @@ function RegisterPage() {
   // 각각의 유효성 검사 결과가 바뀔 때마다 실행됨
   useEffect(() => {
     // 모두 통과했는지 (all true -> true)
-    setIsAllPassed(isMirimEmail && pwCheck && equalPw && agreed);
-  }, [isMirimEmail, pwCheck, equalPw, agreed]);
+    setIsAllPassed(isMirimEmail && isCheckingPw && isEqualPw && agreed);
+  }, [isMirimEmail, isCheckingPw, isEqualPw, agreed]);
 
-  // type에 email, pw1, pw2, agree가 들어와 각각 검사를 진행
-  const checkAll = (type) => {
-    if (type === "agree") {
-      // checkbox onChange
-      setAgreed(!agreed);
-    }
-
+  // email, password1, password2, agree 검사 함수들
+  const checkAgree = () => {
+    // checkbox onChange
+    setAgreed(!agreed);
+    checkEmail();
+    checkPwRequirement(password);
+    checkEqualPw(password, password2);
+  };
+  const checkEmail = () => {
     // 미림 이메일인지
-    let flag = email.includes("@e-mirim.hs.kr");
-    setIsMirimEmail(flag);
-
+    setIsMirimEmail(email.includes("@e-mirim.hs.kr"));
+  };
+  const checkPwRequirement = (pw) => {
     // 알파벳, 특수문자, 숫자 포함 8자 이상
     const checkRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^~*+=-])(?=.*[0-9]).{8,}$/;
 
     // 정규식 테스트
-    flag = checkRegex.test(password);
-    setPwCheck(flag);
+    setIsCheckingPw(checkRegex.test(pw));
 
+    checkEqualPw(pw, password2);
+  };
+  const checkEqualPw = (password1, pw) => {
     // 비밀번호 같은지
-    if (password !== password2) {
-      setEqualPw(false);
+    if (password1 !== pw) {
+      setIsEqualPw(false);
     } else {
-      setEqualPw(true);
+      setIsEqualPw(true);
     }
   };
 
+  // 개인정보수집동의 팝업창
   const [isPopupShowing, setIsPopupShowing] = useState(false);
-  const handlePopup = () => {
+  const handlePopup = (e) => {
+    e.preventDefault();
     setIsPopupShowing(true);
   };
 
+  const dispatch = useDispatch();
+  const history = useHistory();
   const handleSubmit = (e) => {
     // 회원가입 버튼 클릭 시
     e.preventDefault();
+
+    let body = {
+      email,
+      name: email,
+      password,
+    };
+
+    dispatch(registerUser(body)).then((res) => {
+      if (res.payload.success) {
+        history.push(`/users/${email}`);
+      } else {
+        alert("회원가입에 실패하였습니다.");
+      }
+    });
   };
 
   return (
@@ -111,7 +136,7 @@ function RegisterPage() {
                   name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  onBlur={() => checkAll("email")}
+                  onBlur={() => checkEmail("email")}
                 />
                 <div
                   className={
@@ -134,12 +159,14 @@ function RegisterPage() {
                   placeholder="8자 이상 영문, 숫자, 특수문자 포함"
                   name="password1"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  onBlur={() => checkAll("pw1")}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    checkPwRequirement(e.target.value);
+                  }}
                 />
                 <div
                   className={
-                    "WarningContainer" + (pwCheck ? "" : " ShowWarning")
+                    "WarningContainer" + (isCheckingPw ? "" : " ShowWarning")
                   }
                 >
                   <img src="/images/warning.png" alt="warning" />
@@ -157,12 +184,14 @@ function RegisterPage() {
                   type="password"
                   name="password2"
                   value={password2}
-                  onChange={(e) => setPassword2(e.target.value)}
-                  onBlur={() => checkAll("pw2")}
+                  onChange={(e) => {
+                    setPassword2(e.target.value);
+                    checkEqualPw(password, e.target.value);
+                  }}
                 />
                 <div
                   className={
-                    "WarningContainer" + (equalPw ? "" : " ShowWarning")
+                    "WarningContainer" + (isEqualPw ? "" : " ShowWarning")
                   }
                 >
                   <img src="/images/warning.png" alt="warning" />
@@ -178,7 +207,7 @@ function RegisterPage() {
                 name="agree"
                 id="agree"
                 checked={agreed}
-                onChange={() => checkAll("agree")}
+                onChange={() => checkAgree("agree")}
               />
               <label htmlFor="agree"></label>
               <button className="AgreeLink" onClick={handlePopup}>

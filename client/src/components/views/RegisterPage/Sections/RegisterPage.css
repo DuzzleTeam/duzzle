@@ -210,6 +210,8 @@ input[id="agree"] {
   font-size: 1.1rem;
   color: white;
   font-weight: 900;
+
+  cursor: pointer;
 }
 
 .RegisterSubmit:disabled {

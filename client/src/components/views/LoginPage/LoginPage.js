@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Axios from "axios";
 import { Link, withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../../_actions/user_action";
