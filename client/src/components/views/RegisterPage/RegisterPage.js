@@ -84,7 +84,7 @@ function RegisterPage(props) {
     };
 
     dispatch(registerUser(body)).then((res) => {
-      if (res.payload.success) {
+      if (res.payload.registerSuccess) {
         history.push(`/users/${email}`);
       } else {
         alert("회원가입에 실패하였습니다.");
