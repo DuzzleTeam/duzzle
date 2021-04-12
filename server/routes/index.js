@@ -35,7 +35,7 @@ function decrypt(encryptEmail) {
 }
 
 // 04.07 / 회원가입 인증 메일 보내기
-router.post("/api/emailAuth", saveData, async (req, res) => {
+router.post("/api/register", saveData, async (req, res) => {
   const smtpTransport = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -48,7 +48,7 @@ router.post("/api/emailAuth", saveData, async (req, res) => {
 
   var hash = encrypt(req.body.email);
   var link =
-    "http://localhost:5000/api/register/?id=" + encodeURIComponent(hash);
+    "http://localhost:5000/confirmRegister/?id=" + encodeURIComponent(hash);
 
   const mailOptions = {
     from: "DuzzleManager@gmail.com",
@@ -69,7 +69,7 @@ router.post("/api/emailAuth", saveData, async (req, res) => {
 });
 
 // 03.29 / 회원가입
-router.get("/api/register", (req, res) => {
+router.get("/confirmRegister", (req, res) => {
   const email = decodeURIComponent(decrypt(req.query.id));
   User.findOne({ email: email }, (err, user) => {
     if (!user) return res.json({ registerSuccess: false, message: email });
@@ -80,6 +80,7 @@ router.get("/api/register", (req, res) => {
         if (err) return res.json({ registerSucces: false, message: err });
         return res.status(200).send({
           registerSuccess: true,
+          certificationSuccess: true,
         });
       }
     );
