@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOGIN_USER, REGISTER_USER } from "./types";
+import { CONFIRM_REGISTER, LOGIN_USER, REGISTER_USER } from "./types";
 
 export function loginUser(dataToSubmit) {
   const request = axios
@@ -19,6 +19,17 @@ export function registerUser(dataToSubmit) {
 
   return {
     type: REGISTER_USER,
+    payload: request,
+  };
+}
+
+export function confirmRegister(id) {
+  const request = axios
+    .post(`/api/confirmRegister/${id}`)
+    .then((res) => res.data);
+
+  return {
+    type: CONFIRM_REGISTER,
     payload: request,
   };
 }

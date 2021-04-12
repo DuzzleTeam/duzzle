@@ -1,12 +1,15 @@
-import { LOGIN_USER, REGISTER_USER } from "../_actions/types";
+import { CONFIRM_REGISTER, LOGIN_USER, REGISTER_USER } from "../_actions/types";
 
 export default function _(state = {}, action) {
   switch (action.type) {
     case LOGIN_USER:
-      return { ...state, loginSuccess: action.payload };
+      return { ...state, loginPayload: action.payload };
 
     case REGISTER_USER:
-      return { ...state, registerSuccess: action.payload };
+      return { ...state, registerPayload: action.payload };
+
+    case CONFIRM_REGISTER:
+      return { ...state, confirmRegisterPayload: action.payload };
 
     default:
       return state;
