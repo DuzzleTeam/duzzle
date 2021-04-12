@@ -1,0 +1,71 @@
+.CertificationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#CertificationMain {
+  width: 28.1vw;
+  height: 56vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.EmailSendDesc {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.EmailSendDesc h1 {
+  margin: 0;
+}
+.EmailSendDesc span {
+  margin-top: 21px;
+  text-align: center;
+}
+.EmailSendDesc .TextEmail {
+  color: #2ddca7;
+  text-decoration: underline;
+}
+
+.CertificationWarnings {
+  width: 100%;
+  height: 23.7vh;
+
+  border: solid 1px #cecece;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.CertificationWarnings h3 {
+  margin: 0;
+  color: #2d2d2d;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.CertificationWarnings span {
+  color: #707070;
+  font-size: 0.9rem;
+  text-align: center;
+}
+.CertificationWarnings button {
+  width: 136px;
+  height: 42px;
+  border: solid 1.5px #2ddca7;
+  border-radius: 8px;
+  background-color: white;
+  margin-top: 10px;
+
+  color: #2ddca7;
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  cursor: pointer;
+  outline: none;
+}
