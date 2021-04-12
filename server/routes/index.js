@@ -48,7 +48,7 @@ router.post("/api/register", saveData, async (req, res) => {
 
   var hash = encrypt(req.body.email);
   var link =
-    "http://localhost:5000/confirmRegister/?id=" + encodeURIComponent(hash);
+    "http://localhost:3000/confirmRegister/?id=" + encodeURIComponent(hash);
 
   const mailOptions = {
     from: "DuzzleManager@gmail.com",
