@@ -52,6 +52,7 @@
 .CertificationWarnings span {
   color: #707070;
   font-size: 0.9rem;
+  text-align: center;
 }
 .CertificationWarnings button {
   width: 136px;
