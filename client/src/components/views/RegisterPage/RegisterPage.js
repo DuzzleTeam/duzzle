@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { registerUser } from "../../../_actions/user_action";
 import { useHistory } from "react-router-dom";
 
 import Popup from "./Sections/Popup";
@@ -71,7 +69,6 @@ function RegisterPage(props) {
     setIsPopupShowing(true);
   };
 
-  const dispatch = useDispatch();
   const history = useHistory();
   const handleSubmit = (e) => {
     // 회원가입 버튼 클릭 시
@@ -83,12 +80,9 @@ function RegisterPage(props) {
       password,
     };
 
-    dispatch(registerUser(body)).then((res) => {
-      if (res.payload.registerSuccess) {
-        history.push(`/users/${email}`);
-      } else {
-        alert("회원가입에 실패하였습니다.");
-      }
+    history.push({
+      pathname: "/certificationEmail",
+      state: { body },
     });
   };
 
