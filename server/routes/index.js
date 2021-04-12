@@ -72,7 +72,7 @@ router.post("/api/register", saveData, async (req, res) => {
 router.post("/api/confirmRegister/:id", (req, res) => {
   const email = decodeURIComponent(decrypt(req.params.id));
   User.findOne({ email: email }, (err, user) => {
-    if (!user) return res.json({ registerSuccess: false, message: email });
+    if (!user) return res.json({ registerSuccess: false });
     User.findOneAndUpdate(
       { email: email },
       { isCertified: true },
