@@ -48,7 +48,7 @@ router.post("/api/register", saveData, async (req, res) => {
 
   var hash = encrypt(req.body.email);
   var link =
-    "http://localhost:3000/confirmRegister/?id=" + encodeURIComponent(hash);
+    "http://localhost:3000/confirmRegister/" + encodeURIComponent(hash);
 
   const mailOptions = {
     from: "DuzzleManager@gmail.com",
@@ -69,8 +69,8 @@ router.post("/api/register", saveData, async (req, res) => {
 });
 
 // 03.29 / 회원가입
-router.get("/confirmRegister", (req, res) => {
-  const email = decodeURIComponent(decrypt(req.query.id));
+router.post("/api/confirmRegister/:id", (req, res) => {
+  const email = decodeURIComponent(decrypt(req.params.id));
   User.findOne({ email: email }, (err, user) => {
     if (!user) return res.json({ registerSuccess: false, message: email });
     User.findOneAndUpdate(

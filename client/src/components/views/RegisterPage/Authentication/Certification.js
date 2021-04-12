@@ -8,12 +8,7 @@ function Certification() {
   const location = useLocation();
   useEffect(() => {
     const { body } = location.state;
-    dispatch(registerUser(body)).then((res) => {
-      if (res.payload.registerSuccess) {
-      } else {
-        alert("회원가입에 실패하였습니다.");
-      }
-    });
+    dispatch(registerUser(body));
   });
   return <div>인증 메일이 발송되었습니다.</div>;
 }
