@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 
+import NotificationDropdown from "./NotificationDropdown";
+
 import useOutsideClick from "./useOutsideClick";
 import "./AuthMenu.css";
 
@@ -35,6 +37,7 @@ function AuthMenu(props) {
             <button className="RightButton NotificationButton">
               <img src="images/notification.png" alt="notification" />
             </button>
+            {/* <NotificationDropdown /> */}
           </div>
           {/* Profile */}
           <div ref={profileContainer}>
