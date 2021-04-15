@@ -81,6 +81,7 @@ router.post("/api/confirmRegister/:id", (req, res) => {
         return res.status(200).send({
           registerSuccess: true,
           certificationSuccess: true,
+          email: email,
         });
       }
     );
