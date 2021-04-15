@@ -1,5 +1,8 @@
 import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+import axios from "axios";
 
 import useOutsideClick from "./useOutsideClick";
 import "./AuthMenu.css";
@@ -22,12 +25,23 @@ function AuthMenu(props) {
   });
 
   // user info
-  const [user, setUser] = useState({ email: "s2019w16@e-mirim.hs.kr" });
+  const user = useSelector((state) => state.user.userData);
+  const history = useHistory();
+  const handleLogout = (e) => {
+    e.preventDefault();
+    axios.get(`/api/logout`).then((res) => {
+      if (!res.data.isAuth) {
+        history.push("/login");
+      } else {
+        alert("로그아웃을 하는데 실패했습니다.");
+      }
+    });
+  };
 
   return (
     <div id="AuthMenu">
       {/* 로그인 되었는지 */}
-      {props.isAuth ? (
+      {user.isAuth ? (
         // notification and profile image
         <div className="RightMenuContainer">
           {/* Notification */}
@@ -60,7 +74,7 @@ function AuthMenu(props) {
               </li>
               <div className="divider"></div>
               <li>
-                <Link to="/logout">로그아웃</Link>
+                <button onClick={handleLogout}>로그아웃</button>
               </li>
             </ul>
           </div>
