@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../../_actions/user_action";
-import { withRouter } from "react-router-dom";
 
 import "../../../utils/Common.css";
 import "./Sections/LoginPage.css";
