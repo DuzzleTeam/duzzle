@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
@@ -10,9 +10,14 @@ import "./ConfirmRegister.css";
 function ConfirmRegister() {
   const dispatch = useDispatch();
   const { id } = useParams();
+  const [email, setEmail] = useState("");
   useEffect(() => {
     dispatch(confirmRegister(id)).then((res) => {
-      console.log(res);
+      if (!res.payload.registerSuccess) {
+        alert(res.message);
+      } else {
+        setEmail(res.payload.email);
+      }
     });
   });
 
@@ -25,7 +30,7 @@ function ConfirmRegister() {
         <br />
         개발자, 디자이너와의 활동이 가능합니다.
       </span>
-      <Link to={`/users/email`}>마이페이지로 이동</Link>
+      <Link to={`/users/${email}`}>마이페이지로 이동</Link>
     </div>
   );
 }
