@@ -9,34 +9,34 @@ import ConfirmRegister from "./components/views/RegisterPage/Authentication/Conf
 import Auth from "./hoc/auth";
 
 function App() {
-	return (
-		<Router>
-			<NavBar />
+  return (
+    <Router>
+      <NavBar />
 
-			<Switch>
-				{/* 아무나 출입이 가능한 페이지 */}
-				<Route exact path="/" component={Auth(LandingPage, null)} />
+      <Switch>
+        {/* 아무나 출입이 가능한 페이지 */}
+        <Route exact path="/" component={Auth(LandingPage, null)} />
 
-				{/* 로그인한 유저는 출입이 불가능한 페이지 */}
-				<Route path="/login" component={Auth(LoginPage, false)} />
+        {/* 로그인한 유저는 출입이 불가능한 페이지 */}
+        <Route path="/login" component={Auth(LoginPage, false)} />
 
-				{/* 로그인한 유저는 출입이 불가능한 페이지 */}
-				<Route path="/register" component={Auth(RegisterPage, false)} />
+        {/* 로그인한 유저는 출입이 불가능한 페이지 */}
+        <Route path="/register" component={Auth(RegisterPage, false)} />
 
-				{/* 로그인한 유저는 출입이 불가능한 페이지 */}
-				<Route
-					path="/certificationEmail"
-					component={Auth(Certification, false)}
-				/>
+        {/* 로그인한 유저는 출입이 불가능한 페이지 */}
+        <Route
+          path="/certificationEmail"
+          component={Auth(Certification, false)}
+        />
 
-				{/* 로그인한 유저는 출입이 불가능한 페이지 */}
-				<Route
-					path="/confirmRegister/:id"
-					component={Auth(ConfirmRegister, false)}
-				/>
-			</Switch>
-		</Router>
-	);
+        {/* 로그인한 유저는 출입이 불가능한 페이지 */}
+        <Route
+          path="/confirmRegister/:id"
+          component={Auth(ConfirmRegister, false)}
+        />
+      </Switch>
+    </Router>
+  );
 }
 
 export default App;
