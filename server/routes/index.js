@@ -77,7 +77,7 @@ router.post("/api/confirmRegister/:id", (req, res) => {
       { email: email },
       { isCertified: true },
       (err, user) => {
-        if (err) return res.json({ registerSucces: false, message: err });
+        if (err) return res.json({ registerSuccess: false, message: err });
         return res.status(200).send({
           registerSuccess: true,
           certificationSuccess: true,
