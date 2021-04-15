@@ -99,7 +99,8 @@
 }
 
 /* button */
-.ProfileDropdown a {
+.ProfileDropdown a,
+.ProfileDropdown button {
   width: 100%;
   height: 100%;
 
@@ -108,10 +109,19 @@
 
   display: flex;
   align-items: center;
+
+  background: none;
+  border: none;
+  outline: none;
+
+  cursor: pointer;
+
+  font-weight: bold;
+  font-size: 1.3rem;
 }
 
 /* logout button */
-.ProfileDropdown li:last-child a {
+.ProfileDropdown button {
   color: #ff6565 !important;
 }
 

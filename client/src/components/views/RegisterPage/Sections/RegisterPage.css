@@ -216,6 +216,7 @@ input[id="agree"] {
 
 .RegisterSubmit:disabled {
   background-color: #2d2d2d;
+  cursor: default;
 }
 
 .RegisterSubmit:focus {

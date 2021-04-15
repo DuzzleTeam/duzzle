@@ -6,6 +6,7 @@ import LoginPage from "./components/views/LoginPage/LoginPage";
 import RegisterPage from "./components/views/RegisterPage/RegisterPage";
 import Certification from "./components/views/RegisterPage/Authentication/Certification";
 import ConfirmRegister from "./components/views/RegisterPage/Authentication/ConfirmRegister";
+import Auth from "./hoc/auth";
 
 function App() {
   return (
@@ -13,25 +14,26 @@ function App() {
       <NavBar />
 
       <Switch>
-        <Route exact path="/">
-          <LandingPage />
-        </Route>
+        {/* 아무나 출입이 가능한 페이지 */}
+        <Route exact path="/" component={Auth(LandingPage, null)} />
 
-        <Route path="/login">
-          <LoginPage />
-        </Route>
+        {/* 로그인한 유저는 출입이 불가능한 페이지 */}
+        <Route path="/login" component={Auth(LoginPage, false)} />
 
-        <Route path="/register">
-          <RegisterPage />
-        </Route>
+        {/* 로그인한 유저는 출입이 불가능한 페이지 */}
+        <Route path="/register" component={Auth(RegisterPage, false)} />
 
-        <Route path="/certificationEmail">
-          <Certification />
-        </Route>
+        {/* 로그인한 유저는 출입이 불가능한 페이지 */}
+        <Route
+          path="/certificationEmail"
+          component={Auth(Certification, false)}
+        />
 
-        <Route path="/confirmRegister/:id">
-          <ConfirmRegister />
-        </Route>
+        {/* 로그인한 유저는 출입이 불가능한 페이지 */}
+        <Route
+          path="/confirmRegister/:id"
+          component={Auth(ConfirmRegister, false)}
+        />
       </Switch>
     </Router>
   );
