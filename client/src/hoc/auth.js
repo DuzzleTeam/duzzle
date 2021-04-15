@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { auth } from "../_actions/user_action";
 
+//dayeon-choi(2021-4-12)
 export default function _(SpecificComponent, option, adminRoute = null) {
 	function AuthenticationCheck(props) {
 		const dispatch = useDispatch();

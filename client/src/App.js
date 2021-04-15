@@ -14,26 +14,26 @@ function App() {
 			<NavBar />
 
 			<Switch>
-				<Route exact path="/" component={Auth(LandingPage, null)} />
 				{/* 아무나 출입이 가능한 페이지 */}
+				<Route exact path="/" component={Auth(LandingPage, null)} />
 
+				{/* 로그인한 유저는 출입이 불가능한 페이지 */}
 				<Route path="/login" component={Auth(LoginPage, false)} />
-				{/* 로그인한 유저는 출입이 불가능한 페이지 */}
 
+				{/* 로그인한 유저는 출입이 불가능한 페이지 */}
 				<Route path="/register" component={Auth(RegisterPage, false)} />
-				{/* 로그인한 유저는 출입이 불가능한 페이지 */}
 
+				{/* 로그인한 유저는 출입이 불가능한 페이지 */}
 				<Route
 					path="/certificationEmail"
 					component={Auth(Certification, false)}
 				/>
-				{/* 로그인한 유저는 출입이 불가능한 페이지 */}
 
+				{/* 로그인한 유저는 출입이 불가능한 페이지 */}
 				<Route
 					path="/confirmRegister/:id"
 					component={Auth(ConfirmRegister, false)}
 				/>
-				{/* 로그인한 유저는 출입이 불가능한 페이지 */}
 			</Switch>
 		</Router>
 	);
