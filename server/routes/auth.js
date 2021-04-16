@@ -79,18 +79,9 @@ router.post("/api/confirmRegister/:id", (req, res) => {
       (err, user) => {
         if (err) return res.json({ registerSuccess: false, message: err });
 
-        user.generateToken((err, user) => {
-          if (err) return res.status(400).send(err);
-
-          res
-            .cookie("x_auth", user.token, { httpOnly: true })
-            .status(200)
-            .json({ loginSuccess: true, userId: user._id });
-        });
         return res.status(200).send({
           registerSuccess: true,
           certificationSuccess: true,
-          email: email,
         });
       }
     );
