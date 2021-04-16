@@ -37,7 +37,7 @@ function AuthMenu(props) {
             <button className="RightButton NotificationButton">
               <img src="images/notification.png" alt="notification" />
             </button>
-            {/* <NotificationDropdown /> */}
+            <NotificationDropdown />
           </div>
           {/* Profile */}
           <div ref={profileContainer}>

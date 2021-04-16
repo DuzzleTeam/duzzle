@@ -7,7 +7,8 @@ function NotificationDropdown() {
     provider: "조하닮",
     post: { title: "테이블이 좀 이상해요.", isWezzle: false },
     isChecked: false,
-    occurTime: Date.now(),
+    occurTime: new Date().toISOString().slice(0, 10).replace(/\-/g, "."),
+    menuType: "comment",
   });
   useEffect(() => {}, [notification]);
   return (

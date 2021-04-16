@@ -5,7 +5,7 @@ import AuthMenu from "./Sections/AuthMenu";
 import "./Sections/NavBar.css";
 
 function NavBar() {
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(true);
 
   return (
     // Nav 최상위 컨테이너
