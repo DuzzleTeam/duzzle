@@ -25,7 +25,7 @@ function AuthMenu(props) {
   });
 
   // user info
-  const user = useSelector((state) => state.user.authPayload);
+  const user = {};
   const history = useHistory();
   const handleLogout = (e) => {
     e.preventDefault();
