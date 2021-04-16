@@ -1,0 +1,26 @@
+.NotiDropContainer {
+  width: 460px;
+  height: 55.6vh;
+
+  border-radius: 8px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.13);
+  background-color: #fefefe;
+
+  position: absolute;
+  z-index: 1;
+
+  /* - 알림 컨테이너 크기 + 알림 아이콘 크기 */
+  margin-left: -427px;
+  margin-top: 20px;
+
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-20px);
+  transition: all 0.4s ease;
+}
+
+.OpeningDropdown {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0px);
+}
