@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -25,7 +25,13 @@ function AuthMenu(props) {
   });
 
   // user info
-  const user = useSelector((state) => state.user.authPayload);
+  const [user, setUser] = useState({});
+  const reduxUser = useSelector((state) => state.user.authPayload);
+  useEffect(() => {
+    if (reduxUser !== undefined) {
+      setUser(reduxUser);
+    }
+  }, [reduxUser]);
   const history = useHistory();
   const handleLogout = (e) => {
     e.preventDefault();
