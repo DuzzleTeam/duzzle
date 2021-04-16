@@ -12,8 +12,15 @@ function NotificationDropdown(props) {
     occurTime: new Date().toISOString().slice(0, 10).replace(/\-/g, "."),
     menuType: "comment",
   });
+
+  // 메뉴 리스트
+  const menus = ["댓글", "좋아요", "협업해요"];
+
+  // 현재 활성화 중인 메뉴 (기본적으로 댓글)
+  const [activeNotiMenu, setActiveNotiMenu] = useState(0);
   useEffect(() => {}, [notification]);
   return (
+    // 알림창 전체 컨테이너
     <div
       className={
         props.openingNoti
@@ -21,12 +28,19 @@ function NotificationDropdown(props) {
           : "NotiDropContainer"
       }
     >
+      {/* Title */}
       <h3>알림</h3>
+      {/* 댓글, 좋아요, 협업해요 */}
       <ul className="NotiMenu">
-        <li>댓글</li>
-        <li>좋아요</li>
-        <li>협업해요</li>
+        {/* 배열에 있는 메뉴들을 가지고 li 생성 */}
+        {menus.map((menu, i) => (
+          // 현재 Active 메뉴 인덱스와 인덱스가 같다면 ActiveMenu
+          <li key={i} className={activeNotiMenu === i ? "ActiveNotiMenu" : ""}>
+            {menu}
+          </li>
+        ))}
       </ul>
+      {/* 하나 하나의 알림들 */}
       <ul className="NotiContentsContainer">
         <Notification notification={notification} />
       </ul>

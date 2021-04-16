@@ -17,7 +17,7 @@ function AuthMenu(props) {
   };
 
   // 알림창 열려있는지
-  const [openingNoti, setOpeningNoti] = useState(true);
+  const [openingNoti, setOpeningNoti] = useState(false);
   // 알림 아이콘 눌리면
   const notiDropdownHandler = (e) => {
     // 열림 여부 반전
