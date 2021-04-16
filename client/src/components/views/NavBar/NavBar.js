@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import AuthMenu from "./Sections/AuthMenu";
 import "./Sections/NavBar.css";
 
 function NavBar() {
-  const [isAuth, setIsAuth] = useState(false);
-
   return (
     // Nav 최상위 컨테이너
     <nav id="NavContainer">
@@ -26,7 +24,7 @@ function NavBar() {
         </ul>
       </div>
       {/* 로그인 or 프로필 사진 & 알림 */}
-      <AuthMenu isAuth={isAuth} />
+      <AuthMenu />
     </nav>
   );
 }

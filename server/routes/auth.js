@@ -77,7 +77,16 @@ router.post("/api/confirmRegister/:id", (req, res) => {
       { email: email },
       { isCertified: true },
       (err, user) => {
-        if (err) return res.json({ registerSucces: false, message: err });
+        if (err) return res.json({ registerSuccess: false, message: err });
+
+        user.generateToken((err, user) => {
+          if (err) return res.status(400).send(err);
+
+          res
+            .cookie("x_auth", user.token, { httpOnly: true })
+            .status(200)
+            .json({ loginSuccess: true, userId: user._id });
+        });
         return res.status(200).send({
           registerSuccess: true,
           certificationSuccess: true,
@@ -110,7 +119,7 @@ router.post("/api/login", (req, res) => {
           if (err) return res.status(400).send(err);
 
           res
-            .cookie("x_auth", user.token)
+            .cookie("x_auth", user.token, { httpOnly: true })
             .status(200)
             .json({ loginSuccess: true, userId: user._id });
         });
@@ -140,6 +149,20 @@ router.get("/api/logout", auth, (req, res) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).send({
       logoutSuccess: true,
+    });
+  });
+});
+
+// 04.16 / 회원탈퇴
+router.post("/api/users/:id/delete", (req, res) => {
+  const email = req.params.id;
+  User.findOne({ email: email }, (err, user) => {
+    if (!user)
+      return res.json({ deleteSuccess: false, message: "사용자 찾을 수 없음" });
+
+    User.findOneAndDelete({ email: email }, (err, result) => {
+      if (err) return res.json({ deleteSuccess: false, message: err });
+      res.json({ deleteSuccess: true });
     });
   });
 });
