@@ -233,4 +233,25 @@ router.post("/api/users/:id/password_edit", (req, res) => {
   });
 });
 
+// 04.17 / 회원정보 수정
+router.post("/api/users/edit", auth, (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.user._id },
+    {
+      name: req.body.name,
+      field: req.body.field,
+      introduce: req.body.introduce,
+      group: req.user.group,
+      email: req.body.email,
+      openChating: req.body.openChating,
+    },
+    (err, user) => {
+      if (err) return res.json({ editSuccess: false });
+      return res.status(200).send({
+        editSuccess: true,
+      });
+    }
+  );
+});
+
 module.exports = router;
