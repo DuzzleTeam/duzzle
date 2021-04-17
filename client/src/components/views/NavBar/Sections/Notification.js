@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import "./Notification.css";
+
 function Notification(props) {
   const { notification } = props;
   const message = {
@@ -9,14 +11,21 @@ function Notification(props) {
     wezzle: "님이 협업을 신청했습니다.",
   };
   return (
-    <Link to={"/"} className="NotiContainer">
+    <Link
+      to={"/"}
+      className={
+        notification.isChecked
+          ? "NotiContainer"
+          : "NotiContainer NotiNotChecked"
+      }
+    >
       <div className="NotiTopContainer">
         <div className="NotiLeftContainer">
           <span className="NotiProvider">{notification.provider}</span>
           <div className="NotiDesc">
             {notification.post.isWezzle ? "위즐" : "미즐"}
             {" │ "}
-            {notification.post.title.slice(0, 9) + ".."}
+            {notification.post.title.slice(0, 11) + ".."}
           </div>
         </div>
         <span className="NotiTime">{notification.occurTime}</span>
@@ -26,6 +35,7 @@ function Notification(props) {
           message[notification.menuType] +
           " 확인해보세요!"}
       </span>
+      <div className="NotiDivider"></div>
     </Link>
   );
 }
