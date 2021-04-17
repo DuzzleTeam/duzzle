@@ -1,6 +1,6 @@
 const { User } = require("../models/User");
 
-let saveData = (req, res, next) => {
+const saveUser = (req, res, next) => {
   const user = new User(req.body);
   user.save((err, userInfo) => {
     if (err) return res.json({ success: false, err });
@@ -8,4 +8,4 @@ let saveData = (req, res, next) => {
   next();
 };
 
-module.exports = { saveData };
+module.exports = { saveUser };
