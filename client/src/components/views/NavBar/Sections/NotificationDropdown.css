@@ -1,0 +1,70 @@
+/* 전체 알림창 컨테이너 */
+.NotiDropContainer {
+  width: 460px;
+  height: 55.6vh;
+
+  border-radius: 8px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.13);
+  background-color: #fefefe;
+
+  position: absolute;
+  z-index: 1;
+
+  /* - 알림 컨테이너 크기 + 알림 아이콘 크기 */
+  margin-left: -427px;
+  margin-top: 20px;
+  /* 위 오른쪽 아래 왼쪽 */
+  padding: 26px 26px 19px 30px;
+  box-sizing: border-box;
+
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-20px);
+  transition: all 0.4s ease;
+}
+/* 열려 있을 때 */
+.OpeningDropdown {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0px);
+}
+
+/* 알림 Title */
+.NotiDropContainer > h3 {
+  color: #656565;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+/* 댓글, 좋아요, 협업해요 */
+.NotiMenu {
+  display: flex;
+  margin: 0;
+  margin-top: 28px;
+  margin-left: 4px;
+  padding: 0;
+}
+.NotiMenu li {
+  list-style: none;
+  margin-right: 26px;
+
+  font-size: 1rem;
+  font-weight: bold;
+  color: #cbcbcb;
+
+  cursor: pointer;
+}
+/* 활성화 중인 메뉴 */
+li.ActiveNotiMenu {
+  color: #656565;
+  cursor: default;
+}
+
+.NotiContentsContainer {
+  margin: 0;
+  margin-top: 24px;
+  padding: 0;
+
+  font-size: 0.8rem;
+}

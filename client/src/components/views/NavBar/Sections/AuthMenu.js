@@ -1,8 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import axios from "axios";
+
+import NotificationDropdown from "./NotificationDropdown";
 
 import useOutsideClick from "./useOutsideClick";
 import "./AuthMenu.css";
@@ -17,6 +19,14 @@ function AuthMenu(props) {
     setOpeningDropdown(!openingDropdown);
   };
 
+  // 알림창 열려있는지
+  const [openingNoti, setOpeningNoti] = useState(false);
+  // 알림 아이콘 눌리면
+  const notiDropdownHandler = (e) => {
+    // 열림 여부 반전
+    setOpeningNoti(!openingNoti);
+  };
+
   // ProfileContainer 참조
   const profileContainer = useRef();
   // 메뉴 밖 클릭 시 드롭다운 접기
@@ -25,7 +35,13 @@ function AuthMenu(props) {
   });
 
   // user info
-  const user = useSelector((state) => state.user.authPayload);
+  const [user, setUser] = useState({});
+  const reduxUser = useSelector((state) => state.user.authPayload);
+  useEffect(() => {
+    if (reduxUser !== undefined) {
+      setUser(reduxUser);
+    }
+  }, [reduxUser]);
   const history = useHistory();
   const handleLogout = (e) => {
     e.preventDefault();
@@ -46,9 +62,13 @@ function AuthMenu(props) {
         <div className="RightMenuContainer">
           {/* Notification */}
           <div className="NoticiationContaier">
-            <button className="RightButton NotificationButton">
+            <button
+              onClick={notiDropdownHandler}
+              className="RightButton NotificationButton"
+            >
               <img src="images/notification.png" alt="notification" />
             </button>
+            <NotificationDropdown openingNoti={openingNoti} />
           </div>
           {/* Profile */}
           <div ref={profileContainer}>
