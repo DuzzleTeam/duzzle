@@ -7,9 +7,9 @@ import "./NotificationDropdown.css";
 function NotificationDropdown(props) {
   const [notification, setNotification] = useState({
     provider: "조하닮",
-    post: { title: "테이블이 좀 이상해요.", isWezzle: false },
+    post: { title: "테이블이 좀 이상하고 뭐시기 뭐시기", isWezzle: false },
     isChecked: false,
-    occurTime: new Date().toISOString().slice(0, 10).replace(/\-/g, "."),
+    occurTime: new Date().toISOString().slice(0, 10).replace(/-/g, "."),
     menuType: "comment",
   });
 
@@ -35,13 +35,18 @@ function NotificationDropdown(props) {
         {/* 배열에 있는 메뉴들을 가지고 li 생성 */}
         {menus.map((menu, i) => (
           // 현재 Active 메뉴 인덱스와 인덱스가 같다면 ActiveMenu
-          <li key={i} className={activeNotiMenu === i ? "ActiveNotiMenu" : ""}>
+          <li
+            key={i}
+            className={activeNotiMenu === i ? "ActiveNotiMenu" : ""}
+            onClick={() => setActiveNotiMenu(i)}
+          >
             {menu}
           </li>
         ))}
       </ul>
       {/* 하나 하나의 알림들 */}
       <ul className="NotiContentsContainer">
+        <Notification notification={notification} />
         <Notification notification={notification} />
       </ul>
     </div>
