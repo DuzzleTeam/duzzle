@@ -9,7 +9,7 @@ function NotificationDropdown(props) {
     provider: "조하닮",
     post: { title: "테이블이 좀 이상하고 뭐시기 뭐시기", isWezzle: false },
     isChecked: false,
-    occurTime: new Date().toISOString().slice(0, 10).replace(/\-/g, "."),
+    occurTime: new Date().toISOString().slice(0, 10).replace(/-/g, "."),
     menuType: "comment",
   });
 
