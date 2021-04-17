@@ -32,6 +32,9 @@ const userSchema = mongoose.Schema({
     maxlength: 50,
   },
   profileImage: String,
+  openChating: {
+    type: String,
+  },
   role: {
     type: Number,
     default: 0,
@@ -78,7 +81,7 @@ userSchema.methods.comparePassword = function (plainPassword, cb) {
 // 03.30 / 로그인 토큰 생성
 userSchema.methods.generateToken = function (cb) {
   var user = this;
-  var token = jwt.sign(user._id.oHexString(), "secretToken");
+  var token = jwt.sign(user._id.toHexString(), config.token);
 
   user.token = token;
   user.save(function (err, user) {
