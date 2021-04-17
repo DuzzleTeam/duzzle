@@ -5,6 +5,8 @@ const { User } = require("../models/User");
 const nodemailer = require("nodemailer");
 const config = require("../config/key");
 const crypto = require("crypto");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -79,9 +81,17 @@ router.post("/api/confirmRegister/:id", (req, res) => {
       (err, user) => {
         if (err) return res.json({ registerSuccess: false, message: err });
 
-        return res.status(200).send({
-          registerSuccess: true,
-          certificationSuccess: true,
+        user.generateToken((err, user) => {
+          if (err) return res.status(400).send(err);
+
+          return res
+            .cookie("x_auth", user.token, { httpOnly: true })
+            .status(200)
+            .send({
+              registerSuccess: true,
+              certificationSuccess: true,
+              email: email,
+            });
         });
       }
     );
@@ -137,7 +147,7 @@ router.get("/api/auth", auth, (req, res) => {
 // 03.30 / 로그아웃
 router.get("/api/logout", auth, (req, res) => {
   User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
-    if (err) return res.json({ success: false, err });
+    if (err) return res.json({ logoutSuccess: false, err });
     return res.status(200).send({
       logoutSuccess: true,
     });
@@ -154,6 +164,71 @@ router.post("/api/users/:id/delete", (req, res) => {
     User.findOneAndDelete({ email: email }, (err, result) => {
       if (err) return res.json({ deleteSuccess: false, message: err });
       res.json({ deleteSuccess: true });
+    });
+  });
+});
+
+// 04.16 / 비밀번호 찾기
+router.get("/api/account/password_reset", auth, (req, res) => {
+  const email = req.user.email;
+  User.findOne({ email: email }, async (err, user) => {
+    if (!user) {
+      return res.json({ passwordReset: false, message: "사용자 찾을 수 없음" });
+    } else {
+      const smtpTransport = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
+        auth: {
+          user: "DuzzleManager@gmail.com",
+          pass: config.googlePwd,
+        },
+      });
+
+      var hash = encrypt(email);
+      var link =
+        "http://localhost:5000/api/users/" +
+        encodeURIComponent(hash) +
+        "/password_edit";
+
+      const mailOptions = {
+        from: "DuzzleManager@gmail.com",
+        to: email,
+        subject: "Duzzle 비밀번호 찾기",
+        html: `<h1>Duzzle 비밀번호 찾기</h1><p><a href=${link}>${link}</a>`,
+      };
+
+      await smtpTransport.sendMail(mailOptions, (err, responses) => {
+        if (err) {
+          res.json(err);
+          console.log(err);
+        } else {
+          res.json({ emailSendingSuccess: true });
+        }
+        smtpTransport.close();
+      });
+    }
+  });
+});
+
+// 04.16 / 비밀번호 변경
+router.post("/api/users/:id/password_edit", (req, res) => {
+  const email = decodeURIComponent(decrypt(req.params.id));
+  // 비밀번호 암호화
+  bcrypt.genSalt(saltRounds, function (err, salt) {
+    if (err) return res.json({ genSalt: false });
+    bcrypt.hash(req.body.password, salt, function (err, hash) {
+      if (err) return res.json({ hashSuccess: false });
+      User.findOneAndUpdate(
+        { email: email },
+        { password: hash },
+        (err, user) => {
+          if (err) return res.json({ passwordEdit: false, err: err });
+          return res.status(200).send({
+            passwordEdit: true,
+          });
+        }
+      );
     });
   });
 });
