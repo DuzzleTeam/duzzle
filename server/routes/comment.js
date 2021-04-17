@@ -18,7 +18,7 @@ router.post("/:type(wezzle|mezzle)/post/:postId", (req, res) => {
       }
     });
 
-    return res.status(200).send({ createCommentSuccess: true, comment });
+    return res.status(200).send({ createCommentSuccess: true });
   });
 });
 
