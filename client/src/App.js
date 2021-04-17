@@ -6,6 +6,8 @@ import LoginPage from "./components/views/LoginPage/LoginPage";
 import RegisterPage from "./components/views/RegisterPage/RegisterPage";
 import Certification from "./components/views/RegisterPage/Authentication/Certification";
 import ConfirmRegister from "./components/views/RegisterPage/Authentication/ConfirmRegister";
+import PostPage from "./components/views/PostPage/PostPage";
+
 import Auth from "./hoc/auth";
 
 function App() {
@@ -34,6 +36,8 @@ function App() {
           path="/confirmRegister/:id"
           component={Auth(ConfirmRegister, false)}
         />
+
+        <Route path="/mezzle/post/:postId" component={Auth(PostPage, true)} />
       </Switch>
     </Router>
   );
