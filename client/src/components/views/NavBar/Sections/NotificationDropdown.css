@@ -60,3 +60,7 @@ li.ActiveNotiMenu {
   color: #656565;
   cursor: default;
 }
+
+.NotiContentsContainer {
+  margin-top: 24px;
+}

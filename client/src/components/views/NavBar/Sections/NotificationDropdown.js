@@ -35,7 +35,11 @@ function NotificationDropdown(props) {
         {/* 배열에 있는 메뉴들을 가지고 li 생성 */}
         {menus.map((menu, i) => (
           // 현재 Active 메뉴 인덱스와 인덱스가 같다면 ActiveMenu
-          <li key={i} className={activeNotiMenu === i ? "ActiveNotiMenu" : ""}>
+          <li
+            key={i}
+            className={activeNotiMenu === i ? "ActiveNotiMenu" : ""}
+            onClick={() => setActiveNotiMenu(i)}
+          >
             {menu}
           </li>
         ))}
