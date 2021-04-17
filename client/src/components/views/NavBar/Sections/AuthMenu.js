@@ -66,7 +66,7 @@ function AuthMenu(props) {
               onClick={notiDropdownHandler}
               className="RightButton NotificationButton"
             >
-              <img src="images/notification.png" alt="notification" />
+              <img src="/images/notification.png" alt="notification" />
             </button>
             <NotificationDropdown openingNoti={openingNoti} />
           </div>
@@ -77,7 +77,7 @@ function AuthMenu(props) {
               className="RightButton ProfileButton"
               onClick={profileDropdownHandler}
             >
-              <img src="images/profile-image.jpg" alt="profileImage" />
+              <img src="/images/profile-image.jpg" alt="profileImage" />
             </button>
             {/* Dropdown Menu (My page, Logout) */}
             <ul
