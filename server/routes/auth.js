@@ -1,6 +1,6 @@
 const express = require("express");
 const { auth } = require("../middleware/auth");
-const { saveUser } = require("../middleware/saveData");
+const { saveData } = require("../middleware/saveData");
 const { User } = require("../models/User");
 const nodemailer = require("nodemailer");
 const config = require("../config/key");
@@ -37,7 +37,7 @@ function decrypt(encryptEmail) {
 }
 
 // 04.07 / 회원가입 인증 메일 보내기
-router.post("/api/register", saveUser, async (req, res) => {
+router.post("/api/register", saveData, async (req, res) => {
   const smtpTransport = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
