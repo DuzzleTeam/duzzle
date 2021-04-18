@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+import Comment from "./Sections/Comment";
+
+// 글 보기 페이지 (chohadam)
 function PostPage() {
   // 현 포스트에 포함된 댓글들 목록
   const [comments, setComments] = useState([]);
@@ -24,30 +27,6 @@ function PostPage() {
     // 댓글들 가져오기
     getComments();
   }, []);
-
-  // 댓글 삭제 버튼 클릭 시
-  const handleDeleteComment = (e) => {
-    e.preventDefault();
-
-    // 댓글 삭제 확인
-    if (!window.confirm("댓글을 삭제하시겠습니까?")) {
-      // 취소 선택 시 댓글을 지우지 않음 (함수 종료)
-      return;
-    }
-
-    // 현재 페이지가 위즐인지 미즐인지 가져옴
-    const currentPageMenu = document.location.pathname.match(/wezzle|mezzle/);
-    // 지우려는 댓글의 아이디를 가져옴
-    const commentId = e.target.childNodes[0].id;
-    // 댓글 삭제 요청
-    axios.delete(`/api/${currentPageMenu}/comment/${commentId}`).then((res) => {
-      if (res.data.deleteCommentSuccess) {
-        // 정상적으로 삭제가 되었다면
-        // UI 업데이트 (댓글을 가져옴)
-        getComments();
-      }
-    });
-  };
 
   // 댓글 쓰기 input value
   const [commentValue, setCommentValue] = useState("");
@@ -76,6 +55,7 @@ function PostPage() {
       }
     });
   };
+
   return (
     <div>
       {/* 댓글 쓰기 입력 폼 */}
@@ -94,18 +74,7 @@ function PostPage() {
       <div className="CommentsContainer">
         {/* 댓글들 갯수만큼 반복하며 댓글을 하나씩 가져옴 */}
         {comments.map((comment, i) => (
-          // 댓글 하나의 컨테이너
-          <div className="CommentContainer" key={i}>
-            {/* 댓글 내용 */}
-            <span className="CommentText">{comment.text}</span>
-            {/* 댓글 수정 버튼 */}
-            <button className="EditCommentButton">Edit</button>
-            {/* 댓글 삭제 폼 */}
-            <form onSubmit={handleDeleteComment} method="post">
-              {/* 댓글 삭제 버튼 */}
-              <input id={comment._id} type="submit" value="Delete" />
-            </form>
-          </div>
+          <Comment key={i} comment={comment} getComments={getComments} />
         ))}
       </div>
     </div>
