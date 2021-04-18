@@ -58,4 +58,17 @@ router.get("/:type(wezzle|mezzle)/post/:postId", (req, res) => {
   });
 });
 
+router.delete("/:type(wezzle|mezzle)/comment/:commentId", (req, res) => {
+  // url로 넘어온 comment id 가져오기
+  const { commentId } = req.params;
+
+  // comment id를 기반으로 comment 삭제
+  Comment.findByIdAndDelete(commentId, (err) => {
+    if (err) return res.json({ success: false, err });
+  });
+
+  // 정상적으로 삭제 시 클라이언트에 전송
+  return res.status(200).send({ deleteCommentSuccess: true });
+});
+
 module.exports = router;
