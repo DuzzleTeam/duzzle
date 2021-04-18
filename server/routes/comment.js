@@ -58,6 +58,7 @@ router.get("/:type(wezzle|mezzle)/post/:postId", (req, res) => {
   });
 });
 
+// delete comment (chohadam, 2021-04-19)
 router.delete("/:type(wezzle|mezzle)/comment/:commentId", (req, res) => {
   // url로 넘어온 comment id 가져오기
   const { commentId } = req.params;
@@ -69,6 +70,23 @@ router.delete("/:type(wezzle|mezzle)/comment/:commentId", (req, res) => {
 
   // 정상적으로 삭제 시 클라이언트에 전송
   return res.status(200).send({ deleteCommentSuccess: true });
+});
+
+// edit comment (chohadam, 2021-04-19)
+router.patch("/:type(wezzle|mezzle)/comment/:commentId", (req, res) => {
+  // url로 넘어온 comment id 가져오기
+  const { commentId } = req.params;
+
+  // 수정하려고 하는 텍스트
+  const { text } = req.body;
+
+  // comment id에 해당하는 댓글을 수정
+  Comment.findByIdAndUpdate(commentId, { text }, (err) => {
+    // 에러 발생 시 클라이언트에 실패 전송
+    if (err) return res.json({ success: false, err });
+    // 정상적으로 수정 시 클라이언트에 성공 전송
+    return res.status(200).send({ updateCommentSuccess: true });
+  });
 });
 
 module.exports = router;
