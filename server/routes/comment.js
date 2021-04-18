@@ -10,6 +10,10 @@ router.post("/:type(wezzle|mezzle)/post/:postId", (req, res) => {
 
   const { postId } = req.params;
   Post.findById(postId, (err, post) => {
+    if (err) {
+      return res.json({ success: false, err });
+    }
+
     comment.post = post;
 
     comment.save((err, commentInfo) => {
@@ -19,6 +23,22 @@ router.post("/:type(wezzle|mezzle)/post/:postId", (req, res) => {
     });
 
     return res.status(200).send({ createCommentSuccess: true });
+  });
+});
+
+// 게시글 열람 (chohadam, 2021-04-19)
+router.get("/:type(wezzle|mezzle)/post/:postId", (req, res) => {
+  const { postId } = req.params;
+  Post.findById(postId, (err, post) => {
+    if (err) {
+      return res.json({ success: false, err });
+    }
+
+    Comment.find({ post }, (err, comments) => {
+      if (err) return res.json({ success: false, err });
+
+      return res.json({ gettingCommentSuccess: true, comments });
+    });
   });
 });
 
