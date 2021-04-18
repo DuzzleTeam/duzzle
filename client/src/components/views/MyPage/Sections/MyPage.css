@@ -1,0 +1,31 @@
+/* 전체 컨테이너 */
+.Container {
+  background-color: #fcfcfc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #2d2d2d;
+}
+
+#topBanner {
+  display: flex;
+  width: 100%;
+  height: 20%;
+  background-color: whitesmoke;
+}
+
+#profile {
+  display: flex;
+  width: 40%;
+  height: 100%;
+  float: left;
+  background-color: yellow;
+}
+
+#myPost {
+  display: flex;
+  width: 60%;
+  height: 100%;
+  float: right;
+  background-color: blue;
+}
