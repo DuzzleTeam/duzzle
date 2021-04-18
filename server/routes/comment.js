@@ -77,6 +77,9 @@ router.patch("/:type(wezzle|mezzle)/comment/:commentId", (req, res) => {
   // url로 넘어온 comment id 가져오기
   const { commentId } = req.params;
 
+  // 수정하려고 하는 텍스트
+  const { text } = req.body;
+
   // comment id에 해당하는 댓글을 수정
   Comment.findByIdAndUpdate(commentId, { text }, (err) => {
     // 에러 발생 시 클라이언트에 실패 전송
