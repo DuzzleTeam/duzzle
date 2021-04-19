@@ -238,6 +238,7 @@ router.post("/api/users/edit", auth, (req, res) => {
   User.findOneAndUpdate(
     { _id: req.user._id },
     {
+      profileImage: req.body.profileImage,
       name: req.body.name,
       field: req.body.field,
       introduce: req.body.introduce,
