@@ -46,14 +46,14 @@ h1 {
 }
 .userInfo1 {
   text-align: center;
-  padding: 0% 22% 0% 22%;
+  padding: 0% 24% 0% 24%;
 }
 .userInfo2 {
-  padding: 0% 22% 0% 22%;
+  padding: 0% 24% 0% 24%;
 }
 .hr {
   color: #ddd;
-  width: 70%;
+  width: 60%;
   margin-top: 7%;
   margin-bottom: 7%;
 }
@@ -71,5 +71,29 @@ h1 {
   width: 60%;
   height: 100%;
   float: right;
-  background-color: #ddd;
+}
+.btn {
+  width: 90px;
+  height: 5%;
+  margin-left: 5%;
+  margin-top: 2%;
+  border: 2px solid black;
+  cursor: pointer;
+}
+.btn:focus {
+  outline: none;
+  background-color: black;
+  color: white;
+}
+.apply {
+  background-color: white;
+  color: #ddd;
+  border-color: #ddd;
+  border-radius: 1000px;
+}
+.post {
+  background-color: white;
+  color: #ddd;
+  border-color: #ddd;
+  border-radius: 1000px;
 }

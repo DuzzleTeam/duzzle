@@ -47,7 +47,14 @@ function MyPage() {
       </div>
 
       {/* 내 게시물 */}
-      <div id="myPost"></div>
+      <div id="myPost">
+        <button class="btn apply">
+          <strong>지원목록</strong>
+        </button>
+        <button class="btn post">
+          <strong>내 게시물</strong>
+        </button>
+      </div>
     </div>
   );
 }
