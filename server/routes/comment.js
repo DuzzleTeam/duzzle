@@ -8,7 +8,7 @@ const { User } = require("../models/User");
 // 댓글 작성 (chohadam, 2021-04-17)
 router.post("/:type(wezzle|mezzle)/post/:postId", (req, res) => {
   // 사용자가 입력한 댓글 body data를 기반으로 Comment 생성
-  const comment = new Comment({ ...req.body });
+  const comment = new Comment(req.body);
 
   // 쿠키에 저장된 토큰 가져오기
   const token = req.cookies.x_auth;
@@ -62,7 +62,7 @@ router.get("/:type(wezzle|mezzle)/post/:postId", (req, res) => {
       if (err) return res.json({ success: false, err });
 
       // 댓글들을 성공적으로 찾았다면 클라이언트에 전송
-      return res.json({ gettingCommentSuccess: true, comments });
+      return res.json({ gettingPostSuccess: true, post, comments });
     });
   });
 });
