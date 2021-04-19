@@ -84,14 +84,11 @@ router.post("/api/confirmRegister/:id", (req, res) => {
         user.generateToken((err, user) => {
           if (err) return res.status(400).send(err);
 
-          return res
-            .cookie("x_auth", user.token, { httpOnly: true })
-            .status(200)
-            .send({
-              registerSuccess: true,
-              certificationSuccess: true,
-              email: email,
-            });
+          return res.status(200).send({
+            registerSuccess: true,
+            certificationSuccess: true,
+            email: email,
+          });
         });
       }
     );
