@@ -5,8 +5,24 @@ import Comment from "./Sections/Comment";
 
 // 글 보기 페이지 (chohadam)
 function PostPage() {
+  // 현 포스트
+  const [post, setPost] = useState(null);
+
+  const getPost = () => {
+    // 현재 주소 (postId값을 얻기 위함)
+    const url = document.location.pathname;
+    // get 방식으로 요청
+    axios.get(`/api${url}`).then((res) => {
+      // 받아오기에 성공했다면
+      if (res.data.gettingPostSuccess) {
+        // 포스트 셋팅
+        setPost(res.data.post);
+      }
+    });
+  };
+
   // 현 포스트에 포함된 댓글들 목록
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState(null);
 
   // 현 포스트에 포함된 댓글들을 가져옴
   const getComments = () => {
@@ -15,18 +31,26 @@ function PostPage() {
     // get 방식으로 요청
     axios.get(`/api${url}`).then((res) => {
       // 받아오기에 성공했다면
-      if (res.data.gettingCommentSuccess) {
+      if (res.data.gettingPostSuccess) {
         // 댓글들 목록 셋팅
         setComments(res.data.comments);
       }
     });
   };
 
+  const [stateLoaded, setStateLoaded] = useState(false);
   // componentDidmount
   useEffect(() => {
+    // 현 포스트 가져오기
+    getPost();
     // 댓글들 가져오기
     getComments();
-  }, []);
+
+    if (post !== null && comments !== null) {
+      // state 값 다 셋팅 완료
+      setStateLoaded(true);
+    }
+  }, [post, comments]);
 
   // 댓글 쓰기 input value
   const [commentValue, setCommentValue] = useState("");
@@ -56,8 +80,13 @@ function PostPage() {
     });
   };
 
-  return (
+  return stateLoaded ? (
     <div>
+      <div className="PostContainer">
+        <h1>{post.title}</h1>
+        <span className="PostMainText">{post.contents.text}</span>
+      </div>
+
       {/* 댓글 쓰기 입력 폼 */}
       <form onSubmit={handleCommentSubmit} method="post">
         <input
@@ -78,6 +107,8 @@ function PostPage() {
         ))}
       </div>
     </div>
+  ) : (
+    <></>
   );
 }
 
