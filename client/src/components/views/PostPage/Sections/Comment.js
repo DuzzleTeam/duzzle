@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+import { useSelector } from "react-redux";
+
 // CSS
 import "./Comment.css";
 
@@ -9,10 +11,25 @@ function Comment(props) {
   // 현재 댓글
   const [comment, setComment] = useState({});
 
+  // 현재 유저가 댓글을 쓴 사람인지
+  const [isAuth, setIsAuth] = useState(false);
+  // 현재 접속 유저 정보
+  const user = useSelector((state) => state.user.authPayload);
+
+  // state 셋팅 완료 여부
+  const [stateLoaded, setStateLoaded] = useState(false);
+
   // componentDidmount
   useEffect(() => {
+    const { comment } = props;
     // 현재 댓글 셋팅
-    setComment(props.comment);
+    setComment(comment);
+
+    if (user !== undefined) {
+      setIsAuth(user._id === comment.user);
+    }
+
+    setStateLoaded(true);
   }, [props.comment]);
 
   // 댓글 삭제 버튼 클릭 시
@@ -79,7 +96,7 @@ function Comment(props) {
     }
   };
 
-  return (
+  return stateLoaded ? (
     // 댓글 하나의 컨테이너
     <div className="CommentContainer">
       {/* 댓글 수정할 때는 안 보임 */}
@@ -90,44 +107,52 @@ function Comment(props) {
         <span className="CommentText">{comment.text}</span>
       )}
 
-      {/* 댓글 수정 시에만 보임 */}
-      {updatingComment ? (
-        <>
-          {/* 댓글 수정 input */}
-          <input
-            type="text"
-            className="UpdateCommentInput"
-            value={updateCommentValue}
-            onChange={(e) => setUpdateCommentValue(e.target.value)}
-          />
-          {/* 댓글 수정 취소 버튼 */}
-          <button
-            className="CancelEditCommentButton"
-            onClick={() => setUpdatingComment(false)}
-          >
-            Cancel
+      {isAuth ? (
+        <div className="CommentAuthContainer">
+          {/* 댓글 수정 시에만 보임 */}
+          {updatingComment ? (
+            <>
+              {/* 댓글 수정 input */}
+              <input
+                type="text"
+                className="UpdateCommentInput"
+                value={updateCommentValue}
+                onChange={(e) => setUpdateCommentValue(e.target.value)}
+              />
+              {/* 댓글 수정 취소 버튼 */}
+              <button
+                className="CancelEditCommentButton"
+                onClick={() => setUpdatingComment(false)}
+              >
+                Cancel
+              </button>
+            </>
+          ) : (
+            <></>
+          )}
+
+          {/* 댓글 수정 버튼 */}
+          <button onClick={handleUpdateComment} className="EditCommentButton">
+            {updatingComment ? "Submit" : "Edit"}
           </button>
-        </>
+
+          {/* 댓글 수정할 때는 안 보임 */}
+          {updatingComment ? (
+            <></>
+          ) : (
+            // 댓글 삭제 폼
+            <form onSubmit={handleDeleteComment} method="post">
+              {/* 댓글 삭제 버튼 */}
+              <input id={comment._id} type="submit" value="Delete" />
+            </form>
+          )}
+        </div>
       ) : (
         <></>
-      )}
-
-      {/* 댓글 수정 버튼 */}
-      <button onClick={handleUpdateComment} className="EditCommentButton">
-        {updatingComment ? "Submit" : "Edit"}
-      </button>
-
-      {/* 댓글 수정할 때는 안 보임 */}
-      {updatingComment ? (
-        <></>
-      ) : (
-        // 댓글 삭제 폼
-        <form onSubmit={handleDeleteComment} method="post">
-          {/* 댓글 삭제 버튼 */}
-          <input id={comment._id} type="submit" value="Delete" />
-        </form>
       )}
     </div>
+  ) : (
+    <></>
   );
 }
 

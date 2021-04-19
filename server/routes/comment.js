@@ -3,35 +3,43 @@ const router = express.Router();
 
 const { Comment } = require("../models/Comment");
 const { Post } = require("../models/Post");
+const { User } = require("../models/User");
 
 // 댓글 작성 (chohadam, 2021-04-17)
 router.post("/:type(wezzle|mezzle)/post/:postId", (req, res) => {
   // 사용자가 입력한 댓글 body data를 기반으로 Comment 생성
-  const comment = new Comment({ ...req.body });
+  const comment = new Comment(req.body);
 
-  // url로 넘어온 post id 가져오기
-  const { postId } = req.params;
-  // post id를 기반으로 Post 하나 찾기
-  Post.findById(postId, (err, post) => {
-    if (err) {
-      // post를 찾지 못했거나 에러 발생 시
-      return res.json({ success: false, err });
-    }
+  // 쿠키에 저장된 토큰 가져오기
+  const token = req.cookies.x_auth;
+  // 토큰을 기반으로 유저 찾기
+  User.findByToken(token, (err, user) => {
+    comment.user = user;
 
-    // post를 찾았다면
-    // 댓글의 post에 현재 post 설정
-    comment.post = post;
-
-    // 댓글을 MongoDB에 저장
-    comment.save((err, commentInfo) => {
-      // 에러 발생 시
+    // url로 넘어온 post id 가져오기
+    const { postId } = req.params;
+    // post id를 기반으로 Post 하나 찾기
+    Post.findById(postId, (err, post) => {
       if (err) {
+        // post를 찾지 못했거나 에러 발생 시
         return res.json({ success: false, err });
       }
-    });
 
-    // 성공적으로 댓글 저장 시 클라이언트로 전송
-    return res.status(200).send({ createCommentSuccess: true });
+      // post를 찾았다면
+      // 댓글의 post에 현재 post 설정
+      comment.post = post;
+
+      // 댓글을 MongoDB에 저장
+      comment.save((err, commentInfo) => {
+        // 에러 발생 시
+        if (err) {
+          return res.json({ success: false, err });
+        }
+      });
+
+      // 성공적으로 댓글 저장 시 클라이언트로 전송
+      return res.status(200).send({ createCommentSuccess: true });
+    });
   });
 });
 
@@ -39,6 +47,7 @@ router.post("/:type(wezzle|mezzle)/post/:postId", (req, res) => {
 router.get("/:type(wezzle|mezzle)/post/:postId", (req, res) => {
   // url로 넘어온 post id 가져오기
   const { postId } = req.params;
+
   // post id를 기반으로 post 하나 찾기
   Post.findById(postId, (err, post) => {
     // 에러 발생 시
@@ -53,7 +62,7 @@ router.get("/:type(wezzle|mezzle)/post/:postId", (req, res) => {
       if (err) return res.json({ success: false, err });
 
       // 댓글들을 성공적으로 찾았다면 클라이언트에 전송
-      return res.json({ gettingCommentSuccess: true, comments });
+      return res.json({ gettingPostSuccess: true, post, comments });
     });
   });
 });
