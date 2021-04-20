@@ -65,17 +65,36 @@ h1 {
   color: gray;
   float: right;
 }
+.divEdit {
+  display: flex;
+  justify-content: center;
+}
+.edit {
+  width: 60px;
+  border: 2px solid black;
+  cursor: pointer;
+  background-color: white;
+  border-color: #ddd;
+  border-radius: 1000px;
+  margin: 0 auto;
+  margin-top: 5%;
+  font-size: x-small;
+  font-weight: bold;
+}
+.editeditbtn:focus {
+  outline: none;
+}
 
 #myPost {
-  display: flex;
-  width: 60%;
-  height: 100%;
-  float: right;
+  background-color: white;
+  color: #ddd;
+  border-color: #ddd;
+  border-radius: 1000px;
 }
 .btn {
   width: 90px;
-  height: 5%;
-  margin-left: 5%;
+  height: 35px;
+  margin-left: 3%;
   margin-top: 2%;
   border: 2px solid black;
   cursor: pointer;
@@ -84,6 +103,7 @@ h1 {
   outline: none;
   background-color: black;
   color: white;
+  border: none;
 }
 .apply {
   background-color: white;
