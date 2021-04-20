@@ -7,6 +7,7 @@ import RegisterPage from "./components/views/RegisterPage/RegisterPage";
 import Certification from "./components/views/RegisterPage/Authentication/Certification";
 import ConfirmRegister from "./components/views/RegisterPage/Authentication/ConfirmRegister";
 import PostPage from "./components/views/PostPage/PostPage";
+import PostWritingPage from "./components/views/PostWritingPage/PostWritingPage";
 
 import Auth from "./hoc/auth";
 
@@ -38,6 +39,12 @@ function App() {
         />
 
         <Route path="/mezzle/post/:postId" component={Auth(PostPage, true)} />
+
+        {/* 로그인한 유저만 출입이 가능한 페이지 */}
+        <Route
+          path="/mezzle/write/new"
+          component={Auth(PostWritingPage, true)}
+        />
       </Switch>
     </Router>
   );

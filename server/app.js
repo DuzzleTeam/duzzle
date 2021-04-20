@@ -8,6 +8,7 @@ const port = 5000;
 
 var authRouter = require("./routes/auth");
 const commentRouter = require("./routes/comment");
+const postRouter = require("./routes/post");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -15,6 +16,7 @@ app.use(cookieParser());
 
 app.use("/", authRouter);
 app.use("/api", commentRouter);
+app.use("/api", postRouter);
 
 // 03.28 / mongoDB 연결
 mongoose
