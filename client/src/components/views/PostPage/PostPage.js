@@ -82,21 +82,64 @@ function PostPage() {
 
   return stateLoaded ? (
     <div>
+      {/* 글 컨테이너 */}
       <div className="PostContainer">
-        <h1>{post.title}</h1>
-        <span className="PostMainText">{post.contents.text}</span>
-      </div>
+        {/* 상단 글쓴이 정보, 게시글 좋아요, 댓글 정보 */}
+        <div className="PostTopContents">
+          {/* 글쓴이 정보 */}
+          <div className="PostUser">
+            {/* 프로필 사진 */}
+            <img src="" alt="profile" />
+            {/* 이름, 게시날짜 */}
+            <div className="PostUserText">
+              <span className="PostUserName">{post.user}</span>
+              <span>{post.createdAt}</span>
+            </div>
+          </div>
 
-      {/* 댓글 쓰기 입력 폼 */}
-      <form onSubmit={handleCommentSubmit} method="post">
-        <input
-          type="text"
-          value={commentValue}
-          onChange={(e) => setCommentValue(e.target.value)}
-        />
-        {/* 전송 버튼 */}
-        <input type="submit" value="submit" />
-      </form>
+          {/* 좋아요, 댓글 */}
+          <ul className="PostInfo">
+            <li>
+              좋아요
+              <span className="PostInfoData">{post.likeCount}</span>
+            </li>
+            <li>
+              댓글
+              <span className="PostInfoData">{comments.length}</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* 실제 본문 내용 */}
+        <div className="PostMainContents">
+          <div className="PostTitleContainer">
+            <span className="PostTitle">{post.title}</span>
+            <div className="PostControl">
+              <button>수정하기</button>
+              <button>삭제</button>
+            </div>
+          </div>
+
+          <span className="PostMainText">{post.contents.text}</span>
+
+          {post.contents.images.length !== 0 ? (
+            <img src="/images/profile-image.jpg" alt="postimage" />
+          ) : (
+            <></>
+          )}
+
+          <div className="PostLikeShareContainer">
+            <button>
+              <img src="" alt="likebutton" />
+              좋아요
+            </button>
+            <button>
+              <img src="" alt="sharebutton" />
+              공유하기
+            </button>
+          </div>
+        </div>
+      </div>
 
       {/* 댓글 보기 */}
       {/* 전체 댓글들 컨테이너 */}
@@ -106,6 +149,20 @@ function PostPage() {
           <Comment key={i} comment={comment} getComments={getComments} />
         ))}
       </div>
+
+      {/* 댓글 쓰기 입력 폼 */}
+      <form onSubmit={handleCommentSubmit} method="post">
+        <img src="" alt="currentUserProfileImage" />
+        <input
+          type="text"
+          value={commentValue}
+          onChange={(e) => setCommentValue(e.target.value)}
+        />
+        {/* 전송 버튼 */}
+        <button type="submit">
+          <img src="" alt="submitIcon" />
+        </button>
+      </form>
     </div>
   ) : (
     <></>
