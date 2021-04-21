@@ -127,18 +127,22 @@ function PostPage() {
           <span className="PostMainText">{post.contents.text}</span>
 
           {post.contents.images.length !== 0 ? (
-            <img src="/images/profile-image.jpg" alt="postimage" />
+            <img
+              className="PostContentsImage"
+              src="/images/profile-image.jpg"
+              alt="postimage"
+            />
           ) : (
             <></>
           )}
 
           <div className="PostLikeShareContainer">
             <button>
-              <img src="" alt="likebutton" />
+              <img src="/images/post_like.png" alt="likebutton" />
               좋아요
             </button>
             <button>
-              <img src="" alt="sharebutton" />
+              <img src="/images/post_share.png" alt="sharebutton" />
               공유하기
             </button>
           </div>
