@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
-import "./EditLayout.css";
+import "../Sections/MyPage.css";
 
-function EditLayout() {
-  const [Edit, setEdit] = useState(<EditLayout />);
-
+function EditLayout(props) {
   const [Group, setGroup] = useState("");
   const [Email, setEmail] = useState("");
   const [OpenChating, setOpenChating] = useState("");
@@ -21,22 +19,35 @@ function EditLayout() {
     setOpenChating(event.currentTarget.value);
   };
 
-  const onEditHandler = (event) => {
-    event.preventDefault();
-    setEdit(<EditLayout />);
-  };
-
   return (
     <div>
-      <strong>소속</strong>
-      <input type="text" value={Group} onChange={onGroupHandler} />
-      <p />
-      <strong>메일</strong>
-      <input type="text" value={Email} onChange={onEmailHandler} />
-      <p />
-      <strong>오픈채팅</strong>
-      <input type="text" value={OpenChating} onChange={onOpenChatingHandler} />
-      <p />
+      {props.isEdit ? (
+        <div>
+          <strong>소속</strong>
+          <input type="text" value={Group} onChange={onGroupHandler} />
+          <p />
+          <strong>메일</strong>
+          <input type="text" value={Email} onChange={onEmailHandler} />
+          <p />
+          <strong>오픈채팅</strong>
+          <input
+            type="text"
+            value={OpenChating}
+            onChange={onOpenChatingHandler}
+          />
+          <p />
+        </div>
+      ) : (
+        <div>
+          <strong>소속</strong> <div className="font">DST </div>
+          <p />
+          <strong>메일</strong>
+          <div className="font">2019d12@e-mirim.hs.kr </div>
+          <p />
+          <strong>오픈채팅</strong> <div className="font">asdfeljsfd.com </div>
+          <p />
+        </div>
+      )}
     </div>
   );
 }

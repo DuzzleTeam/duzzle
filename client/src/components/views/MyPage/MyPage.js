@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import "./Sections/MyPage.css";
-import ConfirmLayout from "./Sections/ConfirmLayout";
 import EditLayout from "./Sections/EditLayout.js";
 
 function MyPage() {
+  // 04.21 / 수정하기 버튼
+  const [Infobtn, setInfobtn] = useState("수정하기");
+  const [Bool, setBool] = useState(false);
+
   // 04.18 / 상단 배너 이미지 랜덤으로 띄우기
   useEffect(() => {
     let num = Math.floor(Math.random() * 3) + 1;
@@ -12,26 +15,13 @@ function MyPage() {
     banner.innerHTML = `<img src="../images/myPage/${num}.jpg" />`;
   }, []);
 
-  // 04.20 / 수정하기 화면 변경
-  // const [Edit, setEdit] = useState(<ConfirmLayout />);
-
-  // const onEditHandler = (event) => {
-  //   event.preventDefault();
-  //   if (Edit == <ConfirmLayout />) {
-  //     setEdit(<EditLayout />);
-  //   } else {
-  //     setEdit(<ConfirmLayout />);
-  //   }
-  // };
-
-  const [Edit, setEdit] = useState(true);
-
-  const onEditHandler = (event) => {
-    event.preventDefault();
-    if (Edit == true) {
-      setEdit(<EditLayout />);
+  const onEditHandler = () => {
+    if (Infobtn == "수정하기") {
+      setInfobtn("확인하기");
+      setBool(true);
     } else {
-      setEdit(<ConfirmLayout />);
+      setInfobtn("수정하기");
+      setBool(false);
     }
   };
 
@@ -60,11 +50,15 @@ function MyPage() {
             <progress value="50" max="100"></progress>
           </div>
           <p />
-          <div id="editLayout">{Edit}</div>
+          <div id="editLayout">
+            <EditLayout isEdit={Bool} />
+          </div>
+          <div className="divEdit">
+            <button className="edit" onClick={onEditHandler}>
+              {Infobtn}
+            </button>
+          </div>
         </div>
-        <button className="edit" onClick={onEditHandler}>
-          수정하기
-        </button>
       </div>
 
       {/* 내 게시물 */}

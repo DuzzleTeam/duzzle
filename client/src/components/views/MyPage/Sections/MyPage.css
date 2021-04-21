@@ -81,7 +81,7 @@ h1 {
   font-size: x-small;
   font-weight: bold;
 }
-.editeditbtn:focus {
+.edit:focus {
   outline: none;
 }
 
@@ -116,4 +116,8 @@ h1 {
   color: #ddd;
   border-color: #ddd;
   border-radius: 1000px;
+}
+
+input {
+  float: right;
 }
