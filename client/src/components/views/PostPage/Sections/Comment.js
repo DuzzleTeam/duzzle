@@ -165,7 +165,7 @@ function Comment(props) {
                 id={comment._id}
                 type="submit"
               >
-                삭제
+                <img src="/images/comment_delete.png" alt="delete" />
               </button>
             </form>
           )}

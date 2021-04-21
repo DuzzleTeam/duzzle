@@ -107,9 +107,11 @@ ul.PostInfo span.PostInfoData {
   font-size: 1.75rem;
 }
 /* 글 수정, 삭제 버튼 */
+.PostControl {
+  display: flex;
+  align-items: center;
+}
 .PostTitleContainer .PostControl button {
-  width: 104px;
-  height: 46px;
   border-radius: 23px;
   border: none;
   box-shadow: 0 1px 6px 0 rgba(112, 112, 112, 0.24);
@@ -122,6 +124,17 @@ ul.PostInfo span.PostInfoData {
 
   cursor: pointer;
   outline: none;
+}
+/* 수정 버튼 */
+.PostTitleContainer .PostControl button:first-child {
+  width: 104px;
+  height: 46px;
+}
+
+/* 삭제 버튼 */
+.PostTitleContainer .PostControl button:last-child {
+  width: 46px;
+  height: 46px;
 }
 
 /* 실제 본문 글 */

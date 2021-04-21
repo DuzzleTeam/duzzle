@@ -120,7 +120,9 @@ function PostPage() {
             <span className="PostTitle">{post.title}</span>
             <div className="PostControl">
               <button>수정하기</button>
-              <button>삭제</button>
+              <button>
+                <img src="/images/post_delete.png" alt="delete" />
+              </button>
             </div>
           </div>
 
