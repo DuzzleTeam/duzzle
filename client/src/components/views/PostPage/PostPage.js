@@ -159,16 +159,21 @@ function PostPage() {
       </div>
 
       {/* 댓글 쓰기 입력 폼 */}
-      <form onSubmit={handleCommentSubmit} method="post">
-        <img src="" alt="currentUserProfileImage" />
+      <form
+        className="CommentInputContainer"
+        onSubmit={handleCommentSubmit}
+        method="post"
+      >
+        <img src="/images/profile-image.jpg" alt="currentUserProfileImage" />
         <input
           type="text"
+          placeholder="지금 바로 친구들과 의견을 공유해보세요!"
           value={commentValue}
           onChange={(e) => setCommentValue(e.target.value)}
         />
         {/* 전송 버튼 */}
         <button type="submit">
-          <img src="" alt="submitIcon" />
+          <img src="/images/comment_send.png" alt="submitIcon" />
         </button>
       </form>
     </div>

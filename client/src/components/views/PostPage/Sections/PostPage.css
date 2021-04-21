@@ -181,4 +181,75 @@ span.PostMainText {
 .CommentsContainer {
   width: 64.6%;
   margin-top: 20px;
+  margin-bottom: -10px;
+}
+
+/* 댓글 입력 */
+.CommentInputContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 64.6%;
+
+  margin-top: 80px;
+  margin-bottom: 90px;
+
+  padding-left: 30px;
+  padding-right: 32px;
+
+  box-sizing: border-box;
+}
+
+/* 댓글 입력 유저 이미지 */
+.CommentInputContainer > img {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+}
+
+/* 댓글 입력 input */
+.CommentInputContainer > input[type="text"] {
+  width: 80%;
+  height: 60px;
+  border-radius: 30px;
+  border: solid 1px #cecece;
+
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 3px;
+
+  box-sizing: border-box;
+
+  color: #2d2d2d;
+  font-weight: 500;
+  font-size: 1.15rem;
+
+  outline: none;
+}
+
+.CommentInputContainer > input[type="text"]::placeholder {
+  color: #cecece;
+  font-weight: 500;
+  font-size: 1.15rem;
+}
+
+/* 댓글 전송 버튼 */
+.CommentInputContainer > button {
+  width: 36px;
+  height: 36px;
+
+  padding: 0;
+
+  background-color: transparent;
+  border: none;
+
+  cursor: pointer;
+  outline: none;
+}
+
+.CommentInputContainer > button img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
 }
