@@ -176,3 +176,9 @@ span.PostMainText {
 .PostLikeShareContainer > button > img {
   margin-right: 10px;
 }
+
+/* 댓글 영역 */
+.CommentsContainer {
+  width: 64.6%;
+  margin-top: 20px;
+}

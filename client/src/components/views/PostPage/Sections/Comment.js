@@ -103,19 +103,25 @@ function Comment(props) {
       {updatingComment ? (
         <></>
       ) : (
-        <>
+        <div className="CommentLeftContainer">
           {/* 댓글 유저 프로필 사진 */}
-          <img src="" alt="commentUserProfileImage" />
+          <img
+            className="CommentUserProfileImage"
+            src="/images/profile-image.jpg"
+            alt="commentUserProfileImage"
+          />
           {/* 댓글 유저, 댓글 게시 날짜, 내용 */}
           <div className="CommentMainContents">
             <div>
-              <span className="CommentUser">{comment.user}</span>
-              <span className="CommentDate">{comment.createdAt}</span>
+              <span className="CommentUser">{"조하닮"}</span>
+              <span className="CommentDate">
+                {comment.createdAt.slice(0, 10)}
+              </span>
             </div>
             {/* 댓글 내용 */}
             <span className="CommentText">{comment.text}</span>
           </div>
-        </>
+        </div>
       )}
 
       {isAuth ? (
@@ -144,7 +150,7 @@ function Comment(props) {
 
           {/* 댓글 수정 버튼 */}
           <button onClick={handleUpdateComment} className="EditCommentButton">
-            {updatingComment ? "Submit" : "Edit"}
+            {updatingComment ? "Submit" : "수정"}
           </button>
 
           {/* 댓글 수정할 때는 안 보임 */}
@@ -154,7 +160,13 @@ function Comment(props) {
             // 댓글 삭제 폼
             <form onSubmit={handleDeleteComment} method="post">
               {/* 댓글 삭제 버튼 */}
-              <input id={comment._id} type="submit" value="Delete" />
+              <button
+                className="DeleteCommentButton"
+                id={comment._id}
+                type="submit"
+              >
+                삭제
+              </button>
             </form>
           )}
         </div>
@@ -166,7 +178,7 @@ function Comment(props) {
       <div className="CommentLikeContainer">
         <span className="CommentLike">{comment.likeCount}</span>
         <button>
-          <img src="" alt="likeIcon" />
+          <img src="/images/post_like.png" alt="likeIcon" />
         </button>
       </div>
     </div>
