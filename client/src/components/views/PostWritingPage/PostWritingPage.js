@@ -32,8 +32,9 @@ function PostWritingPage() {
       contents: { text: inputContents.contents.text },
     };
     console.log(body, "body도 실행은 되었음");
-    //const url = document.location.pathname;
-    axios.post(`/api/mezzle/write/new`, body).then((res) => {
+
+    const currentPageMenu = document.location.pathname.match(/wezzle|mezzle/);
+    axios.post(`/api/${currentPageMenu}/write/new`, body).then((res) => {
       if (res.data.createPostSuccess) {
         setInputContents({
           title: "",

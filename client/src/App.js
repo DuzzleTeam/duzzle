@@ -45,6 +45,10 @@ function App() {
           path="/mezzle/write/new"
           component={Auth(PostWritingPage, true)}
         />
+        <Route
+          path="/wezzle/write/new"
+          component={Auth(PostWritingPage, true)}
+        />
       </Switch>
     </Router>
   );
