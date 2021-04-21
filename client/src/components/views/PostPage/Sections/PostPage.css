@@ -1,0 +1,79 @@
+/* 글 보기 전체 컨테이너 */
+.PostPageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 글 영역 */
+.PostContainer {
+  width: 64.6%;
+}
+
+/* 글쓴이, 게시글 정보 */
+.PostTopContents {
+  width: 100%;
+  height: 166px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-bottom: solid 1px #d2d2d2;
+}
+
+/* 글쓴이 프로필 사진, 이름, 게시 날짜 */
+.PostUser {
+  display: flex;
+  align-items: center;
+}
+/* 글쓴이 프로필 사진 */
+.PostUser > img {
+  width: 72px;
+  height: 72px;
+  border-radius: 36px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+}
+/* 글쓴이 이름, 게시 날짜 */
+.PostUserText {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  margin-left: 32px;
+}
+/* 이름 */
+.PostUserText > span.PostUserName {
+  color: #4b4b4b;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+/* 게시날짜 */
+.PostUserText > span {
+  color: #656565;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+/* 좋아요, 댓글 */
+ul.PostInfo {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+/* 좋아요, 댓글 글씨 및 요소 하나 컨테이너 */
+ul.PostInfo > li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 50px;
+
+  color: #a2a2a2;
+  font-size: 1rem;
+  font-weight: 500;
+}
+/* 좋아요, 댓글 숫자 */
+ul.PostInfo span.PostInfoData {
+  color: #656565;
+  font-size: 1.5rem;
+}

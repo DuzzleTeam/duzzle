@@ -3,6 +3,10 @@ import axios from "axios";
 
 import Comment from "./Sections/Comment";
 
+// CSS
+import "./Sections/PostPage.css";
+import "../../../utils/Common.css";
+
 // 글 보기 페이지 (chohadam)
 function PostPage() {
   // 현 포스트
@@ -81,7 +85,7 @@ function PostPage() {
   };
 
   return stateLoaded ? (
-    <div>
+    <div id="Container" className="PostPageContainer">
       {/* 글 컨테이너 */}
       <div className="PostContainer">
         {/* 상단 글쓴이 정보, 게시글 좋아요, 댓글 정보 */}
@@ -89,11 +93,11 @@ function PostPage() {
           {/* 글쓴이 정보 */}
           <div className="PostUser">
             {/* 프로필 사진 */}
-            <img src="" alt="profile" />
+            <img src="/images/profile-image.jpg" alt="profile" />
             {/* 이름, 게시날짜 */}
             <div className="PostUserText">
-              <span className="PostUserName">{post.user}</span>
-              <span>{post.createdAt}</span>
+              <span className="PostUserName">{"최다연"}</span>
+              <span>{post.createdAt.slice(0, 10)}</span>
             </div>
           </div>
 
