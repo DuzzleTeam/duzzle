@@ -16,11 +16,6 @@
 }
 
 /* 댓글 유저 사진, 이름, 날짜, 내용 */
-.CommentLeftContainer {
-  display: flex;
-  align-items: center;
-  width: 74.3%;
-}
 /* 댓글 유저 사진 */
 img.CommentUserProfileImage {
   width: 60px;
@@ -35,7 +30,7 @@ img.CommentUserProfileImage {
 
 /* 댓글 유저 이름, 게시날짜, 내용 */
 .CommentMainContents {
-  width: 88%;
+  width: 65%;
 }
 /* 유저 이름 */
 span.CommentUser {
@@ -141,4 +136,28 @@ span.CommentLike {
   width: 25px;
   height: 22px;
   object-fit: contain;
+}
+
+/* 댓글 수정 input */
+.UpdateCommentInput {
+  width: 100%;
+  height: auto;
+  border-radius: 30px;
+  border: solid 1px #cecece;
+
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 10px;
+  /* 위|아래 오른쪽|왼쪽 */
+  padding: 10px 20px;
+
+  box-sizing: border-box;
+
+  color: #656565;
+  font-weight: 500;
+  font-size: 1.15rem;
+
+  resize: none;
+
+  outline: none;
 }
