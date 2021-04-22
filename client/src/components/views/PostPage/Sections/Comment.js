@@ -30,7 +30,7 @@ function Comment(props) {
     }
 
     setStateLoaded(true);
-  }, [props.comment]);
+  }, [props, user]);
 
   // 댓글 삭제 버튼 클릭 시
   const handleDeleteComment = (e) => {
@@ -103,8 +103,19 @@ function Comment(props) {
       {updatingComment ? (
         <></>
       ) : (
-        // 댓글 내용
-        <span className="CommentText">{comment.text}</span>
+        <>
+          {/* 댓글 유저 프로필 사진 */}
+          <img src="" alt="commentUserProfileImage" />
+          {/* 댓글 유저, 댓글 게시 날짜, 내용 */}
+          <div className="CommentMainContents">
+            <div>
+              <span className="CommentUser">{comment.user}</span>
+              <span className="CommentDate">{comment.createdAt}</span>
+            </div>
+            {/* 댓글 내용 */}
+            <span className="CommentText">{comment.text}</span>
+          </div>
+        </>
       )}
 
       {isAuth ? (
@@ -150,6 +161,14 @@ function Comment(props) {
       ) : (
         <></>
       )}
+
+      {/* 좋아요 버튼 */}
+      <div className="CommentLikeContainer">
+        <span className="CommentLike">{comment.likeCount}</span>
+        <button>
+          <img src="" alt="likeIcon" />
+        </button>
+      </div>
     </div>
   ) : (
     <></>
