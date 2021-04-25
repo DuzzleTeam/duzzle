@@ -22,4 +22,20 @@ router.post("/:type(wezzle|mezzle)/write/new", (req, res) => {
   });
 });
 
+//게시글 삭제 (dayeon-choi, 2021-04-25)
+router.post("/:type(wezzle|mezzle)/post/:postId", (req, res) => {
+  const { postId } = req.params;
+  Post.findById(postId, (err, post) => {
+    if (err) {
+      return res.json({ success: false, err });
+    }
+    Post.findByIdAndDelete(postId, (err, result) => {
+      if (err) {
+        return res.json({ deletePostSuccess: false, message: err });
+      }
+      res.json({ deletePostSuccess: true });
+    });
+  });
+});
+
 module.exports = router;
