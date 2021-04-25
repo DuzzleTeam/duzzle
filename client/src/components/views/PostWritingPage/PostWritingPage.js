@@ -38,7 +38,7 @@ function PostWritingPage() {
       peopleNum: peopleNum,
     };
 
-    axios.post(`/api/${currentPageMenu}/write/new`, body).then((res) => {
+    axios.post(`/api/${currentPageMenu}/write`, body).then((res) => {
       if (res.data.createPostSuccess) {
         setInputContents({
           title: "",
