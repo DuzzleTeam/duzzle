@@ -8,7 +8,13 @@ import {
 export default function _(state = {}, action) {
   switch (action.type) {
     case LOGIN_USER:
-      return { ...state, loginPayload: action.payload };
+      return {
+        ...state,
+        loginPayload: action.payload,
+        user: {
+          user_id: action.user_id,
+        },
+      };
 
     case REGISTER_USER:
       return { ...state, registerPayload: action.payload };

@@ -136,6 +136,8 @@ router.get("/api/auth", auth, (req, res) => {
     _id: req.user._id,
     email: req.user.email,
     name: req.user.name,
+    group: req.user.group,
+    openChating: req.user.openChating,
     isAdmin: req.user.role === 0 ? false : true,
     isAuth: true,
   });
