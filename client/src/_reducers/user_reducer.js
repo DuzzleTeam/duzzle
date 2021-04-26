@@ -3,6 +3,7 @@ import {
   LOGIN_USER,
   REGISTER_USER,
   AUTH_USER,
+  EDIT_USER,
 } from "../_actions/types";
 
 export default function _(state = {}, action) {
@@ -24,6 +25,9 @@ export default function _(state = {}, action) {
 
     case AUTH_USER:
       return { ...state, authPayload: action.payload };
+
+    case EDIT_USER:
+      return { ...state, editPayload: action.payload };
     default:
       return state;
   }

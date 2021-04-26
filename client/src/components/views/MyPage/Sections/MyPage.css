@@ -47,15 +47,18 @@ h1 {
 .userInfo1 {
   text-align: center;
   padding: 0% 24% 0% 24%;
-}
-.userInfo2 {
-  padding: 0% 24% 0% 24%;
+  align-items: center;
+  justify-content: center;
 }
 .hr {
   color: #ddd;
   width: 60%;
   margin-top: 7%;
   margin-bottom: 7%;
+}
+
+.userInfo2 {
+  padding: 0% 24% 0% 24%;
 }
 .level {
   line-height: 0;
@@ -118,6 +121,22 @@ h1 {
   border-radius: 1000px;
 }
 
-input {
+.bottom {
   float: right;
+  text-align: center;
+}
+.name {
+  width: 200px;
+  font-size: x-large;
+  font-weight: bold;
+  text-align: center;
+}
+.field {
+  width: 200px;
+  text-align: center;
+}
+.intro {
+  width: 200px;
+  text-align: center;
+  resize: none;
 }
