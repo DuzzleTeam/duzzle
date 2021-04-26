@@ -4,6 +4,7 @@ import {
   LOGIN_USER,
   REGISTER_USER,
   AUTH_USER,
+  EDIT_USER,
 } from "./types";
 
 export function loginUser(dataToSubmit) {
@@ -35,6 +36,17 @@ export function confirmRegister(id) {
 
   return {
     type: CONFIRM_REGISTER,
+    payload: request,
+  };
+}
+
+export function editUser(dataToSubmit) {
+  const request = axios
+    .post("/api/users/edit", dataToSubmit)
+    .then((res) => res.data);
+
+  return {
+    type: EDIT_USER,
     payload: request,
   };
 }
