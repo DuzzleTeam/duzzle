@@ -31,6 +31,7 @@ img.CommentUserProfileImage {
 /* 댓글 유저 이름, 게시날짜, 내용 */
 .CommentMainContents {
   width: 65%;
+  margin-right: auto;
 }
 /* 유저 이름 */
 span.CommentUser {
@@ -60,6 +61,7 @@ span.CommentText {
 /* 댓글 수정, 삭제 */
 .CommentAuthContainer {
   display: flex;
+  margin-right: auto;
 }
 
 /* 댓글 수정 버튼 */
