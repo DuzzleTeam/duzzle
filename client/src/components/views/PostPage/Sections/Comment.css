@@ -163,3 +163,33 @@ span.CommentLike {
 
   outline: none;
 }
+
+/* 댓글 수정 완료 버튼 */
+.EditButton {
+  width: 8%;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 50px;
+}
+
+button.ConfirmEditCommentButton {
+  height: 30px;
+  background: transparent;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+button.ConfirmEditCommentButton > img {
+  width: 100%;
+}
+
+button.CancelEditCommentButton {
+  height: 30px;
+  background: transparent;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+button.CancelEditCommentButton > img {
+  width: 100%;
+}

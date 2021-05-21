@@ -158,20 +158,25 @@ function Comment(props) {
             {/* 댓글 수정 Input */}
             <textarea
               className="UpdateCommentInput"
-              rows={Math.floor(updateCommentValue.length / 50)}
+              rows={Math.floor(updateCommentValue.length / 50) + 1}
               value={updateCommentValue}
               onChange={(e) => setUpdateCommentValue(e.target.value)}
             />
-            {/* 댓글 수정 취소 버튼 */}
-            <button onClick={handleUpdateComment} className="EditCommentButton">
-              {"수정"}
-            </button>
-            <button
-              className="CancelEditCommentButton"
-              onClick={() => setUpdatingComment(false)}
-            >
-              취소
-            </button>
+            <div className="EditButton">
+              <button
+                onClick={handleUpdateComment}
+                className="ConfirmEditCommentButton"
+              >
+                <img src="/images/comment_edit_confirm.png" alt="confirm" />
+              </button>
+              {/* 댓글 수정 취소 버튼 */}
+              <button
+                className="CancelEditCommentButton"
+                onClick={() => setUpdatingComment(false)}
+              >
+                <img src="/images/comment_edit_cancel.png" alt="cancel" />
+              </button>
+            </div>
           </>
         )}
       </div>
