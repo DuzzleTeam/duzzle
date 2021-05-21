@@ -3,7 +3,6 @@ const router = express.Router();
 
 const { Comment } = require("../models/Comment");
 const { Post } = require("../models/Post");
-const { User } = require("../models/User");
 
 const { auth } = require("../middleware/auth");
 
@@ -93,6 +92,29 @@ router.patch("/:type(wezzle|mezzle)/comment/:commentId", (req, res) => {
     if (err) return res.json({ success: false, err });
     // 정상적으로 수정 시 클라이언트에 성공 전송
     return res.status(200).send({ updateCommentSuccess: true });
+  });
+});
+
+// 댓글 좋아요 버튼 클릭 시
+router.patch("/:type(wezzle|mezzle)/like/:commentId", auth, (req, res) => {
+  // url로 넘어온 comment id 가져오기
+  const { commentId } = req.params;
+
+  // 현재 접속 유저
+  const { user } = req;
+  // comment id에 해당하는 댓글
+  Comment.findById(commentId, async (err, comment) => {
+    if (err) return res.json({ success: false, err });
+
+    const likeIndex = comment.like.findIndex((email) => email === user.email);
+    if (likeIndex === -1) {
+      comment.like.push(user.email);
+    } else {
+      comment.like.splice(likeIndex, 1);
+    }
+    const newComment = await comment.save();
+
+    return res.status(200).send({ updateCommentSuccess: true, newComment });
   });
 });
 
