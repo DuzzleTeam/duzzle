@@ -41,14 +41,8 @@ function App() {
         <Route path="/mezzle/post/:postId" component={Auth(PostPage, true)} />
 
         {/* 로그인한 유저만 출입이 가능한 페이지 */}
-        <Route
-          path="/mezzle/write/new"
-          component={Auth(PostWritingPage, true)}
-        />
-        <Route
-          path="/wezzle/write/new"
-          component={Auth(PostWritingPage, true)}
-        />
+        <Route path="/mezzle/write" component={Auth(PostWritingPage, true)} />
+        <Route path="/wezzle/write" component={Auth(PostWritingPage, true)} />
       </Switch>
     </Router>
   );
