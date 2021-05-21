@@ -3,6 +3,10 @@ import axios from "axios";
 
 import Comment from "./Sections/Comment";
 
+// CSS
+import "./Sections/PostPage.css";
+import "../../../utils/Common.css";
+
 // 글 보기 페이지 (chohadam)
 function PostPage() {
   // 현 포스트
@@ -81,7 +85,7 @@ function PostPage() {
   };
 
   return stateLoaded ? (
-    <div>
+    <div id="Container" className="PostPageContainer">
       {/* 글 컨테이너 */}
       <div className="PostContainer">
         {/* 상단 글쓴이 정보, 게시글 좋아요, 댓글 정보 */}
@@ -89,11 +93,11 @@ function PostPage() {
           {/* 글쓴이 정보 */}
           <div className="PostUser">
             {/* 프로필 사진 */}
-            <img src="" alt="profile" />
+            <img src="/images/profile-image.jpg" alt="profile" />
             {/* 이름, 게시날짜 */}
             <div className="PostUserText">
-              <span className="PostUserName">{post.user}</span>
-              <span>{post.createdAt}</span>
+              <span className="PostUserName">{"최다연"}</span>
+              <span>{post.createdAt.slice(0, 10)}</span>
             </div>
           </div>
 
@@ -116,25 +120,31 @@ function PostPage() {
             <span className="PostTitle">{post.title}</span>
             <div className="PostControl">
               <button>수정하기</button>
-              <button>삭제</button>
+              <button>
+                <img src="/images/post_delete.png" alt="delete" />
+              </button>
             </div>
           </div>
 
           <span className="PostMainText">{post.contents.text}</span>
 
           {post.contents.images.length !== 0 ? (
-            <img src="/images/profile-image.jpg" alt="postimage" />
+            <img
+              className="PostContentsImage"
+              src="/images/profile-image.jpg"
+              alt="postimage"
+            />
           ) : (
             <></>
           )}
 
           <div className="PostLikeShareContainer">
             <button>
-              <img src="" alt="likebutton" />
+              <img src="/images/post_like.png" alt="likebutton" />
               좋아요
             </button>
             <button>
-              <img src="" alt="sharebutton" />
+              <img src="/images/post_share.png" alt="sharebutton" />
               공유하기
             </button>
           </div>
@@ -151,16 +161,21 @@ function PostPage() {
       </div>
 
       {/* 댓글 쓰기 입력 폼 */}
-      <form onSubmit={handleCommentSubmit} method="post">
-        <img src="" alt="currentUserProfileImage" />
+      <form
+        className="CommentInputContainer"
+        onSubmit={handleCommentSubmit}
+        method="post"
+      >
+        <img src="/images/profile-image.jpg" alt="currentUserProfileImage" />
         <input
           type="text"
+          placeholder="지금 바로 친구들과 의견을 공유해보세요!"
           value={commentValue}
           onChange={(e) => setCommentValue(e.target.value)}
         />
         {/* 전송 버튼 */}
         <button type="submit">
-          <img src="" alt="submitIcon" />
+          <img src="/images/comment_send.png" alt="submitIcon" />
         </button>
       </form>
     </div>

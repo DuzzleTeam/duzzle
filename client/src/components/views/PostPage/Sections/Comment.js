@@ -96,82 +96,91 @@ function Comment(props) {
     }
   };
 
-  return stateLoaded ? (
-    // 댓글 하나의 컨테이너
-    <div className="CommentContainer">
-      {/* 댓글 수정할 때는 안 보임 */}
-      {updatingComment ? (
-        <></>
-      ) : (
-        <>
-          {/* 댓글 유저 프로필 사진 */}
-          <img src="" alt="commentUserProfileImage" />
-          {/* 댓글 유저, 댓글 게시 날짜, 내용 */}
-          <div className="CommentMainContents">
-            <div>
-              <span className="CommentUser">{comment.user}</span>
-              <span className="CommentDate">{comment.createdAt}</span>
-            </div>
-            {/* 댓글 내용 */}
-            <span className="CommentText">{comment.text}</span>
-          </div>
-        </>
-      )}
+  return (
+    stateLoaded && (
+      // 댓글 하나의 컨테이너
+      <div className="CommentContainer">
+        {/* 댓글 유저, 댓글 게시 날짜, 내용 */}
+        {/* 댓글 유저 프로필 사진 */}
+        <img
+          className="CommentUserProfileImage"
+          src="/images/profile-image.jpg"
+          alt="commentUserProfileImage"
+        />
 
-      {isAuth ? (
-        <div className="CommentAuthContainer">
-          {/* 댓글 수정 시에만 보임 */}
-          {updatingComment ? (
-            <>
-              {/* 댓글 수정 input */}
-              <input
-                type="text"
-                className="UpdateCommentInput"
-                value={updateCommentValue}
-                onChange={(e) => setUpdateCommentValue(e.target.value)}
-              />
+        {!updatingComment ? (
+          <>
+            <div className="CommentMainContents">
+              <div>
+                <span className="CommentUser">{"조하닮"}</span>
+                <span className="CommentDate">
+                  {comment.createdAt.slice(0, 10)}
+                </span>
+              </div>
+              {/* 댓글 내용 */}
+              <span className="CommentText">{comment.text}</span>
+            </div>
+
+            {isAuth && (
+              <div className="CommentAuthContainer">
+                {/* 댓글 수정 버튼 */}
+                <button
+                  onClick={handleUpdateComment}
+                  className="EditCommentButton"
+                >
+                  {"수정"}
+                </button>
+
+                {/* 댓글 삭제 폼 */}
+                <form onSubmit={handleDeleteComment} method="post">
+                  {/* 댓글 삭제 버튼 */}
+                  <button
+                    className="DeleteCommentButton"
+                    id={comment._id}
+                    type="submit"
+                  >
+                    <img src="/images/comment_delete.png" alt="delete" />
+                  </button>
+                </form>
+              </div>
+            )}
+
+            {/* 좋아요 버튼 */}
+            <div className="CommentLikeContainer">
+              <span className="CommentLike">{comment.likeCount}</span>
+              <button>
+                <img src="/images/post_like.png" alt="likeIcon" />
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            {/* 댓글 수정 Input */}
+            <textarea
+              className="UpdateCommentInput"
+              rows={Math.floor(updateCommentValue.length / 50) + 1}
+              value={updateCommentValue}
+              onChange={(e) => setUpdateCommentValue(e.target.value)}
+            />
+            <div className="EditButton">
+              <button
+                onClick={handleUpdateComment}
+                className="ConfirmEditCommentButton"
+              >
+                <img src="/images/comment_edit_confirm.png" alt="confirm" />
+              </button>
               {/* 댓글 수정 취소 버튼 */}
               <button
                 className="CancelEditCommentButton"
                 onClick={() => setUpdatingComment(false)}
               >
-                Cancel
+                <img src="/images/comment_edit_cancel.png" alt="cancel" />
               </button>
-            </>
-          ) : (
-            <></>
-          )}
-
-          {/* 댓글 수정 버튼 */}
-          <button onClick={handleUpdateComment} className="EditCommentButton">
-            {updatingComment ? "Submit" : "Edit"}
-          </button>
-
-          {/* 댓글 수정할 때는 안 보임 */}
-          {updatingComment ? (
-            <></>
-          ) : (
-            // 댓글 삭제 폼
-            <form onSubmit={handleDeleteComment} method="post">
-              {/* 댓글 삭제 버튼 */}
-              <input id={comment._id} type="submit" value="Delete" />
-            </form>
-          )}
-        </div>
-      ) : (
-        <></>
-      )}
-
-      {/* 좋아요 버튼 */}
-      <div className="CommentLikeContainer">
-        <span className="CommentLike">{comment.likeCount}</span>
-        <button>
-          <img src="" alt="likeIcon" />
-        </button>
+            </div>
+          </>
+        )}
       </div>
-    </div>
-  ) : (
-    <></>
+    )
   );
 }
 
