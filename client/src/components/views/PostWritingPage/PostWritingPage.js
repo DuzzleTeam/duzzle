@@ -28,6 +28,14 @@ function PostWritingPage() {
     }
   };
 
+  const onChangePeopleNum = (e) => {
+    if (e.target.id === "M") {
+      if (peopleNum > 0) setPeopleNum(peopleNum - 1);
+    } else if (e.target.id === "P") {
+      setPeopleNum(peopleNum + 1);
+    }
+  };
+
   const handlePostSubmit = (event) => {
     event.preventDefault();
 
@@ -104,17 +112,11 @@ function PostWritingPage() {
 
             <div>
               <label>모집인원</label>
-              <button
-                id="peopleNumM"
-                onClick={() => setPeopleNum(peopleNum - 1)}
-              >
+              <button id="M" onClick={onChangePeopleNum}>
                 -
               </button>
               <span>{peopleNum}</span>
-              <button
-                id="peopleNumP"
-                onClick={() => setPeopleNum(peopleNum + 1)}
-              >
+              <button id="P" onClick={onChangePeopleNum}>
                 +
               </button>
             </div>
