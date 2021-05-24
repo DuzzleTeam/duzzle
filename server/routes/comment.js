@@ -3,43 +3,40 @@ const router = express.Router();
 
 const { Comment } = require("../models/Comment");
 const { Post } = require("../models/Post");
-const { User } = require("../models/User");
+
+const { auth } = require("../middleware/auth");
 
 // 댓글 작성 (chohadam, 2021-04-17)
-router.post("/:type(wezzle|mezzle)/post/:postId", (req, res) => {
+router.post("/:type(wezzle|mezzle)/post/:postId", auth, (req, res) => {
   // 사용자가 입력한 댓글 body data를 기반으로 Comment 생성
   const comment = new Comment(req.body);
 
-  // 쿠키에 저장된 토큰 가져오기
-  const token = req.cookies.x_auth;
-  // 토큰을 기반으로 유저 찾기
-  User.findByToken(token, (err, user) => {
-    comment.user = user;
+  // 현재 유저를 댓글 작성자로 저장
+  comment.user = req.user;
 
-    // url로 넘어온 post id 가져오기
-    const { postId } = req.params;
-    // post id를 기반으로 Post 하나 찾기
-    Post.findById(postId, (err, post) => {
+  // url로 넘어온 post id 가져오기
+  const { postId } = req.params;
+  // post id를 기반으로 Post 하나 찾기
+  Post.findById(postId, (err, post) => {
+    if (err) {
+      // post를 찾지 못했거나 에러 발생 시
+      return res.json({ success: false, err });
+    }
+
+    // post를 찾았다면
+    // 댓글의 post에 현재 post 설정
+    comment.post = post;
+
+    // 댓글을 MongoDB에 저장
+    comment.save((err, commentInfo) => {
+      // 에러 발생 시
       if (err) {
-        // post를 찾지 못했거나 에러 발생 시
         return res.json({ success: false, err });
       }
-
-      // post를 찾았다면
-      // 댓글의 post에 현재 post 설정
-      comment.post = post;
-
-      // 댓글을 MongoDB에 저장
-      comment.save((err, commentInfo) => {
-        // 에러 발생 시
-        if (err) {
-          return res.json({ success: false, err });
-        }
-      });
-
-      // 성공적으로 댓글 저장 시 클라이언트로 전송
-      return res.status(200).send({ createCommentSuccess: true });
     });
+
+    // 성공적으로 댓글 저장 시 클라이언트로 전송
+    return res.status(200).send({ createCommentSuccess: true });
   });
 });
 
@@ -93,8 +90,34 @@ router.patch("/:type(wezzle|mezzle)/comment/:commentId", (req, res) => {
   Comment.findByIdAndUpdate(commentId, { text }, (err) => {
     // 에러 발생 시 클라이언트에 실패 전송
     if (err) return res.json({ success: false, err });
+
     // 정상적으로 수정 시 클라이언트에 성공 전송
     return res.status(200).send({ updateCommentSuccess: true });
+  });
+});
+
+// 댓글 좋아요 버튼 클릭 시
+router.patch("/:type(wezzle|mezzle)/like/:commentId", auth, (req, res) => {
+  // url로 넘어온 comment id 가져오기
+  const { commentId } = req.params;
+
+  // 현재 접속 유저
+  const { user } = req;
+  // comment id에 해당하는 댓글
+  Comment.findById(commentId, async (err, comment) => {
+    if (err) return res.json({ success: false, err });
+
+    const likeIndex = comment.like.indexOf(user.email);
+    // 좋아요를 누른 적이 없다면
+    if (likeIndex === -1) {
+      comment.like.push(user.email);
+    } else {
+      // 좋아요를 누른 적이 있다면 좋아요 취소
+      comment.like.splice(likeIndex, 1);
+    }
+    const newComment = await comment.save();
+
+    return res.status(200).send({ updateCommentSuccess: true, newComment });
   });
 });
 

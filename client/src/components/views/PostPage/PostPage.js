@@ -3,54 +3,57 @@ import axios from "axios";
 
 import Comment from "./Sections/Comment";
 
+// CSS
+import "./Sections/PostPage.css";
+import "../../../utils/Common.css";
+
 // 글 보기 페이지 (chohadam)
 function PostPage() {
   // 현 포스트
   const [post, setPost] = useState(null);
 
-  const getPost = () => {
+  const getPost = async () => {
     // 현재 주소 (postId값을 얻기 위함)
     const url = document.location.pathname;
     // get 방식으로 요청
-    axios.get(`/api${url}`).then((res) => {
-      // 받아오기에 성공했다면
-      if (res.data.gettingPostSuccess) {
-        // 포스트 셋팅
-        setPost(res.data.post);
-      }
-    });
+    const res = await axios.get(`/api${url}`);
+    // 받아오기에 성공했다면
+    if (res.data.gettingPostSuccess) {
+      // 포스트 셋팅
+      setPost(res.data.post);
+    }
   };
 
   // 현 포스트에 포함된 댓글들 목록
   const [comments, setComments] = useState(null);
 
   // 현 포스트에 포함된 댓글들을 가져옴
-  const getComments = () => {
+  const getComments = async () => {
     // 현재 주소 (postId값을 얻기 위함)
     const url = document.location.pathname;
     // get 방식으로 요청
-    axios.get(`/api${url}`).then((res) => {
-      // 받아오기에 성공했다면
-      if (res.data.gettingPostSuccess) {
-        // 댓글들 목록 셋팅
-        setComments(res.data.comments);
-      }
-    });
+    const res = await axios.get(`/api${url}`);
+    // 받아오기에 성공했다면
+    if (res.data.gettingPostSuccess) {
+      // 댓글들 목록 셋팅
+      setComments(res.data.comments);
+    }
   };
 
   const [stateLoaded, setStateLoaded] = useState(false);
   // componentDidmount
   useEffect(() => {
-    // 현 포스트 가져오기
-    getPost();
-    // 댓글들 가져오기
-    getComments();
+    const fetchData = async () => {
+      // 현 포스트 가져오기
+      await getPost();
+      // 댓글들 가져오기
+      await getComments();
 
-    if (post !== null && comments !== null) {
       // state 값 다 셋팅 완료
       setStateLoaded(true);
-    }
-  }, [post, comments]);
+    };
+    fetchData();
+  }, []);
 
   // 댓글 쓰기 input value
   const [commentValue, setCommentValue] = useState("");
@@ -80,92 +83,101 @@ function PostPage() {
     });
   };
 
-  return stateLoaded ? (
-    <div>
-      {/* 글 컨테이너 */}
-      <div className="PostContainer">
-        {/* 상단 글쓴이 정보, 게시글 좋아요, 댓글 정보 */}
-        <div className="PostTopContents">
-          {/* 글쓴이 정보 */}
-          <div className="PostUser">
-            {/* 프로필 사진 */}
-            <img src="" alt="profile" />
-            {/* 이름, 게시날짜 */}
-            <div className="PostUserText">
-              <span className="PostUserName">{post.user}</span>
-              <span>{post.createdAt}</span>
+  return (
+    stateLoaded && (
+      <div id="Container" className="PostPageContainer">
+        {/* 글 컨테이너 */}
+        <div className="PostContainer">
+          {/* 상단 글쓴이 정보, 게시글 좋아요, 댓글 정보 */}
+          <div className="PostTopContents">
+            {/* 글쓴이 정보 */}
+            <div className="PostUser">
+              {/* 프로필 사진 */}
+              <img src="/images/profile-image.jpg" alt="profile" />
+              {/* 이름, 게시날짜 */}
+              <div className="PostUserText">
+                <span className="PostUserName">{"최다연"}</span>
+                <span>{post.createdAt.slice(0, 10)}</span>
+              </div>
+            </div>
+
+            {/* 좋아요, 댓글 */}
+            <ul className="PostInfo">
+              <li>
+                좋아요
+                <span className="PostInfoData">{post.likeCount}</span>
+              </li>
+              <li>
+                댓글
+                <span className="PostInfoData">{comments.length}</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* 실제 본문 내용 */}
+          <div className="PostMainContents">
+            <div className="PostTitleContainer">
+              <span className="PostTitle">{post.title}</span>
+              <div className="PostControl">
+                <button>수정하기</button>
+                <button>
+                  <img src="/images/post_delete.png" alt="delete" />
+                </button>
+              </div>
+            </div>
+
+            <span className="PostMainText">{post.contents.text}</span>
+
+            {post.contents.images.length !== 0 && (
+              <img
+                className="PostContentsImage"
+                src="/images/profile-image.jpg"
+                alt="postimage"
+              />
+            )}
+
+            <div className="PostLikeShareContainer">
+              <button>
+                <img src="/images/post_like.png" alt="likebutton" />
+                좋아요
+              </button>
+              <button>
+                <img src="/images/post_share.png" alt="sharebutton" />
+                공유하기
+              </button>
             </div>
           </div>
-
-          {/* 좋아요, 댓글 */}
-          <ul className="PostInfo">
-            <li>
-              좋아요
-              <span className="PostInfoData">{post.likeCount}</span>
-            </li>
-            <li>
-              댓글
-              <span className="PostInfoData">{comments.length}</span>
-            </li>
-          </ul>
         </div>
 
-        {/* 실제 본문 내용 */}
-        <div className="PostMainContents">
-          <div className="PostTitleContainer">
-            <span className="PostTitle">{post.title}</span>
-            <div className="PostControl">
-              <button>수정하기</button>
-              <button>삭제</button>
-            </div>
-          </div>
-
-          <span className="PostMainText">{post.contents.text}</span>
-
-          {post.contents.images.length !== 0 ? (
-            <img src="/images/profile-image.jpg" alt="postimage" />
-          ) : (
-            <></>
-          )}
-
-          <div className="PostLikeShareContainer">
-            <button>
-              <img src="" alt="likebutton" />
-              좋아요
-            </button>
-            <button>
-              <img src="" alt="sharebutton" />
-              공유하기
-            </button>
-          </div>
+        {/* 댓글 보기 */}
+        {/* 전체 댓글들 컨테이너 */}
+        <div className="CommentsContainer">
+          {/* 댓글들 갯수만큼 반복하며 댓글을 하나씩 가져옴 */}
+          {comments.map((comment, i) => (
+            <Comment key={i} comment={comment} getComments={getComments} />
+          ))}
         </div>
-      </div>
 
-      {/* 댓글 보기 */}
-      {/* 전체 댓글들 컨테이너 */}
-      <div className="CommentsContainer">
-        {/* 댓글들 갯수만큼 반복하며 댓글을 하나씩 가져옴 */}
-        {comments.map((comment, i) => (
-          <Comment key={i} comment={comment} getComments={getComments} />
-        ))}
+        {/* 댓글 쓰기 입력 폼 */}
+        <form
+          className="CommentInputContainer"
+          onSubmit={handleCommentSubmit}
+          method="post"
+        >
+          <img src="/images/profile-image.jpg" alt="currentUserProfileImage" />
+          <input
+            type="text"
+            placeholder="지금 바로 친구들과 의견을 공유해보세요!"
+            value={commentValue}
+            onChange={(e) => setCommentValue(e.target.value)}
+          />
+          {/* 전송 버튼 */}
+          <button type="submit">
+            <img src="/images/comment_send.png" alt="submitIcon" />
+          </button>
+        </form>
       </div>
-
-      {/* 댓글 쓰기 입력 폼 */}
-      <form onSubmit={handleCommentSubmit} method="post">
-        <img src="" alt="currentUserProfileImage" />
-        <input
-          type="text"
-          value={commentValue}
-          onChange={(e) => setCommentValue(e.target.value)}
-        />
-        {/* 전송 버튼 */}
-        <button type="submit">
-          <img src="" alt="submitIcon" />
-        </button>
-      </form>
-    </div>
-  ) : (
-    <></>
+    )
   );
 }
 

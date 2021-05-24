@@ -1,0 +1,195 @@
+/* 댓글 한 개 컨테이너 */
+.CommentContainer {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  /* 위 오른쪽 아래 왼쪽 */
+  padding: 20px 35px 38px 30px;
+  margin-bottom: 20px;
+
+  box-sizing: border-box;
+
+  border-bottom: solid 1px #e5e5e5;
+}
+
+/* 댓글 유저 사진, 이름, 날짜, 내용 */
+/* 댓글 유저 사진 */
+img.CommentUserProfileImage {
+  width: 60px;
+  height: 60px;
+
+  border-radius: 30px;
+
+  margin-right: 44px;
+
+  align-self: flex-start;
+}
+
+/* 댓글 유저 이름, 게시날짜, 내용 */
+.CommentMainContents {
+  width: 65%;
+  margin-right: auto;
+}
+/* 유저 이름 */
+span.CommentUser {
+  color: #4b4b4b;
+  font-weight: bold;
+  font-size: 1.25rem;
+  margin-right: 14px;
+}
+
+/* 댓글 게시 날짜 */
+span.CommentDate {
+  color: #656565;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* 댓글 내용 */
+span.CommentText {
+  display: block;
+  margin-top: 10px;
+
+  color: #656565;
+  font-weight: 500;
+  font-size: 1.15rem;
+}
+
+/* 댓글 수정, 삭제 */
+.CommentAuthContainer {
+  display: flex;
+  margin-right: auto;
+}
+
+/* 댓글 수정 버튼 */
+button.EditCommentButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 56px;
+  height: 34px;
+
+  margin-right: 16px;
+
+  border: none;
+  border-radius: 28px;
+  box-shadow: 0 1px 6px 0 rgba(112, 112, 112, 0.24);
+  background-color: #ffffff;
+
+  color: #707070;
+  font-weight: bold;
+  font-size: 1rem;
+
+  cursor: pointer;
+  outline: none;
+}
+
+/* 댓글 삭제 버튼 */
+button.DeleteCommentButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 34px;
+  height: 34px;
+
+  border: none;
+  border-radius: 28px;
+  box-shadow: 0 1px 6px 0 rgba(112, 112, 112, 0.24);
+  background-color: #ffffff;
+
+  cursor: pointer;
+  outline: none;
+}
+
+/* 좋아요 버튼 */
+.CommentLikeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 좋아요 갯수 */
+span.CommentLike {
+  color: #aaaaaa;
+  font-weight: 500;
+  font-size: 1rem;
+
+  margin-bottom: 16px;
+}
+
+/* 댓글 좋아요 버튼 */
+.CommentLikeContainer > button {
+  width: 25px;
+  height: 22px;
+  padding: 0;
+
+  background: transparent;
+  border: none;
+
+  cursor: pointer;
+  outline: none;
+}
+.CommentLikeContainer > button img {
+  width: 25px;
+  height: 22px;
+  object-fit: contain;
+}
+
+/* 댓글 수정 input */
+.UpdateCommentInput {
+  width: 100%;
+  height: auto;
+  border-radius: 30px;
+  border: solid 1px #cecece;
+
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 10px;
+  /* 위|아래 오른쪽|왼쪽 */
+  padding: 10px 20px;
+
+  box-sizing: border-box;
+
+  color: #656565;
+  font-weight: 500;
+  font-size: 1.15rem;
+
+  resize: none;
+
+  outline: none;
+}
+
+/* 댓글 수정 완료 버튼 */
+.EditButton {
+  width: 8%;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 50px;
+}
+
+button.ConfirmEditCommentButton {
+  height: 30px;
+  background: transparent;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+button.ConfirmEditCommentButton > img {
+  width: 100%;
+}
+
+button.CancelEditCommentButton {
+  height: 30px;
+  background: transparent;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+button.CancelEditCommentButton > img {
+  width: 100%;
+}

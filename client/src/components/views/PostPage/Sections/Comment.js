@@ -9,7 +9,7 @@ import "./Comment.css";
 // 댓글 하나 하나의 컴포넌트 (chohadam)
 function Comment(props) {
   // 현재 댓글
-  const [comment, setComment] = useState({});
+  const [comment, setComment] = useState(props.comment);
 
   // 현재 유저가 댓글을 쓴 사람인지
   const [isAuth, setIsAuth] = useState(false);
@@ -19,18 +19,18 @@ function Comment(props) {
   // state 셋팅 완료 여부
   const [stateLoaded, setStateLoaded] = useState(false);
 
-  // componentDidmount
+  // componentDidMount
   useEffect(() => {
-    const { comment } = props;
-    // 현재 댓글 셋팅
-    setComment(comment);
-
     if (user !== undefined) {
+      // 접속한 유저가 댓글 작성자인지
       setIsAuth(user._id === comment.user);
+      // 좋아요를 누른 댓글인지
+      setCommentLiked(comment.like.includes(user.email));
     }
 
+    // 로드 완료
     setStateLoaded(true);
-  }, [props, user]);
+  }, [user, comment]);
 
   // 댓글 삭제 버튼 클릭 시
   const handleDeleteComment = (e) => {
@@ -44,16 +44,16 @@ function Comment(props) {
 
     // 현재 페이지가 위즐인지 미즐인지 가져옴
     const currentPageMenu = document.location.pathname.match(/wezzle|mezzle/);
-    // 지우려는 댓글의 아이디를 가져옴
-    const commentId = e.target.childNodes[0].id;
     // 댓글 삭제 요청
-    axios.delete(`/api/${currentPageMenu}/comment/${commentId}`).then((res) => {
-      if (res.data.deleteCommentSuccess) {
-        // 정상적으로 삭제가 되었다면
-        // UI 업데이트 (댓글을 가져옴)
-        props.getComments();
-      }
-    });
+    axios
+      .delete(`/api/${currentPageMenu}/comment/${comment._id}`)
+      .then((res) => {
+        if (res.data.deleteCommentSuccess) {
+          // 정상적으로 삭제가 되었다면
+          // UI 업데이트 (댓글을 가져옴)
+          props.getComments();
+        }
+      });
   };
 
   // 현재 댓글 수정 중인지
@@ -77,8 +77,10 @@ function Comment(props) {
         .patch(`/api/${currentPageMenu}/comment/${comment._id}`, body)
         .then((res) => {
           if (res.data.updateCommentSuccess) {
-            // 댓글 수정 성공 시 UI 업데이트 (댓글 목록 다시 가져오기)
-            props.getComments();
+            setComment({
+              ...comment,
+              text: updateCommentValue,
+            });
           } else {
             alert("댓글 수정에 실패했습니다.");
           }
@@ -96,82 +98,112 @@ function Comment(props) {
     }
   };
 
-  return stateLoaded ? (
-    // 댓글 하나의 컨테이너
-    <div className="CommentContainer">
-      {/* 댓글 수정할 때는 안 보임 */}
-      {updatingComment ? (
-        <></>
-      ) : (
-        <>
-          {/* 댓글 유저 프로필 사진 */}
-          <img src="" alt="commentUserProfileImage" />
-          {/* 댓글 유저, 댓글 게시 날짜, 내용 */}
-          <div className="CommentMainContents">
-            <div>
-              <span className="CommentUser">{comment.user}</span>
-              <span className="CommentDate">{comment.createdAt}</span>
-            </div>
-            {/* 댓글 내용 */}
-            <span className="CommentText">{comment.text}</span>
-          </div>
-        </>
-      )}
+  const [commentLiked, setCommentLiked] = useState(false);
+  const handleLikeComment = (e) => {
+    // 현재 페이지가 위즐인지 미즐인지 가져옴
+    const currentPageMenu = document.location.pathname.match(/wezzle|mezzle/);
+    // 현재 comment id를 보내며 patch 요청
+    axios.patch(`/api/${currentPageMenu}/like/${comment._id}`).then((res) => {
+      if (res.data.updateCommentSuccess) {
+        setComment(res.data.newComment);
+      } else {
+        alert("좋아요를 실패했습니다.");
+      }
+    });
+  };
 
-      {isAuth ? (
-        <div className="CommentAuthContainer">
-          {/* 댓글 수정 시에만 보임 */}
-          {updatingComment ? (
-            <>
-              {/* 댓글 수정 input */}
-              <input
-                type="text"
-                className="UpdateCommentInput"
-                value={updateCommentValue}
-                onChange={(e) => setUpdateCommentValue(e.target.value)}
-              />
+  return (
+    stateLoaded && (
+      // 댓글 하나의 컨테이너
+      <div className="CommentContainer">
+        {/* 댓글 유저, 댓글 게시 날짜, 내용 */}
+        {/* 댓글 유저 프로필 사진 */}
+        <img
+          className="CommentUserProfileImage"
+          src="/images/profile-image.jpg"
+          alt="commentUserProfileImage"
+        />
+
+        {!updatingComment ? (
+          <>
+            <div className="CommentMainContents">
+              <div>
+                <span className="CommentUser">{"조하닮"}</span>
+                <span className="CommentDate">
+                  {comment.createdAt.slice(0, 10)}
+                </span>
+              </div>
+              {/* 댓글 내용 */}
+              <span className="CommentText">{comment.text}</span>
+            </div>
+
+            {isAuth && (
+              <div className="CommentAuthContainer">
+                {/* 댓글 수정 버튼 */}
+                <button
+                  onClick={handleUpdateComment}
+                  className="EditCommentButton"
+                >
+                  {"수정"}
+                </button>
+
+                {/* 댓글 삭제 폼 */}
+                <form onSubmit={handleDeleteComment} method="post">
+                  {/* 댓글 삭제 버튼 */}
+                  <button
+                    className="DeleteCommentButton"
+                    id={comment._id}
+                    type="submit"
+                  >
+                    <img src="/images/comment_delete.png" alt="delete" />
+                  </button>
+                </form>
+              </div>
+            )}
+
+            {/* 좋아요 버튼 */}
+            <div className="CommentLikeContainer" onClick={handleLikeComment}>
+              <span className="CommentLike">{comment.like.length}</span>
+              <button>
+                <img
+                  src={
+                    commentLiked
+                      ? "/images/comment_like_sel.png"
+                      : "/images/comment_like.png"
+                  }
+                  alt="like"
+                />
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            {/* 댓글 수정 Input */}
+            <textarea
+              className="UpdateCommentInput"
+              rows={Math.floor(updateCommentValue.length / 50) + 1}
+              value={updateCommentValue}
+              onChange={(e) => setUpdateCommentValue(e.target.value)}
+            />
+            <div className="EditButton">
+              <button
+                onClick={handleUpdateComment}
+                className="ConfirmEditCommentButton"
+              >
+                <img src="/images/comment_edit_confirm.png" alt="confirm" />
+              </button>
               {/* 댓글 수정 취소 버튼 */}
               <button
                 className="CancelEditCommentButton"
                 onClick={() => setUpdatingComment(false)}
               >
-                Cancel
+                <img src="/images/comment_edit_cancel.png" alt="cancel" />
               </button>
-            </>
-          ) : (
-            <></>
-          )}
-
-          {/* 댓글 수정 버튼 */}
-          <button onClick={handleUpdateComment} className="EditCommentButton">
-            {updatingComment ? "Submit" : "Edit"}
-          </button>
-
-          {/* 댓글 수정할 때는 안 보임 */}
-          {updatingComment ? (
-            <></>
-          ) : (
-            // 댓글 삭제 폼
-            <form onSubmit={handleDeleteComment} method="post">
-              {/* 댓글 삭제 버튼 */}
-              <input id={comment._id} type="submit" value="Delete" />
-            </form>
-          )}
-        </div>
-      ) : (
-        <></>
-      )}
-
-      {/* 좋아요 버튼 */}
-      <div className="CommentLikeContainer">
-        <span className="CommentLike">{comment.likeCount}</span>
-        <button>
-          <img src="" alt="likeIcon" />
-        </button>
+            </div>
+          </>
+        )}
       </div>
-    </div>
-  ) : (
-    <></>
+    )
   );
 }
 
