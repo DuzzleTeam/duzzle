@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "./Sections/MyPage.css";
 import EditLayout from "./Sections/EditLayout.js";
+import MyPost from "./Sections/MyPost.js";
 
 function MyPage() {
   // 유저 정보
@@ -33,13 +34,7 @@ function MyPage() {
 
       {/* 내 게시물 */}
       <div id="myPost">
-        <button className="btn apply">
-          <strong>지원목록</strong>
-        </button>
-        <button className="btn post">
-          <strong>내 게시물</strong>
-        </button>
-        <div className="postLayout"></div>
+        <MyPost isPost={false}/>
       </div>
     </div>
   );
