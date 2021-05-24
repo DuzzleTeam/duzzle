@@ -34,11 +34,12 @@ img.CommentUserProfileImage {
   margin-right: auto;
 }
 /* 유저 이름 */
-span.CommentUser {
+a.CommentUser {
   color: #4b4b4b;
   font-weight: bold;
   font-size: 1.25rem;
   margin-right: 14px;
+  text-decoration: none;
 }
 
 /* 댓글 게시 날짜 */

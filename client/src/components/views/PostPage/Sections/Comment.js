@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 import { useSelector } from "react-redux";
@@ -128,7 +129,12 @@ function Comment(props) {
           <>
             <div className="CommentMainContents">
               <div>
-                <span className="CommentUser">{"조하닮"}</span>
+                <Link
+                  to={`/users/${comment.user.email}`}
+                  className="CommentUser"
+                >
+                  {comment.user.name}
+                </Link>
                 <span className="CommentDate">
                   {comment.createdAt.slice(0, 10)}
                 </span>

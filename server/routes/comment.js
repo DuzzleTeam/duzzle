@@ -12,7 +12,11 @@ router.post("/:type(wezzle|mezzle)/post/:postId", auth, (req, res) => {
   const comment = new Comment(req.body);
 
   // 현재 유저를 댓글 작성자로 저장
-  comment.user = req.user;
+  comment.user = {
+    name: req.user.name,
+    email: req.user.email,
+    // profileImage: req.user.profileImage,
+  };
 
   // url로 넘어온 post id 가져오기
   const { postId } = req.params;
