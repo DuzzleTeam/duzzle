@@ -69,12 +69,13 @@ function EditLayout(props) {
   return (
     <div>
       {isEdit ? (
+        // 수정화면 일 때
         <div>
           <div className="box">
             <img className="profile" src="../images/profile-image.jpg" alt="profile"/>
           </div>
           <div className="userInfo1">
-            <h1>
+            <h2>
               <input
                 className="name"
                 type="text"
@@ -83,7 +84,7 @@ function EditLayout(props) {
                 placeholder={user.name}
                 onChange={updateForm}
               />
-            </h1>
+            </h2>
             <font color="gray">
               <input
                 className="field"
@@ -98,7 +99,7 @@ function EditLayout(props) {
               <textarea
                 className="intro"
                 name="introduction"
-                rows="5"
+                rows="4"
                 cols="30"
                 value={form.introduction}
                 placeholder={user.introduction}
@@ -108,9 +109,9 @@ function EditLayout(props) {
           </div>
           <hr className="hr" />
           <div className="userInfo2">
-            <h2 className="level">Lv.{user.level} 만렙 디자이너</h2>
-            <div className="progress3">
-              <progress value="50" max="100"></progress>
+          <h2 className="level">Lv.{user.level} 만렙 디자이너</h2>
+            <div className="progress">
+              <progress value={user.level} max="100"></progress>
             </div>
             <p />
             <div id="editLayout">
@@ -153,6 +154,7 @@ function EditLayout(props) {
           </div>
         </div>
       ) : (
+        // 수정화면 아닐 때
         <div>
           <div className="box">
             <img className="profile" src="../images/profile-image.jpg" alt="profile"/>
@@ -165,8 +167,8 @@ function EditLayout(props) {
           <hr className="hr" />
           <div className="userInfo2">
             <h2 className="level">Lv.{user.level} 만렙 디자이너</h2>
-            <div className="progress3">
-              <progress value="50" max="100"></progress>
+            <div className="progress">
+              <progress value={user.level} max="100"></progress>
             </div>
             <p />
             <div id="editLayout">
