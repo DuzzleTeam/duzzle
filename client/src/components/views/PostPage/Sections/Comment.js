@@ -106,7 +106,6 @@ function Comment(props) {
     axios.patch(`/api/${currentPageMenu}/like/${comment._id}`).then((res) => {
       if (res.data.updateCommentSuccess) {
         setComment(res.data.newComment);
-        // setCommentLiked(!commentLiked);
       } else {
         alert("좋아요를 실패했습니다.");
       }
@@ -166,11 +165,14 @@ function Comment(props) {
             <div className="CommentLikeContainer" onClick={handleLikeComment}>
               <span className="CommentLike">{comment.like.length}</span>
               <button>
-                {commentLiked ? (
-                  <img src="/images/comment_like_sel.png" alt="likeIcon" />
-                ) : (
-                  <img src="/images/comment_like.png" alt="likeIcon" />
-                )}
+                <img
+                  src={
+                    commentLiked
+                      ? "/images/comment_like_sel.png"
+                      : "/images/comment_like.png"
+                  }
+                  alt="like"
+                />
               </button>
             </div>
           </>
