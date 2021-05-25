@@ -99,6 +99,11 @@ function PostPage() {
     });
   };
 
+  const onRemoveComment = (commentId) => {
+    const newComments = comments.filter((comment) => comment._id !== commentId);
+    setComments(newComments);
+  };
+
   return (
     stateLoaded && (
       <div id="Container" className="PostPageContainer">
@@ -170,7 +175,11 @@ function PostPage() {
         <div className="CommentsContainer">
           {/* 댓글들 갯수만큼 반복하며 댓글을 하나씩 가져옴 */}
           {comments.map((comment, i) => (
-            <Comment key={i} comment={comment} getComments={getComments} />
+            <Comment
+              key={i}
+              comment={comment}
+              onRemoveComment={onRemoveComment}
+            />
           ))}
         </div>
 

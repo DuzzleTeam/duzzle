@@ -51,8 +51,8 @@ function Comment(props) {
       .then((res) => {
         if (res.data.deleteCommentSuccess) {
           // 정상적으로 삭제가 되었다면
-          // UI 업데이트 (댓글을 가져옴)
-          props.getComments();
+          // UI 업데이트
+          props.onRemoveComment(comment._id);
         }
       });
   };
