@@ -24,7 +24,7 @@ function Comment(props) {
   useEffect(() => {
     if (user !== undefined) {
       // 접속한 유저가 댓글 작성자인지
-      setIsAuth(user._id === comment.user);
+      setIsAuth(user._id === comment.user._id);
       // 좋아요를 누른 댓글인지
       setCommentLiked(comment.like.includes(user.email));
     }
