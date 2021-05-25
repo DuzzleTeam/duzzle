@@ -44,12 +44,11 @@ function PostPage() {
   const setCommentsUser = async (comments) => {
     for (let i = 0; i < comments.length; i++) {
       const comment = comments[i];
-      const userId = comment.user;
+      const userId = comment.user._id ?? comment.user;
       const res = await axios.get(`/api/users/${userId}`);
       if (res.status === 200) {
         const { user } = res.data;
         comment.user = {
-          _id: userId,
           ...user,
         };
       }
