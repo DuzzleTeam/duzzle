@@ -91,12 +91,17 @@ function PostPage() {
         // 댓글 전송 성공 시 input 값 초기화
         setCommentValue("");
         // 댓글 가져오기
-        getComments();
+        setComments([...comments, res.data.comment]);
       } else {
         // 댓글 작성 실패 시
         alert("댓글 작성에 실패하였습니다.");
       }
     });
+  };
+
+  const onRemoveComment = (commentId) => {
+    const newComments = comments.filter((comment) => comment._id !== commentId);
+    setComments(newComments);
   };
 
   return (
@@ -170,7 +175,11 @@ function PostPage() {
         <div className="CommentsContainer">
           {/* 댓글들 갯수만큼 반복하며 댓글을 하나씩 가져옴 */}
           {comments.map((comment, i) => (
-            <Comment key={i} comment={comment} getComments={getComments} />
+            <Comment
+              key={i}
+              comment={comment}
+              onRemoveComment={onRemoveComment}
+            />
           ))}
         </div>
 

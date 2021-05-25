@@ -37,7 +37,7 @@ router.post("/:type(wezzle|mezzle)/post/:postId", auth, (req, res) => {
     });
 
     // 성공적으로 댓글 저장 시 클라이언트로 전송
-    return res.status(200).send({ createCommentSuccess: true });
+    return res.status(200).send({ createCommentSuccess: true, comment });
   });
 });
 
@@ -118,7 +118,9 @@ router.patch("/:type(wezzle|mezzle)/like/:commentId", auth, (req, res) => {
     }
     const newComment = await comment.save();
 
-    return res.status(200).send({ updateCommentSuccess: true, newComment });
+    return res
+      .status(200)
+      .send({ updateCommentSuccess: true, like: newComment.like });
   });
 });
 
