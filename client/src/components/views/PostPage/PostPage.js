@@ -91,7 +91,7 @@ function PostPage() {
         // 댓글 전송 성공 시 input 값 초기화
         setCommentValue("");
         // 댓글 가져오기
-        getComments();
+        setComments([...comments, res.data.comment]);
       } else {
         // 댓글 작성 실패 시
         alert("댓글 작성에 실패하였습니다.");
