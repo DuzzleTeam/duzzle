@@ -41,6 +41,28 @@ router.post("/:type(wezzle|mezzle)/post/:postId", auth, (req, res) => {
   });
 });
 
+// Comment user의 값을 가져오기 (chohadam, 2021-05-25)
+const getUserInfo = async (userId) => {
+  // id로 해당 유저 찾기
+  const user = await User.findById(userId);
+
+  if (user) {
+    // 있다면 정보 리턴
+    return {
+      name: user.name,
+      email: user.email,
+      // profileImage: user.profileImage
+    };
+  } else {
+    // 없다면 존재하지 않는 사용자
+    return {
+      name: "(없는 사용자)",
+      email: null,
+      // profileImage: null
+    };
+  }
+};
+
 // 게시글 열람 (chohadam, 2021-04-19)
 router.get("/:type(wezzle|mezzle)/post/:postId", (req, res) => {
   // url로 넘어온 post id 가져오기
@@ -122,20 +144,10 @@ router.patch("/:type(wezzle|mezzle)/like/:commentId", auth, (req, res) => {
   });
 });
 
-// 댓글 유저 정보 불러오기
-router.get("/:type(wezzle|mezzle)/comment/user/:userId", (req, res) => {
+router.get("/users/:userId", async (req, res) => {
   const { userId } = req.params;
-  User.findById(userId, (err, user) => {
-    if (err) return res.json({ success: false, err });
-
-    return res.status(200).send({
-      user: {
-        name: user.name,
-        email: user.email,
-        // profileImage: user.profileImage
-      },
-    });
-  });
+  const user = await getUserInfo(userId);
+  return res.status(200).send({ user });
 });
 
 module.exports = router;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 import Comment from "./Sections/Comment";
@@ -28,16 +28,33 @@ function PostPage() {
   const [comments, setComments] = useState(null);
 
   // 현 포스트에 포함된 댓글들을 가져옴
-  const getComments = async () => {
+  const getComments = useCallback(async () => {
     // 현재 주소 (postId값을 얻기 위함)
     const url = document.location.pathname;
     // get 방식으로 요청
     const res = await axios.get(`/api${url}`);
     // 받아오기에 성공했다면
     if (res.data.gettingPostSuccess) {
+      const newComments = await setCommentsUser(res.data.comments);
       // 댓글들 목록 셋팅
-      setComments(res.data.comments);
+      setComments(newComments);
     }
+  }, []);
+
+  const setCommentsUser = async (comments) => {
+    for (let i = 0; i < comments.length; i++) {
+      const comment = comments[i];
+      const userId = comment.user;
+      const res = await axios.get(`/api/users/${userId}`);
+      if (res.status === 200) {
+        const { user } = res.data;
+        comment.user = {
+          _id: userId,
+          ...user,
+        };
+      }
+    }
+    return comments;
   };
 
   const [stateLoaded, setStateLoaded] = useState(false);
@@ -53,7 +70,7 @@ function PostPage() {
       setStateLoaded(true);
     };
     fetchData();
-  }, []);
+  }, [getComments]);
 
   // 댓글 쓰기 input value
   const [commentValue, setCommentValue] = useState("");
