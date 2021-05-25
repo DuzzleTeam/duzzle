@@ -23,6 +23,9 @@ function EditLayout(props) {
   const [isEdit, setIsEdit] = useState(props.isEdit);
   const [Infobtn, setInfobtn] = useState("수정하기");
 
+  // 프로필 이미지
+  const [Image, setImage] = useState("../images/myPage/defaultImg.png");
+
   // 수정인지에 아닌지에 따라 버튼 이름 변경
   const onEditHandler = () => {
     // input박스에 기존 값 적혀있도록 초기화하는 코드
@@ -80,7 +83,7 @@ function EditLayout(props) {
         <div>
           <div className="box">
             <img className="profileEdit" src="../images/myPage/profileEdit.png" alt="profileEdit" onClick={onProfileHandler}/>
-            <img className="profile" src="../images/profile-image.jpg" alt="profile"/>
+            <img className="profile" src={Image} alt="profile"/>
           </div>
           <div className="userInfo1">
             <h2>
@@ -159,7 +162,7 @@ function EditLayout(props) {
         // 수정화면 아닐 때
         <div>
           <div className="box">
-            <img className="profile" src="../images/profile-image.jpg" alt="profile"/>
+            <img className="profile" src={Image} alt="profile"/>
           </div>
           <div className="userInfo1">
             <h1>{user.name}</h1>
