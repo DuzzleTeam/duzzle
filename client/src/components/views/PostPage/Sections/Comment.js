@@ -29,6 +29,20 @@ function Comment(props) {
       setCommentLiked(comment.like.includes(user.email));
     }
 
+    // 현재 페이지가 위즐인지 미즐인지 가져옴
+    const currentPageMenu = document.location.pathname.match(/wezzle|mezzle/);
+    // 현재 comment id를 보내며 patch 요청
+    axios.get(`/api/${currentPageMenu}/comment/user/${comment.user}`, (res) => {
+      console.log(res);
+      if (res.status === 200) {
+        setComment({
+          ...comment,
+          user: res.data.user,
+        });
+        console.log(res.data.user);
+      }
+    });
+
     // 로드 완료
     setStateLoaded(true);
   }, [user, comment]);

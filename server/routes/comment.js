@@ -3,6 +3,7 @@ const router = express.Router();
 
 const { Comment } = require("../models/Comment");
 const { Post } = require("../models/Post");
+const { User } = require("../models/User");
 
 const { auth } = require("../middleware/auth");
 
@@ -12,11 +13,7 @@ router.post("/:type(wezzle|mezzle)/post/:postId", auth, (req, res) => {
   const comment = new Comment(req.body);
 
   // 현재 유저를 댓글 작성자로 저장
-  comment.user = {
-    name: req.user.name,
-    email: req.user.email,
-    // profileImage: req.user.profileImage,
-  };
+  comment.user = req.user;
 
   // url로 넘어온 post id 가져오기
   const { postId } = req.params;
@@ -122,6 +119,22 @@ router.patch("/:type(wezzle|mezzle)/like/:commentId", auth, (req, res) => {
     const newComment = await comment.save();
 
     return res.status(200).send({ updateCommentSuccess: true, newComment });
+  });
+});
+
+// 댓글 유저 정보 불러오기
+router.get("/:type(wezzle|mezzle)/comment/user/:userId", (req, res) => {
+  const { userId } = req.params;
+  User.findById(userId, (err, user) => {
+    if (err) return res.json({ success: false, err });
+
+    return res.status(200).send({
+      user: {
+        name: user.name,
+        email: user.email,
+        // profileImage: user.profileImage
+      },
+    });
   });
 });
 
