@@ -106,7 +106,10 @@ function Comment(props) {
     // 현재 comment id를 보내며 patch 요청
     axios.patch(`/api/${currentPageMenu}/like/${comment._id}`).then((res) => {
       if (res.data.updateCommentSuccess) {
-        setComment(res.data.newComment);
+        setComment({
+          ...comment,
+          like: res.data.like,
+        });
       } else {
         alert("좋아요를 실패했습니다.");
       }

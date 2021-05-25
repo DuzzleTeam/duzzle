@@ -118,7 +118,9 @@ router.patch("/:type(wezzle|mezzle)/like/:commentId", auth, (req, res) => {
     }
     const newComment = await comment.save();
 
-    return res.status(200).send({ updateCommentSuccess: true, newComment });
+    return res
+      .status(200)
+      .send({ updateCommentSuccess: true, like: newComment.like });
   });
 });
 
