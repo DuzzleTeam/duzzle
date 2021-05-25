@@ -245,7 +245,6 @@ router.post("/api/users/edit", auth, (req, res) => {
       field: req.body.field,
       introduction: req.body.introduction,
       group: req.body.group,
-      email: req.body.email,
       openChating: req.body.openChating,
     },
     (err, user) => {

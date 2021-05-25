@@ -19,7 +19,6 @@ function MyPost(props) {
     }
     const onPostHandler = (event) => {
         setIsPost(true)
-        console.log(isPost)
     }
 
     const defaultBtn = {
@@ -27,23 +26,21 @@ function MyPost(props) {
         height: '40px', 
         marginLeft: '1%', 
         marginTop: '2%', 
-        border: '2px solid black', 
+        border: '2px solid #ddd',
         cursor: 'pointer',
         borderRadius: '1000px',
         backgroundColor: 'white',
         color: '#ddd',
-        borderColor: '#ddd'
     }
     const selectBtn = {
         backgroundColor: 'black', 
         color: 'white', 
         borderRadius: '1000px', 
-        borderColor: '#ddd', 
+        borderColor: 'black', 
         width: '90px', 
         height: '40px', 
         marginLeft: '1%', 
         marginTop: '2%', 
-        border: '2px solid black', 
         cursor: 'pointer'
     }
 
