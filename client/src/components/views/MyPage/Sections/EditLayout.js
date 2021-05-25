@@ -17,14 +17,7 @@ function EditLayout(props) {
   }, [reduxUser]);
 
   // 편집할 때 입력받는 값
-  const [form, setValues] = useState({
-    name: user.name,
-    field: user.field,
-    introduction: user.introduction,
-    group: user.group,
-    email: user.email,
-    openChating: user.openChating,
-  });
+  const [form, setValues] = useState("");
 
   // 04.21 / 수정하기 버튼
   const [isEdit, setIsEdit] = useState(props.isEdit);
@@ -32,6 +25,16 @@ function EditLayout(props) {
 
   // 수정인지에 아닌지에 따라 버튼 이름 변경
   const onEditHandler = () => {
+    // input박스에 기존 값 적혀있도록 초기화하는 코드
+    setValues({
+      ...form,
+      name: user.name,
+      field: user.field,
+      introduction: user.introduction,
+      group: user.group,
+      openChating: user.openChating,
+    });
+
     if (Infobtn === "수정하기") {
       setInfobtn("확인하기");
       setIsEdit(true);
@@ -41,7 +44,6 @@ function EditLayout(props) {
         field: form.field,
         introduction: form.introduction,
         group: form.group,
-        email: form.email,
         openChating: form.openChating,
       };
       dispatch(editUser(body)).then((response) => {
@@ -58,6 +60,11 @@ function EditLayout(props) {
     }
   };
 
+  // 프로필 사진 변경
+  const onProfileHandler = () => {
+    console.log("이미지 변경");
+  }
+
   // input 입력
   const updateForm = (event) => {
     setValues({
@@ -72,6 +79,7 @@ function EditLayout(props) {
         // 수정화면 일 때
         <div>
           <div className="box">
+            <img className="profileEdit" src="../images/myPage/profileEdit.png" alt="profileEdit" onClick={onProfileHandler}/>
             <img className="profile" src="../images/profile-image.jpg" alt="profile"/>
           </div>
           <div className="userInfo1">
@@ -81,7 +89,6 @@ function EditLayout(props) {
                 type="text"
                 name="name"
                 value={form.name}
-                placeholder={user.name}
                 onChange={updateForm}
               />
             </h2>
@@ -91,7 +98,6 @@ function EditLayout(props) {
                 type="text"
                 name="field"
                 value={form.field}
-                placeholder={user.field}
                 onChange={updateForm}
               />
             </font>
@@ -102,7 +108,6 @@ function EditLayout(props) {
                 rows="4"
                 cols="30"
                 value={form.introduction}
-                placeholder={user.introduction}
                 onChange={updateForm}
               />
             </p>
@@ -121,7 +126,6 @@ function EditLayout(props) {
                 type="text"
                 name="group"
                 value={form.group}
-                placeholder={user.group}
                 onChange={updateForm}
               />
               <p />
@@ -130,9 +134,8 @@ function EditLayout(props) {
                 className="bottom"
                 type="text"
                 name="email"
-                value={form.email}
-                placeholder={user.email}
-                onChange={updateForm}
+                value={user.email}
+                disabled
               />
               <p />
               <strong>오픈채팅</strong>
@@ -141,7 +144,6 @@ function EditLayout(props) {
                 type="text"
                 name="openChating"
                 value={form.openChating}
-                placeholder={user.openChating}
                 onChange={updateForm}
               />
               <p />
