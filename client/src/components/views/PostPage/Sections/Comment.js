@@ -22,6 +22,11 @@ function Comment(props) {
 
   // componentDidMount
   useEffect(() => {
+    // comment 셋팅
+    if (props.comment._id !== comment._id) {
+      setComment(props.comment);
+    }
+
     if (user !== undefined) {
       // 접속한 유저가 댓글 작성자인지
       setIsAuth(user._id === comment.user._id);
@@ -31,7 +36,7 @@ function Comment(props) {
 
     // 로드 완료
     setStateLoaded(true);
-  }, [user, comment]);
+  }, [props.comment, user, comment]);
 
   // 댓글 삭제 버튼 클릭 시
   const handleDeleteComment = (e) => {
