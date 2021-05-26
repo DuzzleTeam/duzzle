@@ -20,7 +20,6 @@ const userSchema = mongoose.Schema({
   },
   field: {
     type: Array,
-    required: true,
   },
   level: {
     type: Number,
