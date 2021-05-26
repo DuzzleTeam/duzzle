@@ -45,10 +45,11 @@
   margin-left: 32px;
 }
 /* 이름 */
-.PostUserText > span.PostUserName {
+.PostUserText > a.PostUserName {
   color: #4b4b4b;
   font-weight: bold;
   font-size: 1.5rem;
+  text-decoration: none;
 }
 /* 게시날짜 */
 .PostUserText > span {
