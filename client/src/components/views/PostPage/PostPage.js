@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
 
 import { useSelector } from "react-redux";
@@ -128,6 +128,27 @@ function PostPage() {
     });
   };
 
+  const [isRemovedPost, setIsRemovedPost] = useState(false);
+  // 게시글 삭제 버튼 클릭시
+  const onRemovePost = async (e) => {
+    // 게시글 삭제 확인
+    if (!window.confirm("게시글을 삭제하시겠습니까?")) {
+      // 취소 선택 시 게시글을 지우지 않음 (함수 종료)
+      return;
+    }
+
+    // 현재 페이지가 위즐인지 미즐인지
+    const currentPageMenu = post.isWezzle ? "wezzle" : "mezzle";
+    // 삭제 요청
+    const res = await axios.delete(`/api/${currentPageMenu}/post/${post._id}`);
+
+    // 삭제 성공 시
+    if (res.data.deletePostSuccess) {
+      window.alert("게시글이 삭제되었습니다.");
+      setIsRemovedPost(true);
+    }
+  };
+
   // 댓글 삭제할 경우 실행
   const onRemoveComment = (commentId) => {
     // 지운 comment 제외하고 comments 새로 설정
@@ -136,7 +157,10 @@ function PostPage() {
   };
 
   return (
-    stateLoaded && (
+    stateLoaded &&
+    (isRemovedPost ? (
+      <Redirect to={`/${post.isWezzle ? "wezzle" : "mezzle"}`} />
+    ) : (
       <div id="Container" className="PostPageContainer">
         {/* 글 컨테이너 */}
         <div className="PostContainer">
@@ -176,7 +200,7 @@ function PostPage() {
               {user !== undefined && user._id === post.user._id && (
                 <div className="PostControl">
                   <button>수정하기</button>
-                  <button>
+                  <button onClick={onRemovePost}>
                     <img src="/images/post_delete.png" alt="delete" />
                   </button>
                 </div>
@@ -238,7 +262,7 @@ function PostPage() {
           </button>
         </form>
       </div>
-    )
+    ))
   );
 }
 
