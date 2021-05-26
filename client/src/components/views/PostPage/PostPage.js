@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 import Comment from "./Sections/Comment";
@@ -12,17 +13,30 @@ function PostPage() {
   // 현 포스트
   const [post, setPost] = useState(null);
 
-  const getPost = async () => {
+  const setPostUser = async (post) => {
+    const userId = post.user;
+    const res = await axios(`/api/users/${userId}`);
+    if (res.status === 200) {
+      const { user } = res.data;
+      post.user = {
+        ...user,
+      };
+    }
+    return post;
+  };
+
+  const getPost = useCallback(async () => {
     // 현재 주소 (postId값을 얻기 위함)
     const url = document.location.pathname;
     // get 방식으로 요청
     const res = await axios.get(`/api${url}`);
     // 받아오기에 성공했다면
     if (res.data.gettingPostSuccess) {
+      const newPost = await setPostUser(res.data.post);
       // 포스트 셋팅
-      setPost(res.data.post);
+      setPost(newPost);
     }
-  };
+  }, []);
 
   // 현 포스트에 포함된 댓글들 목록
   const [comments, setComments] = useState(null);
@@ -69,7 +83,7 @@ function PostPage() {
       setStateLoaded(true);
     };
     fetchData();
-  }, [getComments]);
+  }, [getPost, getComments]);
 
   // 댓글 쓰기 input value
   const [commentValue, setCommentValue] = useState("");
@@ -117,7 +131,9 @@ function PostPage() {
               <img src="/images/profile-image.jpg" alt="profile" />
               {/* 이름, 게시날짜 */}
               <div className="PostUserText">
-                <span className="PostUserName">{"최다연"}</span>
+                <Link to={`/users/${post.user.email}`} className="PostUserName">
+                  {post.user.name}
+                </Link>
                 <span>{post.createdAt.slice(0, 10)}</span>
               </div>
             </div>
