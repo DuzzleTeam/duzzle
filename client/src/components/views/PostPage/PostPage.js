@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+import { useSelector } from "react-redux";
+
 import Comment from "./Sections/Comment";
 
 // CSS
@@ -13,14 +15,18 @@ function PostPage() {
   // 현 포스트
   const [post, setPost] = useState(null);
 
+  // 게시글 작성자 정보 셋팅
   const setPostUser = async (post) => {
+    // 게시글 작성자 id
     const userId = post.user;
+    // 정보 가져오기 (이름, 메일, 프로필 사진)
     const res = await axios(`/api/users/${userId}`);
+    // 정상적으로 가져왔다면
     if (res.status === 200) {
+      // user data
       const { user } = res.data;
-      post.user = {
-        ...user,
-      };
+      // 셋팅
+      post.user = user;
     }
     return post;
   };
@@ -32,6 +38,7 @@ function PostPage() {
     const res = await axios.get(`/api${url}`);
     // 받아오기에 성공했다면
     if (res.data.gettingPostSuccess) {
+      // 포스트 유저 정보 셋팅하기
       const newPost = await setPostUser(res.data.post);
       // 포스트 셋팅
       setPost(newPost);
@@ -55,21 +62,29 @@ function PostPage() {
     }
   }, []);
 
+  // 현 포스트에 포함된 댓글들의 작성자 정보 셋팅하기
   const setCommentsUser = async (comments) => {
+    // 루프를 돌면서 모든 댓글들을 설정해줌
     for (let i = 0; i < comments.length; i++) {
       const comment = comments[i];
+      // 댓글의 유저 아이디
       const userId = comment.user._id ?? comment.user;
+      // 유저 정보 요청
       const res = await axios.get(`/api/users/${userId}`);
+      // 받아오기 성공하면
       if (res.status === 200) {
+        // user 정보 셋팅
         const { user } = res.data;
-        comment.user = {
-          ...user,
-        };
+        comment.user = user;
       }
     }
     return comments;
   };
 
+  // 현재 접속 유저 정보
+  const user = useSelector((state) => state.user.authPayload);
+
+  // 모든 state가 로드 되었는지
   const [stateLoaded, setStateLoaded] = useState(false);
   // componentDidmount
   useEffect(() => {
@@ -83,7 +98,7 @@ function PostPage() {
       setStateLoaded(true);
     };
     fetchData();
-  }, [getPost, getComments]);
+  }, [getPost, getComments, user]);
 
   // 댓글 쓰기 input value
   const [commentValue, setCommentValue] = useState("");
@@ -113,7 +128,9 @@ function PostPage() {
     });
   };
 
+  // 댓글 삭제할 경우 실행
   const onRemoveComment = (commentId) => {
+    // 지운 comment 제외하고 comments 새로 설정
     const newComments = comments.filter((comment) => comment._id !== commentId);
     setComments(newComments);
   };
@@ -155,12 +172,15 @@ function PostPage() {
           <div className="PostMainContents">
             <div className="PostTitleContainer">
               <span className="PostTitle">{post.title}</span>
-              <div className="PostControl">
-                <button>수정하기</button>
-                <button>
-                  <img src="/images/post_delete.png" alt="delete" />
-                </button>
-              </div>
+              {/* 게시글 수정, 삭제 버튼 작성자여야 보이기 */}
+              {user !== undefined && user._id === post.user._id && (
+                <div className="PostControl">
+                  <button>수정하기</button>
+                  <button>
+                    <img src="/images/post_delete.png" alt="delete" />
+                  </button>
+                </div>
+              )}
             </div>
 
             <span className="PostMainText">{post.contents.text}</span>
