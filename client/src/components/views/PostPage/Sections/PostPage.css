@@ -190,6 +190,12 @@ span.PostMainText {
 .PostLikeShareContainer > button > img {
   margin-right: 10px;
 }
+.ButtonSharePost:hover {
+  background-color: #57ecbf;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+  border: solid 1px #57ecbf;
+  color: white;
+}
 
 /* 댓글 영역 */
 .CommentsContainer {
@@ -266,4 +272,9 @@ span.PostMainText {
   width: 36px;
   height: 36px;
   object-fit: contain;
+}
+
+/* 토스트 */
+.Toastify {
+  font-size: 1rem;
 }
