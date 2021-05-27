@@ -156,6 +156,12 @@ function PostPage() {
     setComments(newComments);
   };
 
+  // 게시글 공유
+  const onSharePost = (e) => {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url);
+  };
+
   return (
     stateLoaded &&
     (isRemovedPost ? (
@@ -222,7 +228,7 @@ function PostPage() {
                 <img src="/images/post_like.png" alt="likebutton" />
                 좋아요
               </button>
-              <button>
+              <button onClick={onSharePost}>
                 <img src="/images/post_share.png" alt="sharebutton" />
                 공유하기
               </button>
