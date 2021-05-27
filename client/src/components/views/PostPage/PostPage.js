@@ -1,8 +1,11 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
 
 import { useSelector } from "react-redux";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Comment from "./Sections/Comment";
 
@@ -156,6 +159,27 @@ function PostPage() {
     setComments(newComments);
   };
 
+  // 게시글 공유
+  const onSharePost = (e) => {
+    // 현 게시글 url
+    const url = window.location.href;
+    // 클립보드에 복사
+    navigator.clipboard.writeText(url);
+
+    // 토스트 메시지 출력
+    toast.success("🔗 링크가 클립보드에 복사되었습니다!", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
+  const sharePostButtonRef = useRef();
+
   return (
     stateLoaded &&
     (isRemovedPost ? (
@@ -222,8 +246,22 @@ function PostPage() {
                 <img src="/images/post_like.png" alt="likebutton" />
                 좋아요
               </button>
-              <button>
-                <img src="/images/post_share.png" alt="sharebutton" />
+              <button
+                className={"ButtonSharePost"}
+                onClick={onSharePost}
+                onMouseOver={() =>
+                  (sharePostButtonRef.current.src =
+                    "/images/post_share_hover.png")
+                }
+                onMouseOut={() =>
+                  (sharePostButtonRef.current.src = "/images/post_share.png")
+                }
+              >
+                <img
+                  ref={sharePostButtonRef}
+                  src="/images/post_share.png"
+                  alt="sharebutton"
+                />
                 공유하기
               </button>
             </div>
@@ -261,6 +299,19 @@ function PostPage() {
             <img src="/images/comment_send.png" alt="submitIcon" />
           </button>
         </form>
+
+        {/* 토스트 메시지 컨테이너 */}
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </div>
     ))
   );
