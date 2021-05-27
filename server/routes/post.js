@@ -24,16 +24,12 @@ router.post("/:type(wezzle|mezzle)/write", auth, (req, res) => {
 //게시글 삭제 (dayeon-choi, 2021-04-25)
 router.delete("/:type(wezzle|mezzle)/post/:postId", (req, res) => {
   const { postId } = req.params;
-  Post.findById(postId, (err, post) => {
+  Post.deleteOne({ _id: postId }, (err) => {
     if (err) {
-      return res.json({ success: false, err });
+      return res.json({ deletePostSuccess: false, message: err });
     }
-    Post.findByIdAndDelete(postId, (err, result) => {
-      if (err) {
-        return res.json({ deletePostSuccess: false, message: err });
-      }
-      res.json({ deletePostSuccess: true });
-    });
+
+    res.json({ deletePostSuccess: true });
   });
 });
 
