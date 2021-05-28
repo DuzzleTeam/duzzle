@@ -19,7 +19,7 @@ const userSchema = mongoose.Schema({
     required: true,
   },
   field: {
-    type: Array,
+    type: String,
   },
   level: {
     type: Number,
@@ -30,7 +30,10 @@ const userSchema = mongoose.Schema({
     type: String,
     maxlength: 50,
   },
-  profileImage: String,
+  profileImage: {
+    type: String,
+    default: "../images/myPage/defaultImg.png",
+  },
   openChating: {
     type: String,
   },

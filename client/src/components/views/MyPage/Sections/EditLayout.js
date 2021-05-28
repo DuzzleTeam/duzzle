@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -24,11 +25,14 @@ function EditLayout(props) {
   const [Infobtn, setInfobtn] = useState("수정하기");
 
   // 프로필 이미지
-  const [Image, setImage] = useState("../images/myPage/defaultImg.png");
+  const [Image, setImage] = useState("");
+  // 프로필 이미지 파일명 담을 변수
+  let imgName = '';
 
   // 수정인지에 아닌지에 따라 버튼 이름 변경
   const onEditHandler = () => {
     // input박스에 기존 값 적혀있도록 초기화하는 코드
+    setImage(user.profileImage);
     setValues({
       ...form,
       name: user.name,
@@ -42,30 +46,42 @@ function EditLayout(props) {
       setInfobtn("확인하기");
       setIsEdit(true);
     } else {
-      let body = {
-        name: form.name,
-        field: form.field,
-        introduction: form.introduction,
-        group: form.group,
-        openChating: form.openChating,
-      };
-      dispatch(editUser(body)).then((response) => {
-        if (response.payload.editSuccess) {
-          alert("수정되었습니다!");
-          window.location.replace("/users/:email");
-        } else {
-          alert("수정 오류");
-        }
-      });
+      onProfileHandler()
+      .then(() => {
+        let body = {
+          profileImage: `http://localhost:5000/${imgName}`,
+          name: form.name,
+          field: form.field,
+          introduction: form.introduction,
+          group: form.group,
+          openChating: form.openChating,
+        };
+        dispatch(editUser(body)).then((response) => {
+          if (response.payload.editSuccess) {
+            alert("수정되었습니다!");
+            window.location.replace("/users/:email");
+          } else {
+            alert("수정 오류");
+          }
+        });
+        setInfobtn("수정하기");
+        setIsEdit(false);
 
-      setInfobtn("수정하기");
-      setIsEdit(false);
+      });
     }
   };
 
-  // 프로필 사진 변경
-  const onProfileHandler = () => {
-    console.log("이미지 변경");
+  // 프로필 사진 변경 (제출 눌렀을 때)
+  const onProfileHandler = async () => {
+    const formData = new FormData();
+    formData.append('selectImg', Image);
+    const res = await axios.post("/api/upload", formData);
+    // 새로운 이미지 파일 이름 저장
+    imgName = (res.data.filename).toString();
+  }
+
+  const profileOnChange = (event) => {
+    setImage(event.target.files[0]);
   }
 
   // input 입력
@@ -82,8 +98,9 @@ function EditLayout(props) {
         // 수정화면 일 때
         <div>
           <div className="box">
-            <img className="profileEdit" src="../images/myPage/profileEdit.png" alt="profileEdit" onClick={onProfileHandler}/>
-            <img className="profile" src={Image} alt="profile"/>
+            <input className="selectImg" type="file" onChange={profileOnChange}/>
+            <img className="profileEdit" src="../images/myPage/profileEdit.png" alt="profileEdit"/>
+            <img className="profile" src={user.profileImage} alt="profile"/>
           </div>
           <div className="userInfo1">
             <h2>
@@ -162,7 +179,7 @@ function EditLayout(props) {
         // 수정화면 아닐 때
         <div>
           <div className="box">
-            <img className="profile" src={Image} alt="profile"/>
+            <img className="profile" src={user.profileImage} alt="profile"/>
           </div>
           <div className="userInfo1">
             <h1>{user.name}</h1>

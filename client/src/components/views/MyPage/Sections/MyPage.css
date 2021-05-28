@@ -52,6 +52,14 @@ h1 {
   height: 100%;
   object-fit: cover;
 }
+.selectImg {
+  position: absolute;
+  object-fit: cover;
+  margin-top: 75%;
+  z-index: 1;
+  cursor: pointer;
+  opacity: 0;
+}
 
 .userInfo1 {
   text-align: center;
