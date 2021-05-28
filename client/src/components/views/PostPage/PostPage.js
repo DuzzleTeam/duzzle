@@ -187,9 +187,9 @@ function PostPage() {
     ) : (
       <div id="Container" className="PostPageContainer">
         {/* 글 컨테이너 */}
-        <div className="PostContainer">
+        <section className="PostContainer">
           {/* 상단 글쓴이 정보, 게시글 좋아요, 댓글 정보 */}
-          <div className="PostTopContents">
+          <article className="PostTopContents">
             {/* 글쓴이 정보 */}
             <div className="PostUser">
               {/* 프로필 사진 */}
@@ -214,10 +214,10 @@ function PostPage() {
                 <span className="PostInfoData">{comments.length}</span>
               </li>
             </ul>
-          </div>
+          </article>
 
           {/* 실제 본문 내용 */}
-          <div className="PostMainContents">
+          <article className="PostMainContents">
             <div className="PostTitleContainer">
               <span className="PostTitle">{post.title}</span>
               {/* 게시글 수정, 삭제 버튼 작성자여야 보이기 */}
@@ -230,6 +230,9 @@ function PostPage() {
                 </div>
               )}
             </div>
+
+            {/* 위즐일 때 협업 관련 내용 */}
+            {post.isWezzle && <div></div>}
 
             <span className="PostMainText">{post.contents.text}</span>
 
@@ -265,12 +268,12 @@ function PostPage() {
                 공유하기
               </button>
             </div>
-          </div>
-        </div>
+          </article>
+        </section>
 
         {/* 댓글 보기 */}
         {/* 전체 댓글들 컨테이너 */}
-        <div className="CommentsContainer">
+        <section className="CommentsContainer">
           {/* 댓글들 갯수만큼 반복하며 댓글을 하나씩 가져옴 */}
           {comments.map((comment, i) => (
             <Comment
@@ -279,7 +282,7 @@ function PostPage() {
               onRemoveComment={onRemoveComment}
             />
           ))}
-        </div>
+        </section>
 
         {/* 댓글 쓰기 입력 폼 */}
         <form
