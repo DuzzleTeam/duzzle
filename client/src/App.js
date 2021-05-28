@@ -36,7 +36,10 @@ function App() {
           path="/confirmRegister/:id"
           component={Auth(ConfirmRegister, false)}
         />
-        <Route path="/mezzle/post/:postId" component={Auth(PostPage, true)} />
+        <Route
+          path={["/mezzle/post/:postId", "/wezzle/post/:postId"]}
+          component={Auth(PostPage, true)}
+        />
 
         {/* 로그인한 유저만 출입 가능한 페이지 */}
         <Route path="/users/:email" component={Auth(MyPage, true)} />
