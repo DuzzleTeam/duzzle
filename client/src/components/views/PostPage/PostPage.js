@@ -293,7 +293,7 @@ function PostPage() {
               <button>
                 {post.isWezzle ? (
                   <>
-                    <img src="/images/post_like.png" alt="likebutton" />
+                    <img src="/images/post_together.png" alt="likebutton" />
                     협업해요
                   </>
                 ) : (
