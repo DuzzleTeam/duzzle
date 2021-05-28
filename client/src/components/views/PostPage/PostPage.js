@@ -218,7 +218,7 @@ function PostPage() {
             {/* 글쓴이 정보 */}
             <div className="PostUser">
               {/* 프로필 사진 */}
-              <img src="/images/profile-image.jpg" alt="profile" />
+              <img src={user.profileImage} alt="profile" />
               {/* 이름, 게시날짜 */}
               <div className="PostUserText">
                 <Link to={`/users/${post.user.email}`} className="PostUserName">
@@ -344,7 +344,7 @@ function PostPage() {
           onSubmit={handleCommentSubmit}
           method="post"
         >
-          <img src="/images/profile-image.jpg" alt="currentUserProfileImage" />
+          <img src={user.profileImage} alt="currentUserProfileImage" />
           <input
             type="text"
             placeholder="지금 바로 친구들과 의견을 공유해보세요!"
