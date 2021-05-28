@@ -19,7 +19,7 @@ function MyPage() {
   useEffect(() => {
     let num = Math.floor(Math.random() * 3) + 1;
     const banner = document.getElementById("topBanner");
-    banner.innerHTML = `<img src="../images/myPage/${num}.jpg" />`;
+    banner.innerHTML = `<img src="/images/myPage/${num}.jpg" />`;
   }, []);
 
   return (
@@ -34,7 +34,7 @@ function MyPage() {
 
       {/* 내 게시물 */}
       <div id="myPost">
-        <MyPost isPost={false}/>
+        <MyPost isPost={false} />
       </div>
     </div>
   );
