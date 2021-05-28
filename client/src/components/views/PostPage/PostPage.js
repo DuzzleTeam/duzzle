@@ -291,8 +291,17 @@ function PostPage() {
 
             <div className="PostLikeShareContainer">
               <button>
-                <img src="/images/post_like.png" alt="likebutton" />
-                좋아요
+                {post.isWezzle ? (
+                  <>
+                    <img src="/images/post_like.png" alt="likebutton" />
+                    협업해요
+                  </>
+                ) : (
+                  <>
+                    <img src="/images/post_like.png" alt="likebutton" />
+                    좋아요
+                  </>
+                )}
               </button>
               <button
                 className={"ButtonSharePost"}
