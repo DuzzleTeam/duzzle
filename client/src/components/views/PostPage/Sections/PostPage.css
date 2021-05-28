@@ -227,6 +227,7 @@ span.PostMainText {
   width: 60px;
   height: 60px;
   border-radius: 30px;
+  object-fit: cover;
 }
 
 /* 댓글 입력 input */

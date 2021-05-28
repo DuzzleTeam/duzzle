@@ -26,6 +26,8 @@ img.CommentUserProfileImage {
   margin-right: 44px;
 
   align-self: flex-start;
+
+  object-fit: cover;
 }
 
 /* 댓글 유저 이름, 게시날짜, 내용 */
