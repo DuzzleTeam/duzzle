@@ -180,6 +180,31 @@ function PostPage() {
 
   const sharePostButtonRef = useRef();
 
+  // 프로젝트 모집 기간, 프로젝트 예상 기간 템플릿
+  const periodTemplate = (period) => {
+    const [start, end] = period.split("-");
+    const $start = <span>{dateTemplate(start)}</span>;
+    const $end = <span>{dateTemplate(end)}</span>;
+    return (
+      <span>
+        {$start} - {$end}
+      </span>
+    );
+  };
+  // 날짜 템플릿 (yyyy년 mm월 dd일)
+  const dateTemplate = (date) => {
+    return `
+    ${date.substring(0, 4)}년 ${date.substring(4, 6)}월 ${date.substring(
+      6,
+      8
+    )}일`;
+  };
+
+  // 모집분야 템플릿 (배열을 span 하나씩)
+  const fieldTemplate = (field) => {
+    return field.map((str, index) => <span key={index}>{str}</span>);
+  };
+
   return (
     stateLoaded &&
     (isRemovedPost ? (
@@ -232,7 +257,27 @@ function PostPage() {
             </div>
 
             {/* 위즐일 때 협업 관련 내용 */}
-            {post.isWezzle && <div></div>}
+            {post.isWezzle && (
+              <div>
+                {/* period, field, peopleNum, projectPeriod */}
+                <div className={"PostPeriod"}>
+                  <span>{"모집기간"}</span>
+                  {periodTemplate(post.recruit.period)}
+                </div>
+                <div className={"PostField"}>
+                  <span>{"모집분야"}</span>
+                  {fieldTemplate(post.recruit.field)}
+                </div>
+                <div className={"PostPeopleNum"}>
+                  <span>{"모집인원"}</span>
+                  {post.recruit.peopleNum + "명"}
+                </div>
+                <div className={"PostProjectPeriod"}>
+                  <span>{"프로젝트 예상 기간"}</span>
+                  {periodTemplate(post.projectPeriod)}
+                </div>
+              </div>
+            )}
 
             <span className="PostMainText">{post.contents.text}</span>
 
