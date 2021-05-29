@@ -239,23 +239,37 @@ router.post("/api/users/:id/password_edit", (req, res) => {
 
 // 04.17 / 회원정보 수정
 router.post("/api/users/edit", auth, (req, res) => {
-  User.findOneAndUpdate(
-    { _id: req.user._id },
-    {
-      profileImage: req.body.profileImage,
-      name: req.body.name,
-      field: req.body.field,
-      introduction: req.body.introduction,
-      group: req.body.group,
-      openChating: req.body.openChating,
-    },
-    (err, user) => {
-      if (err) return res.json({ editSuccess: false });
-      return res.status(200).send({
-        editSuccess: true,
-      });
-    }
-  );
+  User.findOne({ _id: req.user._id }, (err, user) => {
+    // 이미지 변경이 일어나면
+    // if (req.user.profileImage != req.body.profileImage) {
+    //   // 기본 이미지가 아니라면
+    //   if (req.user.profileImage != "../images/myPage/defaultImg.png") {
+    //     const preImg = req.user.profileImage.substr(22);
+    //     // 전의 이미지 파일 삭제
+    //     fs.unlink(`../uploads/${req.user.profileImage}`, (err) => {
+    //       if (err) return console.log(err);
+    //       else console.log("파일 삭제");
+    //     });
+    //   }
+    // }
+    User.findOneAndUpdate(
+      { _id: req.user._id },
+      {
+        profileImage: req.body.profileImage,
+        name: req.body.name,
+        field: req.body.field,
+        introduction: req.body.introduction,
+        group: req.body.group,
+        openChating: req.body.openChating,
+      },
+      (err, user) => {
+        if (err) return res.json({ editSuccess: false });
+        return res.status(200).send({
+          editSuccess: true,
+        });
+      }
+    );
+  });
 });
 
 module.exports = router;

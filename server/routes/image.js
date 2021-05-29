@@ -27,7 +27,7 @@ const upload = multer({
     // limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-// 이미지 업로드 API
+// 이미지 업로드
 router.post('/upload', upload.single('selectImg'), (req, res) => {
     console.log(req.file);
     res.json({filename: `${req.file.filename}`});
