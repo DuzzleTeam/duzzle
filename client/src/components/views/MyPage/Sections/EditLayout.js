@@ -4,11 +4,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { editUser } from "../../../../_actions/user_action";
 import "../Sections/MyPage.css";
+// 프로필 이미지 변경되었는지 check
+let cnt = 0;
 
 function EditLayout(props) {
   const dispatch = useDispatch();
 
-  // 로그인한 유저 정보
+  // 로그인한 유저 정보 -> url의 이메일로 정보 가져오기
   const [user, setUser] = useState({});
   const reduxUser = useSelector((state) => state.user.authPayload);
   useEffect(() => {
@@ -48,7 +50,7 @@ function EditLayout(props) {
     } else {
       onProfileHandler().then(() => {
         let body = {
-          profileImage: `http://localhost:5000/${imgName}`,
+          profileImage: imgName,
           name: form.name,
           field: form.field,
           introduction: form.introduction,
@@ -71,15 +73,22 @@ function EditLayout(props) {
 
   // 프로필 사진 변경 (제출 눌렀을 때)
   const onProfileHandler = async () => {
-    const formData = new FormData();
-    formData.append("selectImg", Image);
-    const res = await axios.post("/api/upload", formData);
-    // 새로운 이미지 파일 이름 저장
-    imgName = res.data.filename.toString();
+    // Image state가 변경되었을 떄
+    if (cnt >= 1) {
+      const formData = new FormData();
+      formData.append("selectImg", Image);
+      // 이미지 서버에 업로드
+      const res = await axios.post("/api/upload", formData);
+      // 새로운 이미지 파일 이름 저장
+      imgName = "http://localhost:5000/" + res.data.filename.toString();
+    } else {
+      imgName = user.profileImage;
+    }
   };
 
   const profileOnChange = (event) => {
     setImage(event.target.files[0]);
+    cnt += 1;
   };
 
   // input 입력
