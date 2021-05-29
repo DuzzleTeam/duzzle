@@ -21,20 +21,25 @@ router.post("/:type(wezzle|mezzle)/write", auth, (req, res) => {
   return res.status(200).send({ createPostSuccess: true });
 });
 
-//게시글 삭제 (dayeon-choi, 2021-04-25)
-router.delete("/:type(wezzle|mezzle)/post/:postId", (req, res) => {
+// 게시글 삭제 (dayeon-choi, 2021-04-25)
+// (chohadam, 2021-05)
+router.delete("/post/:postId", (req, res) => {
+  // url에서 post id 받아오기
   const { postId } = req.params;
+  // 해당 포스트 삭제
   Post.deleteOne({ _id: postId }, (err) => {
+    // 에러 발생 시 클라이언트에 에러 전송
     if (err) {
-      return res.json({ deletePostSuccess: false, message: err });
+      return res.json({ err });
     }
 
-    res.json({ deletePostSuccess: true });
+    // 삭제 성공 시 클라이언트에 status 200 전송
+    return res.sendStatus(200);
   });
 });
 
 // 게시글 열람 (chohadam, 2021-04-19)
-router.get("/:type(wezzle|mezzle)/post/:postId", async (req, res) => {
+router.get("/post/:postId", async (req, res) => {
   // url로 넘어온 post id 가져오기
   const { postId } = req.params;
 

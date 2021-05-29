@@ -19,9 +19,13 @@ function Post({ post, setPost, commentsLength }) {
   // 현재 포스트 가져오기
   const getPost = useCallback(async () => {
     // 현재 주소 (postId값을 얻기 위함)
-    const url = document.location.pathname;
+    // post/postid
+    const url = document.location.pathname
+      .replace(/mezzle|wezzle/, "")
+      .substring(2);
+
     // get 방식으로 요청
-    const res = await axios.get(`/api${url}`);
+    const res = await axios.get(`/api/${url}`);
     // 받아오기에 성공했다면
     if (res.status === 200) {
       // 포스트 셋팅
@@ -47,13 +51,11 @@ function Post({ post, setPost, commentsLength }) {
       return;
     }
 
-    // 현재 페이지가 위즐인지 미즐인지
-    const currentPageMenu = post.isWezzle ? "wezzle" : "mezzle";
     // 삭제 요청
-    const res = await axios.delete(`/api/${currentPageMenu}/post/${post._id}`);
+    const res = await axios.delete(`/api/post/${post._id}`);
 
     // 삭제 성공 시
-    if (res.data.deletePostSuccess) {
+    if (res.status === 200) {
       window.alert("게시글이 삭제되었습니다.");
       setIsRemovedPost(true);
     }

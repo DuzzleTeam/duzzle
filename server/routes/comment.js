@@ -3,13 +3,12 @@ const router = express.Router();
 
 const { Comment } = require("../models/Comment");
 const { Post } = require("../models/Post");
-const { User } = require("../models/User");
 
 const { auth } = require("../middleware/auth");
 const { setCommentUser } = require("../functions/comment");
 
 // 댓글 작성 (chohadam, 2021-04-17)
-router.post("/:type(wezzle|mezzle)/post/:postId", auth, (req, res) => {
+router.post("/comment/new", auth, (req, res) => {
   // 사용자가 입력한 댓글 body data를 기반으로 Comment 생성
   const comment = new Comment(req.body);
 
@@ -22,7 +21,7 @@ router.post("/:type(wezzle|mezzle)/post/:postId", auth, (req, res) => {
   Post.findById(postId, (err, post) => {
     if (err) {
       // post를 찾지 못했거나 에러 발생 시
-      return res.json({ success: false, err });
+      return res.json({ err });
     }
 
     // post를 찾았다면
@@ -33,17 +32,17 @@ router.post("/:type(wezzle|mezzle)/post/:postId", auth, (req, res) => {
     comment.save((err, commentInfo) => {
       // 에러 발생 시
       if (err) {
-        return res.json({ success: false, err });
+        return res.json({ err });
       }
     });
 
     // 성공적으로 댓글 저장 시 클라이언트로 전송
-    return res.status(200).send({ createCommentSuccess: true, comment });
+    return res.status(200).send({ comment });
   });
 });
 
 // 댓글들 가져오기 (chohadam, 2021-05-29)
-router.get("/:type(wezzle|mezzle)/post/:postId/comments", (req, res) => {
+router.get("/post/:postId/comments", (req, res) => {
   // url로 넘어온 post id 가져오기
   const { postId } = req.params;
 
@@ -69,7 +68,7 @@ router.get("/:type(wezzle|mezzle)/post/:postId/comments", (req, res) => {
 });
 
 // delete comment (chohadam, 2021-04-19)
-router.delete("/:type(wezzle|mezzle)/comment/:commentId", (req, res) => {
+router.delete("/comment/:commentId", (req, res) => {
   // url로 넘어온 comment id 가져오기
   const { commentId } = req.params;
 
@@ -83,7 +82,7 @@ router.delete("/:type(wezzle|mezzle)/comment/:commentId", (req, res) => {
 });
 
 // edit comment (chohadam, 2021-04-19)
-router.patch("/:type(wezzle|mezzle)/comment/:commentId", (req, res) => {
+router.patch("/comment/:commentId", (req, res) => {
   // url로 넘어온 comment id 가져오기
   const { commentId } = req.params;
 
@@ -101,7 +100,7 @@ router.patch("/:type(wezzle|mezzle)/comment/:commentId", (req, res) => {
 });
 
 // 댓글 좋아요 버튼 클릭 시
-router.patch("/:type(wezzle|mezzle)/like/:commentId", auth, (req, res) => {
+router.patch("/like/:commentId", auth, (req, res) => {
   // url로 넘어온 comment id 가져오기
   const { commentId } = req.params;
 
