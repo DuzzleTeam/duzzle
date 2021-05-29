@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 
 // CSS
 import "./Comment.css";
+import UpdateComment from "./UpdateComment";
 
 // 댓글 하나 하나의 컴포넌트 (chohadam)
 function Comment(props) {
@@ -64,47 +65,10 @@ function Comment(props) {
 
   // 현재 댓글 수정 중인지
   const [updatingComment, setUpdatingComment] = useState(false);
-  // 댓글 수정 input value
-  const [updateCommentValue, setUpdateCommentValue] = useState("");
-  // 댓글 수정 or 댓글 수정 전송 버튼 핸들
-  const handleUpdateComment = (e) => {
-    if (updatingComment) {
-      // 수정 중이었다면
 
-      // 수정하려는 텍스트 body data 설정
-      const body = {
-        text: updateCommentValue,
-      };
-
-      // 현재 페이지가 위즐인지 미즐인지 가져옴
-      const currentPageMenu = document.location.pathname.match(/wezzle|mezzle/);
-      // 현재 comment id를 보내며 patch 요청
-      axios
-        .patch(`/api/${currentPageMenu}/comment/${comment._id}`, body)
-        .then((res) => {
-          if (res.data.updateCommentSuccess) {
-            setComment({
-              ...comment,
-              text: updateCommentValue,
-            });
-          } else {
-            alert("댓글 수정에 실패했습니다.");
-          }
-        });
-
-      // 수정 중인지 여부 초기화
-      setUpdatingComment(false);
-    } else {
-      // 수정 중이 아니었다면
-
-      // 수정하려고 하는 댓글의 원래 텍스트 가져와서 셋팅
-      setUpdateCommentValue(comment.text);
-      // 수정 중 true로 변경
-      setUpdatingComment(true);
-    }
-  };
-
+  // 현재 댓글에 좋아요를 눌렀는지
   const [commentLiked, setCommentLiked] = useState(false);
+  // 좋아요 요청 혹은 해제
   const handleLikeComment = (e) => {
     // 현재 페이지가 위즐인지 미즐인지 가져옴
     const currentPageMenu = document.location.pathname.match(/wezzle|mezzle/);
@@ -155,7 +119,7 @@ function Comment(props) {
               <div className="CommentAuthContainer">
                 {/* 댓글 수정 버튼 */}
                 <button
-                  onClick={handleUpdateComment}
+                  onClick={() => setUpdatingComment(true)}
                   className="EditCommentButton"
                 >
                   {"수정"}
@@ -180,50 +144,24 @@ function Comment(props) {
 
             {/* 좋아요 버튼 */}
             <div className="CommentLikeContainer" onClick={handleLikeComment}>
+              {/* 좋아요 갯수 */}
               <span className="CommentLike">{comment.like.length}</span>
-              <button>
-                <img
-                  src={
-                    commentLiked
-                      ? "/images/postPage/comment_like_sel.png"
-                      : "/images/postPage/comment_like.png"
-                  }
-                  alt="like"
-                />
-              </button>
+              <img
+                src={
+                  commentLiked
+                    ? "/images/postPage/comment_like_sel.png"
+                    : "/images/postPage/comment_like.png"
+                }
+                alt="like"
+              />
             </div>
           </>
         ) : (
-          <>
-            {/* 댓글 수정 Input */}
-            <textarea
-              className="UpdateCommentInput"
-              rows={Math.floor(updateCommentValue.length / 50) + 1}
-              value={updateCommentValue}
-              onChange={(e) => setUpdateCommentValue(e.target.value)}
-            />
-            <div className="EditButton">
-              <button
-                onClick={handleUpdateComment}
-                className="ConfirmEditCommentButton"
-              >
-                <img
-                  src="/images/postPage/comment_edit_confirm.png"
-                  alt="confirm"
-                />
-              </button>
-              {/* 댓글 수정 취소 버튼 */}
-              <button
-                className="CancelEditCommentButton"
-                onClick={() => setUpdatingComment(false)}
-              >
-                <img
-                  src="/images/postPage/comment_edit_cancel.png"
-                  alt="cancel"
-                />
-              </button>
-            </div>
-          </>
+          <UpdateComment
+            setUpdatingComment={setUpdatingComment}
+            comment={comment}
+            setComment={setComment}
+          />
         )}
       </div>
     )
