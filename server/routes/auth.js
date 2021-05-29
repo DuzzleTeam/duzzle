@@ -6,6 +6,7 @@ const nodemailer = require("nodemailer");
 const config = require("../config/key");
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
+const fs = require("fs");
 const saltRounds = 10;
 const router = express.Router();
 
@@ -134,8 +135,14 @@ router.post("/api/login", (req, res) => {
 router.get("/api/auth", auth, (req, res) => {
   res.status(200).json({
     _id: req.user._id,
+    profileImage: req.user.profileImage,
     email: req.user.email,
     name: req.user.name,
+    introduction: req.user.introduction,
+    field: req.user.field,
+    level: req.user.level,
+    group: req.user.group,
+    openChating: req.user.openChating,
     isAdmin: req.user.role === 0 ? false : true,
     isAuth: true,
   });
@@ -235,11 +242,11 @@ router.post("/api/users/edit", auth, (req, res) => {
   User.findOneAndUpdate(
     { _id: req.user._id },
     {
+      profileImage: req.body.profileImage,
       name: req.body.name,
       field: req.body.field,
-      introduce: req.body.introduce,
-      group: req.user.group,
-      email: req.body.email,
+      introduction: req.body.introduction,
+      group: req.body.group,
       openChating: req.body.openChating,
     },
     (err, user) => {

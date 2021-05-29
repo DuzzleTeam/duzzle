@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 import { useSelector } from "react-redux";
@@ -21,16 +22,21 @@ function Comment(props) {
 
   // componentDidMount
   useEffect(() => {
+    // comment 셋팅
+    if (props.comment._id !== comment._id) {
+      setComment(props.comment);
+    }
+
     if (user !== undefined) {
       // 접속한 유저가 댓글 작성자인지
-      setIsAuth(user._id === comment.user);
+      setIsAuth(user._id === comment.user._id);
       // 좋아요를 누른 댓글인지
       setCommentLiked(comment.like.includes(user.email));
     }
 
     // 로드 완료
     setStateLoaded(true);
-  }, [user, comment]);
+  }, [props.comment, user, comment]);
 
   // 댓글 삭제 버튼 클릭 시
   const handleDeleteComment = (e) => {
@@ -50,8 +56,8 @@ function Comment(props) {
       .then((res) => {
         if (res.data.deleteCommentSuccess) {
           // 정상적으로 삭제가 되었다면
-          // UI 업데이트 (댓글을 가져옴)
-          props.getComments();
+          // UI 업데이트
+          props.onRemoveComment(comment._id);
         }
       });
   };
@@ -105,7 +111,10 @@ function Comment(props) {
     // 현재 comment id를 보내며 patch 요청
     axios.patch(`/api/${currentPageMenu}/like/${comment._id}`).then((res) => {
       if (res.data.updateCommentSuccess) {
-        setComment(res.data.newComment);
+        setComment({
+          ...comment,
+          like: res.data.like,
+        });
       } else {
         alert("좋아요를 실패했습니다.");
       }
@@ -120,7 +129,7 @@ function Comment(props) {
         {/* 댓글 유저 프로필 사진 */}
         <img
           className="CommentUserProfileImage"
-          src="/images/profile-image.jpg"
+          src={comment.user.profileImage}
           alt="commentUserProfileImage"
         />
 
@@ -128,7 +137,12 @@ function Comment(props) {
           <>
             <div className="CommentMainContents">
               <div>
-                <span className="CommentUser">{"조하닮"}</span>
+                <Link
+                  to={`/users/${comment.user.email}`}
+                  className="CommentUser"
+                >
+                  {comment.user.name}
+                </Link>
                 <span className="CommentDate">
                   {comment.createdAt.slice(0, 10)}
                 </span>

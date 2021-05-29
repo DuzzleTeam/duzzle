@@ -3,6 +3,7 @@ const router = express.Router();
 
 const { Comment } = require("../models/Comment");
 const { Post } = require("../models/Post");
+const { User } = require("../models/User");
 
 const { auth } = require("../middleware/auth");
 
@@ -36,7 +37,7 @@ router.post("/:type(wezzle|mezzle)/post/:postId", auth, (req, res) => {
     });
 
     // 성공적으로 댓글 저장 시 클라이언트로 전송
-    return res.status(200).send({ createCommentSuccess: true });
+    return res.status(200).send({ createCommentSuccess: true, comment });
   });
 });
 
@@ -117,8 +118,40 @@ router.patch("/:type(wezzle|mezzle)/like/:commentId", auth, (req, res) => {
     }
     const newComment = await comment.save();
 
-    return res.status(200).send({ updateCommentSuccess: true, newComment });
+    return res
+      .status(200)
+      .send({ updateCommentSuccess: true, like: newComment.like });
   });
+});
+
+// Comment user의 값을 가져오기 (chohadam, 2021-05-25)
+const getUserInfo = async (userId) => {
+  // id로 해당 유저 찾기
+  const user = await User.findById(userId);
+
+  if (user) {
+    // 있다면 정보 리턴
+    return {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      profileImage: user.profileImage,
+    };
+  } else {
+    // 없다면 존재하지 않는 사용자
+    return {
+      _id: null,
+      name: "(없는 사용자)",
+      email: null,
+      profileImage: null,
+    };
+  }
+};
+
+router.get("/users/:userId", async (req, res) => {
+  const { userId } = req.params;
+  const user = await getUserInfo(userId);
+  return res.status(200).send({ user });
 });
 
 module.exports = router;
