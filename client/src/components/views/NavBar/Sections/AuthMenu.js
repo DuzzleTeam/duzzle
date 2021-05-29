@@ -42,6 +42,7 @@ function AuthMenu(props) {
       setUser(reduxUser);
     }
   }, [reduxUser]);
+
   const history = useHistory();
   const handleLogout = (e) => {
     e.preventDefault();
@@ -77,7 +78,7 @@ function AuthMenu(props) {
               className="RightButton ProfileButton"
               onClick={profileDropdownHandler}
             >
-              <img src="/images/profile-image.jpg" alt="profileImage" />
+              <img src={user.profileImage} alt="profileImage" />
             </button>
             {/* Dropdown Menu (My page, Logout) */}
             <ul

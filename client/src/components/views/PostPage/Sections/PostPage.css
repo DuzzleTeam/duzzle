@@ -35,6 +35,7 @@
   height: 72px;
   border-radius: 36px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  object-fit: cover;
 }
 /* 글쓴이 이름, 게시 날짜 */
 .PostUserText {
@@ -226,6 +227,7 @@ span.PostMainText {
   width: 60px;
   height: 60px;
   border-radius: 30px;
+  object-fit: cover;
 }
 
 /* 댓글 입력 input */
@@ -277,4 +279,35 @@ span.PostMainText {
 /* 토스트 */
 .Toastify {
   font-size: 1rem;
+}
+
+/* 위즐 */
+.PostWezzleContainer {
+  /* 위 | 오른쪽 | 아래 | 왼쪽 */
+  margin: 52px 4.2vw 0 4.2vw;
+  font-size: 1rem;
+  color: #2d2d2d;
+}
+
+.PostTextPeriod > span {
+  word-spacing: 12px;
+}
+.PostTextPeriod > span:first-child {
+  margin-right: 27px;
+}
+.PostTextPeriod > span:last-child {
+  margin-left: 27px;
+}
+
+.PostWezzleContainer > div > span:first-child {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-right: 39px;
+}
+
+.PostWezzleContainer > div {
+  margin-top: 32px;
+}
+.PostWezzleContainer > div:first-child {
+  margin-top: 0;
 }

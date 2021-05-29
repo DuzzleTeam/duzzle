@@ -129,7 +129,7 @@ function Comment(props) {
         {/* 댓글 유저 프로필 사진 */}
         <img
           className="CommentUserProfileImage"
-          src="/images/profile-image.jpg"
+          src={comment.user.profileImage}
           alt="commentUserProfileImage"
         />
 

@@ -37,7 +37,7 @@ const postSchema = mongoose.Schema({
       type: String,
     },
     field: {
-      type: [Number],
+      type: [String],
     },
     peopleNum: {
       type: Number,

@@ -180,6 +180,31 @@ function PostPage() {
 
   const sharePostButtonRef = useRef();
 
+  // 프로젝트 모집 기간, 프로젝트 예상 기간 템플릿
+  const periodTemplate = (period) => {
+    const [start, end] = period.split("-");
+    const $start = <span>{dateTemplate(start)}</span>;
+    const $end = <span>{dateTemplate(end)}</span>;
+
+    return (
+      <span className={"PostTextPeriod"}>
+        {$start} - {$end}
+      </span>
+    );
+  };
+  // 날짜 템플릿 (yyyy년 mm월 dd일)
+  const dateTemplate = (date) => {
+    return `${date.substring(0, 4)}년 ${date.substring(
+      4,
+      6
+    )}월 ${date.substring(6)}일`;
+  };
+
+  // 모집분야 템플릿 (배열을 span 하나씩)
+  const fieldTemplate = (field) => {
+    return field.map((str, index) => <span key={index}>{str}</span>);
+  };
+
   return (
     stateLoaded &&
     (isRemovedPost ? (
@@ -187,13 +212,13 @@ function PostPage() {
     ) : (
       <div id="Container" className="PostPageContainer">
         {/* 글 컨테이너 */}
-        <div className="PostContainer">
+        <section className="PostContainer">
           {/* 상단 글쓴이 정보, 게시글 좋아요, 댓글 정보 */}
-          <div className="PostTopContents">
+          <article className="PostTopContents">
             {/* 글쓴이 정보 */}
             <div className="PostUser">
               {/* 프로필 사진 */}
-              <img src="/images/profile-image.jpg" alt="profile" />
+              <img src={user.profileImage} alt="profile" />
               {/* 이름, 게시날짜 */}
               <div className="PostUserText">
                 <Link to={`/users/${post.user.email}`} className="PostUserName">
@@ -214,10 +239,10 @@ function PostPage() {
                 <span className="PostInfoData">{comments.length}</span>
               </li>
             </ul>
-          </div>
+          </article>
 
           {/* 실제 본문 내용 */}
-          <div className="PostMainContents">
+          <article className="PostMainContents">
             <div className="PostTitleContainer">
               <span className="PostTitle">{post.title}</span>
               {/* 게시글 수정, 삭제 버튼 작성자여야 보이기 */}
@@ -231,6 +256,29 @@ function PostPage() {
               )}
             </div>
 
+            {/* 위즐일 때 협업 관련 내용 */}
+            {post.isWezzle && (
+              <div className={"PostWezzleContainer"}>
+                {/* period, field, peopleNum, projectPeriod */}
+                <div>
+                  <span>{"모집기간"}</span>
+                  {periodTemplate(post.recruit.period)}
+                </div>
+                <div>
+                  <span>{"모집분야"}</span>
+                  {fieldTemplate(post.recruit.field)}
+                </div>
+                <div>
+                  <span>{"모집인원"}</span>
+                  {post.recruit.peopleNum + "명"}
+                </div>
+                <div>
+                  <span>{"프로젝트 예상 기간"}</span>
+                  {periodTemplate(post.projectPeriod)}
+                </div>
+              </div>
+            )}
+
             <span className="PostMainText">{post.contents.text}</span>
 
             {post.contents.images.length !== 0 && (
@@ -243,8 +291,17 @@ function PostPage() {
 
             <div className="PostLikeShareContainer">
               <button>
-                <img src="/images/post_like.png" alt="likebutton" />
-                좋아요
+                {post.isWezzle ? (
+                  <>
+                    <img src="/images/post_together.png" alt="likebutton" />
+                    협업해요
+                  </>
+                ) : (
+                  <>
+                    <img src="/images/post_like.png" alt="likebutton" />
+                    좋아요
+                  </>
+                )}
               </button>
               <button
                 className={"ButtonSharePost"}
@@ -265,12 +322,12 @@ function PostPage() {
                 공유하기
               </button>
             </div>
-          </div>
-        </div>
+          </article>
+        </section>
 
         {/* 댓글 보기 */}
         {/* 전체 댓글들 컨테이너 */}
-        <div className="CommentsContainer">
+        <section className="CommentsContainer">
           {/* 댓글들 갯수만큼 반복하며 댓글을 하나씩 가져옴 */}
           {comments.map((comment, i) => (
             <Comment
@@ -279,7 +336,7 @@ function PostPage() {
               onRemoveComment={onRemoveComment}
             />
           ))}
-        </div>
+        </section>
 
         {/* 댓글 쓰기 입력 폼 */}
         <form
@@ -287,7 +344,7 @@ function PostPage() {
           onSubmit={handleCommentSubmit}
           method="post"
         >
-          <img src="/images/profile-image.jpg" alt="currentUserProfileImage" />
+          <img src={user.profileImage} alt="currentUserProfileImage" />
           <input
             type="text"
             placeholder="지금 바로 친구들과 의견을 공유해보세요!"

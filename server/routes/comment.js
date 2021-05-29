@@ -135,7 +135,7 @@ const getUserInfo = async (userId) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      // profileImage: user.profileImage
+      profileImage: user.profileImage,
     };
   } else {
     // 없다면 존재하지 않는 사용자
@@ -143,7 +143,7 @@ const getUserInfo = async (userId) => {
       _id: null,
       name: "(없는 사용자)",
       email: null,
-      // profileImage: null
+      profileImage: null,
     };
   }
 };
