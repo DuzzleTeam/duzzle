@@ -18,33 +18,15 @@ function PostPage() {
   // 현 포스트
   const [post, setPost] = useState(null);
 
-  // 게시글 작성자 정보 셋팅
-  const setPostUser = async (post) => {
-    // 게시글 작성자 id
-    const userId = post.user;
-    // 정보 가져오기 (이름, 메일, 프로필 사진)
-    const res = await axios(`/api/users/${userId}`);
-    // 정상적으로 가져왔다면
-    if (res.status === 200) {
-      // user data
-      const { user } = res.data;
-      // 셋팅
-      post.user = user;
-    }
-    return post;
-  };
-
   const getPost = useCallback(async () => {
     // 현재 주소 (postId값을 얻기 위함)
     const url = document.location.pathname;
     // get 방식으로 요청
     const res = await axios.get(`/api${url}`);
     // 받아오기에 성공했다면
-    if (res.data.gettingPostSuccess) {
-      // 포스트 유저 정보 셋팅하기
-      const newPost = await setPostUser(res.data.post);
+    if (res.status === 200) {
       // 포스트 셋팅
-      setPost(newPost);
+      setPost(res.data.post);
     }
   }, []);
 
@@ -56,33 +38,13 @@ function PostPage() {
     // 현재 주소 (postId값을 얻기 위함)
     const url = document.location.pathname;
     // get 방식으로 요청
-    const res = await axios.get(`/api${url}`);
+    const res = await axios.get(`/api${url}/comments`);
     // 받아오기에 성공했다면
-    if (res.data.gettingPostSuccess) {
-      const newComments = await setCommentsUser(res.data.comments);
+    if (res.status === 200) {
       // 댓글들 목록 셋팅
-      setComments(newComments);
+      setComments(res.data.comments);
     }
   }, []);
-
-  // 현 포스트에 포함된 댓글들의 작성자 정보 셋팅하기
-  const setCommentsUser = async (comments) => {
-    // 루프를 돌면서 모든 댓글들을 설정해줌
-    for (let i = 0; i < comments.length; i++) {
-      const comment = comments[i];
-      // 댓글의 유저 아이디
-      const userId = comment.user._id ?? comment.user;
-      // 유저 정보 요청
-      const res = await axios.get(`/api/users/${userId}`);
-      // 받아오기 성공하면
-      if (res.status === 200) {
-        // user 정보 셋팅
-        const { user } = res.data;
-        comment.user = user;
-      }
-    }
-    return comments;
-  };
 
   // 현재 접속 유저 정보
   const user = useSelector((state) => state.user.authPayload);
