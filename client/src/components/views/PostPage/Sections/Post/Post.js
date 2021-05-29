@@ -1,12 +1,16 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
 
-import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+
+import PostInfo from "./PostInfo";
+import Wezzle from "./Wezzle";
 
 // CSS
 import "./Post.css";
+import LikeTogetherButton from "./LikeTogetherButton";
+import ShareButton from "./ShareButton";
 
 function Post({ post, setPost, commentsLength }) {
   // 현재 접속 유저 정보
@@ -34,25 +38,6 @@ function Post({ post, setPost, commentsLength }) {
     fetchData();
   }, [getPost]);
 
-  // 게시글 공유
-  const onSharePost = (e) => {
-    // 현 게시글 url
-    const url = window.location.href;
-    // 클립보드에 복사
-    navigator.clipboard.writeText(url);
-
-    // 토스트 메시지 출력
-    toast.success("🔗 링크가 클립보드에 복사되었습니다!", {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  };
-
   const [isRemovedPost, setIsRemovedPost] = useState(false);
   // 게시글 삭제 버튼 클릭시
   const onRemovePost = async (e) => {
@@ -74,32 +59,6 @@ function Post({ post, setPost, commentsLength }) {
     }
   };
 
-  const sharePostButtonRef = useRef();
-
-  // 프로젝트 모집 기간, 프로젝트 예상 기간 템플릿
-  const periodTemplate = (period) => {
-    const [start, end] = period.split("-");
-    const $start = <span>{dateTemplate(start)}</span>;
-    const $end = <span>{dateTemplate(end)}</span>;
-
-    return (
-      <span className={"PostTextPeriod"}>
-        {$start} - {$end}
-      </span>
-    );
-  };
-  // 날짜 템플릿 (yyyy년 mm월 dd일)
-  const dateTemplate = (date) => {
-    return `${date.substring(0, 4)}년 ${date.substring(
-      4,
-      6
-    )}월 ${date.substring(6)}일`;
-  };
-
-  // 모집분야 템플릿 (배열을 span 하나씩)
-  const fieldTemplate = (field) => {
-    return field.map((str, index) => <span key={index}>{str}</span>);
-  };
   return (
     post &&
     (isRemovedPost ? (
@@ -123,14 +82,8 @@ function Post({ post, setPost, commentsLength }) {
 
           {/* 좋아요, 댓글 */}
           <ul className="PostInfo">
-            <li>
-              좋아요
-              <span className="PostInfoData">{post.likeCount}</span>
-            </li>
-            <li>
-              댓글
-              <span className="PostInfoData">{commentsLength}</span>
-            </li>
+            <PostInfo infoName={"좋아요"} info={post.likeCount} />
+            <PostInfo infoName={"댓글"} info={commentsLength} />
           </ul>
         </article>
 
@@ -151,25 +104,12 @@ function Post({ post, setPost, commentsLength }) {
 
           {/* 위즐일 때 협업 관련 내용 */}
           {post.isWezzle && (
-            <div className={"PostWezzleContainer"}>
-              {/* period, field, peopleNum, projectPeriod */}
-              <div>
-                <span>{"모집기간"}</span>
-                {periodTemplate(post.recruit.period)}
-              </div>
-              <div>
-                <span>{"모집분야"}</span>
-                {fieldTemplate(post.recruit.field)}
-              </div>
-              <div>
-                <span>{"모집인원"}</span>
-                {post.recruit.peopleNum + "명"}
-              </div>
-              <div>
-                <span>{"프로젝트 예상 기간"}</span>
-                {periodTemplate(post.projectPeriod)}
-              </div>
-            </div>
+            <Wezzle
+              period={post.recruit.period}
+              field={post.recruit.field}
+              peopleNum={post.recruit.peopleNum}
+              projectPeriod={post.projectPeriod}
+            />
           )}
 
           <span className="PostMainText">{post.contents.text}</span>
@@ -183,41 +123,8 @@ function Post({ post, setPost, commentsLength }) {
           )}
 
           <div className="PostLikeShareContainer">
-            <button>
-              {post.isWezzle ? (
-                <>
-                  <img
-                    src="/images/postPage/post_together.png"
-                    alt="likebutton"
-                  />
-                  협업해요
-                </>
-              ) : (
-                <>
-                  <img src="/images/postPage/post_like.png" alt="likebutton" />
-                  좋아요
-                </>
-              )}
-            </button>
-            <button
-              className={"ButtonSharePost"}
-              onClick={onSharePost}
-              onMouseOver={() =>
-                (sharePostButtonRef.current.src =
-                  "/images/postPage/post_share_hover.png")
-              }
-              onMouseOut={() =>
-                (sharePostButtonRef.current.src =
-                  "/images/postPage/post_share.png")
-              }
-            >
-              <img
-                ref={sharePostButtonRef}
-                src="/images/postPage/post_share.png"
-                alt="sharebutton"
-              />
-              공유하기
-            </button>
+            <LikeTogetherButton isWezzle={post.isWezzle} />
+            <ShareButton />
           </div>
         </article>
       </section>
