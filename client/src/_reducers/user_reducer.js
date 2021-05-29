@@ -4,6 +4,7 @@ import {
   REGISTER_USER,
   AUTH_USER,
   EDIT_USER,
+  GET_USER,
 } from "../_actions/types";
 
 export default function _(state = {}, action) {
@@ -28,6 +29,10 @@ export default function _(state = {}, action) {
 
     case EDIT_USER:
       return { ...state, editPayload: action.payload };
+
+    case GET_USER:
+      return { ...state, getPayload: action.payload };
+
     default:
       return state;
   }
