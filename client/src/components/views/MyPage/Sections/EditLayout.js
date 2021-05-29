@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { editUser } from "../../../../_actions/user_action";
+import { getUser, editUser } from "../../../../_actions/user_action";
 import "../Sections/MyPage.css";
 // 프로필 이미지 변경되었는지 check
 let cnt = 0;
@@ -10,14 +10,31 @@ let cnt = 0;
 function EditLayout(props) {
   const dispatch = useDispatch();
 
-  // 로그인한 유저 정보 -> url의 이메일로 정보 가져오기
-  const [user, setUser] = useState({});
+  // 나의 마이페이지인지 다른 사람의 마이페이지 인지
+  const [isMy, setIsMy] = useState(false);
+
+  // 내 정보
+  const [myInfo, setMyInfo] = useState({});
   const reduxUser = useSelector((state) => state.user.authPayload);
+
+  // 보고있는 마이페이지의 유저 정보
+  const [user, setUser] = useState({});
+  const myPageEmail = window.location.href.substr(28);
   useEffect(() => {
+    dispatch(getUser(myPageEmail)).then((res) => {
+      if (res.payload.getSuccess) {
+        setUser(res.payload.userInfo);
+      }
+    });
+    // 내 정보 가져오기
     if (reduxUser !== undefined) {
-      setUser(reduxUser);
+      setMyInfo(reduxUser);
     }
-  }, [reduxUser]);
+    // 내가 나의 마이페이지를 보고있다면
+    if (myInfo.email === myPageEmail) {
+      setIsMy(true);
+    }
+  }, [dispatch, isMy, myInfo.email, myPageEmail, reduxUser]);
 
   // 편집할 때 입력받는 값
   const [form, setValues] = useState("");
@@ -60,7 +77,7 @@ function EditLayout(props) {
         dispatch(editUser(body)).then((response) => {
           if (response.payload.editSuccess) {
             alert("수정되었습니다!");
-            window.location.replace("/users/:email");
+            window.location.replace(`/users/${user.email}`);
           } else {
             alert("수정 오류");
           }
@@ -219,7 +236,12 @@ function EditLayout(props) {
               <div className="font">{user.openChating}</div>
               <p />
               <div className="divEdit">
-                <button className="edit" onClick={onEditHandler}>
+                {/* 자신의 마이페이지를 보고있다면 수정버튼 활성화 */}
+                <button
+                  className="edit"
+                  onClick={onEditHandler}
+                  style={isMy ? { display: "block" } : { display: "none" }}
+                >
                   {Infobtn}
                 </button>
               </div>
