@@ -241,17 +241,16 @@ router.post("/api/users/:id/password_edit", (req, res) => {
 router.post("/api/users/edit", auth, (req, res) => {
   User.findOne({ _id: req.user._id }, (err, user) => {
     // 이미지 변경이 일어나면
-    // if (req.user.profileImage != req.body.profileImage) {
-    //   // 기본 이미지가 아니라면
-    //   if (req.user.profileImage != "../images/myPage/defaultImg.png") {
-    //     const preImg = req.user.profileImage.substr(22);
-    //     // 전의 이미지 파일 삭제
-    //     fs.unlink(`../uploads/${req.user.profileImage}`, (err) => {
-    //       if (err) return console.log(err);
-    //       else console.log("파일 삭제");
-    //     });
-    //   }
-    // }
+    if (req.user.profileImage != req.body.profileImage) {
+      // 기본 이미지가 아니라면
+      if (req.user.profileImage != "/images/defaultImg.png") {
+        const preImg = req.user.profileImage.substr(22);
+        // 전의 이미지 파일 삭제
+        fs.unlink(`../server/uploads/${preImg}`, (err) => {
+          if (err) return console.log("파일 삭제 오류");
+        });
+      }
+    }
     User.findOneAndUpdate(
       { _id: req.user._id },
       {

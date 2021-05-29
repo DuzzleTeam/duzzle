@@ -6,6 +6,7 @@ const { Post } = require("../models/Post");
 const { User } = require("../models/User");
 
 const { auth } = require("../middleware/auth");
+const { setCommentUser } = require("../functions/comment");
 
 // 댓글 작성 (chohadam, 2021-04-17)
 router.post("/:type(wezzle|mezzle)/post/:postId", auth, (req, res) => {
@@ -41,27 +42,29 @@ router.post("/:type(wezzle|mezzle)/post/:postId", auth, (req, res) => {
   });
 });
 
-// 게시글 열람 (chohadam, 2021-04-19)
-router.get("/:type(wezzle|mezzle)/post/:postId", (req, res) => {
+// 댓글들 가져오기 (chohadam, 2021-05-29)
+router.get("/:type(wezzle|mezzle)/post/:postId/comments", (req, res) => {
   // url로 넘어온 post id 가져오기
   const { postId } = req.params;
 
-  // post id를 기반으로 post 하나 찾기
-  Post.findById(postId, (err, post) => {
-    // 에러 발생 시
-    if (err) {
-      return res.json({ success: false, err });
+  // 현재 post에 속한 comment들 찾기
+  Comment.find({ post: postId }, async (err, comments) => {
+    // 댓글을 찾지 못했다면
+    if (err) return res.json({ success: false, err });
+
+    // 댓글들을 성공적으로 찾았다면
+    // 댓글 유저 정보 셋팅
+    const newComments = [];
+    for (let i = 0; i < comments.length; i++) {
+      const comment = comments[i];
+      // user 정보 포함 새로운 comment
+      const newComment = await setCommentUser(comment);
+      // 추가
+      newComments.push(newComment);
     }
 
-    // 성공적으로 post를 찾으면
-    // 현재 post에 속한 comment들 찾기
-    Comment.find({ post }, (err, comments) => {
-      // 댓글을 찾지 못했다면
-      if (err) return res.json({ success: false, err });
-
-      // 댓글들을 성공적으로 찾았다면 클라이언트에 전송
-      return res.json({ gettingPostSuccess: true, post, comments });
-    });
+    // 클라이언트에 전송
+    return res.status(200).json({ comments: newComments });
   });
 });
 
@@ -122,36 +125,6 @@ router.patch("/:type(wezzle|mezzle)/like/:commentId", auth, (req, res) => {
       .status(200)
       .send({ updateCommentSuccess: true, like: newComment.like });
   });
-});
-
-// Comment user의 값을 가져오기 (chohadam, 2021-05-25)
-const getUserInfo = async (userId) => {
-  // id로 해당 유저 찾기
-  const user = await User.findById(userId);
-
-  if (user) {
-    // 있다면 정보 리턴
-    return {
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      profileImage: user.profileImage,
-    };
-  } else {
-    // 없다면 존재하지 않는 사용자
-    return {
-      _id: null,
-      name: "(없는 사용자)",
-      email: null,
-      profileImage: null,
-    };
-  }
-};
-
-router.get("/users/:userId", async (req, res) => {
-  const { userId } = req.params;
-  const user = await getUserInfo(userId);
-  return res.status(200).send({ user });
 });
 
 module.exports = router;
