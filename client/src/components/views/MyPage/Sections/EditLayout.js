@@ -10,7 +10,7 @@ let cnt = 0;
 function EditLayout(props) {
   const dispatch = useDispatch();
 
-  // 로그인한 유저 정보
+  // 로그인한 유저 정보 -> url의 이메일로 정보 가져오기
   const [user, setUser] = useState({});
   const reduxUser = useSelector((state) => state.user.authPayload);
   useEffect(() => {
@@ -82,15 +82,11 @@ function EditLayout(props) {
       formData.append('selectImg', Image);
       // 이미지 서버에 업로드
       const res = await axios.post("/api/upload", formData);
-      // 기존 이미지 삭제
-      axios.post('/api/delete', user.profileImage);
       // 새로운 이미지 파일 이름 저장
       imgName = "http://localhost:5000/"+(res.data.filename).toString();
     } else {
       imgName = user.profileImage;
     }
-    console.log(imgName);
-    
   }
 
   const profileOnChange = (event) => {

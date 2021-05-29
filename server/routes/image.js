@@ -33,9 +33,4 @@ router.post('/upload', upload.single('selectImg'), (req, res) => {
     res.json({filename: `${req.file.filename}`});
 });
 
-// 이미지 삭제
-router.post('/delete', (req, res) => {
-    console.log(req.body);
-});
-
 module.exports = router;
