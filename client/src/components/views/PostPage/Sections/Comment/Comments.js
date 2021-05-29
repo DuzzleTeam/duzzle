@@ -10,9 +10,12 @@ function Comments({ comments, setComments, setCommentsLength }) {
   // 현 포스트에 포함된 댓글들을 가져옴
   const getComments = useCallback(async () => {
     // 현재 주소 (postId값을 얻기 위함)
-    const url = document.location.pathname;
+    // post/postid
+    const url = document.location.pathname
+      .replace(/mezzle|wezzle/, "")
+      .substring(2);
     // get 방식으로 요청
-    const res = await axios.get(`/api${url}/comments`);
+    const res = await axios.get(`/api/${url}/comments`);
     // 받아오기에 성공했다면
     if (res.status === 200) {
       // 댓글들 목록 셋팅

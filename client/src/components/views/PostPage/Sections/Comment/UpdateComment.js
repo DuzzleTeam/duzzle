@@ -12,21 +12,17 @@ function UpdateComment({ setUpdatingComment, comment, setComment }) {
       text: updateCommentValue,
     };
 
-    // 현재 페이지가 위즐인지 미즐인지 가져옴
-    const currentPageMenu = document.location.pathname.match(/wezzle|mezzle/);
     // 현재 comment id를 보내며 patch 요청
-    axios
-      .patch(`/api/${currentPageMenu}/comment/${comment._id}`, body)
-      .then((res) => {
-        if (res.data.updateCommentSuccess) {
-          setComment({
-            ...comment,
-            text: updateCommentValue,
-          });
-        } else {
-          alert("댓글 수정에 실패했습니다.");
-        }
-      });
+    axios.patch(`/api/comment/${comment._id}`, body).then((res) => {
+      if (res.status === 200) {
+        setComment({
+          ...comment,
+          text: updateCommentValue,
+        });
+      } else {
+        alert("댓글 수정에 실패했습니다.");
+      }
+    });
 
     // 수정 중인지 여부 초기화
     setUpdatingComment(false);

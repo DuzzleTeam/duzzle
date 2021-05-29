@@ -49,18 +49,14 @@ function Comment(props) {
       return;
     }
 
-    // 현재 페이지가 위즐인지 미즐인지 가져옴
-    const currentPageMenu = document.location.pathname.match(/wezzle|mezzle/);
     // 댓글 삭제 요청
-    axios
-      .delete(`/api/${currentPageMenu}/comment/${comment._id}`)
-      .then((res) => {
-        if (res.data.deleteCommentSuccess) {
-          // 정상적으로 삭제가 되었다면
-          // UI 업데이트
-          props.onRemoveComment(comment._id);
-        }
-      });
+    axios.delete(`/api/comment/${comment._id}`).then((res) => {
+      if (res.data.deleteCommentSuccess) {
+        // 정상적으로 삭제가 되었다면
+        // UI 업데이트
+        props.onRemoveComment(comment._id);
+      }
+    });
   };
 
   // 현재 댓글 수정 중인지
@@ -70,10 +66,8 @@ function Comment(props) {
   const [commentLiked, setCommentLiked] = useState(false);
   // 좋아요 요청 혹은 해제
   const handleLikeComment = (e) => {
-    // 현재 페이지가 위즐인지 미즐인지 가져옴
-    const currentPageMenu = document.location.pathname.match(/wezzle|mezzle/);
     // 현재 comment id를 보내며 patch 요청
-    axios.patch(`/api/${currentPageMenu}/like/${comment._id}`).then((res) => {
+    axios.patch(`/api/like/${comment._id}`).then((res) => {
       if (res.data.updateCommentSuccess) {
         setComment({
           ...comment,
