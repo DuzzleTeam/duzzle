@@ -3,6 +3,9 @@ import axios from "axios";
 
 import Comment from "./Comment";
 
+// CSS
+import "./Comments.css";
+
 function Comments({ comments, setComments, setCommentsLength }) {
   // 현 포스트에 포함된 댓글들을 가져옴
   const getComments = useCallback(async () => {

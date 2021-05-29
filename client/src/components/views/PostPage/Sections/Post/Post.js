@@ -5,6 +5,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
+// CSS
+import "./Post.css";
+
 function Post({ post, setPost, commentsLength }) {
   // 현재 접속 유저 정보
   const user = useSelector((state) => state.user.authPayload);

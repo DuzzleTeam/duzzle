@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
+
 import { useSelector } from "react-redux";
+
+// CSS
+import "./CommentInput.css";
 
 function CommentInput({ setComments }) {
   // 현재 접속 유저 정보
