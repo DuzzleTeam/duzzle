@@ -57,7 +57,7 @@ function CommentInput({ setComments }) {
       />
       {/* 전송 버튼 */}
       <button type="submit">
-        <img src="/images/comment_send.png" alt="submitIcon" />
+        <img src="/images/postPage/comment_send.png" alt="submitIcon" />
       </button>
     </form>
   );

@@ -169,7 +169,10 @@ function Comment(props) {
                     id={comment._id}
                     type="submit"
                   >
-                    <img src="/images/comment_delete.png" alt="delete" />
+                    <img
+                      src="/images/postPage/comment_delete.png"
+                      alt="delete"
+                    />
                   </button>
                 </form>
               </div>
@@ -182,8 +185,8 @@ function Comment(props) {
                 <img
                   src={
                     commentLiked
-                      ? "/images/comment_like_sel.png"
-                      : "/images/comment_like.png"
+                      ? "/images/postPage/comment_like_sel.png"
+                      : "/images/postPage/comment_like.png"
                   }
                   alt="like"
                 />
@@ -204,14 +207,20 @@ function Comment(props) {
                 onClick={handleUpdateComment}
                 className="ConfirmEditCommentButton"
               >
-                <img src="/images/comment_edit_confirm.png" alt="confirm" />
+                <img
+                  src="/images/postPage/comment_edit_confirm.png"
+                  alt="confirm"
+                />
               </button>
               {/* 댓글 수정 취소 버튼 */}
               <button
                 className="CancelEditCommentButton"
                 onClick={() => setUpdatingComment(false)}
               >
-                <img src="/images/comment_edit_cancel.png" alt="cancel" />
+                <img
+                  src="/images/postPage/comment_edit_cancel.png"
+                  alt="cancel"
+                />
               </button>
             </div>
           </>

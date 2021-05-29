@@ -143,7 +143,7 @@ function Post({ post, setPost, commentsLength }) {
               <div className="PostControl">
                 <button>수정하기</button>
                 <button onClick={onRemovePost}>
-                  <img src="/images/post_delete.png" alt="delete" />
+                  <img src="/images/postPage/post_delete.png" alt="delete" />
                 </button>
               </div>
             )}
@@ -186,12 +186,15 @@ function Post({ post, setPost, commentsLength }) {
             <button>
               {post.isWezzle ? (
                 <>
-                  <img src="/images/post_together.png" alt="likebutton" />
+                  <img
+                    src="/images/postPage/post_together.png"
+                    alt="likebutton"
+                  />
                   협업해요
                 </>
               ) : (
                 <>
-                  <img src="/images/post_like.png" alt="likebutton" />
+                  <img src="/images/postPage/post_like.png" alt="likebutton" />
                   좋아요
                 </>
               )}
@@ -201,15 +204,16 @@ function Post({ post, setPost, commentsLength }) {
               onClick={onSharePost}
               onMouseOver={() =>
                 (sharePostButtonRef.current.src =
-                  "/images/post_share_hover.png")
+                  "/images/postPage/post_share_hover.png")
               }
               onMouseOut={() =>
-                (sharePostButtonRef.current.src = "/images/post_share.png")
+                (sharePostButtonRef.current.src =
+                  "/images/postPage/post_share.png")
               }
             >
               <img
                 ref={sharePostButtonRef}
-                src="/images/post_share.png"
+                src="/images/postPage/post_share.png"
                 alt="sharebutton"
               />
               공유하기
