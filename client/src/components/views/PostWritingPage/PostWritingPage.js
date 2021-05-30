@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import { get } from "mongoose";
 
 function PostWritingPage() {
   /* post의 제목, 내용, 이미지, 파일 (공통 항목) */
@@ -106,18 +105,30 @@ function PostWritingPage() {
   /* 업로드 버튼 활성화를 위한 (모든 내용이 작성되어 있으면 활성화) */
   let now = new Date();
   useEffect(() => {
-    console.log(
-      Number(inputPeriods.period[5]) >= Number(inputPeriods.period[2])
-    );
     if (isWezzle) {
       // Wezzle일때
+      let nowDay = Number(now.getFullYear() + now.getMonth() + now.getDate());
       let startPeriod = Number(
         inputPeriods.period[0] + inputPeriods.period[1] + inputPeriods.period[2]
       );
       let endPeriod = Number(
         inputPeriods.period[3] + inputPeriods.period[4] + inputPeriods.period[5]
       );
-      let nowDay = Number(now.getFullYear() + now.getMonth() + now.getDate());
+      let startProjectPeriod = Number(
+        inputPeriods.projectPeriod[0] +
+          inputPeriods.projectPeriod[1] +
+          inputPeriods.projectPeriod[2]
+      );
+      let endProjectPeriod = Number(
+        inputPeriods.projectPeriod[3] +
+          inputPeriods.projectPeriod[4] +
+          inputPeriods.projectPeriod[5]
+      );
+      console.log(
+        inputPeriods.projectPeriod[6] === "미정" ||
+          (startProjectPeriod >= nowDay &&
+            endProjectPeriod >= startProjectPeriod)
+      );
       if (
         // 제목, 내용, 모집기간, 모집분야, 모집인원, 프로젝트예상기간에 값이 들어가 있을 경우
         String(inputContents.title) !== "" &&
@@ -125,7 +136,10 @@ function PostWritingPage() {
         inputPeopleNum > 0 &&
         inputPeriods.period.indexOf("") === -1 &&
         startPeriod >= nowDay &&
-        endPeriod >= startPeriod
+        endPeriod >= startPeriod &&
+        (inputPeriods.projectPeriod[6] === "미정" ||
+          (startProjectPeriod >= nowDay &&
+            endProjectPeriod >= startProjectPeriod))
       ) {
         // isActive가 true -> 버튼 활성화
         setIsActive(true);
