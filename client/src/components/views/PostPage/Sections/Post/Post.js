@@ -129,11 +129,7 @@ function Post({ post, setPost, commentsLength }) {
           {/* 좋아요, 공유 버튼 */}
           <div className="PostLikeShareContainer">
             {/* 좋아요 버튼 */}
-            <LikeTogetherButton
-              setPost={setPost}
-              postId={post._id}
-              isWezzle={post.isWezzle}
-            />
+            <LikeTogetherButton setPost={setPost} post={post} />
             {/* 공유 버튼 */}
             <ShareButton />
           </div>
