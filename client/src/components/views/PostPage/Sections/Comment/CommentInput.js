@@ -26,8 +26,13 @@ function CommentInput({ setComments }) {
   };
 
   const onSubmitNewComment = (body) => {
-    // post 방식으로 요청
-    axios.post(`/api/comment/new`, body).then((res) => {
+    // 현재 주소 (postId값을 얻기 위함)
+    // post/postid
+    const url = document.location.pathname
+      .replace(/mezzle|wezzle/, "")
+      .substring(2);
+
+    axios.post(`/api/${url}/comment`, body).then((res) => {
       if (res.status === 200) {
         // 댓글 전송 성공 시 input 값 초기화
         setCommentValue("");

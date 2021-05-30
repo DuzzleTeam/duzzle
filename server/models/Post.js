@@ -21,9 +21,9 @@ const postSchema = mongoose.Schema({
     images: [String],
     files: [String],
   },
-  likeCount: {
-    type: Number,
-    default: 0,
+  like: {
+    type: [String],
+    default: [],
   },
   createdAt: {
     type: Date,

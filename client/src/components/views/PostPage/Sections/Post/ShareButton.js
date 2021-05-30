@@ -1,6 +1,8 @@
 import React, { useRef } from "react";
 import { toast } from "react-toastify";
 
+import "./ShareButton.css";
+
 function ShareButton() {
   const sharePostButtonRef = useRef();
 
