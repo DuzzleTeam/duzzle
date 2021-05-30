@@ -72,7 +72,7 @@ function Post({ post, setPost, commentsLength }) {
           {/* 글쓴이 정보 */}
           <div className="PostUser">
             {/* 프로필 사진 */}
-            <img src={user.profileImage} alt="profile" />
+            <img src={post.user.profileImage} alt="profile" />
             {/* 이름, 게시날짜 */}
             <div className="PostUserText">
               <Link to={`/users/${post.user.email}`} className="PostUserName">
