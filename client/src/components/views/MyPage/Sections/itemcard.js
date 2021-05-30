@@ -1,4 +1,4 @@
-function ItemCard({ key, Image, title, field, likeCount, commentCount }) {
+function ItemCard({ key, Image, title, writer, likeCount, commentCount }) {
   return (
     <div>
       <img className="itemImg" src={Image} alt="itemImg"></img>
