@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import "./Post.css";
 
@@ -15,12 +16,26 @@ function Post(props) {
     }
   }, [props.post, post._id]);
 
+  // 페이지 전환을 위한 Hook
+  const history = useHistory();
+  const onPostClick = (e) => {
+    // 게시글 미리보기 클릭
+    // wezzle 혹은 mezzle
+    const postType = document.location.pathname.match(/wezzle|mezzle/);
+
+    // 해당 게시글로 화면 전환
+    history.push({
+      pathname: `/${postType}/post/${post._id}`,
+      state: { postId: post._id },
+    });
+  };
+
   return (
-    <article>
+    <article onClick={onPostClick}>
       {/* 이미지가 있는지 없는지에 따라 기본 이미지 or 이미지 출력 */}
 
       {/* 타이틀 */}
-      <span>{post.title}</span>
+      <span className={"FeedPostTitle"}>{post.title}</span>
 
       <div className="PostInformation">
         {/* 작성자 */}

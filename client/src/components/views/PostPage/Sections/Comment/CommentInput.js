@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 // CSS
 import "./CommentInput.css";
 
-function CommentInput({ setComments }) {
+function CommentInput({ postId, setComments }) {
   // 현재 접속 유저 정보
   const user = useSelector((state) => state.user.authPayload);
 
@@ -26,13 +26,10 @@ function CommentInput({ setComments }) {
   };
 
   const onSubmitNewComment = (body) => {
-    // 현재 주소 (postId값을 얻기 위함)
-    // post/postid
-    const url = document.location.pathname
-      .replace(/mezzle|wezzle/, "")
-      .substring(2);
+    // 요청 보낼 url
+    const url = `/api/post/${postId}/comment`;
 
-    axios.post(`/api/${url}/comment`, body).then((res) => {
+    axios.post(url, body).then((res) => {
       if (res.status === 200) {
         // 댓글 전송 성공 시 input 값 초기화
         setCommentValue("");

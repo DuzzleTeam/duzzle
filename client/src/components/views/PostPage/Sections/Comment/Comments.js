@@ -6,16 +6,13 @@ import Comment from "./Comment";
 // CSS
 import "./Comments.css";
 
-function Comments({ comments, setComments, setCommentsLength }) {
+function Comments({ postId, comments, setComments, setCommentsLength }) {
   // 현 포스트에 포함된 댓글들을 가져옴
   const getComments = useCallback(async () => {
-    // 현재 주소 (postId값을 얻기 위함)
-    // post/postid
-    const url = document.location.pathname
-      .replace(/mezzle|wezzle/, "")
-      .substring(2);
+    // 요청 보낼 url
+    const url = `/api/post/${postId}/comments`;
     // get 방식으로 요청
-    const res = await axios.get(`/api/${url}/comments`);
+    const res = await axios.get(url);
     // 받아오기에 성공했다면
     if (res.status === 200) {
       // 댓글들 목록 셋팅
@@ -23,7 +20,7 @@ function Comments({ comments, setComments, setCommentsLength }) {
       // 댓글 갯수
       setCommentsLength(res.data.comments.length);
     }
-  }, [setComments, setCommentsLength]);
+  }, [postId, setComments, setCommentsLength]);
 
   // componentDidmount
   useEffect(() => {

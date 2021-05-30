@@ -36,6 +36,13 @@ function App() {
           component={Auth(ConfirmRegister, false)}
         />
 
+        {/* 로그인 한 유저만 출입 가능 (메인 피드) */}
+        <Route
+          exact
+          path={["/mezzle", "/wezzle"]}
+          component={Auth(FeedPage, true)}
+        />
+
         {/* 로그인 한 유저만 출입 가능 */}
         <Route
           path={["/mezzle/post/:postId", "/wezzle/post/:postId"]}
@@ -48,9 +55,6 @@ function App() {
         {/* 로그인한 유저만 출입이 가능한 페이지 */}
         <Route path="/mezzle/write" component={Auth(PostWritingPage, true)} />
         <Route path="/wezzle/write" component={Auth(PostWritingPage, true)} />
-
-        {/* 로그인 한 유저만 출입 가능 (메인 피드) */}
-        <Route path={["/mezzle", "/wezzle"]} component={Auth(FeedPage, true)} />
       </Switch>
     </Router>
   );
