@@ -11,10 +11,11 @@ function Posts() {
   // 전체 포스트들
   const [posts, setPosts] = useState([]);
 
+  // wezzle 혹은 mezzle
+  const postType = document.location.pathname.match(/wezzle|mezzle/);
+
   // 전체 게시글 가져오기
   const getPosts = useCallback(async () => {
-    // wezzle 혹은 mezzle
-    const postType = document.location.pathname.match(/wezzle|mezzle/);
     // 요청 url
     const url = `/api/${postType}`;
 
@@ -25,7 +26,7 @@ function Posts() {
       // 가져오기에 성공했을 경우 전체 게시글 셋팅
       setPosts(res.data.posts);
     }
-  }, []);
+  }, [postType]);
 
   useEffect(() => {
     const fetchData = async () => {
