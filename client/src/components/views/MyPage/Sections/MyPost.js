@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getUser } from "../../../../_actions/user_action";
+import "./MyPost.css";
 
 function MyPost(props) {
   const dispatch = useDispatch();
