@@ -8,7 +8,7 @@ const { auth } = require("../middleware/auth");
 const { setCommentUser } = require("../functions/comment");
 
 // 댓글 작성 (chohadam, 2021-04-17)
-router.post("/comment/new", auth, (req, res) => {
+router.post("/post/:postId/comment", auth, (req, res) => {
   // 사용자가 입력한 댓글 body data를 기반으로 Comment 생성
   const comment = new Comment(req.body);
 

@@ -1,0 +1,10 @@
+.PostLikeButton {
+  margin-right: 70px;
+}
+
+.PostLikedButton {
+  background-color: #57ecbf !important;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+  border: solid 1px #57ecbf !important;
+  color: white !important;
+}

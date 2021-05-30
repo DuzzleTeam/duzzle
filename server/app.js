@@ -12,6 +12,7 @@ const authRouter = require("./routes/auth");
 const commentRouter = require("./routes/comment");
 const postRouter = require("./routes/post");
 const imgRouter = require("./routes/image");
+const likeRouter = require("./routes/like");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -21,6 +22,7 @@ app.use("/", authRouter);
 app.use("/api", commentRouter);
 app.use("/api", postRouter);
 app.use("/api", imgRouter);
+app.use("/api", likeRouter);
 
 app.use("/", express.static(path.join(__dirname, "uploads")));
 
