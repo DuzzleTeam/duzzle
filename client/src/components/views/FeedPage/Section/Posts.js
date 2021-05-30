@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import axios from "axios";
+
 import Pagination from "./Pagination";
 import Post from "./Post";
 
@@ -8,6 +10,30 @@ import "./Posts.css";
 function Posts() {
   // 전체 포스트들
   const [posts, setPosts] = useState([]);
+
+  // 전체 게시글 가져오기
+  const getPosts = useCallback(async () => {
+    // wezzle 혹은 mezzle
+    const postType = document.location.pathname.match(/wezzle|mezzle/);
+    // 요청 url
+    const url = `/api/${postType}`;
+
+    // get 방식으로 요청
+    const res = await axios.get(url);
+
+    if (res.status === 200) {
+      // 가져오기에 성공했을 경우 전체 게시글 셋팅
+      setPosts(res.data.posts);
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // 전체 게시글 가져오기
+      await getPosts();
+    };
+    fetchData();
+  }, [getPosts]);
 
   return (
     // 글 전체 목록 컨테이너
@@ -29,7 +55,7 @@ function Posts() {
 
       {/* 포스트 컴포넌트들 (실제 피드) */}
       {posts.map((post) => (
-        <Post post={post} />
+        <Post key={post._id} post={post} />
       ))}
 
       {/* 숫자 목록 */}
