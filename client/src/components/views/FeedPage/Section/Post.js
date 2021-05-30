@@ -20,7 +20,7 @@ function Post(props) {
       {/* 이미지가 있는지 없는지에 따라 기본 이미지 or 이미지 출력 */}
 
       {/* 타이틀 */}
-      <span></span>
+      <span>{post.title}</span>
 
       <div className="PostInformation">
         {/* 작성자 */}
