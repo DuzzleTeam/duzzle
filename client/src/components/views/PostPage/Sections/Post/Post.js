@@ -114,8 +114,10 @@ function Post({ post, setPost, commentsLength }) {
             />
           )}
 
+          {/* 글 내용 */}
           <span className="PostMainText">{post.contents.text}</span>
 
+          {/* 이미지 있다면 */}
           {post.contents.images.length !== 0 && (
             <img
               className="PostContentsImage"
@@ -124,8 +126,15 @@ function Post({ post, setPost, commentsLength }) {
             />
           )}
 
+          {/* 좋아요, 공유 버튼 */}
           <div className="PostLikeShareContainer">
-            <LikeTogetherButton isWezzle={post.isWezzle} />
+            {/* 좋아요 버튼 */}
+            <LikeTogetherButton
+              setPost={setPost}
+              postId={post._id}
+              isWezzle={post.isWezzle}
+            />
+            {/* 공유 버튼 */}
             <ShareButton />
           </div>
         </article>
