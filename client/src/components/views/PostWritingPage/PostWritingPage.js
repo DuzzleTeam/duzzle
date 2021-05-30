@@ -10,22 +10,15 @@ function PostWritingPage() {
   });
 
   /* 모집 인원 */
-  const [peopleNum, setPeopleNum] = useState(0);
+  const [inputPeopleNum, setInputPeopleNum] = useState(0);
 
   /* 모집분야 */
-  const [inputField, setInputField] = useState(["", "", ""]);
+  const [inputField, setInputField] = useState({ field: ["", "디자인"] });
 
   /* 모집 기간, 프로젝트 예상 기간 */
   const [inputPeriods, setInputPeriods] = useState({
-    period: {
-      start: ["", "", ""],
-      end: ["", "", ""],
-    },
-    projectPeriod: {
-      start: ["", "", ""],
-      end: ["", "", ""],
-      yet: "",
-    },
+    period: ["", "", "", "", "", ""],
+    projectPeriod: ["", "", "", "", "", "", "미정"],
   });
 
   /* 업로드 버튼 활성화 및 비활성화 상태 */
@@ -36,8 +29,8 @@ function PostWritingPage() {
   let isWezzle = false;
   if (currentPageMenu[0] === "wezzle") isWezzle = true;
 
-  /* 공통 항목 (제목,내용,이미지,파일) */
-  const onChange = (e) => {
+  /* 공통 항목 (제목,내용,이미지,파일) state 변경 */
+  const onChangeCommon = (e) => {
     if (e.target.id === "text") {
       setInputContents({
         ...inputContents,
@@ -56,12 +49,57 @@ function PostWritingPage() {
     }
   };
 
-  const onChangePeopleNum = (e) => {
-    if (e.target.id === "M") {
-      if (peopleNum > 0) setPeopleNum(peopleNum - 1);
-    } else if (e.target.id === "P") {
-      setPeopleNum(peopleNum + 1);
+  /* 기간 state 변경 */
+  const onChangePeriod = (e) => {
+    if (e.target.id === "period") {
+      let periodArr = inputPeriods.period;
+      periodArr[e.target.name] = e.target.value;
+      setInputPeriods({
+        ...inputPeriods,
+        [e.target.id]: periodArr,
+      });
+    } else if (parseInt(e.target.name) <= 5) {
+      let projectPeriodArr = inputPeriods.projectPeriod;
+      projectPeriodArr[e.target.name] = e.target.value;
+      projectPeriodArr[6] = "";
+      setInputPeriods({
+        ...inputPeriods,
+        [e.target.id]: projectPeriodArr,
+      });
+    } else if (e.target.name === "6") {
+      let projectPeriodArr = ["", "", "", "", "", "", "미정"];
+      setInputPeriods({
+        ...inputPeriods,
+        [e.target.id]: projectPeriodArr,
+      });
     }
+  };
+
+  /* 모집분야 state 변경 */
+  const onChangeField = (e) => {
+    if (parseInt(e.target.id.replace("field", "")) === 0) {
+      let fieldArr = inputField.field;
+      fieldArr[0] = fieldArr[0] ? "" : "개발";
+      setInputField({ field: fieldArr });
+      console.log(inputField, inputField.field);
+    } else if (parseInt(e.target.id.replace("field", "")) === 1) {
+      let fieldArr = inputField.field;
+      fieldArr[1] = fieldArr[1] ? "" : "디자인";
+      setInputField({ field: fieldArr });
+      console.log(inputField, inputField.field[1]);
+    }
+  };
+
+  /* 모집 인원 state 변경 */
+  const onChangePeopleNumMinus = (e) => {
+    e.preventDefault();
+    if (inputPeopleNum > 0) {
+      setInputPeopleNum((prev) => prev - 1);
+    }
+  };
+  const onChangePeopleNumPlus = (e) => {
+    e.preventDefault();
+    setInputPeopleNum((prev) => prev + 1);
   };
 
   /* 업로드 버튼 활성화를 위한 (모든 내용이 작성되어 있으면 활성화) */
@@ -72,7 +110,7 @@ function PostWritingPage() {
         // 제목, 내용, 모집기간, 모집분야, 모집인원, 프로젝트예상기간에 값이 들어가 있을 경우
         String(inputContents.title) !== "" &&
         String(inputContents.contents.text) !== "" &&
-        peopleNum > 0
+        inputPeopleNum.peopleNum > 0
       ) {
         // isActive가 true -> 버튼 활성화
         setIsActive(true);
@@ -92,12 +130,16 @@ function PostWritingPage() {
         setIsActive(false);
       }
     }
-  }, [inputContents.title, inputContents.contents.text, peopleNum]);
+  }, [
+    inputContents.title,
+    inputContents.contents.text,
+    inputPeopleNum.peopleNum,
+  ]);
 
   const handlePostSubmit = (event) => {
     event.preventDefault();
 
-    const body = {
+    let body = {
       title: inputContents.title,
       contents: {
         text: inputContents.contents.text,
@@ -105,9 +147,19 @@ function PostWritingPage() {
         files: inputContents.contents.files,
       },
       isWezzle: isWezzle,
-      peopleNum: peopleNum,
-      if(isWezzle) {},
     };
+
+    if (isWezzle) {
+      body = {
+        ...body,
+        recruit: {
+          period: inputPeriods.period,
+          field: inputField.field,
+          peopleNum: inputPeopleNum.peopleNum,
+        },
+        projectPeriod: inputPeriods.projectPeriod,
+      };
+    }
 
     axios.post(`/api/${currentPageMenu}/write`, body).then((res) => {
       if (res.data.createPostSuccess) {
@@ -115,7 +167,7 @@ function PostWritingPage() {
           title: "",
           contents: { text: "" },
         });
-        setPeopleNum(0);
+        setInputPeopleNum(0);
       } else {
         alert("게시글 작성에 실패하였습니다.");
       }
@@ -130,8 +182,8 @@ function PostWritingPage() {
             type="text"
             id="title"
             placeholder="제목"
-            value={inputContents.title}
-            onChange={onChange}
+            defaultValue={inputContents.title}
+            onChange={onChangeCommon}
           />
           {/* isActive가 false일 때 버튼 비활성화(disabled=true) */}
           <button
@@ -153,41 +205,89 @@ function PostWritingPage() {
             <div>
               <label>모집기간</label>
               <span>
-                <input size="4" value={inputPeriods.period.start[0]} />
+                <input
+                  size="4"
+                  id="period"
+                  name="0"
+                  defaultValue={inputPeriods.period[0]}
+                  onChange={onChangePeriod}
+                />
                 <label>년</label>
-                <input size="2" value={inputPeriods.period.start[1]} />
+                <input
+                  size="2"
+                  id="period"
+                  name="1"
+                  defaultValue={inputPeriods.period[1]}
+                  onChange={onChangePeriod}
+                />
                 <label>월</label>
-                <input size="2" value={inputPeriods.period.start[2]} />
+                <input
+                  size="2"
+                  id="period"
+                  name="2"
+                  defaultValue={inputPeriods.period[2]}
+                  onChange={onChangePeriod}
+                />
                 <label>일</label>
               </span>
               <span> - </span>
               <span>
-                <input size="4" value={inputPeriods.period.end[0]} />
+                <input
+                  size="4"
+                  id="period"
+                  name="3"
+                  defaultValue={inputPeriods.period[3]}
+                  onChange={onChangePeriod}
+                />
                 <label>년</label>
-                <input size="2" value={inputPeriods.period.end[1]} />
+                <input
+                  size="2"
+                  id="period"
+                  name="4"
+                  defaultValue={inputPeriods.period[4]}
+                  onChange={onChangePeriod}
+                />
                 <label>월</label>
-                <input size="2" value={inputPeriods.period.end[2]} />
+                <input
+                  size="2"
+                  id="period"
+                  name="5"
+                  defaultValue={inputPeriods.period[5]}
+                  onChange={onChangePeriod}
+                />
                 <label>일</label>
               </span>
             </div>
 
             <div>
               <label>모집분야</label>
-              <label>
-                <input type="checkbox" name="category" value="develop" /> 개발
-              </label>
-              <label>
-                <input type="checkbox" name="category" value="design" /> 디자인
-              </label>
+
+              <input
+                type="checkbox"
+                id="field0"
+                name="field"
+                checked={inputField.field[0] ? true : false}
+                onChange={onChangeField}
+              />
+              <label>개발</label>
+
+              <input
+                type="checkbox"
+                id="field1"
+                name="field"
+                checked={inputField.field[1] ? true : false}
+                onChange={onChangeField}
+              />
+              <label>디자인</label>
             </div>
 
             <div>
               <label>모집인원</label>
-              <button id="M" onClick={onChangePeopleNum}>
+              <button onClick={onChangePeopleNumMinus} id="peopleNum">
                 -
               </button>
-              <span>{peopleNum}</span>
-              <button id="P" onClick={onChangePeopleNum}>
+              <span>{inputPeopleNum}</span>
+              <button onClick={onChangePeopleNumPlus} id="peopleNum">
                 +
               </button>
             </div>
@@ -195,29 +295,70 @@ function PostWritingPage() {
             <div>
               <label>프로젝트 예상 기간</label>
               <span>
-                <input size="4" value={inputPeriods.projectPeriod.start[0]} />
+                <input
+                  size="4"
+                  id="projectPeriod"
+                  name="0"
+                  defaultValue={inputPeriods.projectPeriod[0]}
+                  onChange={onChangePeriod}
+                />
                 <label>년</label>
-                <input size="2" value={inputPeriods.projectPeriod.start[1]} />
+                <input
+                  size="2"
+                  id="projectPeriod"
+                  name="1"
+                  defaultValue={inputPeriods.projectPeriod[1]}
+                  onChange={onChangePeriod}
+                />
                 <label>월</label>
-                <input size="2" value={inputPeriods.projectPeriod.start[2]} />
+                <input
+                  size="2"
+                  id="projectPeriod"
+                  name="2"
+                  defaultValue={inputPeriods.projectPeriod[2]}
+                  onChange={onChangePeriod}
+                />
                 <label>일</label>
               </span>
               <span> - </span>
               <span>
-                <input size="4" value={inputPeriods.projectPeriod.end[0]} />
+                <input
+                  size="4"
+                  id="projectPeriod"
+                  name="3"
+                  defaultValue={inputPeriods.projectPeriod[3]}
+                  onChange={onChangePeriod}
+                />
                 <label>년</label>
-                <input size="2" value={inputPeriods.projectPeriod.end[1]} />
+                <input
+                  size="2"
+                  id="projectPeriod"
+                  name="4"
+                  defaultValue={inputPeriods.projectPeriod[4]}
+                  onChange={onChangePeriod}
+                />
                 <label>월</label>
-                <input size="2" value={inputPeriods.projectPeriod.start[2]} />
+                <input
+                  size="2"
+                  id="projectPeriod"
+                  name="5"
+                  defaultValue={inputPeriods.projectPeriod[5]}
+                  onChange={onChangePeriod}
+                />
                 <label>일</label>
               </span>
               <input
                 type="checkbox"
-                name="term"
-                value="design"
-                value={inputPeriods.projectPeriod.yet}
+                id="projectPeriod"
+                name="6"
+                checked={inputPeriods.projectPeriod[6] ? true : false}
+                onChange={onChangePeriod}
               />
               <label>미정</label>
+            </div>
+
+            <div>
+              <hr />
             </div>
           </div>
         ) : (
@@ -225,21 +366,17 @@ function PostWritingPage() {
         )}
 
         <div>
-          <hr />
-        </div>
-
-        <div>
           <input
             type="file"
             id="images"
             accept="image/png,image/jpeg"
-            value={inputContents.contents.images}
+            defaultValue={inputContents.contents.images}
           />
           <input
             type="file"
             id="images"
             accept=".doc, .docx, .xml, .hwp"
-            value={inputContents.contents.files}
+            defaultValue={inputContents.contents.files}
           />
         </div>
 
@@ -248,8 +385,8 @@ function PostWritingPage() {
             rows="7"
             cols="80"
             id="text"
-            value={inputContents.contents.text}
-            onChange={onChange}
+            defaultValue={inputContents.contents.text}
+            onChange={onChangeCommon}
             placeholder={
               isWezzle
                 ? "프로젝트에 대한 설명과 합류 시 담당하게 될 업무에 대해 자세히 작성해주세요!"
