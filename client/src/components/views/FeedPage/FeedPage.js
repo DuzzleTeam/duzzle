@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router";
 
 // Components
 import Banner from "./Section/Banner";
@@ -25,4 +26,4 @@ function FeedPage() {
   );
 }
 
-export default FeedPage;
+export default withRouter(FeedPage);

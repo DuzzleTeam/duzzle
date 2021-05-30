@@ -1,0 +1,6 @@
+/* 임시로 글씨 크게 */
+.FeedPostTitle {
+  font-size: 1.6rem;
+
+  cursor: pointer;
+}

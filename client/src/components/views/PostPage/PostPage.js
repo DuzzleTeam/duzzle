@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { withRouter } from "react-router-dom";
+import { useLocation, withRouter } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 
@@ -16,6 +16,11 @@ import "../../../utils/Common.css";
 
 // 글 보기 페이지 (chohadam)
 function PostPage() {
+  // 페이지 전환하면서 넘긴 parameter 받아오기 위한 Hook
+  const location = useLocation();
+  // post id 받아오기
+  const { postId } = location.state;
+
   // 현 포스트
   const [post, setPost] = useState(null);
   // 현 포스트 댓글 갯수
@@ -47,13 +52,14 @@ function PostPage() {
         {/* 댓글 보기 */}
         {/* 전체 댓글들 컨테이너 */}
         <Comments
+          postId={postId}
           comments={comments}
           setComments={setComments}
           setCommentsLength={setCommentsLength}
         />
 
         {/* 댓글 쓰기 입력 폼 */}
-        <CommentInput setComments={setComments} />
+        <CommentInput postId={postId} setComments={setComments} />
 
         {/* 토스트 메시지 컨테이너 */}
         <ToastContainer
