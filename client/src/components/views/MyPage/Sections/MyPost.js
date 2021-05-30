@@ -1,22 +1,23 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getUser } from "../../../../_actions/user_action";
 import "./MyPost.css";
 
 function MyPost(props) {
   const dispatch = useDispatch();
   const [isPost, setIsPost] = useState(props.isPost);
 
-  // 보고있는 마이페이지의 유저 정보
-  const [user, setUser] = useState({});
+  // 보고있는 마이페이지 유저의 포스트 정보
+  const [post, setPost] = useState();
   const myPageEmail = window.location.href.substr(28);
   useEffect(() => {
-    dispatch(getUser(myPageEmail)).then((res) => {
-      if (res.payload.getSuccess) {
-        setUser(res.payload.userInfo);
-      }
-    });
+    const fetchData = async () => {
+      const post = await axios.get(`/api/users/post/${myPageEmail}`);
+      setPost(post.data.postInfo);
+    };
+    fetchData();
+    console.log(post);
   }, [myPageEmail]);
 
   const onApplyHandler = (event) => {
