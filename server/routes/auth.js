@@ -271,4 +271,16 @@ router.post("/api/users/edit", auth, (req, res) => {
   });
 });
 
+// 05.29 / 유저 정보 가져오기
+router.get("/api/users/:email", (req, res) => {
+  User.findOne({ email: req.params.email }, (err, user) => {
+    if (err) console.log(err);
+    else
+      res.status(200).send({
+        getSuccess: true,
+        userInfo: user,
+      });
+  });
+});
+
 module.exports = router;
