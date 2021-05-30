@@ -76,6 +76,7 @@
   width: 240px;
   height: 150px;
 
+  background-color: white;
   border: 1px solid #ececec;
   border-radius: 8px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.13);
