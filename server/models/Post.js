@@ -23,6 +23,7 @@ const postSchema = mongoose.Schema({
   },
   like: {
     type: [String],
+    default: [],
   },
   createdAt: {
     type: Date,

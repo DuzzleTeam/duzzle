@@ -84,7 +84,7 @@ function Post({ post, setPost, commentsLength }) {
 
           {/* 좋아요, 댓글 */}
           <ul className="PostInfo">
-            <PostInfo infoName={"좋아요"} info={post.likeCount} />
+            <PostInfo infoName={"좋아요"} info={post.like.length} />
             <PostInfo infoName={"댓글"} info={commentsLength} />
           </ul>
         </article>

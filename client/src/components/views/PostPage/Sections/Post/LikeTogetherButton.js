@@ -25,10 +25,8 @@ function LikeTogetherButton({ setPost, post }) {
   // 눌려있는지 체크
   const [isLiked, setIsLiked] = useState(false);
   useEffect(() => {
-    // undefined가 아닐 경우에만 실행
-    if (post.like) {
-      setIsLiked(post.like.includes(user.email));
-    }
+    // 좋아요 눌렀었는지 판별
+    setIsLiked(post.like.includes(user.email));
   }, [post, user]);
 
   return (
