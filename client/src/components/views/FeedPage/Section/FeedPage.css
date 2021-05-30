@@ -1,4 +1,5 @@
 /* Main Container */
 .FeedContainer {
   font-size: 10px;
+  overflow-y: auto;
 }
