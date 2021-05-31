@@ -60,8 +60,16 @@
 
 /* Post 피드 컴포넌트들 컨테이너 */
 .PostsPostContainer {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 32px;
+  row-gap: 72px;
   margin-top: 80px;
   margin-bottom: 100px;
+}
+
+@media (max-width: 1900px) {
+  .PostsPostContainer {
+    grid-template-columns: repeat(auto-fill, minmax(391px, auto));
+  }
 }

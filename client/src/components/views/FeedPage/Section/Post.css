@@ -2,8 +2,8 @@
 .PreviewPostContainer {
   display: inline-flex;
   flex-direction: column;
+  width: 391px;
   cursor: pointer;
-  margin-right: 32px;
 }
 
 /* 이미지 없음 */
