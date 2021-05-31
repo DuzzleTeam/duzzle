@@ -23,8 +23,6 @@ function PostPage() {
 
   // 현 포스트
   const [post, setPost] = useState(null);
-  // 현 포스트 댓글 갯수
-  const [commentsLength, setCommentsLength] = useState(0);
 
   // 현 포스트에 포함된 댓글들 목록
   const [comments, setComments] = useState(null);
@@ -47,7 +45,7 @@ function PostPage() {
     loaded && (
       <div id="Container" className="PostPageContainer">
         {/* 글 컨테이너 */}
-        <Post post={post} setPost={setPost} commentsLength={commentsLength} />
+        <Post post={post} setPost={setPost} />
 
         {/* 댓글 보기 */}
         {/* 전체 댓글들 컨테이너 */}
@@ -55,11 +53,15 @@ function PostPage() {
           postId={postId}
           comments={comments}
           setComments={setComments}
-          setCommentsLength={setCommentsLength}
+          setPost={setPost}
         />
 
         {/* 댓글 쓰기 입력 폼 */}
-        <CommentInput postId={postId} setComments={setComments} />
+        <CommentInput
+          postId={postId}
+          setComments={setComments}
+          setPost={setPost}
+        />
 
         {/* 토스트 메시지 컨테이너 */}
         <ToastContainer

@@ -33,16 +33,31 @@ function Post(props) {
   return (
     <article onClick={onPostClick}>
       {/* 이미지가 있는지 없는지에 따라 기본 이미지 or 이미지 출력 */}
+      {post.contents.images.length === 0 ? (
+        // 이미지 없음
+        <div className="PostDefaultImage"></div>
+      ) : (
+        // 이미지 있음
+        post.contents.images.map((image) => (
+          <img src={image} alt="post-contents" />
+        ))
+      )}
 
       {/* 타이틀 */}
       <span className={"FeedPostTitle"}>{post.title}</span>
 
       <div className="PostInformation">
         {/* 작성자 */}
-
-        {/* 하트 수 */}
-
-        {/* 댓글 수 */}
+        <span>{post.user.name}</span>
+        {/* 하트, 댓글 수 preview */}
+        <div>
+          {/* 하트 수 */}
+          <img src="/images/feedPage/like_preview.png" alt="like" />
+          <span>{post.like.length}</span>
+          {/* 댓글 수 */}
+          <img src="/images/feedPage/comment_preview.png" alt="like" />
+          <span>{post.commentCount}</span>
+        </div>
       </div>
     </article>
   );

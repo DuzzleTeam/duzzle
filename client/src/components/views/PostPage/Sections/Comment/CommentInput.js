@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 // CSS
 import "./CommentInput.css";
 
-function CommentInput({ postId, setComments }) {
+function CommentInput({ postId, setComments, setPost }) {
   // 현재 접속 유저 정보
   const user = useSelector((state) => state.user.authPayload);
 
@@ -35,6 +35,13 @@ function CommentInput({ postId, setComments }) {
         setCommentValue("");
         // 댓글 가져오기
         setComments((comments) => [...comments, res.data.comment]);
+        // post 댓글 갯수도 업데이트
+        setPost((post) => {
+          return {
+            ...post,
+            commentCount: post.commentCount + 1,
+          };
+        });
       } else {
         // 댓글 작성 실패 시
         alert("댓글 작성에 실패하였습니다.");

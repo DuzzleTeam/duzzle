@@ -12,7 +12,7 @@ import "./Post.css";
 import LikeTogetherButton from "./LikeTogetherButton";
 import ShareButton from "./ShareButton";
 
-function Post({ post, setPost, commentsLength }) {
+function Post({ post, setPost }) {
   // 현재 접속 유저 정보
   const user = useSelector((state) => state.user.authPayload);
 
@@ -85,7 +85,7 @@ function Post({ post, setPost, commentsLength }) {
           {/* 좋아요, 댓글 */}
           <ul className="PostInfo">
             <PostInfo infoName={"좋아요"} info={post.like.length} />
-            <PostInfo infoName={"댓글"} info={commentsLength} />
+            <PostInfo infoName={"댓글"} info={post.commentCount} />
           </ul>
         </article>
 
