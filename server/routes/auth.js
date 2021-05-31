@@ -286,7 +286,6 @@ router.get("/api/users/:email", (req, res) => {
 
 // 05.30 내 게시물 가져오기
 router.get("/api/users/post/:email", (req, res) => {
-  console.log(req.params.email);
   User.findOne({ email: req.params.email }, (err, user) => {
     if (err) console.log(err);
     Post.findOne({ user: user._id }, (err, post) => {

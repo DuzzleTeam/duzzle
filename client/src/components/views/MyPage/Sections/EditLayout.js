@@ -106,6 +106,7 @@ function EditLayout(props) {
   const profileOnChange = (event) => {
     setImage(event.target.files[0]);
     cnt += 1;
+    // console.log(document.getElementsByClassName("profile"));
   };
 
   // input 입력

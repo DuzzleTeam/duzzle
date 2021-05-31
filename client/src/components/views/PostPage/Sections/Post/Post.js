@@ -12,7 +12,7 @@ import "./Post.css";
 import LikeTogetherButton from "./LikeTogetherButton";
 import ShareButton from "./ShareButton";
 
-function Post({ post, setPost, commentsLength }) {
+function Post({ post, setPost }) {
   // 현재 접속 유저 정보
   const user = useSelector((state) => state.user.authPayload);
 
@@ -72,7 +72,7 @@ function Post({ post, setPost, commentsLength }) {
           {/* 글쓴이 정보 */}
           <div className="PostUser">
             {/* 프로필 사진 */}
-            <img src={user.profileImage} alt="profile" />
+            <img src={post.user.profileImage} alt="profile" />
             {/* 이름, 게시날짜 */}
             <div className="PostUserText">
               <Link to={`/users/${post.user.email}`} className="PostUserName">
@@ -85,7 +85,7 @@ function Post({ post, setPost, commentsLength }) {
           {/* 좋아요, 댓글 */}
           <ul className="PostInfo">
             <PostInfo infoName={"좋아요"} info={post.like.length} />
-            <PostInfo infoName={"댓글"} info={commentsLength} />
+            <PostInfo infoName={"댓글"} info={post.commentCount} />
           </ul>
         </article>
 
