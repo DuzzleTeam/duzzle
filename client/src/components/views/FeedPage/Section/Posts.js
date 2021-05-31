@@ -12,7 +12,7 @@ function Posts() {
   const [posts, setPosts] = useState([]);
 
   // wezzle 혹은 mezzle
-  const postType = document.location.pathname.match(/wezzle|mezzle/);
+  const postType = document.location.pathname.match(/wezzle|mezzle/)[0];
 
   // 전체 게시글 가져오기
   const getPosts = useCallback(async () => {
@@ -56,6 +56,16 @@ function Posts() {
     }
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 12;
+
+  const getCurrentPosts = () => {
+    const endIndex = currentPage * postsPerPage;
+    const startIndex = endIndex - postsPerPage;
+    const currentPosts = posts.slice(startIndex, endIndex);
+    return currentPosts;
+  };
+
   return (
     // 글 전체 목록 컨테이너
     <section className={"FeedPostsContainer"}>
@@ -83,14 +93,19 @@ function Posts() {
 
       {/* 포스트 컴포넌트들 (실제 피드) */}
       <div className="PostsPostContainer">
-        {posts.map((post) => (
+        {getCurrentPosts().map((post) => (
           <Post key={post._id} post={post} />
         ))}
       </div>
 
       {/* 숫자 목록 */}
       {/* 전체 페이지 번호 수, 현재 페이지 번호, 현재 페이지 번호 Setter */}
-      <Pagination totalIndex={4} currentPage={1} setCurrentPage={() => {}} />
+      <Pagination
+        postsPerPage={postsPerPage}
+        totalPosts={posts.length}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </section>
   );
 }
