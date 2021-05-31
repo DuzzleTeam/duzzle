@@ -6,7 +6,7 @@ import Comment from "./Comment";
 // CSS
 import "./Comments.css";
 
-function Comments({ postId, comments, setComments, setCommentsLength }) {
+function Comments({ postId, comments, setComments, setPost }) {
   // 현 포스트에 포함된 댓글들을 가져옴
   const getComments = useCallback(async () => {
     // 요청 보낼 url
@@ -17,10 +17,8 @@ function Comments({ postId, comments, setComments, setCommentsLength }) {
     if (res.status === 200) {
       // 댓글들 목록 셋팅
       setComments(res.data.comments);
-      // 댓글 갯수
-      setCommentsLength(res.data.comments.length);
     }
-  }, [postId, setComments, setCommentsLength]);
+  }, [postId, setComments]);
 
   // componentDidmount
   useEffect(() => {
@@ -36,6 +34,13 @@ function Comments({ postId, comments, setComments, setCommentsLength }) {
     // 지운 comment 제외하고 comments 새로 설정
     const newComments = comments.filter((comment) => comment._id !== commentId);
     setComments(newComments);
+    // post 댓글 갯수도 업데이트
+    setPost((post) => {
+      return {
+        ...post,
+        commentCount: post.commentCount - 1,
+      };
+    });
   };
 
   return (

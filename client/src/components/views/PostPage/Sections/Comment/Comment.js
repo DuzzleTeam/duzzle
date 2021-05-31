@@ -51,7 +51,7 @@ function Comment(props) {
 
     // 댓글 삭제 요청
     axios.delete(`/api/comment/${comment._id}`).then((res) => {
-      if (res.data.deleteCommentSuccess) {
+      if (res.status === 200) {
         // 정상적으로 삭제가 되었다면
         // UI 업데이트
         props.onRemoveComment(comment._id);
