@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { useHistory, useLocation } from "react-router";
 
 import Pagination from "./Pagination";
 import Post from "./Post";
 
 // CSS
 import "./Posts.css";
-import { useHistory } from "react-router";
 
 // cache
 let wezzle = [];
@@ -20,6 +20,9 @@ function Posts() {
 
   // 전체 게시글 가져오기
   const getPosts = useCallback(async () => {
+    // 페이지 초기화
+    setCurrentPage(1);
+
     // 요청 url
     const url = `/api/${postType}`;
 
@@ -101,9 +104,35 @@ function Posts() {
     history.push(`/${postType}/write`);
   };
 
+  // 게시글 모음 컨테이너
+  const scrollTargetRef = useRef();
+  // location: state, pathname, hash ...
+  const location = useLocation();
+  // location state가 있고 ref가 있다면
+  if (location.state && scrollTargetRef.current) {
+    // state에서 scroll을 가져옴
+    const { scroll } = location.state;
+    // scroll이 true이면 pagination에서 페이지 전환한 것
+    if (scroll) {
+      // 게시글 상단으로 자동 스크롤 (사용자 편의)
+      scrollTargetRef.current.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  }
+
+  useEffect(() => {
+    // 페이지 전환을 한 적이 있다면
+    if (location.hash !== "") {
+      // 새로고침해도 현재 페이지이도록 설정
+      const hashPage = location.hash.substring(1);
+      setCurrentPage(Number(hashPage));
+    }
+  }, [location.hash]);
+
   return (
     // 글 전체 목록 컨테이너
-    <section className={"FeedPostsContainer"}>
+    <section ref={scrollTargetRef} className={"FeedPostsContainer"}>
       {/* 상단 버튼들 (개발/디자인, 글 작성) */}
       <div className="FeedButtons">
         {/* 개발, 디자인 버튼 */}

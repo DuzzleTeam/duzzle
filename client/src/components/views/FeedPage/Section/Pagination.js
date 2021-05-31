@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 // CSS
 import "./Pagination.css";
@@ -18,14 +19,28 @@ function Pagination({ postsPerPage, totalPosts, currentPage, setCurrentPage }) {
     setNumbers(numbers);
   }, [totalPosts, postsPerPage]);
 
+  const history = useHistory();
+
   const onPreviousClick = (e) => {
     // 이전 페이지 버튼 클릭
     setCurrentPage(currentPage - 1);
+
+    // anchor
+    history.push({
+      hash: `#${currentPage - 1}`,
+      state: { scroll: true },
+    });
   };
 
   const onNextClick = (e) => {
     // 다음 페이지 버튼 클릭
     setCurrentPage(currentPage + 1);
+
+    // anchor
+    history.push({
+      hash: `#${currentPage + 1}`,
+      state: { scroll: true },
+    });
   };
 
   return (
@@ -62,7 +77,16 @@ function Pagination({ postsPerPage, totalPosts, currentPage, setCurrentPage }) {
             setCurrentPage(number);
           }}
         >
-          {number}
+          <Link
+            to={{
+              state: {
+                scroll: true,
+              },
+              hash: `#${number}`,
+            }}
+          >
+            {number}
+          </Link>
         </span>
       ))}
 
