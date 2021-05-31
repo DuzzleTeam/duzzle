@@ -1,13 +1,24 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+import { useSelector } from "react-redux";
 import Notification from "./Notification";
 
 import "./NotificationDropdown.css";
 
 function NotificationDropdown(props) {
+  // 현재 접속 유저 정보
+  const user = useSelector((state) => state.user.authPayload);
+  async function fetchData() {
+    const noti = await axios.get(`/api/notification/${user._id}`);
+    console.log(noti);
+  }
+  fetchData();
   const [notification, setNotification] = useState({
     provider: "조하닮",
-    post: { title: "테이블이 좀 이상하고 뭐시기 뭐시기", isWezzle: false },
+    post: {
+      title: "테이블이 좀 이상하고 뭐시기 뭐시기",
+      isWezzle: false,
+    },
     isChecked: false,
     occurTime: new Date().toISOString().slice(0, 10).replace(/-/g, "."),
     menuType: "comment",
