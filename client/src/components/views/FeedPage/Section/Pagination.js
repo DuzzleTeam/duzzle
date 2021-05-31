@@ -1,29 +1,46 @@
 import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 // CSS
 import "./Pagination.css";
 
 // 하단 게시물 번호
 // 전체 페이지 번호 수, 현재 페이지 번호, 현재 페이지 번호 Setter
-function Pagination({ totalIndex, currentPage, setCurrentPage }) {
+function Pagination({ postsPerPage, totalPosts, currentPage, setCurrentPage }) {
   // 페이지 번호들을 담음 (ex [1, 2, 3])
   const [numbers, setNumbers] = useState([]);
   // totalIndex가 변하면 실행
   useEffect(() => {
     const numbers = [];
-    for (let i = 1; i <= totalIndex; i++) {
+    for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
       // 1부터 전체 페이지 번호 수까지 배열 생성
       numbers.push(i);
     }
     setNumbers(numbers);
-  }, [totalIndex]);
+  }, [totalPosts, postsPerPage]);
+
+  const history = useHistory();
 
   const onPreviousClick = (e) => {
     // 이전 페이지 버튼 클릭
+    setCurrentPage(currentPage - 1);
+
+    // anchor
+    history.push({
+      hash: `#${currentPage - 1}`,
+      state: { scroll: true },
+    });
   };
 
   const onNextClick = (e) => {
     // 다음 페이지 버튼 클릭
+    setCurrentPage(currentPage + 1);
+
+    // anchor
+    history.push({
+      hash: `#${currentPage + 1}`,
+      state: { scroll: true },
+    });
   };
 
   return (
@@ -60,12 +77,21 @@ function Pagination({ totalIndex, currentPage, setCurrentPage }) {
             setCurrentPage(number);
           }}
         >
-          {number}
+          <Link
+            to={{
+              state: {
+                scroll: true,
+              },
+              hash: `#${number}`,
+            }}
+          >
+            {number}
+          </Link>
         </span>
       ))}
 
       {/* right arrow button */}
-      {currentPage === totalIndex ? (
+      {currentPage === Math.ceil(totalPosts / postsPerPage) ? (
         // 마지막 페이지라면 클릭 불가
         <button className="ButtonArrow" disabled>
           <img src="/images/feedPage/right_arrow_disabled.png" alt="disabled" />
