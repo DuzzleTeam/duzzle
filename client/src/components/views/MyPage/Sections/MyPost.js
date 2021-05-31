@@ -1,11 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "./MyPost.css";
 
 function MyPost(props) {
-  const dispatch = useDispatch();
   const [isPost, setIsPost] = useState(props.isPost);
 
   // 보고있는 마이페이지 유저의 포스트 정보
