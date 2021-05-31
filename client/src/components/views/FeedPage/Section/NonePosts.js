@@ -13,7 +13,7 @@ function NonePosts({ postType }) {
     // 컨테이너
     <article className={"NonePostsContainer"}>
       {/* 빈 폴더 사진 */}
-      <img src="/images/feedPage/" alt="" />
+      <img src="/images/feedPage/empty_folder.png" alt="" />
 
       {/* 게시글 없다는 설명 글 */}
       <span>
