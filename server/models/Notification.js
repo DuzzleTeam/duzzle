@@ -16,6 +16,7 @@ const notificationSchema = mongoose.Schema({
   },
   isChecked: {
     Boolean,
+    default: false,
   },
   occurTime: {
     type: Date,

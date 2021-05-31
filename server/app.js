@@ -13,6 +13,7 @@ const commentRouter = require("./routes/comment");
 const postRouter = require("./routes/post");
 const imgRouter = require("./routes/image");
 const likeRouter = require("./routes/like");
+const notificationRouter = require("./routes/notification");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -23,6 +24,7 @@ app.use("/api", commentRouter);
 app.use("/api", postRouter);
 app.use("/api", imgRouter);
 app.use("/api", likeRouter);
+app.use("/api", notificationRouter);
 
 app.use("/", express.static(path.join(__dirname, "uploads")));
 
