@@ -1,5 +1,7 @@
 /* Main Container */
 .FeedContainer {
+  height: 90.7%;
   font-size: 10px;
-  overflow-y: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }

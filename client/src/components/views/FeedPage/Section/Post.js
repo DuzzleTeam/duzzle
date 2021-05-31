@@ -31,16 +31,18 @@ function Post(props) {
   };
 
   return (
-    <article onClick={onPostClick}>
+    <article className={"PreviewPostContainer"} onClick={onPostClick}>
       {/* 이미지가 있는지 없는지에 따라 기본 이미지 or 이미지 출력 */}
       {post.contents.images.length === 0 ? (
         // 이미지 없음
         <div className="PostDefaultImage"></div>
       ) : (
         // 이미지 있음
-        post.contents.images.map((image) => (
-          <img src={image} alt="post-contents" />
-        ))
+        <img
+          className={"PreviewPostImage"}
+          src={post.contents.images[0]}
+          alt="post-contents"
+        />
       )}
 
       {/* 타이틀 */}
@@ -48,9 +50,9 @@ function Post(props) {
 
       <div className="PostInformation">
         {/* 작성자 */}
-        <span>{post.user.name}</span>
+        <span className={"PreviewPostUser"}>{post.user.name}</span>
         {/* 하트, 댓글 수 preview */}
-        <div>
+        <div className={"PreviewLikeComment"}>
           {/* 하트 수 */}
           <img src="/images/feedPage/like_preview.png" alt="like" />
           <span>{post.like.length}</span>
