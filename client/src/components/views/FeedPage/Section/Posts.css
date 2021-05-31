@@ -26,6 +26,13 @@
   cursor: pointer;
 }
 
+/* 개발, 디자인 버튼 hover */
+.PostsCategory > button:hover {
+  background-color: #ececec;
+  border: solid 2px #ececec;
+  color: #000000;
+}
+
 /* 개발 버튼 */
 .PostsCategory > button:first-child {
   margin-right: 20px;
