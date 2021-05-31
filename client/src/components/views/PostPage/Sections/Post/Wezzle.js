@@ -1,5 +1,8 @@
 import React from "react";
 
+// CSS
+import "./Wezzle.css";
+
 function Wezzle({ period, field, peopleNum, projectPeriod }) {
   // 프로젝트 모집 기간, 프로젝트 예상 기간 템플릿
   const periodTemplate = (period) => {
@@ -23,7 +26,11 @@ function Wezzle({ period, field, peopleNum, projectPeriod }) {
 
   // 모집분야 템플릿 (배열을 span 하나씩)
   const fieldTemplate = (field) => {
-    return field.map((str, index) => <span key={index}>{str}</span>);
+    return field.map((str, index) => (
+      <span className={"WezzleRecruitField"} key={index}>
+        {str}
+      </span>
+    ));
   };
 
   return (
