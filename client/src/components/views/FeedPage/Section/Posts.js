@@ -6,6 +6,10 @@ import Post from "./Post";
 
 // CSS
 import "./Posts.css";
+import { useHistory } from "react-router";
+
+// cache
+let wezzle = [];
 
 function Posts() {
   // 전체 포스트들
@@ -23,8 +27,23 @@ function Posts() {
     const res = await axios.get(url);
 
     if (res.status === 200) {
-      // 가져오기에 성공했을 경우 전체 게시글 셋팅
-      setPosts(res.data.posts);
+      if (postType === "wezzle") {
+        // 위즐이면 캐싱
+        wezzle = res.data.posts;
+
+        // 개발 모집 글만 필터
+        const developPosts = wezzle.filter((post) =>
+          post.recruit.field.includes("개발")
+        );
+
+        // 개발 게시글로 설정
+        setCurrentField(0);
+        setPosts(developPosts);
+      } else {
+        // 미즐
+        // 가져오기에 성공했을 경우 전체 게시글 셋팅
+        setPosts(res.data.posts);
+      }
     }
   }, [postType]);
 
@@ -54,16 +73,32 @@ function Posts() {
       // 디자인으로 설정
       setCurrentField(1);
     }
+
+    // 개발 혹은 디자인 관련 글로만 필터
+    const filteredPosts = wezzle.filter((post) =>
+      post.recruit.field.includes(field)
+    );
+    // state 업데이트
+    setPosts(filteredPosts);
   };
 
+  // 현재 페이지 (페이지네이션에서)
   const [currentPage, setCurrentPage] = useState(1);
+  // 한 페이지에 표시할 게시글 갯수
   const postsPerPage = 12;
 
+  // 현재 화면에 표시할 게시물 구하기
   const getCurrentPosts = () => {
     const endIndex = currentPage * postsPerPage;
     const startIndex = endIndex - postsPerPage;
     const currentPosts = posts.slice(startIndex, endIndex);
     return currentPosts;
+  };
+
+  const history = useHistory();
+  // 글쓰기 버튼 클릭
+  const onWriteButtonClick = (e) => {
+    history.push(`/${postType}/write`);
   };
 
   return (
@@ -73,19 +108,23 @@ function Posts() {
       <div className="FeedButtons">
         {/* 개발, 디자인 버튼 */}
         <div className="PostsCategory">
-          {fields.map((field, index) => (
-            <button
-              key={index}
-              className={index === currentField ? "ActivePostsCategory" : ""}
-              onClick={() => onButtonFieldClick(field)}
-            >
-              {field}
-            </button>
-          ))}
+          {/* 위즐일 때만 버튼 표시 */}
+          {postType === "wezzle" &&
+            fields.map((field, index) => (
+              <button
+                key={index}
+                // 현재 카테고리면 class 추가
+                className={index === currentField ? "ActivePostsCategory" : ""}
+                // 클릭 시 현재 클릭 분야로 설정하는 핸들러
+                onClick={() => onButtonFieldClick(field)}
+              >
+                {field}
+              </button>
+            ))}
         </div>
 
         {/* 글 작성 버튼 */}
-        <button className="ButtonWritePost">
+        <button className="ButtonWritePost" onClick={onWriteButtonClick}>
           <img src="/images/feedPage/post_write.png" alt="write" />
           {"글 작성"}
         </button>
@@ -93,8 +132,8 @@ function Posts() {
 
       {/* 포스트 컴포넌트들 (실제 피드) */}
       <div className="PostsPostContainer">
-        {getCurrentPosts().map((post) => (
-          <Post key={post._id} post={post} />
+        {getCurrentPosts().map((post, index) => (
+          <Post key={index} post={post} />
         ))}
       </div>
 
