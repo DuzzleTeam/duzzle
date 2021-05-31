@@ -21,6 +21,7 @@ function EditLayout(props) {
   const [user, setUser] = useState({});
   const myPageEmail = window.location.href.substr(28);
   useEffect(() => {
+    // 현재 보고있는 마이페이지의 유저 정보 가져오기
     dispatch(getUser(myPageEmail)).then((res) => {
       if (res.payload.getSuccess) {
         setUser(res.payload.userInfo);
@@ -74,6 +75,7 @@ function EditLayout(props) {
           group: form.group,
           openChating: form.openChating,
         };
+        // 회원정보 수정
         dispatch(editUser(body)).then((response) => {
           if (response.payload.editSuccess) {
             alert("수정되었습니다!");
@@ -106,7 +108,6 @@ function EditLayout(props) {
   const profileOnChange = (event) => {
     setImage(event.target.files[0]);
     cnt += 1;
-    // console.log(document.getElementsByClassName("profile"));
   };
 
   // input 입력
