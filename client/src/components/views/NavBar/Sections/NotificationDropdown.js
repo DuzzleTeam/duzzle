@@ -8,11 +8,7 @@ import "./NotificationDropdown.css";
 function NotificationDropdown(props) {
   // 현재 접속 유저 정보
   const user = useSelector((state) => state.user.authPayload);
-  async function fetchData() {
-    const noti = await axios.get(`/api/notification/${user._id}`);
-    console.log(noti);
-  }
-  fetchData();
+
   const [notification, setNotification] = useState({
     provider: "조하닮",
     post: {
@@ -23,6 +19,38 @@ function NotificationDropdown(props) {
     occurTime: new Date().toISOString().slice(0, 10).replace(/-/g, "."),
     menuType: "comment",
   });
+
+  // 알림 가져오기 -> 가져올때마다 Item{ }에 추가
+  const loadNoti = async () => {
+    axios
+      .get(`/api/notification/${user._id}`)
+      .then(({ data }) => {
+        const notificationList = {
+          provider: data.provider,
+          post: {
+            title: data.content,
+            isWezzle: data.isWezzle,
+          },
+          isChecked: false,
+          occurTime: data.occurTime.slice(0, 10).replace(/-/g, "."),
+          menuType: "comment",
+        };
+        setNotification({
+          ...notification,
+          notificationList,
+        });
+        // setNotiList({
+        //   data,
+        // });
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+  loadNoti();
+
+  // 알림 리스트
+  const [notiList, setNotiList] = useState([]);
 
   // 메뉴 리스트
   const menus = ["댓글", "좋아요", "협업해요"];
