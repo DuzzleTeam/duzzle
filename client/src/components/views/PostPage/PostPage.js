@@ -16,10 +16,8 @@ import "../../../utils/Common.css";
 
 // 글 보기 페이지 (chohadam)
 function PostPage() {
-  // 페이지 전환하면서 넘긴 parameter 받아오기 위한 Hook
-  const location = useLocation();
-  // post id 받아오기
-  const { postId } = location.state;
+  // 현 글의 id
+  const postId = document.location.pathname.substring(13);
 
   // 현 포스트
   const [post, setPost] = useState(null);
