@@ -2,7 +2,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getUser, editUser } from "../../../../_actions/user_action";
+import { editUser } from "../../../../_actions/user_action";
+
+import Profile from "./Profile";
 
 // CSS
 import "./EditLayout.css";
@@ -10,37 +12,24 @@ import "./EditLayout.css";
 // 프로필 이미지 변경되었는지 check
 let cnt = 0;
 
-function EditLayout() {
+function EditLayout({ user }) {
   const dispatch = useDispatch();
 
   // 나의 마이페이지인지 다른 사람의 마이페이지 인지
   const [isMy, setIsMy] = useState(false);
 
   // 내 정보
-  const [myInfo, setMyInfo] = useState({});
   const reduxUser = useSelector((state) => state.user.authPayload);
 
-  // 보고있는 마이페이지의 유저 정보
-  const [user, setUser] = useState({});
-  const myPageEmail = document.location.pathname.replace("/users/", "");
   useEffect(() => {
-    // 현재 보고있는 마이페이지의 유저 정보 가져오기
-    dispatch(getUser(myPageEmail)).then((res) => {
-      if (res.payload.getSuccess) {
-        setUser(res.payload.userInfo);
+    // 현재 접속 유저 정보 가져오기
+    if (!reduxUser && !user) {
+      // 내가 나의 마이페이지를 보고있다면
+      if (reduxUser.email === user.email) {
+        setIsMy(true);
       }
-    });
-
-    // 내 정보 가져오기
-    if (!reduxUser) {
-      setMyInfo(reduxUser);
     }
-
-    // 내가 나의 마이페이지를 보고있다면
-    if (myInfo.email === myPageEmail) {
-      setIsMy(true);
-    }
-  }, [dispatch, isMy, myInfo.email, myPageEmail, reduxUser]);
+  }, [reduxUser, user]);
 
   // 편집할 때 입력받는 값
   const [form, setValues] = useState("");
@@ -123,140 +112,133 @@ function EditLayout() {
     });
   };
 
-  return (
+  return isEdit ? (
+    // 수정화면 일 때
     <div>
-      {isEdit ? (
-        // 수정화면 일 때
-        <div>
-          <div className="box">
-            <input
-              className="selectImg"
-              type="file"
-              onChange={profileOnChange}
-            />
-            <img
-              className="profileEdit"
-              src="/images/myPage/profileEdit.png"
-              alt="profileEdit"
-            />
-            <img className="profile" src={user.profileImage} alt="profile" />
-          </div>
-          <div className="userInfo1">
-            <h2>
-              <input
-                className="name"
-                type="text"
-                name="name"
-                value={form.name}
-                onChange={updateForm}
-              />
-            </h2>
-            <font color="gray">
-              <input
-                className="field"
-                type="text"
-                name="field"
-                value={form.field}
-                onChange={updateForm}
-              />
-            </font>
-            <p>
-              <textarea
-                className="intro"
-                name="introduction"
-                rows="4"
-                cols="30"
-                value={form.introduction}
-                onChange={updateForm}
-              />
-            </p>
-          </div>
-          <hr className="hr" />
-          <div className="userInfo2">
-            <h2 className="level">Lv.{user.level} 만렙 디자이너</h2>
-            <div className="progress">
-              <progress value={user.level} max="100"></progress>
-            </div>
-            <p />
-            <div id="editLayout">
-              <strong>소속</strong>
-              <input
-                className="bottom"
-                type="text"
-                name="group"
-                value={form.group}
-                onChange={updateForm}
-              />
-              <p />
-              <strong>메일</strong>
-              <input
-                className="bottom"
-                type="text"
-                name="email"
-                value={user.email}
-                disabled
-              />
-              <p />
-              <strong>오픈채팅</strong>
-              <input
-                className="bottom"
-                type="text"
-                name="openChating"
-                value={form.openChating}
-                onChange={updateForm}
-              />
-              <p />
-              <div className="divEdit">
-                <button className="edit" onClick={onEditHandler}>
-                  {Infobtn}
-                </button>
-              </div>
-            </div>
+      <div className="box">
+        <input className="selectImg" type="file" onChange={profileOnChange} />
+        <img
+          className="profileEdit"
+          src="/images/myPage/profileEdit.png"
+          alt="profileEdit"
+        />
+        <img className="profile" src={user.profileImage} alt="profile" />
+      </div>
+      <div className="userInfo1">
+        <h2>
+          <input
+            className="name"
+            type="text"
+            name="name"
+            value={form.name}
+            onChange={updateForm}
+          />
+        </h2>
+        <font color="gray">
+          <input
+            className="field"
+            type="text"
+            name="field"
+            value={form.field}
+            onChange={updateForm}
+          />
+        </font>
+        <p>
+          <textarea
+            className="intro"
+            name="introduction"
+            rows="4"
+            cols="30"
+            value={form.introduction}
+            onChange={updateForm}
+          />
+        </p>
+      </div>
+      <hr className="hr" />
+      <div className="userInfo2">
+        <h2 className="level">Lv.{user.level} 만렙 디자이너</h2>
+        <div className="progress">
+          <progress value={user.level} max="100"></progress>
+        </div>
+        <p />
+        <div id="editLayout">
+          <strong>소속</strong>
+          <input
+            className="bottom"
+            type="text"
+            name="group"
+            value={form.group}
+            onChange={updateForm}
+          />
+          <p />
+          <strong>메일</strong>
+          <input
+            className="bottom"
+            type="text"
+            name="email"
+            value={user.email}
+            disabled
+          />
+          <p />
+          <strong>오픈채팅</strong>
+          <input
+            className="bottom"
+            type="text"
+            name="openChating"
+            value={form.openChating}
+            onChange={updateForm}
+          />
+          <p />
+          <div className="divEdit">
+            <button className="edit" onClick={onEditHandler}>
+              {Infobtn}
+            </button>
           </div>
         </div>
-      ) : (
-        // 수정화면 아닐 때
-        <div>
-          <div className="box">
-            <img className="profile" src={user.profileImage} alt="profile" />
-          </div>
-          <div className="userInfo1">
-            <h1>{user.name}</h1>
-            <font color="gray">{user.field}</font>
-            <p>{user.introduction}</p>
-          </div>
-          <hr className="hr" />
-          <div className="userInfo2">
-            <h2 className="level">Lv.{user.level} 만렙 디자이너</h2>
-            <div className="progress">
-              <progress value={user.level} max="100"></progress>
-            </div>
-            <p />
-            <div id="editLayout">
-              <strong>소속</strong>
-              <div className="font">{user.group}</div>
-              <p />
-              <strong>메일</strong>
-              <div className="font">{user.email}</div>
-              <p />
-              <strong>오픈채팅</strong>
-              <div className="font">{user.openChating}</div>
-              <p />
-              <div className="divEdit">
-                {/* 자신의 마이페이지를 보고있다면 수정버튼 활성화 */}
-                <button
-                  className="edit"
-                  onClick={onEditHandler}
-                  style={isMy ? { display: "block" } : { display: "none" }}
-                >
-                  {Infobtn}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      </div>
     </div>
+  ) : (
+    // 수정화면 아닐 때
+    // <div>
+    //   <div className="box">
+    //     <img className="profile" src={user.profileImage} alt="profile" />
+    //   </div>
+    //   <div className="userInfo1">
+    //     <h1>{user.name}</h1>
+    //     <font color="gray">{user.field}</font>
+    //     <p>{user.introduction}</p>
+    //   </div>
+    //   <hr className="hr" />
+    //   <div className="userInfo2">
+    //     <h2 className="level">Lv.{user.level} 만렙 디자이너</h2>
+    //     <div className="progress">
+    //       <progress value={user.level} max="100"></progress>
+    //     </div>
+    //     <p />
+    //     <div id="editLayout">
+    //       <strong>소속</strong>
+    //       <div className="font">{user.group}</div>
+    //       <p />
+    //       <strong>메일</strong>
+    //       <div className="font">{user.email}</div>
+    //       <p />
+    //       <strong>오픈채팅</strong>
+    //       <div className="font">{user.openChating}</div>
+    //       <p />
+    //       <div className="divEdit">
+    //         {/* 자신의 마이페이지를 보고있다면 수정버튼 활성화 */}
+    //         <button
+    //           className="edit"
+    //           onClick={onEditHandler}
+    //           style={isMy ? { display: "block" } : { display: "none" }}
+    //         >
+    //           {Infobtn}
+    //         </button>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
+    <Profile user={user} />
   );
 }
 

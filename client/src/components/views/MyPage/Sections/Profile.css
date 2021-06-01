@@ -1,0 +1,128 @@
+/* 왼쪽 프로필 컨테이너 */
+.MypageLeftProfile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-size: 10px;
+}
+
+/* 프로필 이미지 */
+.MypageLeftProfile img {
+  width: 200px;
+  height: 200px;
+
+  /* 원으로 만들기 */
+  border-radius: 100px;
+  /* 그림자 */
+  box-shadow: 0 3px 6px 0 rgba(112, 112, 112, 0.16);
+
+  /* 배너에 반 걸치도록 위치 조정 */
+  transform: translateY(-100px);
+
+  object-fit: cover;
+}
+
+/* 프로필 사진 외 텍스트들 */
+.MypageTextContainer {
+  /* 원래 마진 (30px) - 이미지 반절 크기 (100px) */
+  margin-top: -70px;
+
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 이름 */
+.ProfileName {
+  font-size: 3em;
+  font-weight: bold;
+  color: #2d2d2d;
+}
+
+/* 분야 */
+.ProfileField {
+  font-size: 1.6em;
+  color: #aaaaaa;
+  margin-top: 8px;
+}
+
+/* 소개 */
+.ProfileIntro {
+  font-size: 1.9em;
+  color: #2d2d2d;
+  margin-top: 30px;
+}
+
+/* 디바이더 */
+.hr {
+  width: 100%;
+  border: none;
+  height: 1px;
+  background-color: #ccc;
+  margin: 50px 0;
+}
+
+/* 레벨 */
+.ProfileLevel {
+  font-size: 2.1em;
+  font-weight: bold;
+  color: #2d2d2d;
+  align-self: flex-start;
+}
+
+/* 레벨 바 */
+.ProfileLevelBar {
+  margin-top: 19px;
+  width: 100%;
+  height: 10px;
+  border-radius: 98px;
+  background-color: #ececec;
+}
+/* 레벨 바 채우기 */
+.ProfileFillLevelBar {
+  width: 60%; /* 임시 width */
+  height: 10px;
+  border-radius: 98px;
+  background-color: #57ecbf;
+}
+
+/* 소속, 메일, 오픈채팅 */
+.ProfileContact {
+  margin-top: 40px;
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 80px auto;
+}
+/* 데이터 타이틀 (소속, 메일, 오픈채팅) */
+.ProfileContact > span {
+  font-size: 2em;
+  font-weight: 500;
+  color: #2d2d2d;
+}
+/* 실제 데이터 */
+.ProfileContact > span:nth-child(2n) {
+  text-align: right;
+  font-size: 1.9em;
+  font-weight: normal;
+  color: #bcbcbc;
+}
+
+/* 수정하기 버튼 */
+.ButtonProfileEdit {
+  margin: 100px 0;
+  width: 104px;
+  height: 43px;
+  border-radius: 28px;
+  box-shadow: 0 1px 6px 0 rgba(112, 112, 112, 0.24);
+  background-color: #ffffff;
+
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #707070;
+
+  border: none;
+  cursor: pointer;
+}

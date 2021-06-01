@@ -7,7 +7,11 @@ h1 {
 }
 
 /* 마이페이지 컨테이너 */
-.MyPageContainer {
+.MypageContainer {
+  width: 100vw;
+  height: 90.7vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* 마이페이지 배너 */
@@ -23,6 +27,7 @@ h1 {
 
 /* 왼쪽 프로필 & 게시글 */
 .MypageContents {
+  width: 100%;
   display: grid;
   grid-template-columns: 36% auto;
 }
