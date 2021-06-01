@@ -4,6 +4,7 @@ import { useHistory, useLocation } from "react-router";
 
 import Pagination from "./Pagination";
 import Post from "./Post";
+import NonePosts from "./NonePosts";
 
 // CSS
 import "./Posts.css";
@@ -159,21 +160,28 @@ function Posts() {
         </button>
       </div>
 
-      {/* 포스트 컴포넌트들 (실제 피드) */}
-      <div className="PostsPostContainer">
-        {getCurrentPosts().map((post, index) => (
-          <Post key={index} post={post} />
-        ))}
-      </div>
+      {posts.length !== 0 ? (
+        <div>
+          {/* 포스트 컴포넌트들 (실제 피드) */}
+          <div className="PostsPostContainer">
+            {getCurrentPosts().map((post, index) => (
+              <Post key={index} post={post} />
+            ))}
+          </div>
 
-      {/* 숫자 목록 */}
-      {/* 전체 페이지 번호 수, 현재 페이지 번호, 현재 페이지 번호 Setter */}
-      <Pagination
-        postsPerPage={postsPerPage}
-        totalPosts={posts.length}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+          {/* 숫자 목록 */}
+          {/* 전체 페이지 번호 수, 현재 페이지 번호, 현재 페이지 번호 Setter */}
+          <Pagination
+            postsPerPage={postsPerPage}
+            totalPosts={posts.length}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </div>
+      ) : (
+        // 글이 없음
+        <NonePosts postType={postType} />
+      )}
     </section>
   );
 }

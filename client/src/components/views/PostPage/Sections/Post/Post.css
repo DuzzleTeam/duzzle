@@ -179,34 +179,3 @@ span.PostMainText {
 .PostLikeShareContainer > button > img {
   margin-right: 10px;
 }
-
-/* 위즐 */
-.PostWezzleContainer {
-  /* 위 | 오른쪽 | 아래 | 왼쪽 */
-  margin: 52px 4.2vw 0 4.2vw;
-  font-size: 1rem;
-  color: #2d2d2d;
-}
-
-.PostTextPeriod > span {
-  word-spacing: 12px;
-}
-.PostTextPeriod > span:first-child {
-  margin-right: 27px;
-}
-.PostTextPeriod > span:last-child {
-  margin-left: 27px;
-}
-
-.PostWezzleContainer > div > span:first-child {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-right: 39px;
-}
-
-.PostWezzleContainer > div {
-  margin-top: 32px;
-}
-.PostWezzleContainer > div:first-child {
-  margin-top: 0;
-}
