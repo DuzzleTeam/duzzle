@@ -3,11 +3,14 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getUser, editUser } from "../../../../_actions/user_action";
-import "../Sections/MyPage.css";
+
+// CSS
+import "./EditLayout.css";
+
 // 프로필 이미지 변경되었는지 check
 let cnt = 0;
 
-function EditLayout(props) {
+function EditLayout() {
   const dispatch = useDispatch();
 
   // 나의 마이페이지인지 다른 사람의 마이페이지 인지
@@ -19,7 +22,7 @@ function EditLayout(props) {
 
   // 보고있는 마이페이지의 유저 정보
   const [user, setUser] = useState({});
-  const myPageEmail = window.location.href.substr(28);
+  const myPageEmail = document.location.pathname.replace("/users/", "");
   useEffect(() => {
     // 현재 보고있는 마이페이지의 유저 정보 가져오기
     dispatch(getUser(myPageEmail)).then((res) => {
@@ -27,10 +30,12 @@ function EditLayout(props) {
         setUser(res.payload.userInfo);
       }
     });
+
     // 내 정보 가져오기
-    if (reduxUser !== undefined) {
+    if (!reduxUser) {
       setMyInfo(reduxUser);
     }
+
     // 내가 나의 마이페이지를 보고있다면
     if (myInfo.email === myPageEmail) {
       setIsMy(true);
@@ -41,7 +46,7 @@ function EditLayout(props) {
   const [form, setValues] = useState("");
 
   // 04.21 / 수정하기 버튼
-  const [isEdit, setIsEdit] = useState(props.isEdit);
+  const [isEdit, setIsEdit] = useState(false);
   const [Infobtn, setInfobtn] = useState("수정하기");
 
   // 프로필 이미지

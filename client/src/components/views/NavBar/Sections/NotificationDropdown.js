@@ -7,12 +7,12 @@ import "./NotificationDropdown.css";
 
 function NotificationDropdown(props) {
   // 현재 접속 유저 정보
-  const user = useSelector((state) => state.user.authPayload);
-  async function fetchData() {
-    const noti = await axios.get(`/api/notification/${user._id}`);
-    console.log(noti);
-  }
-  fetchData();
+  // const user = useSelector((state) => state.user.authPayload);
+  // async function fetchData() {
+  //   const noti = await axios.get(`/api/notification/${user._id}`);
+  //   console.log(noti);
+  // }
+  // fetchData();
   const [notification, setNotification] = useState({
     provider: "조하닮",
     post: {
