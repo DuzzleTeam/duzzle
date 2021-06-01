@@ -9,7 +9,7 @@ function Input({ className = "", value, setValue, placeholder }) {
     <input
       type="text"
       className={className}
-      value={value}
+      value={value || ""}
       placeholder={placeholder}
       onChange={(e) => setValue(e.target.value)}
     />

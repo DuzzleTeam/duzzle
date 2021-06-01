@@ -19,6 +19,19 @@
   /* 배너에 반 걸치도록 위치 조정 */
   transform: translateY(-100px);
 }
+/* 실제 file input 태그 */
+.EditProfileImageInput {
+  width: 100%;
+  height: 100%;
+  /* 원으로 만들기 */
+  border-radius: 100px;
+
+  opacity: 0;
+  cursor: pointer;
+
+  /* 프로필 이미지 수정 컨테이너에 위치 */
+  position: absolute;
+}
 /* 프레임 */
 .EditProfileImage {
   width: 100%;
@@ -35,11 +48,12 @@
     rgba(0, 0, 0, 0.2),
     rgba(0, 0, 0, 0.8)
   );
-  cursor: pointer;
 }
+/* 카메라 아이콘 */
 .EditProfileImage > img {
   margin-bottom: 20px;
 }
+/* 편집 텍스트 */
 .EditProfileImage > span {
   margin-bottom: 20px;
   margin-left: 10px;
@@ -48,6 +62,7 @@
   font-weight: 500;
   color: white;
 }
+/* 실제 프로필 사진 */
 .MypageEditProfile .UserProfileImage {
   width: 100%;
   height: 100%;

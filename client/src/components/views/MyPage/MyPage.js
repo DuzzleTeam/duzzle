@@ -49,7 +49,7 @@ function MyPage() {
 
         <section className="MypageContents">
           {/* 왼쪽 프로필 */}
-          <EditLayout user={user} />
+          <EditLayout user={user} setUser={setUser} />
 
           {/* 내 게시물 */}
           <article className={"MypageRightPosts"}>

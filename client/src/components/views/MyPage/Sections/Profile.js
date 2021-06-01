@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import "./Profile.css";
 
-function Profile({ user, onEditHandler }) {
+function Profile({ user, setIsEditing }) {
   // Redux에서 접속 User 정보 가져오기
   const connectUser = useSelector((state) => state.user.authPayload);
 
@@ -57,7 +57,14 @@ function Profile({ user, onEditHandler }) {
 
         {/* 수정하기 버튼 */}
         {/* 현재 접속 유저가 마이페이지 유저와 동일할 때만 보여줌 */}
-        {isAuth && <button className="ButtonProfileEdit">수정하기</button>}
+        {isAuth && (
+          <button
+            onClick={() => setIsEditing(true)}
+            className="ButtonProfileEdit"
+          >
+            수정하기
+          </button>
+        )}
       </div>
     </article>
   );
