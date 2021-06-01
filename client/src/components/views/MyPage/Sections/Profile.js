@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import "./Profile.css";
 
-function Profile({ user }) {
+function Profile({ user, onEditHandler }) {
+  // Redux에서 접속 User 정보 가져오기
+  const connectUser = useSelector((state) => state.user.authPayload);
+
+  const [isAuth, setIsAuth] = useState(false);
+
+  useEffect(() => {
+    if (connectUser) {
+      // 접속 유저 정보가 있을 때 실행
+      if (user._id === connectUser._id) {
+        // 접속 유저와 마이페이지 유저가 같다면
+        setIsAuth(true);
+      }
+    }
+  }, [connectUser, user._id]);
+
   return (
     <article className={"MypageLeftProfile"}>
       {/* 프로필 사진 */}
@@ -40,7 +56,8 @@ function Profile({ user }) {
         </div>
 
         {/* 수정하기 버튼 */}
-        <button className="ButtonProfileEdit">수정하기</button>
+        {/* 현재 접속 유저가 마이페이지 유저와 동일할 때만 보여줌 */}
+        {isAuth && <button className="ButtonProfileEdit">수정하기</button>}
       </div>
     </article>
   );
