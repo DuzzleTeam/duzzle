@@ -12,7 +12,7 @@ function EditProfile({ user, setUser, setIsEditing }) {
   // Form data state
   const [name, setName] = useState(user.name);
   const [field, setField] = useState(user.field);
-  const [introduction, setIntroduction] = useState(user.introduction);
+  const [introduction, setIntroduction] = useState(user.introduction ?? "");
   const [group, setGroup] = useState(user.group);
   const [openChating, setOpenChating] = useState(user.openChating);
 
