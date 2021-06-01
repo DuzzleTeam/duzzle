@@ -1,0 +1,191 @@
+/* 최상위 컨테이너 */
+#PostWritingPage {
+  width: 100%;
+  height: 100%;
+
+  /* navbar 높이만큼 줄임 */
+  margin-top: -9.3vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.FormContentsContainer {
+  display: flex;
+  justify-content: center;
+}
+.IsWezzleContainer {
+  display: flex;
+  flex-direction: column;
+}
+.TopContainer {
+  display: flex;
+  flex-direction: row;
+}
+.Container {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  background-color: white;
+}
+.LineContainer {
+  display: flex;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+label,
+span {
+  font-family: "Noto Sans KR", sans-serif;
+  margin-left: 5px;
+  margin-right: 5px;
+  text-align: center;
+}
+
+.InputTitle {
+  display: flex;
+  margin-right: auto;
+  margin-right: 15px;
+
+  width: 45vw;
+  font-size: 1.2rem;
+  font-weight: 800;
+
+  outline: 0;
+  border: none;
+}
+.InputTitle::placeholder {
+  color: #cecece;
+}
+
+.UploadButtonContainer {
+  display: flex;
+  margin-left: auto;
+}
+
+.UploadButton {
+  display: flex;
+  height: 3vh;
+  width: 4.5vw;
+  min-height: 28px;
+  min-width: 75px;
+
+  border: none;
+  outline: 0;
+  background-color: #57ecbf;
+  color: white;
+  border-radius: 28px;
+
+  display: inline-block;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1rem;
+
+  cursor: pointer;
+}
+.UploadButton:disabled {
+  background-color: #ececec;
+  cursor: default;
+}
+.Line {
+  display: flex;
+  height: 0.5px;
+  background-color: #cecece;
+  border: none;
+  width: 100%;
+}
+
+.KeyLable {
+  margin-right: 18px;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+/* .CheckBox {
+  margin-right: 10px;
+} */
+
+input[type="checkbox"] {
+  display: none;
+}
+input[type="checkbox"] + label {
+  display: inline-block;
+
+  width: 18px;
+  height: 18px;
+
+  margin-right: 1px;
+
+  border-radius: 4px;
+  border: solid 1px #707070;
+
+  box-sizing: border-box;
+
+  cursor: pointer;
+}
+input[type="checkbox"]:checked + label {
+  background-image: url("http://localhost:3000/images/checkbox.png");
+  background-repeat: no-repeat;
+  border: none;
+}
+
+.PeriodOutline {
+  border: 1px solid #ececec;
+  display: inline-block;
+  height: 2.2vh;
+  padding-right: 7px;
+  border-radius: 2.5px;
+  margin-left: 1px;
+  margin-right: 1px;
+  font-family: "Noto Sans KR", sans-serif;
+}
+.InputPeriodYear,
+.InputPeriodMD {
+  border: none;
+  outline: 0;
+  padding-left: 5px;
+}
+.InputPeriodYear {
+  width: 2vw;
+  min-width: 35px;
+}
+.InputPeriodMD {
+  width: 1vw;
+  min-width: 20px;
+}
+.PeopleNumOutline {
+  border: 1px solid #ececec;
+  display: inline-block;
+  border-radius: 2.5px;
+  height: 2.3vh;
+  font-family: "Noto Sans KR", sans-serif;
+}
+.PeopleNumButton {
+  border: none;
+  background-color: white;
+  height: 2.2vh;
+  display: inline-block;
+  border-radius: 2.5px;
+}
+.PeopleNumText {
+  border: none;
+  display: inline-block;
+  background-color: white;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.TextArea {
+  height: 60vh;
+  width: 100%;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 1rem;
+  border: none;
+  outline: 0;
+}
+
+.Input[id="images"] {
+  background: url("http: //localhost 3000px /images/camera.png") no-repeat;
+  border: none;
+  cursor: pointer;
+}
