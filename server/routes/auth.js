@@ -278,8 +278,7 @@ router.get("/api/users/:email", (req, res) => {
     if (err) console.log(err);
     else
       res.status(200).send({
-        getSuccess: true,
-        userInfo: user,
+        user: user,
       });
   });
 });
