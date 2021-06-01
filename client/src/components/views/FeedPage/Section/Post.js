@@ -24,10 +24,7 @@ function Post(props) {
     const postType = document.location.pathname.match(/wezzle|mezzle/);
 
     // 해당 게시글로 화면 전환
-    history.push({
-      pathname: `/${postType}/post/${post._id}`,
-      state: { postId: post._id },
-    });
+    history.push(`/${postType}/post/${post._id}`);
   };
 
   return (
