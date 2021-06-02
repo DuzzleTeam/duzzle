@@ -13,6 +13,7 @@
 .FormContentsContainer {
   display: flex;
   justify-content: center;
+  margin-top: 4.5vh;
 }
 .IsWezzleContainer {
   display: flex;
@@ -36,14 +37,14 @@
   margin-bottom: 15px;
 }
 
-label,
+/* label,
 span {
   font-family: "Noto Sans KR", sans-serif;
   color: #2d2d2d;
   margin-left: 5px;
   margin-right: 5px;
   text-align: center;
-}
+} */
 
 .InputTitle {
   display: flex;
@@ -112,7 +113,7 @@ input[type="checkbox"] + label {
   width: 18px;
   height: 18px;
 
-  margin-right: 1px;
+  margin-right: 12px;
 
   border-radius: 4px;
   border: solid 1px #707070;
@@ -198,4 +199,17 @@ input[type="checkbox"]:checked + label {
 
 .ImagesButton {
   display: none;
+}
+
+.ForSpaceCheckbox {
+  margin-left: 20px;
+}
+
+.ForSpaceLabel {
+  margin-right: 15px;
+}
+
+.ForSpaceSpan {
+  margin-right: 3px;
+  margin-left: 3px;
 }

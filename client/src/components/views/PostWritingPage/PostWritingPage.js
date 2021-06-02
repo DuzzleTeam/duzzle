@@ -262,7 +262,7 @@ function PostWritingPage() {
                     />
                     <label>일</label>
                   </span>
-                  <span> - </span>
+                  <span className="ForSpaceSpan"> - </span>
                   <span className="PeriodOutline">
                     <input
                       maxLength="4"
@@ -303,9 +303,10 @@ function PostWritingPage() {
                     name="field"
                     checked={inputField.field[0] ? true : false}
                     onChange={onChangeField}
+                    className="PostWirtingCheckbox"
                   />
                   <label htmlFor="field0"></label>
-                  <label>개발</label>
+                  <label className="ForSpaceLabel">개발</label>
 
                   <input
                     type="checkbox"
@@ -313,9 +314,10 @@ function PostWritingPage() {
                     name="field"
                     checked={inputField.field[1] ? true : false}
                     onChange={onChangeField}
+                    className="PostWirtingCheckbox"
                   />
                   <label htmlFor="field1"></label>
-                  <label>디자인</label>
+                  <label className="ForSpaceLabel">디자인</label>
                 </div>
 
                 <div className="Container">
@@ -370,7 +372,7 @@ function PostWritingPage() {
                     />
                     <label>일</label>
                   </span>
-                  <span> - </span>
+                  <span className="ForSpaceSpan"> - </span>
                   <span className="PeriodOutline">
                     <input
                       maxLength="4"
@@ -406,9 +408,10 @@ function PostWritingPage() {
                     name="6"
                     checked={inputPeriods.projectPeriod[6] ? true : false}
                     onChange={onChangePeriod}
+                    className="PostWirtingCheckbox"
                   />
-                  <label htmlFor="6"></label>
-                  <label>미정</label>
+                  <label htmlFor="6" className="ForSpaceCheckbox"></label>
+                  <label className="ForSpaceLabel">미정</label>
                 </div>
 
                 <div className="LineContainer">
