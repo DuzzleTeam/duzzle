@@ -1,0 +1,48 @@
+/* 버튼 컨테이너 */
+.MyPostNav {
+  font-size: 10px;
+  margin-top: 90px;
+  margin-bottom: 60px;
+}
+
+/* 첫 번째 버튼 */
+.MyPostNav > button:first-child {
+  margin-right: 16px;
+}
+
+/* 지원목록, 내 게시물 기본 디자인 */
+.ButtonMyPost {
+  width: 120px;
+  height: 48px;
+
+  border-radius: 28px;
+
+  border: solid 2px #cecece;
+
+  background-color: white;
+  color: #cecece;
+
+  font-size: 2em;
+  font-weight: bold;
+
+  cursor: pointer;
+  outline: none;
+}
+.UnactiveButtonMyPost:hover {
+  background-color: #cecece;
+  color: #2d2d2d;
+}
+
+/* 선택 되었을 때 */
+.ActiveButtonMyPost {
+  width: 120px;
+  height: 48px;
+
+  border-radius: 28px;
+  border: solid 2px #2d2d2d;
+
+  background-color: #2d2d2d;
+  color: white;
+
+  cursor: default;
+}

@@ -3,8 +3,9 @@ import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getUser } from "../../../_actions/user_action";
 
-import MyPost from "./Sections/MyPost.js";
 import EditLayout from "./Sections/EditLayout.js";
+import MyPostNav from "./Sections/MyPostNav";
+import MyPost from "./Sections/MyPost.js";
 
 import "./Sections/MyPage.css";
 
@@ -39,6 +40,9 @@ function MyPage() {
     fetchData();
   }, [setMypageUser]);
 
+  // 지원 목록인지 내 게시물인지 현재 메뉴
+  const [currentMenu, setCurrentMenu] = useState(0);
+
   return (
     user && (
       <main className="MypageContainer">
@@ -53,6 +57,12 @@ function MyPage() {
 
           {/* 내 게시물 */}
           <article className={"MypageRightPosts"}>
+            {/* 지원목록, 내 게시물 */}
+            <MyPostNav
+              currentMenu={currentMenu}
+              setCurrentMenu={setCurrentMenu}
+            />
+            {/* 게시물 */}
             <MyPost isPost={false} />
           </article>
         </section>
