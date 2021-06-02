@@ -64,3 +64,7 @@ web_modules/
 
 # mongodb
 dev.js
+
+# 환경변수
+.env
+.env.dev

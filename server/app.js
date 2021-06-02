@@ -1,11 +1,12 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const port = 5000;
+const PORT = process.env.PORT || 5000;
 
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+require("dotenv/config");
 const config = require("./config/key");
 
 const authRouter = require("./routes/auth");
@@ -18,6 +19,17 @@ const notificationRouter = require("./routes/notification");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+
+// PRODUCT
+if (process.env.NODE_ENV === "production") {
+  console.log("production mode");
+  app.use(express.static(path.join(__dirname, "../client/build")));
+}
+
+app.get("/", (req, res) => {
+  console.log(__dirname);
+  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+});
 
 app.use("/", authRouter);
 app.use("/api", commentRouter);
@@ -39,4 +51,4 @@ mongoose
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
 
-app.listen(port);
+app.listen(PORT, () => console.log(`port ${PORT}`));
