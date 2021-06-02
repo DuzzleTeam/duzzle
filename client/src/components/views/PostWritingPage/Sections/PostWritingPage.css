@@ -39,6 +39,7 @@
 label,
 span {
   font-family: "Noto Sans KR", sans-serif;
+  color: #2d2d2d;
   margin-left: 5px;
   margin-right: 5px;
   text-align: center;
@@ -101,10 +102,6 @@ span {
   margin-right: 18px;
   font-family: "Noto Sans KR", sans-serif;
 }
-
-/* .CheckBox {
-  margin-right: 10px;
-} */
 
 input[type="checkbox"] {
   display: none;
@@ -174,18 +171,31 @@ input[type="checkbox"]:checked + label {
   background-color: white;
   padding-left: 8px;
   padding-right: 8px;
+  color: #2d2d2d;
 }
 .TextArea {
   height: 60vh;
   width: 100%;
   font-family: "Noto Sans KR", sans-serif;
+  color: #2d2d2d;
   font-size: 1rem;
   border: none;
   outline: 0;
 }
 
-.Input[id="images"] {
-  background: url("http: //localhost 3000px /images/camera.png") no-repeat;
-  border: none;
+.ImagesLabel {
+  display: flex;
   cursor: pointer;
+  text-decoration: underline;
+  color: #585858;
+  margin-left: auto;
+}
+.ImagesIcon {
+  width: 22px;
+  height: 18px;
+  margin-right: 7px;
+}
+
+.ImagesButton {
+  display: none;
 }

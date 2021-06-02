@@ -127,11 +127,6 @@ function PostWritingPage() {
           inputPeriods.projectPeriod[4] +
           inputPeriods.projectPeriod[5]
       );
-      console.log(
-        inputPeriods.projectPeriod[6] === "미정" ||
-          (startProjectPeriod >= nowDay &&
-            endProjectPeriod >= startProjectPeriod)
-      );
       if (
         // 제목, 내용, 모집기간, 모집분야, 모집인원, 프로젝트예상기간에 값이 들어가 있을 경우
         String(inputContents.title) !== "" &&
@@ -412,7 +407,7 @@ function PostWritingPage() {
                     checked={inputPeriods.projectPeriod[6] ? true : false}
                     onChange={onChangePeriod}
                   />
-                  <label for="6"></label>
+                  <label htmlFor="6"></label>
                   <label>미정</label>
                 </div>
 
@@ -425,11 +420,16 @@ function PostWritingPage() {
             )}
 
             <div className="Container">
+              <label htmlFor="images" className="ImagesLabel">
+                <img src="/images/camera.png" className="ImagesIcon" />
+                사진 추가
+              </label>
               <input
                 type="file"
                 id="images"
                 accept="image/png,image/jpeg"
                 defaultValue={inputContents.contents.images}
+                className="ImagesButton"
               />
             </div>
 
