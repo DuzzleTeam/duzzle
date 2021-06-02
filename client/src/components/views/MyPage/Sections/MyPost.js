@@ -1,22 +1,27 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
+
+// CSS
 import "./MyPost.css";
 
-function MyPost(props) {
-  const [isPost, setIsPost] = useState(props.isPost);
-
+function MyPost({ currentMenu, email }) {
   // 보고있는 마이페이지 유저의 포스트 정보
-  const [post, setPost] = useState();
-  const myPageEmail = window.location.href.substr(28);
+  const [posts, setPosts] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
-      const post = await axios.get(`/api/users/post/${myPageEmail}`);
-      setPost(post.data.postInfo);
+      // 유저의 포스트 정보 가져오기 요청
+      const res = await axios.get(`/api/posts/${email}`);
+
+      // 가져오기에 성공했다면
+      if (res.status === 200) {
+        // posts 셋팅
+        setPosts(res.data.posts);
+      }
     };
     fetchData();
-    console.log(post);
-  }, [myPageEmail]);
+  }, [email]);
 
   return <div></div>;
 }
