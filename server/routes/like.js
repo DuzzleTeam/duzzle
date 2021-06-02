@@ -92,7 +92,7 @@ router.get("/likes/:email", async (req, res) => {
 
   if (wezzle.length !== 0) {
     // 협업 신청한 글이 있다면
-    return res.status(200).send({ likes: wezzle });
+    return res.status(200).send({ posts: wezzle });
   }
 
   return res.send();
