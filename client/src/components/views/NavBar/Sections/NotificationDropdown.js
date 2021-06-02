@@ -20,44 +20,49 @@ function NotificationDropdown(props) {
     menuType: "comment",
   });
 
-  // 알림 가져오기 -> 가져올때마다 Item{ }에 추가
-  const loadNoti = async () => {
-    axios
-      .get(`/api/notification/${user._id}`)
-      .then(({ data }) => {
-        const notificationList = {
-          provider: data.provider,
-          post: {
-            title: data.content,
-            isWezzle: data.isWezzle,
-          },
-          isChecked: false,
-          occurTime: data.occurTime.slice(0, 10).replace(/-/g, "."),
-          menuType: "comment",
-        };
-        setNotification({
-          ...notification,
-          notificationList,
-        });
-        // setNotiList({
-        //   data,
-        // });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  };
-  loadNoti();
+  // const fetchData = async () => {
+  //   axios.get(`/api/notification/${user._id}`).then(({ data }) => {
+  //     const noti = {
+  //       provider: data.provider,
+  //       post: {
+  //         title: data.content,
+  //         isWezzle: data.isWezzle,
+  //       },
+  //       isChecked: false,
+  //       occurTime: data.occurTime.slice(0, 10).replace(/-/g, "."),
+  //       menuType: "comment",
+  //     };
+  //     // notification 배열의 불변성을 유지하며 noti 추가
+  //     setNotification([...notification], noti);
+  //   });
+  // };
 
-  // 알림 리스트
-  const [notiList, setNotiList] = useState([]);
+  // 알림 가져오기
+  // async function fetchData() {
+  //   const noti = await axios.get(`/api/notification/${user._id}`);
+  //   console.log(noti.data);
+  //   setNotification({
+  //     provider: noti.data.provider,
+  //     post: {
+  //       title: noti.data.content,
+  //       isWezzle: noti.data.isWezzle,
+  //     },
+  //     isChecked: false,
+  //     occurTime: noti.data.occurTime.slice(0, 10).replace(/-/g, "."),
+  //     menuType: "comment",
+  //   });
+  // }
+
+  // 현재 활성화 중인 메뉴 (기본적으로 댓글)
+  const [activeNotiMenu, setActiveNotiMenu] = useState(0);
+
+  useEffect(() => {
+    // fetchData();
+  }, [notification]);
 
   // 메뉴 리스트
   const menus = ["댓글", "좋아요", "협업해요"];
 
-  // 현재 활성화 중인 메뉴 (기본적으로 댓글)
-  const [activeNotiMenu, setActiveNotiMenu] = useState(0);
-  useEffect(() => {}, [notification]);
   return (
     // 알림창 전체 컨테이너
     <div

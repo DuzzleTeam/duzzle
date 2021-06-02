@@ -42,13 +42,13 @@ router.get(`/notification/:userId`, (req, res) => {
   // url로 전달받은 user id 가져오기
   const userId = req.params.userId;
   // urlId user가 받은 알림 가져오기
-  Notification.find((err, notification) => {
-    if (!notification) return console.log("알림 찾을 수 없음");
+  Notification.find(async (err, notification) => {
+    // if (!notification) return res.json({ error: "알림 찾을 수 없음" });
     for (i = 0; i < notification.length; i++) {
       // 알림의 user가 현재 접속하고 있는 user와 일치한다면(나한테 온 알림)
       if (notification[i].user.toString() == userId) {
         // 알림을 보낸 사람 찾기(provider)
-        const provider = User.findOne(
+        const provider = await User.findOne(
           { _id: notification[i].provider.toString() },
           (err, provider) => {
             return provider;
@@ -56,26 +56,26 @@ router.get(`/notification/:userId`, (req, res) => {
         );
         // 댓글이 달린 게시물 찾기(post)
         Post.findOne({ _id: notification[i].post.toString() }, (err, post) => {
-          if (!post) return console.log("게시글 찾을 수 없음");
+          // if (!post) return res.json({ error: "게시글 찾을 수 없음" });
           // 댓글 내용 찾기(comment)
           Comment.find((err, comment) => {
-            if (!comment) return console.log("댓글 찾을 수 없음");
+            // if (!comment) return res.json({ error: "댓글 찾을 수 없음" });
             // 최근 달린 댓글부터
             for (i = comment.length - 1; i >= 0; i--) {
               if (comment[i].post.toString() == post._id) {
-                return res.status(200).json({
+                res.status(200).json({
                   provider: provider.name,
                   isWezzle: post.isWezzle,
                   content: comment[i].text,
                   occurTime: comment[i].createdAt,
                 });
               }
+              break;
             }
           });
-        }).catch((e) => {
-          console.error(e);
         });
       }
+      break;
     }
   });
 });
