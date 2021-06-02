@@ -239,7 +239,7 @@ function PostWritingPage() {
                 placeholder="제목"
                 defaultValue={inputContents.title}
                 onChange={onChangeCommon}
-                className="InputTitle"
+                className="WritingInputTitle"
               />
               {/* isActive가 false일 때 버튼 비활성화(disabled=true) */}
               <div className="UploadButtonContainer">

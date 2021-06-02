@@ -8,7 +8,7 @@ function Input({ className = "", value, setValue, placeholder }) {
   return (
     <input
       type="text"
-      className={className}
+      className={`${className} InputTextComponent`}
       value={value || ""}
       placeholder={placeholder}
       onChange={(e) => setValue(e.target.value)}
