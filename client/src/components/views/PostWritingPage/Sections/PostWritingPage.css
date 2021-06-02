@@ -39,8 +39,7 @@
 
 /* label,
 span {
-  font-family: "Noto Sans KR", sans-serif;
-  color: #2d2d2d;
+  
   margin-left: 5px;
   margin-right: 5px;
   text-align: center;
@@ -131,7 +130,7 @@ input[type="checkbox"]:checked + label {
 .PeriodOutline {
   border: 1px solid #ececec;
   display: inline-block;
-  height: 2.2vh;
+  height: 2.3vh;
   padding-right: 7px;
   border-radius: 2.5px;
   margin-left: 1px;
@@ -142,15 +141,18 @@ input[type="checkbox"]:checked + label {
 .InputPeriodMD {
   border: none;
   outline: 0;
-  padding-left: 5px;
+  padding-left: 8px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 0.7rem;
 }
 .InputPeriodYear {
-  width: 2vw;
-  min-width: 35px;
+  width: 1.5vw;
+  min-width: 25px;
 }
 .InputPeriodMD {
   width: 1vw;
-  min-width: 20px;
+  padding-left: 8px;
+  min-width: 15px;
 }
 .PeopleNumOutline {
   border: 1px solid #ececec;

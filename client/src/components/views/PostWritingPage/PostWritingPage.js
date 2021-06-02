@@ -161,6 +161,36 @@ function PostWritingPage() {
 
   const handlePostSubmit = (event) => {
     event.preventDefault();
+    let sortPeriod =
+      inputPeriods.period[0] +
+      "년" +
+      inputPeriods.period[1] +
+      "월" +
+      inputPeriods.period[2] +
+      "일-" +
+      inputPeriods.period[3] +
+      "년" +
+      inputPeriods.period[4] +
+      "월" +
+      inputPeriods.period[5] +
+      "일";
+
+    let sortProjectPeriod = "미정";
+    if (inputPeriods.projectPeriod[6] !== "미정") {
+      sortProjectPeriod =
+        inputPeriods.projectPeriod[0] +
+        "년" +
+        inputPeriods.projectPeriod[1] +
+        "월" +
+        inputPeriods.projectPeriod[2] +
+        "일-" +
+        inputPeriods.projectPeriod[3] +
+        "년" +
+        inputPeriods.projectPeriod[4] +
+        "월" +
+        inputPeriods.projectPeriod[5] +
+        "일";
+    }
 
     let body = {
       title: inputContents.title,
@@ -176,11 +206,11 @@ function PostWritingPage() {
       body = {
         ...body,
         recruit: {
-          period: inputPeriods.period,
+          period: sortPeriod,
           field: inputField.field,
           peopleNum: inputPeopleNum.peopleNum,
         },
-        projectPeriod: inputPeriods.projectPeriod,
+        projectPeriod: sortProjectPeriod,
       };
     }
 
