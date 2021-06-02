@@ -61,7 +61,7 @@ router.post("/like/:postId", auth, async (req, res) => {
       await post.save();
 
       // 클라이언트에 전송
-      return res.status(200).json({ like: post.like });
+      return res.status(200).json({ like: post.like, save: true });
     } catch (e) {
       // 저장 실패
       return res.json({ e });
