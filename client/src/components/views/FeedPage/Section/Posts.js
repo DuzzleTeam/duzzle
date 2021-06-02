@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useHistory, useLocation } from "react-router";
+import pagination from "../../../Pagination/functions";
 
 import Pagination from "../../../Pagination/Pagination";
 import Post from "../../../Feed/Post";
@@ -91,45 +92,23 @@ function Posts() {
   // 한 페이지에 표시할 게시글 갯수
   const postsPerPage = 12;
 
-  // 현재 화면에 표시할 게시물 구하기
-  const getCurrentPosts = () => {
-    const endIndex = currentPage * postsPerPage;
-    const startIndex = endIndex - postsPerPage;
-    const currentPosts = posts.slice(startIndex, endIndex);
-    return currentPosts;
-  };
+  // 게시글 모음 컨테이너
+  const scrollTargetRef = useRef();
+  // location: state, pathname, hash ...
+  const location = useLocation();
+
+  useEffect(() => {
+    // 자동 스크롤 (첫 게시글 위치로)
+    pagination.autoScroll(location, scrollTargetRef);
+    // 페이지 전환을 한 적이 있다면
+    pagination.saveCurrentPage(location, setCurrentPage);
+  }, [location]);
 
   const history = useHistory();
   // 글쓰기 버튼 클릭
   const onWriteButtonClick = (e) => {
     history.push(`/${postType}/write`);
   };
-
-  // 게시글 모음 컨테이너
-  const scrollTargetRef = useRef();
-  // location: state, pathname, hash ...
-  const location = useLocation();
-  // location state가 있고 ref가 있다면
-  if (location.state && scrollTargetRef.current) {
-    // state에서 scroll을 가져옴
-    const { scroll } = location.state;
-    // scroll이 true이면 pagination에서 페이지 전환한 것
-    if (scroll) {
-      // 게시글 상단으로 자동 스크롤 (사용자 편의)
-      scrollTargetRef.current.scrollIntoView({
-        behavior: "smooth",
-      });
-    }
-  }
-
-  useEffect(() => {
-    // 페이지 전환을 한 적이 있다면
-    if (location.hash !== "") {
-      // 새로고침해도 현재 페이지이도록 설정
-      const hashPage = location.hash.substring(1);
-      setCurrentPage(Number(hashPage));
-    }
-  }, [location.hash]);
 
   return (
     // 글 전체 목록 컨테이너
@@ -164,9 +143,11 @@ function Posts() {
         <div>
           {/* 포스트 컴포넌트들 (실제 피드) */}
           <div className="PostsPostContainer">
-            {getCurrentPosts().map((post, index) => (
-              <Post key={index} post={post} />
-            ))}
+            {pagination
+              .getCurrentPosts(currentPage, postsPerPage, posts)
+              .map((post, index) => (
+                <Post key={index} post={post} />
+              ))}
           </div>
 
           {/* 숫자 목록 */}
