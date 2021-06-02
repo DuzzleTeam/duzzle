@@ -62,7 +62,7 @@ export function auth() {
 }
 
 export function getUser(email) {
-  const request = axios.get(`/api/users/${email}`).then((res) => res.data);
+  const request = axios.get(`/api/users/${email}`).then((res) => res);
 
   return {
     type: GET_USER,
