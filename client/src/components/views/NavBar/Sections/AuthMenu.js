@@ -69,6 +69,7 @@ function AuthMenu(props) {
             >
               <img src="/images/notification.png" alt="notification" />
             </button>
+
             {/* <NotificationDropdown openingNoti={openingNoti} /> */}
           </div>
           {/* Profile */}
