@@ -22,6 +22,11 @@ function MyPosts({ currentMenu, email }) {
 
     if (currentMenu) {
       // currentMenu가 1이면 user가 작성한 모든 게시글을 가져옴
+      // 캐싱 되어있다면
+      if (cache.myPosts) {
+        return setPosts(cache.myPosts);
+      }
+
       // 요청 url
       const url = `/api/posts/${email}`;
 
@@ -35,10 +40,31 @@ function MyPosts({ currentMenu, email }) {
         cache.myPosts = posts;
         // posts 셋팅
         setPosts(posts);
+      } else {
+        setPosts(null);
       }
     } else {
       // currentMenu가 0이면 user 관련 wezzle like만 가져옴
-      setPosts(null);
+      // 캐싱 되어있다면
+      if (cache.myLikes) {
+        return setPosts(cache.myLikes);
+      }
+
+      // 요청 url
+      const url = `/api/likes/${email}`;
+
+      // 유저의 포스트 정보 가져오기 요청
+      const res = await axios.get(url);
+      // 가져오기에 성공했다면
+      if (res.status === 200) {
+        const { likes } = res.data;
+        // 캐싱
+        cache.myLikes = likes;
+        // posts 셋팅
+        setPosts(likes);
+      } else {
+        setPosts(null);
+      }
     }
   }, [currentMenu, email]);
 
@@ -89,33 +115,31 @@ function MyPosts({ currentMenu, email }) {
   }, [location.hash]);
 
   return (
-    posts && (
-      // 글 전체 목록 컨테이너
-      <section ref={scrollTargetRef} className={"MyPostsContainer"}>
-        {posts.length !== 0 ? (
-          <>
-            {/* 포스트 컴포넌트들 (실제 피드) */}
-            <div className="MypagePostsPostContainer">
-              {getCurrentPosts().map((post, index) => (
-                <Post key={index} post={post} />
-              ))}
-            </div>
+    // 글 전체 목록 컨테이너
+    <section ref={scrollTargetRef} className={"MyPostsContainer"}>
+      {posts ? (
+        <>
+          {/* 포스트 컴포넌트들 (실제 피드) */}
+          <div className="MypagePostsPostContainer">
+            {getCurrentPosts().map((post, index) => (
+              <Post key={index} post={post} />
+            ))}
+          </div>
 
-            {/* 숫자 목록 */}
-            {/* 전체 페이지 번호 수, 현재 페이지 번호, 현재 페이지 번호 Setter */}
-            <Pagination
-              postsPerPage={postsPerPage}
-              totalPosts={posts.length}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-            />
-          </>
-        ) : (
-          // 글이 없음
-          <></>
-        )}
-      </section>
-    )
+          {/* 숫자 목록 */}
+          {/* 전체 페이지 번호 수, 현재 페이지 번호, 현재 페이지 번호 Setter */}
+          <Pagination
+            postsPerPage={postsPerPage}
+            totalPosts={posts.length}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </>
+      ) : (
+        // 글이 없음
+        <></>
+      )}
+    </section>
   );
 }
 
