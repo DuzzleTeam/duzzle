@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useHistory, useLocation } from "react-router";
 
-import Pagination from "./Pagination";
-import Post from "./Post";
+import Pagination from "../../../Pagination/Pagination";
+import Post from "../../../Feed/Post";
 import NonePosts from "./NonePosts";
 
 // CSS

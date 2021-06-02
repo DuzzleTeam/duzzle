@@ -6,6 +6,16 @@
   cursor: pointer;
 }
 
+/* 마이페이지 컨테이너 */
+.MypagePostsPostContainer > .PreviewPostContainer {
+  width: 350px;
+}
+.MypagePostsPostContainer .PreviewPostImage,
+.MypagePostsPostContainer .PostDefaultImage {
+  width: 350px;
+  height: 285px;
+}
+
 /* 이미지 없음 */
 .PostDefaultImage {
   width: 391px;

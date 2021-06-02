@@ -31,3 +31,8 @@ h1 {
   display: grid;
   grid-template-columns: 36% auto;
 }
+
+/* 오른쪽 게시글 */
+.MypageRightPosts {
+  font-size: 10px;
+}

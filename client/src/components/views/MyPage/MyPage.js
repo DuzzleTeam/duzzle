@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../../_actions/user_action";
 
 import EditLayout from "./Sections/EditLayout.js";
-import MyPostNav from "./Sections/MyPostNav";
-import MyPost from "./Sections/MyPost.js";
+import PostsNav from "../../Feed/PostsNav";
+import MyPosts from "./Sections/MyPosts.js";
 
 import "./Sections/MyPage.css";
 
@@ -76,13 +76,16 @@ function MyPage() {
             {/* 지원목록, 내 게시물 */}
             {/* 현재 접속 유저가 마이페이지의 유저일 때만 보이기 */}
             {isAuth && (
-              <MyPostNav
+              <PostsNav
+                menus={["지원 목록", "내 게시물"]}
                 currentMenu={currentMenu}
-                setCurrentMenu={setCurrentMenu}
+                onChangeCurrentMenu={(index) => {
+                  setCurrentMenu(index);
+                }}
               />
             )}
             {/* 게시물 */}
-            <MyPost currentMenu={currentMenu} email={user.email} />
+            <MyPosts currentMenu={currentMenu} email={user.email} />
           </article>
         </section>
       </main>
