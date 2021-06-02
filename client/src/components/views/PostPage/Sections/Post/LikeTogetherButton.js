@@ -19,6 +19,12 @@ function LikeTogetherButton({ setPost, post }) {
     if (res.status === 200) {
       // 요청 성공 시
       setPost({ ...post, like: res.data.like });
+
+      // 좋아요 저장을 했으면
+      if (res.data.save) {
+        // 알림 보내기
+        await axios.get(`/api/notification/${post._id}/${user._id}`);
+      }
     }
   };
 
