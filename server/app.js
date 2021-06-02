@@ -5,6 +5,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const history = require("connect-history-api-fallback");
 require("dotenv/config");
 const PORT = process.env.PORT || 5000;
 const config = require("./config/key");
@@ -19,12 +20,17 @@ const notificationRouter = require("./routes/notification");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(history());
 
 // PRODUCT
 if (process.env.NODE_ENV === "production") {
   console.log("production mode");
   app.use(express.static(path.join(__dirname, "../client/build")));
 }
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+});
 
 app.use("/", authRouter);
 app.use("/api", commentRouter);
@@ -34,11 +40,6 @@ app.use("/api", likeRouter);
 app.use("/api", notificationRouter);
 
 app.use("/", express.static(path.join(__dirname, "uploads")));
-
-app.get("*", (req, res) => {
-  console.log(__dirname);
-  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
-});
 
 // 03.28 / mongoDB 연결
 mongoose
