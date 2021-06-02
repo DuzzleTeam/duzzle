@@ -64,12 +64,13 @@ function AuthMenu(props) {
           {/* Notification */}
           <div className="NoticiationContaier">
             <button
-              onClick={notiDropdownHandler}
+              // onClick={notiDropdownHandler}
               className="RightButton NotificationButton"
             >
               <img src="/images/notification.png" alt="notification" />
             </button>
-            <NotificationDropdown openingNoti={openingNoti} />
+
+            {/* <NotificationDropdown openingNoti={openingNoti} /> */}
           </div>
           {/* Profile */}
           <div ref={profileContainer}>
