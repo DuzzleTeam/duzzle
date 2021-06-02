@@ -135,9 +135,13 @@ function PostWritingPage() {
         inputPeriods.period.indexOf("") === -1 &&
         startPeriod >= nowDay &&
         endPeriod >= startPeriod &&
+        String(startPeriod).length === 8 &&
+        String(endPeriod).length === 8 &&
         (inputPeriods.projectPeriod[6] === "미정" ||
           (startProjectPeriod >= nowDay &&
-            endProjectPeriod >= startProjectPeriod))
+            endProjectPeriod >= startProjectPeriod &&
+            String(startProjectPeriod).length === 8 &&
+            String(endProjectPeriod).length === 8))
       ) {
         // isActive가 true -> 버튼 활성화
         setIsActive(true);
@@ -163,33 +167,22 @@ function PostWritingPage() {
     event.preventDefault();
     let sortPeriod =
       inputPeriods.period[0] +
-      "년" +
       inputPeriods.period[1] +
-      "월" +
       inputPeriods.period[2] +
-      "일-" +
+      "-" +
       inputPeriods.period[3] +
-      "년" +
       inputPeriods.period[4] +
-      "월" +
-      inputPeriods.period[5] +
-      "일";
-
+      inputPeriods.period[5];
     let sortProjectPeriod = "미정";
     if (inputPeriods.projectPeriod[6] !== "미정") {
       sortProjectPeriod =
         inputPeriods.projectPeriod[0] +
-        "년" +
         inputPeriods.projectPeriod[1] +
-        "월" +
         inputPeriods.projectPeriod[2] +
-        "일-" +
+        "-" +
         inputPeriods.projectPeriod[3] +
-        "년" +
         inputPeriods.projectPeriod[4] +
-        "월" +
-        inputPeriods.projectPeriod[5] +
-        "일";
+        inputPeriods.projectPeriod[5];
     }
 
     let body = {
@@ -208,7 +201,7 @@ function PostWritingPage() {
         recruit: {
           period: sortPeriod,
           field: inputField.field,
-          peopleNum: inputPeopleNum.peopleNum,
+          peopleNum: inputPeopleNum,
         },
         projectPeriod: sortProjectPeriod,
       };
@@ -221,6 +214,12 @@ function PostWritingPage() {
           contents: { text: "" },
         });
         setInputPeopleNum(0);
+        setInputField({ field: ["", "디자인"] });
+        setInputPeriods({
+          period: ["", "", "", "", "", ""],
+          projectPeriod: ["", "", "", "", "", "", "미정"],
+        });
+        setIsActive(false);
       } else {
         alert("게시글 작성에 실패하였습니다.");
       }

@@ -38,7 +38,7 @@ const postSchema = mongoose.Schema({
   },
   recruit: {
     period: {
-      type: [String],
+      type: String,
     },
     field: {
       type: [String],
@@ -48,7 +48,7 @@ const postSchema = mongoose.Schema({
     },
   },
   projectPeriod: {
-    type: [String],
+    type: String,
   },
 });
 
