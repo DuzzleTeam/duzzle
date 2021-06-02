@@ -1,0 +1,44 @@
+/* 컨테이너 */
+.Pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 화살표 버튼 */
+.ButtonArrow {
+  background: transparent;
+  border: none;
+  padding: 0;
+
+  cursor: pointer;
+}
+/* disabled */
+.ButtonArrow:disabled {
+  cursor: default;
+}
+
+/* 숫자들 */
+.PaginationNumber > a {
+  color: #a0a0a0;
+  font-size: 2em;
+  font-weight: bold;
+  margin-right: 47px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* 현재 페이지 숫자 */
+.ActivePaginationNumber > a {
+  color: #2d2d2d;
+  cursor: default;
+}
+
+/* 첫 번째 Arrow Button */
+.Pagination > button:first-child {
+  margin-right: 80px;
+}
+/* 마지막 Arrow Button */
+.Pagination > button:last-child {
+  margin-left: calc(80px - 47px);
+}

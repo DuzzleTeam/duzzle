@@ -1,0 +1,74 @@
+/* 컨테이너 */
+.PreviewPostContainer {
+  display: inline-flex;
+  flex-direction: column;
+  width: 391px;
+  cursor: pointer;
+}
+
+/* 마이페이지 컨테이너 */
+.MypagePostsPostContainer > .PreviewPostContainer {
+  width: 350px;
+}
+.MypagePostsPostContainer .PreviewPostImage,
+.MypagePostsPostContainer .PostDefaultImage {
+  width: 350px;
+  height: 285px;
+}
+
+/* 이미지 없음 */
+.PostDefaultImage {
+  width: 391px;
+  height: 340px;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* 이미지 있음 */
+.PreviewPostImage {
+  width: 391px;
+  height: 340px;
+
+  object-fit: cover;
+}
+
+/* 게시글 제목 */
+.FeedPostTitle {
+  margin-top: 24px;
+  margin-left: 8px;
+
+  color: #2d2d2d;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+/* 작성자, 하트, 댓글 */
+.PostInformation {
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 14px;
+  margin-left: 8px;
+  margin-right: 22px;
+  color: #9f9f9f;
+}
+
+/* 작성자 */
+.PreviewPostUser {
+  font-size: 1.6em;
+}
+
+/* 하트, 댓글 */
+.PreviewLikeComment {
+  font-size: 1.2em;
+}
+
+/* 하트, 댓글 아이콘 */
+.PreviewLikeComment > img {
+  margin-right: 4px;
+}
+
+/* 좋아요 갯수 */
+.PreviewLikeComment > span:nth-child(2) {
+  margin-right: 8px;
+}

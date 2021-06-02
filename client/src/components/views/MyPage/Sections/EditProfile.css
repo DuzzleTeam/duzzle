@@ -1,0 +1,189 @@
+/* 왼쪽 프로필 컨테이너 */
+.MypageEditProfile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-size: 10px;
+}
+
+/* 프로필 이미지 */
+/* 프로필 이미지 수정 */
+.EditProfileImageContainer {
+  width: 200px;
+  height: 200px;
+  /* 원으로 만들기 */
+  border-radius: 100px;
+  position: relative;
+
+  /* 배너에 반 걸치도록 위치 조정 */
+  transform: translateY(-100px);
+}
+/* 실제 file input 태그 */
+.EditProfileImageInput {
+  width: 100%;
+  height: 100%;
+  /* 원으로 만들기 */
+  border-radius: 100px;
+
+  opacity: 0;
+  cursor: pointer;
+
+  /* 프로필 이미지 수정 컨테이너에 위치 */
+  position: absolute;
+}
+/* 프레임 */
+.EditProfileImage {
+  width: 100%;
+  height: 100%;
+  /* 원으로 만들기 */
+  border-radius: 100px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.8)
+  );
+}
+/* 카메라 아이콘 */
+.EditProfileImage > img {
+  margin-bottom: 20px;
+}
+/* 편집 텍스트 */
+.EditProfileImage > span {
+  margin-bottom: 20px;
+  margin-left: 10px;
+
+  font-size: 1.8em;
+  font-weight: 500;
+  color: white;
+}
+/* 실제 프로필 사진 */
+.MypageEditProfile .UserProfileImage {
+  width: 100%;
+  height: 100%;
+  /* 원으로 만들기 */
+  border-radius: 100px;
+  /* 그림자 */
+  box-shadow: 0 3px 6px 0 rgba(112, 112, 112, 0.16);
+
+  position: absolute;
+  top: 0;
+  object-fit: cover;
+
+  z-index: -1;
+}
+
+/* 프로필 사진 외 텍스트들 */
+.EditProfileForm {
+  /* 원래 마진 (30px) - 이미지 반절 크기 (100px) */
+  margin-top: -70px;
+
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 이름, 분야, 소개 */
+.EditProfileForm > input,
+.EditProfileForm > textarea {
+  width: 80%;
+  text-align: center;
+}
+
+.ProfileName {
+  font-size: 3em;
+  font-weight: bold;
+  color: #2d2d2d;
+}
+/* 분야 */
+.ProfileField {
+  font-size: 1.6em;
+  color: #aaaaaa;
+  margin-top: 8px;
+}
+/* 소개 */
+textarea.ProfileIntro {
+  border-radius: 4px;
+  border: solid 1px #cecece;
+  padding: 6px;
+  resize: none;
+}
+.ProfileIntro {
+  font-size: 1.9em;
+  color: #2d2d2d;
+  margin-top: 30px;
+}
+
+/* 디바이더 */
+.hr {
+  width: 100%;
+  border: none;
+  height: 1px;
+  background-color: #ccc;
+  margin: 50px 0;
+}
+
+/* 레벨 */
+.ProfileLevel {
+  font-size: 2.1em;
+  font-weight: bold;
+  color: #2d2d2d;
+  align-self: flex-start;
+}
+
+/* 레벨 바 */
+.ProfileLevelBar {
+  margin-top: 19px;
+  width: 100%;
+  height: 10px;
+  border-radius: 98px;
+  background-color: #ececec;
+}
+/* 레벨 바 채우기 */
+.ProfileFillLevelBar {
+  width: 60%; /* 임시 width */
+  height: 10px;
+  border-radius: 98px;
+  background-color: #57ecbf;
+}
+
+/* 소속, 메일, 오픈채팅 */
+.ProfileContact {
+  margin-top: 40px;
+  margin-bottom: 100px;
+
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 100px auto;
+  row-gap: 16px;
+}
+/* 데이터 타이틀 (소속, 메일, 오픈채팅) */
+.ProfileContact > span {
+  font-size: 2em;
+  font-weight: 500;
+  color: #2d2d2d;
+}
+
+/* 완료하기 버튼 */
+.ButtonEditComplete {
+  margin-bottom: 100px;
+  width: 104px;
+  height: 43px;
+  border-radius: 28px;
+  box-shadow: 0 1px 6px 0 rgba(112, 112, 112, 0.24);
+  background-color: #ffffff;
+
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #707070;
+
+  border: none;
+  cursor: pointer;
+}

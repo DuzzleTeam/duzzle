@@ -114,6 +114,7 @@ button.DeleteCommentButton {
   display: flex;
   flex-direction: column;
   align-items: center;
+  cursor: pointer;
 }
 
 /* 좋아요 갯수 */
@@ -126,18 +127,7 @@ span.CommentLike {
 }
 
 /* 댓글 좋아요 버튼 */
-.CommentLikeContainer > button {
-  width: 25px;
-  height: 22px;
-  padding: 0;
-
-  background: transparent;
-  border: none;
-
-  cursor: pointer;
-  outline: none;
-}
-.CommentLikeContainer > button img {
+.CommentLikeContainer > img {
   width: 25px;
   height: 22px;
   object-fit: contain;

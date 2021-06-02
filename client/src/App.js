@@ -7,10 +7,9 @@ import RegisterPage from "./components/views/RegisterPage/RegisterPage";
 import Certification from "./components/views/RegisterPage/Authentication/Certification";
 import ConfirmRegister from "./components/views/RegisterPage/Authentication/ConfirmRegister";
 import PostPage from "./components/views/PostPage/PostPage";
-
 import MyPage from "./components/views/MyPage/MyPage";
-
 import PostWritingPage from "./components/views/PostWritingPage/PostWritingPage";
+import FeedPage from "./components/views/FeedPage/FeedPage";
 
 import Auth from "./hoc/auth";
 
@@ -36,6 +35,15 @@ function App() {
           path="/confirmRegister/:id"
           component={Auth(ConfirmRegister, false)}
         />
+
+        {/* 로그인 한 유저만 출입 가능 (메인 피드) */}
+        <Route
+          exact
+          path={["/mezzle", "/wezzle"]}
+          component={Auth(FeedPage, true)}
+        />
+
+        {/* 로그인 한 유저만 출입 가능 */}
         <Route
           path={["/mezzle/post/:postId", "/wezzle/post/:postId"]}
           component={Auth(PostPage, true)}

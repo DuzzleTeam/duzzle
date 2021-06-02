@@ -21,7 +21,11 @@ const postSchema = mongoose.Schema({
     images: [String],
     files: [String],
   },
-  likeCount: {
+  like: {
+    type: [String],
+    default: [],
+  },
+  commentCount: {
     type: Number,
     default: 0,
   },

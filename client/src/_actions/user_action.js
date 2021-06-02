@@ -5,6 +5,7 @@ import {
   REGISTER_USER,
   AUTH_USER,
   EDIT_USER,
+  GET_USER,
 } from "./types";
 
 export function loginUser(dataToSubmit) {
@@ -56,6 +57,15 @@ export function auth() {
 
   return {
     type: AUTH_USER,
+    payload: request,
+  };
+}
+
+export function getUser(email) {
+  const request = axios.get(`/api/users/${email}`).then((res) => res);
+
+  return {
+    type: GET_USER,
     payload: request,
   };
 }
