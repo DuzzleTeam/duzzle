@@ -26,11 +26,6 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
 }
 
-app.get("/", (req, res) => {
-  console.log(__dirname);
-  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
-});
-
 app.use("/", authRouter);
 app.use("/api", commentRouter);
 app.use("/api", postRouter);
@@ -39,6 +34,11 @@ app.use("/api", likeRouter);
 app.use("/api", notificationRouter);
 
 app.use("/", express.static(path.join(__dirname, "uploads")));
+
+app.get("*", (req, res) => {
+  console.log(__dirname);
+  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+});
 
 // 03.28 / mongoDB 연결
 mongoose

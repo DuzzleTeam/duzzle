@@ -13,9 +13,9 @@ const router = express.Router();
 
 const URL = "http://ec2-100-26-237-100.compute-1.amazonaws.com";
 
-router.get("/", (req, res) => {
-  res.status(200);
-});
+// router.get("/", (req, res) => {
+//   res.status(200);
+// });
 
 // 04.08 / 입력받은 메일 암호화
 function encrypt(plainEmail) {
