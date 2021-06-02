@@ -1,12 +1,12 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const PORT = process.env.PORT || 5000;
 
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 require("dotenv/config");
+const PORT = process.env.PORT || 5000;
 const config = require("./config/key");
 
 const authRouter = require("./routes/auth");
