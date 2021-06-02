@@ -20,7 +20,6 @@ const notificationRouter = require("./routes/notification");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(history());
 
 // PRODUCT
 if (process.env.NODE_ENV === "production") {
@@ -40,6 +39,9 @@ app.use("/api", likeRouter);
 app.use("/api", notificationRouter);
 
 app.use("/", express.static(path.join(__dirname, "uploads")));
+
+// 404 error ...
+app.use(history());
 
 // 03.28 / mongoDB 연결
 mongoose
