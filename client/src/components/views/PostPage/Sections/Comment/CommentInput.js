@@ -44,8 +44,8 @@ function CommentInput({ postId, setComments, setPost }) {
         });
 
         // 알림 보내기
-        // const commentId = res.data.comment._id;
-        // axios.get(`/api/nofitication/${commentId}`);
+        const commentId = res.data.comment._id;
+        axios.get(`/api/nofitication/${commentId}`);
       } else {
         // 댓글 작성 실패 시
         alert("댓글 작성에 실패하였습니다.");

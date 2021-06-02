@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { Post } = require("../models/Post");
+const { User } = require("../models/User");
 
 const { auth } = require("../middleware/auth");
 const { getUser } = require("../functions/auth");
@@ -92,6 +93,39 @@ router.get(`/:type`, async (req, res) => {
     // 클라이언트에 전송
     return res.status(200).json({ posts: newPosts });
   }
+});
+
+// 05.30 내 게시물 가져오기
+// modify 2021-06-02 (chohadam)
+router.get("/posts/:email", async (req, res) => {
+  // email 가져오기
+  const { email } = req.params;
+  // email로 유저 찾기
+  const user = await User.findOne({ email });
+
+  // 유저가 없다면
+  if (!user) {
+    return res.send();
+  }
+
+  // 유저가 있다면
+  // user와 관련된 post들 찾기 (POJO)
+  const posts = await Post.find({ user: user._id }).lean();
+  // 게시글이 없다면
+  if (!posts) return res.send();
+
+  // 게시글이 있다면 user 정보 셋팅
+  const newPosts = [];
+  posts.forEach((post) => {
+    newPosts.push({
+      ...post,
+      user,
+    });
+  });
+  // 클라이언트에 게시글 전송
+  return res.status(200).send({
+    posts: newPosts,
+  });
 });
 
 module.exports = router;

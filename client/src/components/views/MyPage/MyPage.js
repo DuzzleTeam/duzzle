@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../../_actions/user_action";
 
-import MyPost from "./Sections/MyPost.js";
 import EditLayout from "./Sections/EditLayout.js";
+import PostsNav from "../../Feed/PostsNav";
+import MyPosts from "./Sections/MyPosts.js";
 
 import "./Sections/MyPage.css";
 
@@ -39,6 +40,25 @@ function MyPage() {
     fetchData();
   }, [setMypageUser]);
 
+  // Redux에서 접속 User 정보 가져오기
+  const connectUser = useSelector((state) => state.user.authPayload);
+
+  // 현재 접속 유저가 마이페이지 유저인지
+  const [isAuth, setIsAuth] = useState(false);
+
+  useEffect(() => {
+    if (connectUser && user) {
+      // 접속 유저 정보가 있을 때 실행
+      if (user._id === connectUser._id) {
+        // 접속 유저와 마이페이지 유저가 같다면
+        setIsAuth(true);
+      }
+    }
+  }, [connectUser, user]);
+
+  // 지원 목록인지 내 게시물인지 현재 메뉴
+  const [currentMenu, setCurrentMenu] = useState(0);
+
   return (
     user && (
       <main className="MypageContainer">
@@ -53,7 +73,19 @@ function MyPage() {
 
           {/* 내 게시물 */}
           <article className={"MypageRightPosts"}>
-            <MyPost isPost={false} />
+            {/* 지원목록, 내 게시물 */}
+            {/* 현재 접속 유저가 마이페이지의 유저일 때만 보이기 */}
+            {isAuth && (
+              <PostsNav
+                menus={["지원 목록", "내 게시물"]}
+                currentMenu={currentMenu}
+                onChangeCurrentMenu={(index) => {
+                  setCurrentMenu(index);
+                }}
+              />
+            )}
+            {/* 게시물 */}
+            <MyPosts currentMenu={currentMenu} email={user.email} />
           </article>
         </section>
       </main>

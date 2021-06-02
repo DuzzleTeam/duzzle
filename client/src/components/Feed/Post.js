@@ -21,7 +21,7 @@ function Post(props) {
   const onPostClick = (e) => {
     // 게시글 미리보기 클릭
     // wezzle 혹은 mezzle
-    const postType = document.location.pathname.match(/wezzle|mezzle/);
+    const postType = post.isWezzle ? "wezzle" : "mezzle";
 
     // 해당 게시글로 화면 전환
     history.push(`/${postType}/post/${post._id}`);

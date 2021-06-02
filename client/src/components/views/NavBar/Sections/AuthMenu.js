@@ -62,7 +62,7 @@ function AuthMenu(props) {
         // notification and profile image
         <div className="RightMenuContainer">
           {/* Notification */}
-          {/* <div className="NoticiationContaier">
+          <div className="NoticiationContaier">
             <button
               onClick={notiDropdownHandler}
               className="RightButton NotificationButton"
@@ -70,7 +70,7 @@ function AuthMenu(props) {
               <img src="/images/notification.png" alt="notification" />
             </button>
             <NotificationDropdown openingNoti={openingNoti} />
-          </div> */}
+          </div>
           {/* Profile */}
           <div ref={profileContainer}>
             {/* Circle Profile Image */}
