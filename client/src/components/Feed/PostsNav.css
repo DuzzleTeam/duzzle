@@ -1,17 +1,17 @@
 /* 버튼 컨테이너 */
-.MyPostNav {
+.PostsNav {
   font-size: 10px;
   margin-top: 90px;
   margin-bottom: 60px;
 }
 
 /* 첫 번째 버튼 */
-.MyPostNav > button:first-child {
+.PostsNav > button:first-child {
   margin-right: 16px;
 }
 
 /* 지원목록, 내 게시물 기본 디자인 */
-.ButtonMyPost {
+.ButtonPostsNav {
   width: 120px;
   height: 48px;
 
@@ -28,13 +28,13 @@
   cursor: pointer;
   outline: none;
 }
-.UnactiveButtonMyPost:hover {
+.UnactiveButtonPostsNav:hover {
   background-color: #cecece;
   color: #2d2d2d;
 }
 
 /* 선택 되었을 때 */
-.ActiveButtonMyPost {
+.ActiveButtonPostsNav {
   width: 120px;
   height: 48px;
 

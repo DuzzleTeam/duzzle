@@ -109,14 +109,22 @@ router.get("/posts/:email", async (req, res) => {
   }
 
   // 유저가 있다면
-  // user와 관련된 post들 찾기
-  const posts = await Post.find({ user: user._id });
+  // user와 관련된 post들 찾기 (POJO)
+  const posts = await Post.find({ user: user._id }).lean();
   // 게시글이 없다면
   if (!posts) return res.send();
 
-  // 게시글이 있다면 클라이언트에 게시글 전송
+  // 게시글이 있다면 user 정보 셋팅
+  const newPosts = [];
+  posts.forEach((post) => {
+    newPosts.push({
+      ...post,
+      user,
+    });
+  });
+  // 클라이언트에 게시글 전송
   return res.status(200).send({
-    posts,
+    posts: newPosts,
   });
 });
 

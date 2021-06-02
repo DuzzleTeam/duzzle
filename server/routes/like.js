@@ -3,6 +3,7 @@ const router = express.Router();
 
 const { Post } = require("../models/Post");
 const { Like } = require("../models/Like");
+const { User } = require("../models/User");
 
 const { auth } = require("../middleware/auth");
 
@@ -66,6 +67,35 @@ router.post("/like/:postId", auth, async (req, res) => {
       return res.json({ e });
     }
   }
+});
+
+router.get("/likes/:email", async (req, res) => {
+  // email 가져오기
+  const { email } = req.params;
+
+  // user 정보 가져오기
+  const user = await User.findOne({ email });
+  if (!user) {
+    // user가 없다면
+    return res.send();
+  }
+
+  // email user에 해당되고, post type이 wezzle인 게시글 가져오기
+  const likes = await Like.find({
+    user: user._id,
+  }).populate("post");
+
+  // wezzle
+  const wezzle = likes
+    .filter((like) => like.post.isWezzle)
+    .map((like) => like.post);
+
+  if (wezzle.length !== 0) {
+    // 협업 신청한 글이 있다면
+    return res.status(200).send({ likes: wezzle });
+  }
+
+  return res.send();
 });
 
 module.exports = router;

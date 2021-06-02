@@ -1,0 +1,20 @@
+/* 게시글 + 페이지네이션 컨테이너 */
+.MyPostsContainer {
+  margin-right: 130px;
+  margin-bottom: 86px;
+}
+
+/* 게시글들 컨테이너 */
+.MypagePostsPostContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 25px;
+  row-gap: 50px;
+  margin-bottom: 100px;
+}
+
+@media (max-width: 1900px) {
+  .MypagePostsPostContainer {
+    grid-template-columns: repeat(auto-fill, minmax(350px, auto));
+  }
+}
