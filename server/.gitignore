@@ -68,3 +68,9 @@ dev.js
 # 환경변수
 .env
 .env.dev
+
+# images
+uploads
+
+# package-lock.json
+package-lock.json
