@@ -11,6 +11,8 @@ const fs = require("fs");
 const saltRounds = 10;
 const router = express.Router();
 
+const URL = "http://ec2-100-26-237-100.compute-1.amazonaws.com";
+
 router.get("/", (req, res) => {
   res.status(200);
 });
@@ -51,8 +53,7 @@ router.post("/api/register", saveData, async (req, res) => {
   });
 
   var hash = encrypt(req.body.email);
-  var link =
-    "http://localhost:3000/confirmRegister/" + encodeURIComponent(hash);
+  var link = URL + "/confirmRegister/" + encodeURIComponent(hash);
 
   const mailOptions = {
     from: "DuzzleManager@gmail.com",
