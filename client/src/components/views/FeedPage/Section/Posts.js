@@ -11,59 +11,32 @@ import NonePosts from "./NonePosts";
 import "./Posts.css";
 
 // cache
-let wezzle = [];
+const cache = {};
+
+// 메뉴 배열 (개발, 디자인)
+const fields = ["개발", "디자인"];
 
 function Posts() {
   // 전체 포스트들
   const [posts, setPosts] = useState([]);
 
+  // 현재 게시글을 가져오고 있는 중인지
+  const [isLoading, setIsLoading] = useState(true);
+
   // wezzle 혹은 mezzle
   const postType = document.location.pathname.match(/wezzle|mezzle/)[0];
 
-  // 전체 게시글 가져오기
-  const getPosts = useCallback(async () => {
-    // 페이지 초기화
-    setCurrentPage(1);
-
-    // 요청 url
-    const url = `/api/${postType}`;
-
-    // get 방식으로 요청
-    const res = await axios.get(url);
-
-    if (res.status === 200) {
-      if (postType === "wezzle") {
-        // 위즐이면 캐싱
-        wezzle = res.data.posts;
-
-        // 개발 모집 글만 필터
-        const developPosts = wezzle.filter((post) =>
-          post.recruit.field.includes("개발")
-        );
-
-        // 개발 게시글로 설정
-        setCurrentField(0);
-        setPosts(developPosts);
-      } else {
-        // 미즐
-        // 가져오기에 성공했을 경우 전체 게시글 셋팅
-        setPosts(res.data.posts);
-      }
-    }
-  }, [postType]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      // 전체 게시글 가져오기
-      await getPosts();
-    };
-    fetchData();
-  }, [getPosts]);
-
   // 현재 메뉴가 개발(0)인지 디자인(1)인지
   const [currentField, setCurrentField] = useState(0);
-  // 메뉴 배열 (개발, 디자인)
-  const fields = ["개발", "디자인"];
+
+  const onChangeWezzleField = useCallback(() => {
+    // 개발 혹은 디자인 관련 글로만 필터
+    const filteredPosts = cache["wezzle"].filter((post) =>
+      post.recruit.field.includes(fields[currentField])
+    );
+    // state 업데이트
+    setPosts(filteredPosts);
+  }, [currentField]);
 
   const onButtonFieldClick = (field) => {
     // 현재 선택된 메뉴를 또 선택한다면 아무 이벤트 없이 리턴
@@ -78,13 +51,54 @@ function Posts() {
       // 디자인으로 설정
       setCurrentField(1);
     }
+  };
 
-    // 개발 혹은 디자인 관련 글로만 필터
-    const filteredPosts = wezzle.filter((post) =>
-      post.recruit.field.includes(field)
-    );
-    // state 업데이트
-    setPosts(filteredPosts);
+  // 전체 게시글 가져오기
+  const getPosts = useCallback(async () => {
+    // 페이지 초기화
+    setCurrentPage(1);
+
+    // 캐싱 있으면 셋팅
+    if (cache[postType]) {
+      if (postType === "wezzle") {
+        return onChangeWezzleField();
+      }
+      return setPosts(cache[postType]);
+    }
+
+    // 요청 url
+    const url = `/api/${postType}`;
+
+    // get 방식으로 요청
+    const res = await axios.get(url);
+
+    if (res.status === 200) {
+      // 캐싱
+      cache[postType] = res.data.posts;
+
+      if (postType === "wezzle") {
+        // 필터 후 셋팅
+        onChangeWezzleField();
+      } else {
+        // 미즐
+        // 가져오기에 성공했을 경우 전체 게시글 셋팅
+        setPosts(res.data.posts);
+      }
+    }
+  }, [postType, onChangeWezzleField]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // 전체 게시글 가져오기
+      await getPosts();
+    };
+    fetchData();
+  }, [getPosts]);
+
+  const onRefresh = async (e) => {
+    cache[postType] = null;
+    // 전체 게시글 가져오기
+    await getPosts();
   };
 
   // 현재 페이지 (페이지네이션에서)
@@ -133,10 +147,15 @@ function Posts() {
         </div>
 
         {/* 글 작성 버튼 */}
-        <button className="ButtonWritePost" onClick={onWriteButtonClick}>
-          <img src="/images/feedPage/post_write.png" alt="write" />
-          {"글 작성"}
-        </button>
+        <div className={"PostsRightButtons"}>
+          <button className="ButtonRefresh" onClick={onRefresh}>
+            <img src="/images/feedPage/refresh.png" alt="refresh" />
+          </button>
+          <button className="ButtonWritePost" onClick={onWriteButtonClick}>
+            <img src="/images/feedPage/post_write.png" alt="write" />
+            {"글 작성"}
+          </button>
+        </div>
       </div>
 
       {posts.length !== 0 ? (
