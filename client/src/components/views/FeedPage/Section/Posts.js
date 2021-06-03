@@ -136,11 +136,12 @@ function Posts() {
     history.push(`/${postType}/write`);
   };
 
-  return isLoading ? (
-    <Loading />
-  ) : (
+  return (
     // 글 전체 목록 컨테이너
     <section ref={scrollTargetRef} className={"FeedPostsContainer"}>
+      {/* 로딩 중일 경우 모달 띄우기 */}
+      {isLoading && <Loading />}
+
       {/* 상단 버튼들 (개발/디자인, 글 작성) */}
       <div className="FeedButtons">
         {/* 개발, 디자인 버튼 */}
