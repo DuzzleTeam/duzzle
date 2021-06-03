@@ -15,6 +15,10 @@ const notificationSchema = mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: "Post",
   },
+  comment: {
+    type: Schema.Types.ObjectId,
+    ref: "Comment",
+  },
   isChecked: {
     Boolean,
     default: false,

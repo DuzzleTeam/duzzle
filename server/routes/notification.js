@@ -20,6 +20,7 @@ router.get("/nofitication/:commentId", async (req, res) => {
     user: post.user,
     provider: comment.user,
     post: post._id,
+    comment: comment._id,
     isChecked: false,
   };
 
@@ -33,6 +34,10 @@ router.get("/nofitication/:commentId", async (req, res) => {
       return res.status(200).json({
         success: true,
       });
+    });
+  } else {
+    return res.status(200).json({
+      success: true,
     });
   }
 });
