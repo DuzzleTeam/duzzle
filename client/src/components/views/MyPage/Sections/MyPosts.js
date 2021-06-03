@@ -98,6 +98,7 @@ function MyPosts({ currentMenu, email }) {
             {/* 현재 화면에 표시할 게시물 구하기 */}
             {pagination
               .getCurrentPosts(currentPage, postsPerPage, posts)
+              .reverse()
               .map((post, index) => (
                 <Post key={index} post={post} />
               ))}
