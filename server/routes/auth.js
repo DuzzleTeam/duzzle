@@ -8,12 +8,15 @@ const config = require("../config/key");
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
 const fs = require("fs");
+const { default: axios } = require("axios");
 const saltRounds = 10;
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.status(200);
-});
+const URL = "http://ec2-100-26-237-100.compute-1.amazonaws.com";
+
+// router.get("/", (req, res) => {
+//   res.status(200);
+// });
 
 // 04.08 / 입력받은 메일 암호화
 function encrypt(plainEmail) {
@@ -40,36 +43,50 @@ function decrypt(encryptEmail) {
 
 // 04.07 / 회원가입 인증 메일 보내기
 router.post("/api/register", saveData, async (req, res) => {
-  const smtpTransport = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-      user: "DuzzleManager@gmail.com",
-      pass: config.googlePwd,
-    },
-  });
+  // const smtpTransport = nodemailer.createTransport({
+  //   host: "smtp.gmail.com",
+  //   port: 465,
+  //   secure: true,
+  //   auth: {
+  //     user: "DuzzleManager@gmail.com",
+  //     pass: config.googlePwd,
+  //   },
+  // });
 
-  var hash = encrypt(req.body.email);
-  var link =
-    "http://localhost:3000/confirmRegister/" + encodeURIComponent(hash);
+  // var hash = encrypt(req.body.email);
+  // var link = URL + "/confirmRegister/" + encodeURIComponent(hash);
 
-  const mailOptions = {
-    from: "DuzzleManager@gmail.com",
-    to: req.body.email,
-    subject: "Duzzle 회원가입 인증 메일",
-    html: `<h1>Duzzle 회원가입 인증</h1><p><a href=${link}>${link}</a>`,
-  };
+  // const mailOptions = {
+  //   from: "DuzzleManager@gmail.com",
+  //   to: req.body.email,
+  //   subject: "Duzzle 회원가입 인증 메일",
+  //   html: `<h1>Duzzle 회원가입 인증</h1><p><a href=${link}>${link}</a>`,
+  // };
 
-  await smtpTransport.sendMail(mailOptions, (err, responses) => {
-    if (err) {
-      res.json(err);
-      console.log(err);
-    } else {
-      res.json({ emailSendingSuccess: true });
+  // await smtpTransport.sendMail(mailOptions, (err, responses) => {
+  //   if (err) {
+  //     res.json(err);
+  //     console.log(err);
+  //   } else {
+  //     res.json({ emailSendingSuccess: true });
+  //   }
+  //   smtpTransport.close();
+  // });
+
+  const BASE_URL = "https://duzzle-mailer.herokuapp.com";
+
+  const { email } = req.body;
+  try {
+    const result = await axios.post(`${BASE_URL}/api/send/${email}`);
+
+    if (result.status === 200) {
+      console.log("success", result.data);
+      // return res.status(200).json({ emailSendingSuccess: true, result });
     }
-    smtpTransport.close();
-  });
+  } catch (e) {
+    console.log("Error", e);
+    // return res.json({ e });
+  }
 });
 
 // 03.29 / 회원가입

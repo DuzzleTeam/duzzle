@@ -1,11 +1,12 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const port = 5000;
 
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+require("dotenv/config");
+const PORT = process.env.PORT || 5000;
 const config = require("./config/key");
 
 const authRouter = require("./routes/auth");
@@ -19,6 +20,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+// PRODUCT
+if (process.env.NODE_ENV === "production") {
+  console.log("production mode");
+  app.use(express.static(path.join(__dirname, "../client/build")));
+}
+
 app.use("/", authRouter);
 app.use("/api", commentRouter);
 app.use("/api", postRouter);
@@ -27,6 +34,11 @@ app.use("/api", likeRouter);
 app.use("/api", notificationRouter);
 
 app.use("/", express.static(path.join(__dirname, "uploads")));
+
+// 404 error ...
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+});
 
 // 03.28 / mongoDB 연결
 mongoose
@@ -39,4 +51,4 @@ mongoose
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
 
-app.listen(port);
+app.listen(PORT, () => console.log(`port ${PORT}`));
