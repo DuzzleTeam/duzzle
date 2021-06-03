@@ -145,7 +145,6 @@ function Posts() {
           <div className="PostsPostContainer">
             {pagination
               .getCurrentPosts(currentPage, postsPerPage, posts)
-              .reverse()
               .map((post, index) => (
                 <Post key={index} post={post} />
               ))}
