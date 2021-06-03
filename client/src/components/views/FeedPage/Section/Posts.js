@@ -6,6 +6,7 @@ import pagination from "../../../Pagination/functions";
 import Pagination from "../../../Pagination/Pagination";
 import Post from "../../../Feed/Post";
 import NonePosts from "./NonePosts";
+import Loading from "../../../Loading.js/Loading";
 
 // CSS
 import "./Posts.css";
@@ -55,14 +56,22 @@ function Posts() {
 
   // 전체 게시글 가져오기
   const getPosts = useCallback(async () => {
+    // 로딩 실행
+    setIsLoading(true);
+
     // 페이지 초기화
     setCurrentPage(1);
 
     // 캐싱 있으면 셋팅
     if (cache[postType]) {
+      // 로딩 종료
+      setIsLoading(false);
+
       if (postType === "wezzle") {
+        // 위즐이면 field에 맞추어 설정
         return onChangeWezzleField();
       }
+      // 미즐이면 전체 게시글 셋팅
       return setPosts(cache[postType]);
     }
 
@@ -85,6 +94,9 @@ function Posts() {
         setPosts(res.data.posts);
       }
     }
+
+    // 로딩 완료
+    setIsLoading(false);
   }, [postType, onChangeWezzleField]);
 
   useEffect(() => {
@@ -124,7 +136,9 @@ function Posts() {
     history.push(`/${postType}/write`);
   };
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     // 글 전체 목록 컨테이너
     <section ref={scrollTargetRef} className={"FeedPostsContainer"}>
       {/* 상단 버튼들 (개발/디자인, 글 작성) */}
@@ -148,7 +162,11 @@ function Posts() {
 
         {/* 글 작성 버튼 */}
         <div className={"PostsRightButtons"}>
-          <button className="ButtonRefresh" onClick={onRefresh}>
+          <button
+            className="ButtonRefresh"
+            onClick={onRefresh}
+            disabled={isLoading}
+          >
             <img src="/images/feedPage/refresh.png" alt="refresh" />
           </button>
           <button className="ButtonWritePost" onClick={onWriteButtonClick}>

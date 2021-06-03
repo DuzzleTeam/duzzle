@@ -91,6 +91,10 @@
 .ButtonRefresh:hover {
   opacity: 0.3;
 }
+.ButtonRefresh:disabled {
+  cursor: default;
+  opacity: 0.3;
+}
 
 /* Post 피드 컴포넌트들 컨테이너 */
 .PostsPostContainer {
