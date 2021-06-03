@@ -19,18 +19,18 @@ function MyPage() {
   // 현재 페이지의 user
   const [user, setUser] = useState(null);
 
+  // 현 페이지의 유저 email
+  const email = document.location.pathname.replace("/users/", "");
+
   const dispatch = useDispatch();
   const setMypageUser = useCallback(async () => {
-    // 현 페이지의 유저 email
-    const email = document.location.pathname.replace("/users/", "");
-
     // 현재 보고있는 마이페이지의 유저 정보 가져오기
     const res = await dispatch(getUser(email));
     if (res.payload.status === 200) {
       // 가져오기에 성공했다면 유저 셋팅
       setUser(res.payload.data.user);
     }
-  }, [dispatch]);
+  }, [dispatch, email]);
 
   useEffect(() => {
     // 현재 페이지의 user 정보를 받아온다
@@ -85,7 +85,11 @@ function MyPage() {
               />
             )}
             {/* 게시물 */}
-            <MyPosts currentMenu={currentMenu} email={user.email} />
+            <MyPosts
+              isAuth={isAuth}
+              currentMenu={currentMenu}
+              email={user.email}
+            />
           </article>
         </section>
       </main>

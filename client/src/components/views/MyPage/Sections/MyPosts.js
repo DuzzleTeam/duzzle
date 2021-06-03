@@ -14,7 +14,7 @@ import "./MyPosts.css";
 // cache
 const cache = {};
 
-function MyPosts({ currentMenu, email }) {
+function MyPosts({ isAuth, currentMenu, email }) {
   // 보고있는 마이페이지 유저의 포스트 정보
   const [posts, setPosts] = useState(null);
 
@@ -37,8 +37,9 @@ function MyPosts({ currentMenu, email }) {
 
     // 요청 url
     let url = "";
-    if (currentMenu) {
-      // currentMenu가 1이면 user가 작성한 모든 게시글을 가져옴
+    if (currentMenu || !isAuth) {
+      // currentMenu가 1이거나 다른 사람의 마이페이지를 보고있다면
+      // user가 작성한 모든 게시글을 가져옴
       // 캐싱 되어있다면
       if (cache.myPosts) {
         return setPosts(cache.myPosts);
@@ -74,7 +75,7 @@ function MyPosts({ currentMenu, email }) {
 
     // 로딩 완료
     setIsLoading(false);
-  }, [history, currentMenu, email]);
+  }, [history, isAuth, currentMenu, email]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -106,6 +107,9 @@ function MyPosts({ currentMenu, email }) {
       {/* 로딩 중일 경우 모달 띄우기 */}
       {isLoading && <Loading />}
 
+      {/* 타인의 프로필을 보고 있을 경우 마진 */}
+      <div className="MyPostsMargin"></div>
+
       {posts ? (
         <>
           {/* 포스트 컴포넌트들 (실제 피드) */}
@@ -127,21 +131,24 @@ function MyPosts({ currentMenu, email }) {
             setCurrentPage={setCurrentPage}
           />
         </>
-      ) : // 글이 없음
-      currentMenu === 0 ? (
-        <NonePosts
-          link={"/wezzle"}
-          type={"지원한"}
-          description={"협업을 지원하러 가볼까요?"}
-          go={"협업 지원"}
-        />
       ) : (
-        <NonePosts
-          link={"/wezzle"}
-          type={"작성한"}
-          description={"글을 작성하러 가볼까요?"}
-          go={"글 작성"}
-        />
+        isAuth &&
+        // 글이 없음
+        (currentMenu === 0 ? (
+          <NonePosts
+            link={"/wezzle"}
+            type={"지원한"}
+            description={"협업을 지원하러 가볼까요?"}
+            go={"협업 지원"}
+          />
+        ) : (
+          <NonePosts
+            link={"/wezzle"}
+            type={"작성한"}
+            description={"글을 작성하러 가볼까요?"}
+            go={"글 작성"}
+          />
+        ))
       )}
     </section>
   );
