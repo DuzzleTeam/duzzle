@@ -5,7 +5,7 @@ import pagination from "../../../Pagination/functions";
 
 import Pagination from "../../../Pagination/Pagination";
 import Post from "../../../Feed/Post";
-import NonePosts from "./NonePosts";
+import NonePosts from "../../../Feed/NonePosts";
 import Loading from "../../../Loading.js/Loading";
 
 // CSS
@@ -136,11 +136,12 @@ function Posts() {
     history.push(`/${postType}/write`);
   };
 
-  return isLoading ? (
-    <Loading />
-  ) : (
+  return (
     // 글 전체 목록 컨테이너
     <section ref={scrollTargetRef} className={"FeedPostsContainer"}>
+      {/* 로딩 중일 경우 모달 띄우기 */}
+      {isLoading && <Loading />}
+
       {/* 상단 버튼들 (개발/디자인, 글 작성) */}
       <div className="FeedButtons">
         {/* 개발, 디자인 버튼 */}
@@ -198,7 +199,14 @@ function Posts() {
         </div>
       ) : (
         // 글이 없음
-        <NonePosts postType={postType} />
+        <NonePosts
+          link={`/${postType}/write`}
+          type={postType === "wezzle" ? "협업" : "컨펌"}
+          description={`${
+            postType === "wezzle" ? "협업" : "컨펌"
+          } 글을 작성하러 가볼까요?`}
+          go={`${postType === "wezzle" ? "협업" : "컨펌"} 글 작성`}
+        />
       )}
     </section>
   );

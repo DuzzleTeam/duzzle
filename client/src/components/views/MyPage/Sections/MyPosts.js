@@ -5,6 +5,8 @@ import pagination from "../../../Pagination/functions";
 
 import Pagination from "../../../Pagination/Pagination";
 import Post from "../../../Feed/Post";
+import Loading from "../../../Loading.js/Loading";
+import NonePosts from "../../../Feed/NonePosts";
 
 // CSS
 import "./MyPosts.css";
@@ -15,6 +17,9 @@ const cache = {};
 function MyPosts({ currentMenu, email }) {
   // 보고있는 마이페이지 유저의 포스트 정보
   const [posts, setPosts] = useState(null);
+
+  // 포스트 가져오는 중인지
+  const [isLoading, setIsLoading] = useState(false);
 
   // react-router
   const history = useHistory();
@@ -49,6 +54,10 @@ function MyPosts({ currentMenu, email }) {
       // 요청 url
       url = `/api/likes/${email}`;
     }
+
+    // 서버 통신 로딩 중
+    setIsLoading(true);
+
     // 유저의 포스트 정보 가져오기 요청
     const res = await axios.get(url);
 
@@ -62,6 +71,9 @@ function MyPosts({ currentMenu, email }) {
     } else {
       setPosts(null);
     }
+
+    // 로딩 완료
+    setIsLoading(false);
   }, [history, currentMenu, email]);
 
   useEffect(() => {
@@ -91,6 +103,9 @@ function MyPosts({ currentMenu, email }) {
   return (
     // 글 전체 목록 컨테이너
     <section ref={scrollTargetRef} className={"MyPostsContainer"}>
+      {/* 로딩 중일 경우 모달 띄우기 */}
+      {isLoading && <Loading />}
+
       {posts ? (
         <>
           {/* 포스트 컴포넌트들 (실제 피드) */}
@@ -112,9 +127,21 @@ function MyPosts({ currentMenu, email }) {
             setCurrentPage={setCurrentPage}
           />
         </>
+      ) : // 글이 없음
+      currentMenu === 0 ? (
+        <NonePosts
+          link={"/wezzle"}
+          type={"지원한"}
+          description={"협업을 지원하러 가볼까요?"}
+          go={"협업 지원"}
+        />
       ) : (
-        // 글이 없음
-        <></>
+        <NonePosts
+          link={"/wezzle"}
+          type={"작성한"}
+          description={"글을 작성하러 가볼까요?"}
+          go={"글 작성"}
+        />
       )}
     </section>
   );
