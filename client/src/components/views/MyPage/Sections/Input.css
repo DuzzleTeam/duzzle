@@ -1,4 +1,4 @@
-input[type="text"] {
+.InputTextComponent {
   border-radius: 4px;
   border: solid 1px #cecece;
   padding: 6px;
