@@ -5,7 +5,7 @@ import pagination from "../../../Pagination/functions";
 
 import Pagination from "../../../Pagination/Pagination";
 import Post from "../../../Feed/Post";
-import NonePosts from "./NonePosts";
+import NonePosts from "../../../Feed/NonePosts";
 import Loading from "../../../Loading.js/Loading";
 
 // CSS
@@ -199,7 +199,14 @@ function Posts() {
         </div>
       ) : (
         // 글이 없음
-        <NonePosts postType={postType} />
+        <NonePosts
+          link={`/${postType}/write`}
+          type={postType === "wezzle" ? "협업" : "컨펌"}
+          description={`${
+            postType === "wezzle" ? "협업" : "컨펌"
+          } 글을 작성하러 가볼까요?`}
+          go={`${postType === "wezzle" ? "협업" : "컨펌"} 글 작성`}
+        />
       )}
     </section>
   );
