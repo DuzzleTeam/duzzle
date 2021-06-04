@@ -11,7 +11,7 @@ function ShareButton() {
     // 현 게시글 url
     const url = window.location.href;
     // 클립보드에 복사
-    navigator.clipboard.writeText(url);
+    window.navigator.clipboard.writeText(url);
 
     // 토스트 메시지 출력
     toast.success("🔗 링크가 클립보드에 복사되었습니다!", {

@@ -6,18 +6,24 @@ import { useSelector } from "react-redux";
 
 import PostInfo from "./PostInfo";
 import Wezzle from "./Wezzle";
+import LikeTogetherButton from "./LikeTogetherButton";
+import ShareButton from "./ShareButton";
+import Loading from "../../../../Loading.js/Loading";
 
 // CSS
 import "./Post.css";
-import LikeTogetherButton from "./LikeTogetherButton";
-import ShareButton from "./ShareButton";
 
 function Post({ post, setPost }) {
   // 현재 접속 유저 정보
   const user = useSelector((state) => state.user.authPayload);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   // 현재 포스트 가져오기
   const getPost = useCallback(async () => {
+    // 로딩 중
+    setIsLoading(true);
+
     // 현재 주소 (postId값을 얻기 위함)
     // post/postid
     const url = document.location.pathname
@@ -31,6 +37,9 @@ function Post({ post, setPost }) {
       // 포스트 셋팅
       setPost(res.data.post);
     }
+
+    // 로딩 종료
+    setIsLoading(false);
   }, [setPost]);
 
   // componentDidmount
@@ -67,6 +76,9 @@ function Post({ post, setPost }) {
       <Redirect to={`/${post.isWezzle ? "wezzle" : "mezzle"}`} />
     ) : (
       <section className="PostContainer">
+        {/* 로딩 중이라면 모달 띄우기 */}
+        {isLoading && <Loading />}
+
         {/* 상단 글쓴이 정보, 게시글 좋아요, 댓글 정보 */}
         <article className="PostTopContents">
           {/* 글쓴이 정보 */}
