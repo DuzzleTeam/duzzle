@@ -40,6 +40,9 @@ function MyPage() {
     fetchData();
   }, [setMypageUser]);
 
+  // 지원 목록인지 내 게시물인지 현재 메뉴
+  const [currentMenu, setCurrentMenu] = useState(0);
+
   // Redux에서 접속 User 정보 가져오기
   const connectUser = useSelector((state) => state.user.authPayload);
 
@@ -47,17 +50,19 @@ function MyPage() {
   const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
-    if (connectUser && user) {
+    if (connectUser && email) {
+      console.log("user", connectUser.email, email);
       // 접속 유저 정보가 있을 때 실행
-      if (user._id === connectUser._id) {
+      if (email === connectUser.email) {
         // 접속 유저와 마이페이지 유저가 같다면
         setIsAuth(true);
+        setCurrentMenu(0);
+      } else {
+        setIsAuth(false);
+        setCurrentMenu(1);
       }
     }
-  }, [connectUser, user]);
-
-  // 지원 목록인지 내 게시물인지 현재 메뉴
-  const [currentMenu, setCurrentMenu] = useState(0);
+  }, [connectUser, email]);
 
   return (
     user && (
@@ -85,11 +90,7 @@ function MyPage() {
               />
             )}
             {/* 게시물 */}
-            <MyPosts
-              isAuth={isAuth}
-              currentMenu={currentMenu}
-              email={user.email}
-            />
+            <MyPosts isAuth={isAuth} currentMenu={currentMenu} email={email} />
           </article>
         </section>
       </main>

@@ -95,7 +95,7 @@ router.get("/likes/:email", async (req, res) => {
     return res.status(200).send({ posts: wezzle });
   }
 
-  return res.send();
+  return res.send({ posts: null });
 });
 
 module.exports = router;
