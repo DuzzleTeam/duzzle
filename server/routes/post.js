@@ -114,7 +114,7 @@ router.get("/posts/:email", async (req, res) => {
     .sort({ createdAt: -1 })
     .lean();
   // 게시글이 없다면
-  if (!posts) return res.send();
+  if (posts.length === 0) return res.send();
 
   // 게시글이 있다면 user 정보 셋팅
   const newPosts = [];
