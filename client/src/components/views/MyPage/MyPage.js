@@ -41,7 +41,7 @@ function MyPage() {
   }, [setMypageUser]);
 
   // 지원 목록인지 내 게시물인지 현재 메뉴
-  const [currentMenu, setCurrentMenu] = useState(0);
+  const [currentMenu, setCurrentMenu] = useState(null);
 
   // Redux에서 접속 User 정보 가져오기
   const connectUser = useSelector((state) => state.user.authPayload);
@@ -49,23 +49,28 @@ function MyPage() {
   // 현재 접속 유저가 마이페이지 유저인지
   const [isAuth, setIsAuth] = useState(false);
 
+  const [loaded, setLoaded] = useState(false);
+
   useEffect(() => {
-    if (connectUser && email) {
-      console.log("user", connectUser.email, email);
+    if (connectUser && user) {
       // 접속 유저 정보가 있을 때 실행
-      if (email === connectUser.email) {
-        // 접속 유저와 마이페이지 유저가 같다면
-        setIsAuth(true);
+      // 접속 유저와 마이페이지 유저가 같다면
+      setIsAuth(connectUser.email === user.email);
+      if (connectUser.email === user.email) {
         setCurrentMenu(0);
       } else {
-        setIsAuth(false);
         setCurrentMenu(1);
       }
+      setLoaded(true);
     }
-  }, [connectUser, email]);
+  }, [connectUser, user]);
+
+  const onChangeCurrentMenu = (index) => {
+    setCurrentMenu(index);
+  };
 
   return (
-    user && (
+    loaded && (
       <main className="MypageContainer">
         {/* 상단배너 */}
         <section className={"MypageBanner"}>
@@ -84,9 +89,7 @@ function MyPage() {
               <PostsNav
                 menus={["지원 목록", "내 게시물"]}
                 currentMenu={currentMenu}
-                onChangeCurrentMenu={(index) => {
-                  setCurrentMenu(index);
-                }}
+                onChangeCurrentMenu={onChangeCurrentMenu}
               />
             )}
             {/* 게시물 */}

@@ -16,10 +16,10 @@ function MyPosts({ currentMenu, isAuth, email }) {
   const [posts, setPosts] = useState(null);
 
   // cache
-  const [cache, setCache] = useState([]);
+  const [cache, setCache] = useState([null, null]);
   // cache reset
   useEffect(() => {
-    setCache([]);
+    setCache([null, null]);
   }, [email]);
 
   // 포스트 가져오는 중인지
@@ -29,64 +29,66 @@ function MyPosts({ currentMenu, isAuth, email }) {
   const history = useHistory();
 
   // 전체 게시글 가져오기
-  const getPosts = useCallback(async () => {
-    console.log(email, cache);
-    // 페이지 초기화
-    setCurrentPage(1);
+  // 이메일이 바뀌면 실행
+  const getPosts = useCallback(
+    async (currentMenu) => {
+      // 페이지 초기화
+      setCurrentPage(1);
 
-    // 해시 초기화
-    // anchor
-    history.replace({
-      hash: "",
-    });
+      // 해시 초기화
+      // anchor
+      history.replace({
+        hash: "",
+      });
 
-    // 캐싱 되어있다면
-    if (cache[currentMenu]) {
-      return setPosts(cache[currentMenu]);
-    }
-
-    // 요청 url
-    let url = "";
-    if (currentMenu) {
+      // 요청 url
       // currentMenu가 1이거나 다른 사람의 마이페이지를 보고있다면
       // user가 작성한 모든 게시글을 가져옴
-      // 요청 url
-      url = `/api/posts/${email}`;
-    } else {
       // currentMenu가 0이면 user 관련 wezzle like만 가져옴
-      // 요청 url
-      url = `/api/likes/${email}`;
-    }
+      const url = `/api/${currentMenu ? "posts" : "likes"}/${email}`;
 
-    // 서버 통신 로딩 중
-    setIsLoading(true);
+      // 서버 통신 로딩 중
+      setIsLoading(true);
 
-    // 유저의 포스트 정보 가져오기 요청
-    const res = await axios.get(url);
+      // 유저의 포스트 정보 가져오기 요청
+      const res = await axios.get(url);
 
-    // 가져오기에 성공했다면
-    if (res.status === 200 && res.data.posts) {
-      const { posts } = res.data;
+      // 가져오기에 성공했다면
+      if (res.status === 200 && res.data.posts) {
+        const { posts } = res.data;
 
-      // 캐싱
-      currentMenu ? setCache([cache[0], posts]) : setCache([posts, cache[1]]);
+        // 캐싱
+        // 1이면 likes, 0이면 posts
+        setCache((cache) =>
+          currentMenu ? [cache[0], posts] : [posts, cache[1]]
+        );
 
-      // posts 셋팅
-      setPosts(posts);
-    } else {
-      setPosts(null);
-    }
+        // posts 셋팅
+        setPosts(posts);
+      } else {
+        setPosts(null);
+      }
 
-    // 로딩 완료
-    setIsLoading(false);
-  }, [history, cache, currentMenu, email]);
+      // 로딩 완료
+      setIsLoading(false);
+    },
+    [history, email]
+  );
 
+  // 메뉴가 바뀌었을 때 실행
   useEffect(() => {
-    const fetchData = async () => {
-      await getPosts();
-    };
-    fetchData();
-  }, [getPosts]);
+    // 캐싱 되어있다면
+    if (cache[currentMenu]) {
+      // 캐시 데이터 반환
+      return setPosts(cache[currentMenu]);
+    } else {
+      // 캐시 데이터가 없다면 새로 가져오기
+      const fetchData = async () => {
+        await getPosts(currentMenu);
+      };
+      fetchData();
+    }
+  }, [cache, currentMenu, getPosts]);
 
   // 현재 페이지 (페이지네이션에서)
   const [currentPage, setCurrentPage] = useState(1);
