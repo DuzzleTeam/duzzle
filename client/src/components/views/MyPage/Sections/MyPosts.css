@@ -13,6 +13,11 @@
   margin-bottom: 100px;
 }
 
+/* 타인 프로필일 때 */
+.MyPostsMargin {
+  margin-top: 100px;
+}
+
 @media (max-width: 1900px) {
   .MypagePostsPostContainer {
     grid-template-columns: repeat(auto-fill, minmax(350px, auto));

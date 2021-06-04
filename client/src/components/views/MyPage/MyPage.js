@@ -19,18 +19,18 @@ function MyPage() {
   // 현재 페이지의 user
   const [user, setUser] = useState(null);
 
+  // 현 페이지의 유저 email
+  const email = document.location.pathname.replace("/users/", "");
+
   const dispatch = useDispatch();
   const setMypageUser = useCallback(async () => {
-    // 현 페이지의 유저 email
-    const email = document.location.pathname.replace("/users/", "");
-
     // 현재 보고있는 마이페이지의 유저 정보 가져오기
     const res = await dispatch(getUser(email));
     if (res.payload.status === 200) {
       // 가져오기에 성공했다면 유저 셋팅
       setUser(res.payload.data.user);
     }
-  }, [dispatch]);
+  }, [dispatch, email]);
 
   useEffect(() => {
     // 현재 페이지의 user 정보를 받아온다
@@ -40,6 +40,9 @@ function MyPage() {
     fetchData();
   }, [setMypageUser]);
 
+  // 지원 목록인지 내 게시물인지 현재 메뉴
+  const [currentMenu, setCurrentMenu] = useState(0);
+
   // Redux에서 접속 User 정보 가져오기
   const connectUser = useSelector((state) => state.user.authPayload);
 
@@ -47,17 +50,19 @@ function MyPage() {
   const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
-    if (connectUser && user) {
+    if (connectUser && email) {
+      console.log("user", connectUser.email, email);
       // 접속 유저 정보가 있을 때 실행
-      if (user._id === connectUser._id) {
+      if (email === connectUser.email) {
         // 접속 유저와 마이페이지 유저가 같다면
         setIsAuth(true);
+        setCurrentMenu(0);
+      } else {
+        setIsAuth(false);
+        setCurrentMenu(1);
       }
     }
-  }, [connectUser, user]);
-
-  // 지원 목록인지 내 게시물인지 현재 메뉴
-  const [currentMenu, setCurrentMenu] = useState(0);
+  }, [connectUser, email]);
 
   return (
     user && (
@@ -85,7 +90,7 @@ function MyPage() {
               />
             )}
             {/* 게시물 */}
-            <MyPosts currentMenu={currentMenu} email={user.email} />
+            <MyPosts isAuth={isAuth} currentMenu={currentMenu} email={email} />
           </article>
         </section>
       </main>

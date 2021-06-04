@@ -11,12 +11,16 @@ import NonePosts from "../../../Feed/NonePosts";
 // CSS
 import "./MyPosts.css";
 
-// cache
-const cache = {};
-
-function MyPosts({ currentMenu, email }) {
+function MyPosts({ currentMenu, isAuth, email }) {
   // 보고있는 마이페이지 유저의 포스트 정보
   const [posts, setPosts] = useState(null);
+
+  // cache
+  const [cache, setCache] = useState([]);
+  // cache reset
+  useEffect(() => {
+    setCache([]);
+  }, [email]);
 
   // 포스트 가져오는 중인지
   const [isLoading, setIsLoading] = useState(false);
@@ -26,6 +30,7 @@ function MyPosts({ currentMenu, email }) {
 
   // 전체 게시글 가져오기
   const getPosts = useCallback(async () => {
+    console.log(email, cache);
     // 페이지 초기화
     setCurrentPage(1);
 
@@ -35,22 +40,20 @@ function MyPosts({ currentMenu, email }) {
       hash: "",
     });
 
+    // 캐싱 되어있다면
+    if (cache[currentMenu]) {
+      return setPosts(cache[currentMenu]);
+    }
+
     // 요청 url
     let url = "";
     if (currentMenu) {
-      // currentMenu가 1이면 user가 작성한 모든 게시글을 가져옴
-      // 캐싱 되어있다면
-      if (cache.myPosts) {
-        return setPosts(cache.myPosts);
-      }
+      // currentMenu가 1이거나 다른 사람의 마이페이지를 보고있다면
+      // user가 작성한 모든 게시글을 가져옴
       // 요청 url
       url = `/api/posts/${email}`;
     } else {
       // currentMenu가 0이면 user 관련 wezzle like만 가져옴
-      // 캐싱 되어있다면
-      if (cache.myLikes) {
-        return setPosts(cache.myLikes);
-      }
       // 요청 url
       url = `/api/likes/${email}`;
     }
@@ -62,10 +65,12 @@ function MyPosts({ currentMenu, email }) {
     const res = await axios.get(url);
 
     // 가져오기에 성공했다면
-    if (res.status === 200) {
+    if (res.status === 200 && res.data.posts) {
       const { posts } = res.data;
+
       // 캐싱
-      currentMenu ? (cache.myPosts = posts) : (cache.myLikes = posts);
+      currentMenu ? setCache([cache[0], posts]) : setCache([posts, cache[1]]);
+
       // posts 셋팅
       setPosts(posts);
     } else {
@@ -74,7 +79,7 @@ function MyPosts({ currentMenu, email }) {
 
     // 로딩 완료
     setIsLoading(false);
-  }, [history, currentMenu, email]);
+  }, [history, cache, currentMenu, email]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -106,6 +111,9 @@ function MyPosts({ currentMenu, email }) {
       {/* 로딩 중일 경우 모달 띄우기 */}
       {isLoading && <Loading />}
 
+      {/* 타인의 프로필을 보고 있을 경우 마진 */}
+      <div className="MyPostsMargin"></div>
+
       {posts ? (
         <>
           {/* 포스트 컴포넌트들 (실제 피드) */}
@@ -127,21 +135,24 @@ function MyPosts({ currentMenu, email }) {
             setCurrentPage={setCurrentPage}
           />
         </>
-      ) : // 글이 없음
-      currentMenu === 0 ? (
-        <NonePosts
-          link={"/wezzle"}
-          type={"지원한"}
-          description={"협업을 지원하러 가볼까요?"}
-          go={"협업 지원"}
-        />
       ) : (
-        <NonePosts
-          link={"/wezzle"}
-          type={"작성한"}
-          description={"글을 작성하러 가볼까요?"}
-          go={"글 작성"}
-        />
+        isAuth &&
+        // 글이 없음
+        (currentMenu === 0 ? (
+          <NonePosts
+            link={"/wezzle"}
+            type={"지원한"}
+            description={"협업을 지원하러 가볼까요?"}
+            go={"협업 지원"}
+          />
+        ) : (
+          <NonePosts
+            link={"/wezzle"}
+            type={"작성한"}
+            description={"글을 작성하러 가볼까요?"}
+            go={"글 작성"}
+          />
+        ))
       )}
     </section>
   );
