@@ -116,46 +116,46 @@ function MyPosts({ currentMenu, isAuth, email }) {
       {/* 타인의 프로필을 보고 있을 경우 마진 */}
       <div className="MyPostsMargin"></div>
 
-      {posts ? (
-        <>
-          {/* 포스트 컴포넌트들 (실제 피드) */}
-          <div className="MypagePostsPostContainer">
-            {/* 현재 화면에 표시할 게시물 구하기 */}
-            {pagination
-              .getCurrentPosts(currentPage, postsPerPage, posts)
-              .map((post, index) => (
-                <Post key={index} post={post} />
-              ))}
-          </div>
+      {posts
+        ? posts.length !== 0 && (
+            <>
+              {/* 포스트 컴포넌트들 (실제 피드) */}
+              <div className="MypagePostsPostContainer">
+                {/* 현재 화면에 표시할 게시물 구하기 */}
+                {pagination
+                  .getCurrentPosts(currentPage, postsPerPage, posts)
+                  .map((post, index) => (
+                    <Post key={index} post={post} />
+                  ))}
+              </div>
 
-          {/* 숫자 목록 */}
-          {/* 전체 페이지 번호 수, 현재 페이지 번호, 현재 페이지 번호 Setter */}
-          <Pagination
-            postsPerPage={postsPerPage}
-            totalPosts={posts.length}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
-        </>
-      ) : (
-        isAuth &&
-        // 글이 없음
-        (currentMenu === 0 ? (
-          <NonePosts
-            link={"/wezzle"}
-            type={"지원한"}
-            description={"협업을 지원하러 가볼까요?"}
-            go={"협업 지원"}
-          />
-        ) : (
-          <NonePosts
-            link={"/wezzle"}
-            type={"작성한"}
-            description={"글을 작성하러 가볼까요?"}
-            go={"글 작성"}
-          />
-        ))
-      )}
+              {/* 숫자 목록 */}
+              {/* 전체 페이지 번호 수, 현재 페이지 번호, 현재 페이지 번호 Setter */}
+              <Pagination
+                postsPerPage={postsPerPage}
+                totalPosts={posts.length}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
+            </>
+          )
+        : isAuth &&
+          // 글이 없음
+          (currentMenu === 0 ? (
+            <NonePosts
+              link={"/wezzle"}
+              type={"지원한"}
+              description={"협업을 지원하러 가볼까요?"}
+              go={"협업 지원"}
+            />
+          ) : (
+            <NonePosts
+              link={"/wezzle"}
+              type={"작성한"}
+              description={"글을 작성하러 가볼까요?"}
+              go={"글 작성"}
+            />
+          ))}
     </section>
   );
 }
