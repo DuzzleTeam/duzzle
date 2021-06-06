@@ -8,7 +8,7 @@ import PostInfo from "./PostInfo";
 import Wezzle from "./Wezzle";
 import LikeTogetherButton from "./LikeTogetherButton";
 import ShareButton from "./ShareButton";
-import Loading from "../../../../Loading.js/Loading";
+import Loading from "../../../../Loading/Loading";
 
 // CSS
 import "./Post.css";

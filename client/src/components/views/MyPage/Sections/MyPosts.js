@@ -5,7 +5,7 @@ import pagination from "../../../Pagination/functions";
 
 import Pagination from "../../../Pagination/Pagination";
 import Post from "../../../Feed/Post";
-import Loading from "../../../Loading.js/Loading";
+import Loading from "../../../Loading/Loading";
 import NonePosts from "../../../Feed/NonePosts";
 
 // CSS
