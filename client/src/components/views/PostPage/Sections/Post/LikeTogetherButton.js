@@ -20,6 +20,7 @@ function LikeTogetherButton({ setPost, post }) {
       // 요청 성공 시
       setPost({ ...post, like: res.data.like });
 
+      // (juhyun-noh)
       // 좋아요 저장을 했으면
       if (res.data.save) {
         // 알림 보내기

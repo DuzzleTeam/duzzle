@@ -43,7 +43,7 @@ function CommentInput({ postId, setComments, setPost }) {
           };
         });
 
-        // 알림 보내기
+        // (juhyun-noh) 알림 보내기
         const commentId = res.data.comment._id;
         axios.get(`/api/nofitication/${commentId}`);
       } else {

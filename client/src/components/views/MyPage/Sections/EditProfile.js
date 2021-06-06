@@ -72,7 +72,7 @@ function EditProfile({ user, setUser, setIsEditing }) {
       const res = await axios.post("/api/upload", formData);
 
       // 새로운 이미지 파일 이름 저장
-      const imageUrl = "http://localhost:5000/" + res.data.filename.toString();
+      const imageUrl = "/" + res.data.filename.toString();
 
       return imageUrl;
     }

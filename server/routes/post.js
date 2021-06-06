@@ -76,7 +76,7 @@ router.get(`/:type`, async (req, res) => {
   const isWezzle = type === "wezzle";
 
   // 전체 게시글 가져오기 (POJO로)
-  const posts = await Post.find({ isWezzle }).lean();
+  const posts = await Post.find({ isWezzle }).sort({ createdAt: -1 }).lean();
 
   if (posts) {
     // 게시글이 존재한다면
@@ -110,9 +110,11 @@ router.get("/posts/:email", async (req, res) => {
 
   // 유저가 있다면
   // user와 관련된 post들 찾기 (POJO)
-  const posts = await Post.find({ user: user._id }).lean();
+  const posts = await Post.find({ user: user._id })
+    .sort({ createdAt: -1 })
+    .lean();
   // 게시글이 없다면
-  if (!posts) return res.send();
+  if (posts.length === 0) return res.send({ posts: null });
 
   // 게시글이 있다면 user 정보 셋팅
   const newPosts = [];

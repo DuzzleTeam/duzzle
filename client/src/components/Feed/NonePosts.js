@@ -5,10 +5,7 @@ import { Link } from "react-router-dom";
 import "./NonePosts.css";
 
 // 게시글이 없을 때
-function NonePosts({ postType }) {
-  // 협업인지 컨펌인지
-  const description = postType === "wezzle" ? "협업" : "컨펌";
-
+function NonePosts({ link, type, description, go }) {
   return (
     // 컨테이너
     <article className={"NonePostsContainer"}>
@@ -17,13 +14,13 @@ function NonePosts({ postType }) {
 
       {/* 게시글 없다는 설명 글 */}
       <span>
-        {`앗! ${description} 게시글이 없어요.`}
+        {`앗! ${type} 게시글이 없어요.`}
         <br />
-        {`${description} 글을 작성하러 가볼까요?`}
+        {`${description}`}
       </span>
 
       {/* 작성하러 가기 버튼 */}
-      <Link to={`/${postType}/write`}>{`${description} 글 작성하기`}</Link>
+      <Link to={link}>{`${go}하러 가기`}</Link>
     </article>
   );
 }

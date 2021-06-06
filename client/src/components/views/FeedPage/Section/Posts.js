@@ -5,65 +5,37 @@ import pagination from "../../../Pagination/functions";
 
 import Pagination from "../../../Pagination/Pagination";
 import Post from "../../../Feed/Post";
-import NonePosts from "./NonePosts";
+import NonePosts from "../../../Feed/NonePosts";
+import Loading from "../../../Loading/Loading";
 
 // CSS
 import "./Posts.css";
 
 // cache
-let wezzle = [];
+const cache = {};
 
-function Posts() {
+// 메뉴 배열 (개발, 디자인)
+const fields = ["개발", "디자인"];
+
+// 메인 피드 중 게시글 모음 부분 (chohadam)
+function Posts({ postType }) {
   // 전체 포스트들
   const [posts, setPosts] = useState([]);
 
-  // wezzle 혹은 mezzle
-  const postType = document.location.pathname.match(/wezzle|mezzle/)[0];
-
-  // 전체 게시글 가져오기
-  const getPosts = useCallback(async () => {
-    // 페이지 초기화
-    setCurrentPage(1);
-
-    // 요청 url
-    const url = `/api/${postType}`;
-
-    // get 방식으로 요청
-    const res = await axios.get(url);
-
-    if (res.status === 200) {
-      if (postType === "wezzle") {
-        // 위즐이면 캐싱
-        wezzle = res.data.posts;
-
-        // 개발 모집 글만 필터
-        const developPosts = wezzle.filter((post) =>
-          post.recruit.field.includes("개발")
-        );
-
-        // 개발 게시글로 설정
-        setCurrentField(0);
-        setPosts(developPosts);
-      } else {
-        // 미즐
-        // 가져오기에 성공했을 경우 전체 게시글 셋팅
-        setPosts(res.data.posts);
-      }
-    }
-  }, [postType]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      // 전체 게시글 가져오기
-      await getPosts();
-    };
-    fetchData();
-  }, [getPosts]);
+  // 현재 게시글을 가져오고 있는 중인지
+  const [isLoading, setIsLoading] = useState(true);
 
   // 현재 메뉴가 개발(0)인지 디자인(1)인지
   const [currentField, setCurrentField] = useState(0);
-  // 메뉴 배열 (개발, 디자인)
-  const fields = ["개발", "디자인"];
+
+  const onChangeWezzleField = useCallback(() => {
+    // 개발 혹은 디자인 관련 글로만 필터
+    const filteredPosts = cache["wezzle"].filter((post) =>
+      post.recruit.field.includes(fields[currentField])
+    );
+    // state 업데이트
+    setPosts(filteredPosts);
+  }, [currentField]);
 
   const onButtonFieldClick = (field) => {
     // 현재 선택된 메뉴를 또 선택한다면 아무 이벤트 없이 리턴
@@ -78,14 +50,80 @@ function Posts() {
       // 디자인으로 설정
       setCurrentField(1);
     }
-
-    // 개발 혹은 디자인 관련 글로만 필터
-    const filteredPosts = wezzle.filter((post) =>
-      post.recruit.field.includes(field)
-    );
-    // state 업데이트
-    setPosts(filteredPosts);
   };
+
+  // 전체 게시글 가져오기
+  const getPosts = useCallback(async () => {
+    // 로딩 실행
+    setIsLoading(true);
+
+    // 페이지 초기화
+    setCurrentPage(1);
+
+    // 캐싱 있으면 셋팅
+    if (cache[postType]) {
+      // 로딩 종료
+      setIsLoading(false);
+
+      if (postType === "wezzle") {
+        // 위즐이면 field에 맞추어 설정
+        return onChangeWezzleField();
+      }
+      // 미즐이면 전체 게시글 셋팅
+      return setPosts(cache[postType]);
+    }
+
+    // 요청 url
+    const url = `/api/${postType}`;
+
+    // get 방식으로 요청
+    const res = await axios.get(url);
+
+    if (res.status === 200) {
+      // 캐싱
+      cache[postType] = res.data.posts;
+
+      if (postType === "wezzle") {
+        // 필터 후 셋팅
+        onChangeWezzleField();
+      } else {
+        // 미즐
+        // 가져오기에 성공했을 경우 전체 게시글 셋팅
+        setPosts(res.data.posts);
+      }
+    }
+
+    // 로딩 완료
+    setIsLoading(false);
+  }, [postType, onChangeWezzleField]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // 전체 게시글 가져오기
+      await getPosts();
+    };
+    fetchData();
+  }, [getPosts]);
+
+  // const onRefresh = async (e) => {
+  //   cache[postType] = null;
+  //   // 전체 게시글 가져오기
+  //   await getPosts();
+  // };
+
+  // 게시물이 지워졌을 때 업데이트
+  const onRemovePost = useCallback(
+    (postId) => {
+      // 지워진 게시물 제외하기
+      const filteredPosts = cache[postType].filter(
+        (post) => post._id !== postId
+      );
+      // 업데이트
+      cache[postType] = filteredPosts;
+      setPosts(filteredPosts);
+    },
+    [postType]
+  );
 
   // 현재 페이지 (페이지네이션에서)
   const [currentPage, setCurrentPage] = useState(1);
@@ -96,6 +134,16 @@ function Posts() {
   const scrollTargetRef = useRef();
   // location: state, pathname, hash ...
   const location = useLocation();
+
+  useEffect(() => {
+    // 게시글 삭제 시 postId가 넘어옴
+    // location.state와 포스트가 있다면
+    if (location.state && cache[postType]) {
+      const { postId } = location.state;
+      onRemovePost(postId);
+    }
+    return () => {};
+  }, [location, postType, onRemovePost]);
 
   useEffect(() => {
     // 자동 스크롤 (첫 게시글 위치로)
@@ -113,6 +161,9 @@ function Posts() {
   return (
     // 글 전체 목록 컨테이너
     <section ref={scrollTargetRef} className={"FeedPostsContainer"}>
+      {/* 로딩 중일 경우 모달 띄우기 */}
+      {isLoading && <Loading />}
+
       {/* 상단 버튼들 (개발/디자인, 글 작성) */}
       <div className="FeedButtons">
         {/* 개발, 디자인 버튼 */}
@@ -133,10 +184,19 @@ function Posts() {
         </div>
 
         {/* 글 작성 버튼 */}
-        <button className="ButtonWritePost" onClick={onWriteButtonClick}>
-          <img src="/images/feedPage/post_write.png" alt="write" />
-          {"글 작성"}
-        </button>
+        <div className={"PostsRightButtons"}>
+          {/* <button
+            className="ButtonRefresh"
+            onClick={onRefresh}
+            disabled={isLoading}
+          >
+            <img src="/images/feedPage/refresh.png" alt="refresh" />
+          </button> */}
+          <button className="ButtonWritePost" onClick={onWriteButtonClick}>
+            <img src="/images/feedPage/post_write.png" alt="write" />
+            {"글 작성"}
+          </button>
+        </div>
       </div>
 
       {posts.length !== 0 ? (
@@ -161,7 +221,14 @@ function Posts() {
         </div>
       ) : (
         // 글이 없음
-        <NonePosts postType={postType} />
+        <NonePosts
+          link={`/${postType}/write`}
+          type={postType === "wezzle" ? "협업" : "컨펌"}
+          description={`${
+            postType === "wezzle" ? "협업" : "컨펌"
+          } 글을 작성하러 가볼까요?`}
+          go={`${postType === "wezzle" ? "협업" : "컨펌"} 글 작성`}
+        />
       )}
     </section>
   );

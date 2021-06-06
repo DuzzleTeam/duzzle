@@ -17,6 +17,7 @@ const userSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
+    default: "이름",
   },
   field: {
     type: String,
