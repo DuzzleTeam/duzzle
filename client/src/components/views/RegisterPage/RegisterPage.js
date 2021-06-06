@@ -203,7 +203,9 @@ function RegisterPage(props) {
                 checked={agreed}
                 onChange={() => checkAgree("agree")}
               />
-              <label htmlFor="agree"></label>
+              <label htmlFor="agree">
+                {agreed && <img src="/images/checkbox.png" alt="checked" />}
+              </label>
               <button className="AgreeLink" onClick={handlePopup}>
                 [필수] 개인정보 수집 및 이용 동의
               </button>
