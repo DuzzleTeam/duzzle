@@ -190,7 +190,7 @@ input[id="agree"] + label {
   cursor: pointer;
 }
 input[id="agree"]:checked + label {
-  background-image: url("/images/checkbox.png");
+  /* background-image: url("/images/checkbox.png"); */
   background-repeat: no-repeat;
 
   border: none;
