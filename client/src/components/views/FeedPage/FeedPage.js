@@ -12,13 +12,16 @@ import "./Section/FeedPage.css";
 // 메인 피드 페이지 (chohadam, 2021-05-31)
 // /mezzle or /wezzle
 function FeedPage() {
+  // wezzle 혹은 mezzle
+  const postType = document.location.pathname.match(/wezzle|mezzle/)[0];
+
   return (
     <main className={"FeedContainer"}>
       {/* 최상단 메인 배너 영역 */}
-      <Banner />
+      <Banner postType={postType} />
 
       {/* 중앙 게시글 영역 */}
-      <Posts />
+      <Posts postType={postType} />
 
       {/* 하단 푸터 영역 */}
       <Footer />
