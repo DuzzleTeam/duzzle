@@ -6,11 +6,14 @@ import "../../../utils/Common.css";
 import "./Sections/PostWritingPage.css";
 
 function PostWritingPage() {
-  /* post의 제목, 내용, 이미지, 파일 (공통 항목) */
+  /* post의 제목, 내용, 파일 (공통 항목 - 이미지 제외) */
   const [inputContents, setInputContents] = useState({
     title: "",
-    contents: { text: "", images: [], files: [] },
+    contents: { text: "" },
   });
+
+  /* 이미지 */
+  const [inputImages, setInputImages] = useState([]);
 
   /* 모집 인원 */
   const [inputPeopleNum, setInputPeopleNum] = useState(0);
@@ -32,23 +35,45 @@ function PostWritingPage() {
   let isWezzle = false;
   if (currentPageMenu[0] === "wezzle") isWezzle = true;
 
-  /* 공통 항목 (제목,내용,이미지,파일) state 변경 */
+  /* 공통 항목 (제목,내용,파일) state 변경 */
   const onChangeCommon = (e) => {
     if (e.target.id === "text") {
       setInputContents({
         ...inputContents,
         contents: { [e.target.id]: e.target.value },
       });
-    } else if (e.target.id === "images" || e.target.id === "files") {
-      setInputContents({
-        ...inputContents,
-        contents: { [e.target.id]: [...this, e.target.value] },
-      });
     } else {
       setInputContents({
         ...inputContents,
         [e.target.id]: e.target.value,
       });
+    }
+  };
+
+  let imageArrayPreview = null;
+  /* 이미지 미리보기를 위한 */
+  const handleImageUpload = (e) => {
+    e.preventDefault();
+    const fileArr = e.target.files;
+    let fileURLs = [];
+    let file;
+    for (let i = 0; i < fileArr.length; i++) {
+      file = fileArr[i];
+      let reader = new FileReader();
+      reader.onload = () => {
+        console.log(reader.result);
+        fileURLs[i] = reader.result;
+        setInputImages([...fileURLs]);
+      };
+      reader.readAsDataURL(file);
+    }
+    for (let i = 0; i < inputImages.length; i++) {
+      imageArrayPreview += (
+        <div>
+          <img key={i} src={inputImages[i]} />
+        </div>
+      );
+      console.log(imageArrayPreview);
     }
   };
 
@@ -110,7 +135,11 @@ function PostWritingPage() {
   useEffect(() => {
     if (isWezzle) {
       // Wezzle일때
-      let nowDay = Number(now.getFullYear() + now.getMonth() + now.getDate());
+      let nowDay = Number(
+        String(now.getFullYear()) +
+          String(now.getMonth() + 1).padStart(2, "0") +
+          String(now.getDate()).padStart(2, "0")
+      );
       let startPeriod = Number(
         inputPeriods.period[0] + inputPeriods.period[1] + inputPeriods.period[2]
       );
@@ -459,9 +488,11 @@ function PostWritingPage() {
               <input
                 type="file"
                 id="images"
+                multiple
                 accept="image/png,image/jpeg"
                 defaultValue={inputContents.contents.images}
                 className="ImagesButton"
+                onChange={handleImageUpload}
               />
             </div>
 
@@ -480,6 +511,8 @@ function PostWritingPage() {
                 className="TextArea"
               />
             </div>
+
+            <div className="Container">{imageArrayPreview}</div>
           </form>
         </div>
       </main>
