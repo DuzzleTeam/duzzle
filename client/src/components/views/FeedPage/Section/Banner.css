@@ -2,6 +2,25 @@
 .FeedBannerContainer {
   width: 100vw;
   height: 574px;
+  overflow-x: hidden;
+}
 
-  background-color: #ececec;
+/* 실제 배너 이미지 */
+.FeedBannerContainer img {
+  width: 100vw;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ul */
+.BannerSlide {
+  margin: 0;
+  padding: 0;
+  /* 이미지 가로 배치 */
+  display: flex;
+}
+
+/* li */
+.BannerSlide > li {
+  transition: transform 0.3s linear;
 }
