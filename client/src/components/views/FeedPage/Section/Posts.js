@@ -115,13 +115,18 @@ function Posts() {
   // };
 
   // 게시물이 지워졌을 때 업데이트
-  const onRemovePost = (postId) => {
-    // 지워진 게시물 제외하기
-    const filteredPosts = cache[postType].filter((post) => post._id !== postId);
-    // 업데이트
-    cache[postType] = filteredPosts;
-    setPosts(filteredPosts);
-  };
+  const onRemovePost = useCallback(
+    (postId) => {
+      // 지워진 게시물 제외하기
+      const filteredPosts = cache[postType].filter(
+        (post) => post._id !== postId
+      );
+      // 업데이트
+      cache[postType] = filteredPosts;
+      setPosts(filteredPosts);
+    },
+    [postType]
+  );
 
   // 현재 페이지 (페이지네이션에서)
   const [currentPage, setCurrentPage] = useState(1);
@@ -140,7 +145,10 @@ function Posts() {
       const { postId } = location.state;
       onRemovePost(postId);
     }
+    return () => {};
+  }, [location, postType, onRemovePost]);
 
+  useEffect(() => {
     // 자동 스크롤 (첫 게시글 위치로)
     pagination.autoScroll(location, scrollTargetRef);
     // 페이지 전환을 한 적이 있다면
