@@ -73,7 +73,14 @@ function Post({ post, setPost }) {
   return (
     post &&
     (isRemovedPost ? (
-      <Redirect to={`/${post.isWezzle ? "wezzle" : "mezzle"}`} />
+      // 게시글 삭제 시 피드로 redirect
+      // 피드 업데이트를 위해 post id를 넘겨줌
+      <Redirect
+        to={{
+          pathname: `/${post.isWezzle ? "wezzle" : "mezzle"}`,
+          state: { postId: post._id },
+        }}
+      />
     ) : (
       <section className="PostContainer">
         {/* 로딩 중이라면 모달 띄우기 */}
