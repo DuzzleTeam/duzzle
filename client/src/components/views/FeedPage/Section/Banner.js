@@ -4,7 +4,7 @@ import React from "react";
 import "./Banner.css";
 
 // 최상단 배너 컨테이너
-function Banner() {
+function Banner({ postType }) {
   return <section className={"FeedBannerContainer"}>banner</section>;
 }
 

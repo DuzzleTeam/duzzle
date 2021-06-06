@@ -18,15 +18,12 @@ const cache = {};
 const fields = ["개발", "디자인"];
 
 // 메인 피드 중 게시글 모음 부분 (chohadam)
-function Posts() {
+function Posts({ postType }) {
   // 전체 포스트들
   const [posts, setPosts] = useState([]);
 
   // 현재 게시글을 가져오고 있는 중인지
   const [isLoading, setIsLoading] = useState(true);
-
-  // wezzle 혹은 mezzle
-  const postType = document.location.pathname.match(/wezzle|mezzle/)[0];
 
   // 현재 메뉴가 개발(0)인지 디자인(1)인지
   const [currentField, setCurrentField] = useState(0);
