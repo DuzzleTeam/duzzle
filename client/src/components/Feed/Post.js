@@ -27,12 +27,28 @@ function Post(props) {
     history.push(`/${postType}/post/${post._id}`);
   };
 
+  // 1, 2, 3, 4, 5 중 랜덤하게 하나의 숫자를 리턴함
+  // 기본 이미지를 설정
+  const getRandomNumber = () => {
+    const N = 5;
+    // 0 이상 1 미만 난수 * 5 => 0 이상 5 미만
+    // + 1 => 1 이상 6 미만
+    // parseInt => 1 이상 5 이하 정수
+    const number = parseInt(Math.random() * N + 1);
+    return number;
+  };
+
   return (
     <article className={"PreviewPostContainer"} onClick={onPostClick}>
       {/* 이미지가 있는지 없는지에 따라 기본 이미지 or 이미지 출력 */}
       {post.contents.images.length === 0 ? (
         // 이미지 없음
-        <div className="PostDefaultImage"></div>
+        <div className="PostDefaultImage">
+          <img
+            src={`/images/default/post/${getRandomNumber()}.png`}
+            alt="default"
+          />
+        </div>
       ) : (
         // 이미지 있음
         <img
