@@ -17,6 +17,7 @@ const cache = {};
 // 메뉴 배열 (개발, 디자인)
 const fields = ["개발", "디자인"];
 
+// 메인 피드 중 게시글 모음 부분 (chohadam)
 function Posts() {
   // 전체 포스트들
   const [posts, setPosts] = useState([]);
@@ -107,10 +108,19 @@ function Posts() {
     fetchData();
   }, [getPosts]);
 
-  const onRefresh = async (e) => {
-    cache[postType] = null;
-    // 전체 게시글 가져오기
-    await getPosts();
+  // const onRefresh = async (e) => {
+  //   cache[postType] = null;
+  //   // 전체 게시글 가져오기
+  //   await getPosts();
+  // };
+
+  // 게시물이 지워졌을 때 업데이트
+  const onRemovePost = (postId) => {
+    // 지워진 게시물 제외하기
+    const filteredPosts = cache[postType].filter((post) => post._id !== postId);
+    // 업데이트
+    cache[postType] = filteredPosts;
+    setPosts(filteredPosts);
   };
 
   // 현재 페이지 (페이지네이션에서)
@@ -124,6 +134,13 @@ function Posts() {
   const location = useLocation();
 
   useEffect(() => {
+    // 게시글 삭제 시 postId가 넘어옴
+    // location.state와 포스트가 있다면
+    if (location.state && cache[postType]) {
+      const { postId } = location.state;
+      onRemovePost(postId);
+    }
+
     // 자동 스크롤 (첫 게시글 위치로)
     pagination.autoScroll(location, scrollTargetRef);
     // 페이지 전환을 한 적이 있다면
@@ -163,13 +180,13 @@ function Posts() {
 
         {/* 글 작성 버튼 */}
         <div className={"PostsRightButtons"}>
-          <button
+          {/* <button
             className="ButtonRefresh"
             onClick={onRefresh}
             disabled={isLoading}
           >
             <img src="/images/feedPage/refresh.png" alt="refresh" />
-          </button>
+          </button> */}
           <button className="ButtonWritePost" onClick={onWriteButtonClick}>
             <img src="/images/feedPage/post_write.png" alt="write" />
             {"글 작성"}
