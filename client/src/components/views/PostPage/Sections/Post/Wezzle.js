@@ -26,11 +26,14 @@ function Wezzle({ period, field, peopleNum, projectPeriod }) {
 
   // 모집분야 템플릿 (배열을 span 하나씩)
   const fieldTemplate = (field) => {
-    return field.map((str, index) => (
-      <span className={"WezzleRecruitField"} key={index}>
-        {str}
-      </span>
-    ));
+    return field.map(
+      (str, index) =>
+        str.length !== 0 && (
+          <span className={"WezzleRecruitField"} key={index}>
+            {str}
+          </span>
+        )
+    );
   };
 
   return (
@@ -50,7 +53,9 @@ function Wezzle({ period, field, peopleNum, projectPeriod }) {
       </div>
       <div>
         <span>{"프로젝트 예상 기간"}</span>
-        {periodTemplate(projectPeriod)}
+        {projectPeriod === "미정"
+          ? projectPeriod
+          : periodTemplate(projectPeriod)}
       </div>
     </div>
   );
