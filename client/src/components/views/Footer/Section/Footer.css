@@ -30,13 +30,14 @@ footer {
 /* SNS, Email */
 /* SNS icon */
 .FooterSNS {
-  height: 28px;
-  width: 28px;
   margin-bottom: 18px;
 }
-.FooterSNS > img {
-  height: 100%;
-  width: 100%;
+.FooterSNS > a:first-child {
+  margin-right: 16px;
+}
+.FooterSNS img {
+  height: 28px;
+  width: 28px;
 }
 
 /* Email */
