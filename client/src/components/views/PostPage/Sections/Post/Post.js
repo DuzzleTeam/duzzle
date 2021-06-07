@@ -137,13 +137,11 @@ function Post({ post, setPost }) {
           <span className="PostMainText">{post.contents.text}</span>
 
           {/* 이미지 있다면 */}
-          {post.contents.images.length !== 0 && (
-            <img
-              className="PostContentsImage"
-              src="/images/profile-image.jpg"
-              alt="postimage"
-            />
-          )}
+          <div className="PostContentsImage">
+            {post.contents.images.map((image, index) => (
+              <img key={index} src={image} alt="postimage" />
+            ))}
+          </div>
 
           {/* 좋아요, 공유 버튼 */}
           <div className="PostLikeShareContainer">
