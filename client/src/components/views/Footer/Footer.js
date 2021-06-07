@@ -14,12 +14,31 @@ function Footer() {
       <footer>
         <div className="TopFooter">
           {/* Duzzle 로고 이미지 */}
-          <div className="FooterLogo">Duzzle</div>
+          <div className="FooterLogo">
+            <img src="/images/footer/duzzle_white_logo.png" alt="logo" />
+          </div>
 
           {/* SNS, Email, Menu */}
           {/* SNS, Email */}
           <div className="TopLeftFooter">
-            <div className="FooterSNS"></div>
+            <div className="FooterSNS">
+              <a
+                href="https://www.instagram.com/duzzle.2021/"
+                target="_blank"
+                rel="noreferrer"
+                className="InstaText"
+              >
+                <img src="/images/footer/instagram.png" alt="" />
+              </a>
+              <a
+                href="https://www.facebook.com/profile.php?id=100068791056122"
+                target="_blank"
+                rel="noreferrer"
+                className="FacebookText"
+              >
+                <img src="/images/footer/facebook.png" alt="" />
+              </a>
+            </div>
             <span>{"duzzlemanager@gmail.com"}</span>
           </div>
           {/* Menu */}
