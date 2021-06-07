@@ -35,6 +35,7 @@
 .PreviewPostImage {
   width: 391px;
   height: 340px;
+  border-radius: 20px;
 
   object-fit: cover;
 }
