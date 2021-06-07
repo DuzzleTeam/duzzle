@@ -151,6 +151,12 @@ span.PostMainText {
 
   margin-bottom: 80px;
 }
+.PostContentsImage > img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+  object-fit: contain;
+}
 
 /* 좋아요, 공유 버튼 */
 .PostLikeShareContainer {
