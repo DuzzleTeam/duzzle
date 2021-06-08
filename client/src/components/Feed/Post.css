@@ -1,5 +1,6 @@
 /* 컨테이너 */
 .PreviewPostContainer {
+  position: relative;
   display: inline-flex;
   flex-direction: column;
   width: 391px;
@@ -14,6 +15,21 @@
 .MypagePostsPostContainer .PostDefaultImage {
   width: 350px;
   height: 285px;
+}
+
+/* 삭제 버튼 */
+.ButtonMypagePostDelete {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 24px;
+  right: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.ButtonMypagePostDelete:hover {
+  opacity: 0.5;
 }
 
 /* 이미지 없음 */
