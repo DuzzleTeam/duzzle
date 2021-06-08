@@ -33,7 +33,6 @@ const userSchema = mongoose.Schema({
   },
   profileImage: {
     type: String,
-    default: "/images/defaultImg.png",
   },
   openChating: {
     type: String,

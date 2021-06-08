@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, withRouter } from "react-router-dom";
+import getRandomNumber from "../../../utils/getRandomNumber";
 
 import Popup from "./Sections/Popup";
 
@@ -78,6 +79,7 @@ function RegisterPage(props) {
       email,
       name: email,
       password,
+      profileImage: `/images/default/profile/${getRandomNumber()}.png`,
     };
 
     history.push({
