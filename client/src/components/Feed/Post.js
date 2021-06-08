@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 import "./Post.css";
@@ -19,6 +20,10 @@ function Post(props) {
   // 페이지 전환을 위한 Hook
   const history = useHistory();
   const onPostClick = (e) => {
+    if (buttonDeleteRef.current.contains(e.target)) {
+      return;
+    }
+
     // 게시글 미리보기 클릭
     // wezzle 혹은 mezzle
     const postType = post.isWezzle ? "wezzle" : "mezzle";
@@ -38,8 +43,41 @@ function Post(props) {
     return number;
   };
 
+  // 삭제 버튼 ref
+  const buttonDeleteRef = useRef();
+  // 게시글 삭제
+  const onDeletePost = async (e) => {
+    // 삭제 확인
+    if (!window.confirm("게시글을 삭제하시겠습니까?")) {
+      // 삭제 취소 시 리턴
+      return;
+    }
+
+    // 요청 url
+    const url = `/api/post/${post._id}`;
+
+    // 삭제 요청
+    const res = await axios.delete(url);
+
+    // 성공적으로 삭제되었다면
+    if (res.status === 200) {
+      // 게시글 목록 업데이트
+    }
+  };
+
   return (
     <article className={"PreviewPostContainer"} onClick={onPostClick}>
+      {/* Delete Button */}
+      {props.isMypage && (
+        <button
+          className={"ButtonMypagePostDelete"}
+          ref={buttonDeleteRef}
+          onClick={onDeletePost}
+        >
+          <img src="/images/myPage/post_delete.png" alt="delete" />
+        </button>
+      )}
+
       {/* 이미지가 있는지 없는지에 따라 기본 이미지 or 이미지 출력 */}
       {post.contents.images.length === 0 ? (
         // 이미지 없음
