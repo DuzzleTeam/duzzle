@@ -125,7 +125,12 @@ function MyPosts({ currentMenu, isAuth, email }) {
                 {pagination
                   .getCurrentPosts(currentPage, postsPerPage, posts)
                   .map((post, index) => (
-                    <Post key={index} post={post} />
+                    <Post
+                      key={index}
+                      post={post}
+                      // 내 게시물일 때만 삭제 버튼 표시
+                      isMypage={currentMenu === 1}
+                    />
                   ))}
               </div>
 
