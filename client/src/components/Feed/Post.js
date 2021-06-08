@@ -62,6 +62,8 @@ function Post(props) {
     // 성공적으로 삭제되었다면
     if (res.status === 200) {
       // 게시글 목록 업데이트
+      props.onRemovePost(post._id);
+      alert("🗑 게시글이 삭제되었습니다!");
     }
   };
 
