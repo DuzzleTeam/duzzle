@@ -283,6 +283,7 @@ router.post("/api/users/edit", auth, (req, res) => {
         if (err) return res.json({ editSuccess: false });
         return res.status(200).send({
           editSuccess: true,
+          profileImage: req.body.profileImage,
         });
       }
     );
