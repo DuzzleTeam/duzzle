@@ -21,8 +21,11 @@ function Post(props) {
   // 페이지 전환을 위한 Hook
   const history = useHistory();
   const onPostClick = (e) => {
-    if (buttonDeleteRef.current.contains(e.target)) {
-      return;
+    // delete 버튼 눌렀으면 (마이페이지)
+    if (buttonDeleteRef.current) {
+      if (buttonDeleteRef.current.contains(e.target)) {
+        return;
+      }
     }
 
     // 게시글 미리보기 클릭
@@ -34,7 +37,7 @@ function Post(props) {
   };
 
   // 삭제 버튼 ref
-  const buttonDeleteRef = useRef();
+  const buttonDeleteRef = useRef(null);
   // 게시글 삭제
   const onDeletePost = async (e) => {
     // 삭제 확인

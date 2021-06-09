@@ -90,13 +90,24 @@ function Post({ post, setPost }) {
         <article className="PostTopContents">
           {/* 글쓴이 정보 */}
           <div className="PostUser">
-            {/* 프로필 사진 */}
-            <img src={post.user.profileImage} alt="profile" />
+            {/* 프로필 사진 (null이면 탈퇴한 사용자) */}
+            {post.user.profileImage ? (
+              <img src={post.user.profileImage} alt="profile" />
+            ) : (
+              <img src="/images/default/profile/1.png" alt="profile" />
+            )}
             {/* 이름, 게시날짜 */}
             <div className="PostUserText">
-              <Link to={`/users/${post.user.email}`} className="PostUserName">
-                {post.user.name}
-              </Link>
+              {/* _id null이면 탈퇴한 사용자 */}
+              {post.user._id ? (
+                <Link to={`/users/${post.user.email}`} className="PostUserName">
+                  {post.user.name}
+                </Link>
+              ) : (
+                // 탈퇴한 사용자
+                // name: (탈퇴한 사용자)
+                <Link className="PostUserName">{post.user.name}</Link>
+              )}
               <span>{post.createdAt.slice(0, 10)}</span>
             </div>
           </div>
