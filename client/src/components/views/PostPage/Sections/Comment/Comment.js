@@ -84,23 +84,37 @@ function Comment(props) {
       // 댓글 하나의 컨테이너
       <div className="CommentContainer">
         {/* 댓글 유저, 댓글 게시 날짜, 내용 */}
-        {/* 댓글 유저 프로필 사진 */}
-        <img
-          className="CommentUserProfileImage"
-          src={comment.user.profileImage}
-          alt="commentUserProfileImage"
-        />
+        {/* 댓글 유저 프로필 사진 (없다면 탈퇴 사용자) */}
+        {comment.user._id ? (
+          <img
+            className="CommentUserProfileImage"
+            src={comment.user.profileImage}
+            alt="commentUserProfileImage"
+          />
+        ) : (
+          // 탈퇴한 사용자라면 기본 이미지 표시
+          <img
+            className="CommentUserProfileImage"
+            src="/images/default/profile/1.png"
+            alt="profile"
+          />
+        )}
 
         {!updatingComment ? (
           <>
             <div className="CommentMainContents">
               <div>
-                <Link
-                  to={`/users/${comment.user.email}`}
-                  className="CommentUser"
-                >
-                  {comment.user.name}
-                </Link>
+                {comment.user._id ? (
+                  <Link
+                    to={`/users/${comment.user.email}`}
+                    className="CommentUser"
+                  >
+                    {comment.user.name}
+                  </Link>
+                ) : (
+                  // 탈퇴한 사용자 처리
+                  <Link className="CommentUser">{comment.user.name}</Link>
+                )}
                 <span className="CommentDate">
                   {comment.createdAt.slice(0, 10)}
                 </span>

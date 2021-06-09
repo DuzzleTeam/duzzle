@@ -135,7 +135,7 @@ function MyPosts({ currentMenu, isAuth, email }) {
                       key={index}
                       post={post}
                       // 내 게시물일 때만 삭제 버튼 표시
-                      isMypage={currentMenu === 1}
+                      isMypage={currentMenu === 1 && isAuth}
                       onRemovePost={onRemovePost}
                     />
                   ))}
