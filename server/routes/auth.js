@@ -76,6 +76,7 @@ router.post("/api/register", saveData, async (req, res) => {
   const BASE_URL = "https://duzzle-mailer.herokuapp.com";
 
   const { email } = req.body;
+
   try {
     const result = await axios.post(`${BASE_URL}/api/send/${email}`);
 

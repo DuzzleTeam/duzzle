@@ -2,6 +2,7 @@ const express = require("express");
 const { Post } = require("../models/Post");
 const { User } = require("../models/User");
 const { Comment } = require("../models/Comment");
+const { Like } = require("../models/Like");
 const { Notification } = require("../models/Notification");
 
 const router = express.Router();
@@ -78,44 +79,103 @@ router.get(`/notification/:postId/:userId`, async (req, res) => {
 
 // 알림 가져오기
 router.get(`/notification/:userId`, (req, res) => {
-  // url로 전달받은 user id 가져오기
+  // 알림을 담을 배열
+  var notiArray = [];
+  // url로 전달받은 user id 가져오기 (현재 접속중인 user)
   const userId = req.params.userId;
-  // urlId user가 받은 알림 가져오기
-  Notification.find(async (err, notification) => {
-    // if (!notification) return res.json({ error: "알림 찾을 수 없음" });
+  // userId user가 받은 알림 가져오기
+  Notification.find({ user: userId }, async (err, notification) => {
+    if (!notification) return res.send({ err });
+
     for (i = 0; i < notification.length; i++) {
-      // 알림의 user가 현재 접속하고 있는 user와 일치한다면(나한테 온 알림)
-      if (notification[i].user.toString() == userId) {
-        // 알림을 보낸 사람 찾기(provider)
-        const provider = await User.findOne(
-          { _id: notification[i].provider.toString() },
-          (err, provider) => {
-            return provider;
-          }
-        );
+      // 알림을 보낸 사람 찾기(provider)
+      const provider = await User.findOne(
+        { _id: notification[i].provider },
+        (err, provider) => {
+          return provider;
+        }
+      );
+      // 댓글 알림이면
+      if (notification[i].comment != null) {
+        console.log("댓글");
         // 댓글이 달린 게시물 찾기(post)
-        Post.findOne({ _id: notification[i].post.toString() }, (err, post) => {
-          // if (!post) return res.json({ error: "게시글 찾을 수 없음" });
+        Post.findOne({ _id: "" + notification[i].post }, (err, post) => {
+          if (!post) return res.send({ err });
           // 댓글 내용 찾기(comment)
-          Comment.find((err, comment) => {
-            // if (!comment) return res.json({ error: "댓글 찾을 수 없음" });
-            // 최근 달린 댓글부터
-            for (i = comment.length - 1; i >= 0; i--) {
-              if (comment[i].post.toString() == post._id) {
-                res.status(200).json({
-                  provider: provider.name,
-                  isWezzle: post.isWezzle,
-                  content: comment[i].text,
-                  occurTime: comment[i].createdAt,
-                });
+          Comment.find({ post: post._id }, (err, comment) => {
+            if (!comment) return res.send({ err });
+            for (i = 0; i < comment.length; i++) {
+              if (comment[i].user == provider._id) {
+                console.log(comment[i]);
               }
-              break;
             }
+          });
+          // Comment.find({ user: provider._id }, (err, comment) => {
+          //   if (!comment) return res.send({ err });
+          //   for (i = 0; i < comment.length; i++) {
+          //     if ((comment[i].post = post._id)) {
+          //       re = {
+          //         provider: provider.name,
+          //         isWezzle: post.isWezzle,
+          //         content: comment[i].text,
+          //         occurTime: notification[i].occurTime,
+          //         menuType: "comment",
+          //       };
+          //       notiArray.push(re);
+          //     }
+          //   }
+          // });
+        });
+      } else {
+        console.log("좋아용");
+        // 좋아요나 협업 눌린 게시물 찾기(post)
+        Post.findOne({ _id: "" + notification[i].post }, (err, post) => {
+          if (!post) return res.send({ err });
+          // 협업해요 알림이면
+          // if (post.isWezzle) {
+          //   console.log(
+          //     provider.name,
+          //     post.title,
+          //     post.isWezzle,
+          //     notification[i].occurTime,
+          //     "wezzle"
+          //   );
+          //   re = {
+          //     provider: provider.name,
+          //     content: post.title,
+          //     isWezzle: post.isWezzle,
+          //     occurTime: notification[i].occurTime,
+          //     menuType: "wezzle",
+          //   };
+          //   notiArray.push(re);
+          // } else {
+          //   // 좋아요 알림이면
+          //   console.log(
+          //     provider.name,
+          //     post.title,
+          //     post.isWezzle,
+          //     // notification[i].occurTime,
+          //     "like"
+          //   );
+          //   re = {
+          //     provider: provider.name,
+          //     content: post.title,
+          //     isWezzle: post.isWezzle,
+          //     // occurTime: notification[i].occurTime,
+          //     menuType: "like",
+          //   };
+          //   notiArray.push(re);
+          // }
+        }).catch((err) => {
+          res.json({
+            message: "Post find 에러 발생",
           });
         });
       }
-      break;
     }
+  }).then(() => {
+    // return res.status(200).send(notiArray);
+    console.log(notiArray);
   });
 });
 
