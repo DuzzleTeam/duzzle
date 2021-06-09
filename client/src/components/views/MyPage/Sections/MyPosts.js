@@ -5,7 +5,7 @@ import pagination from "../../../Pagination/functions";
 
 import Pagination from "../../../Pagination/Pagination";
 import Post from "../../../Feed/Post";
-import Loading from "../../../Loading.js/Loading";
+import Loading from "../../../Loading/Loading";
 import NonePosts from "../../../Feed/NonePosts";
 
 // CSS
@@ -107,6 +107,12 @@ function MyPosts({ currentMenu, isAuth, email }) {
     pagination.saveCurrentPage(location, setCurrentPage);
   }, [location]);
 
+  // 게시글 삭제 시 피드 업데이트
+  const onRemovePost = (postId) => {
+    const removedPosts = posts.filter((post) => post._id !== postId);
+    setPosts(removedPosts);
+  };
+
   return (
     // 글 전체 목록 컨테이너
     <section ref={scrollTargetRef} className={"MyPostsContainer"}>
@@ -125,7 +131,13 @@ function MyPosts({ currentMenu, isAuth, email }) {
                 {pagination
                   .getCurrentPosts(currentPage, postsPerPage, posts)
                   .map((post, index) => (
-                    <Post key={index} post={post} />
+                    <Post
+                      key={index}
+                      post={post}
+                      // 내 게시물일 때만 삭제 버튼 표시
+                      isMypage={currentMenu === 1 && isAuth}
+                      onRemovePost={onRemovePost}
+                    />
                   ))}
               </div>
 

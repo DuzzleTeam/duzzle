@@ -1,5 +1,6 @@
 /* 컨테이너 */
 .PreviewPostContainer {
+  position: relative;
   display: inline-flex;
   flex-direction: column;
   width: 391px;
@@ -16,18 +17,41 @@
   height: 285px;
 }
 
+/* 삭제 버튼 */
+.ButtonMypagePostDelete {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 24px;
+  right: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.ButtonMypagePostDelete:hover {
+  opacity: 0.5;
+}
+
 /* 이미지 없음 */
 .PostDefaultImage {
   width: 391px;
   height: 340px;
-  background-color: #f1f1f1;
-  border-radius: 10px;
+  /* background-color: #f1f1f1; */
+  /* border-radius: 10px; */
+}
+/* 게시글 기본 이미지 */
+.PostDefaultImage > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
 }
 
 /* 이미지 있음 */
 .PreviewPostImage {
   width: 391px;
   height: 340px;
+  border-radius: 20px;
 
   object-fit: cover;
 }

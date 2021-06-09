@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, withRouter } from "react-router-dom";
+import getRandomNumber from "../../../utils/getRandomNumber";
 
 import Popup from "./Sections/Popup";
 
@@ -77,6 +78,7 @@ function RegisterPage(props) {
     let body = {
       email,
       password,
+      profileImage: `/images/default/profile/${getRandomNumber()}.png`,
     };
 
     history.push({
@@ -202,7 +204,9 @@ function RegisterPage(props) {
                 checked={agreed}
                 onChange={() => checkAgree("agree")}
               />
-              <label htmlFor="agree"></label>
+              <label htmlFor="agree">
+                {agreed && <img src="/images/checkbox.png" alt="checked" />}
+              </label>
               <button className="AgreeLink" onClick={handlePopup}>
                 [필수] 개인정보 수집 및 이용 동의
               </button>
