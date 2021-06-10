@@ -62,9 +62,21 @@ function NotificationDropdown(props) {
       <ul className="NotiContentsContainer">
         {/* notification이 있으면 Notification 렌더링 */}
         {notification &&
-          notification.map((noti, i) => (
-            <Notification notification={notification[i]} />
-          ))}
+          notification.map((noti, i) => {
+            if (activeNotiMenu === 0) {
+              if (noti.menuType === "comment") {
+                return <Notification notification={notification[i]} key={i} />;
+              }
+            } else if (activeNotiMenu === 1) {
+              if (noti.menuType === "like") {
+                return <Notification notification={notification[i]} key={i} />;
+              }
+            } else {
+              if (noti.menuType === "wezzle") {
+                return <Notification notification={notification[i]} key={i} />;
+              }
+            }
+          })}
       </ul>
     </div>
   );
