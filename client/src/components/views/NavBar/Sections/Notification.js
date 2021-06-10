@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./Notification.css";
 
 function Notification({ notification }) {
@@ -16,10 +16,6 @@ function Notification({ notification }) {
       document.location.href = `/mezzle/post/${notification.post}`;
     }
   };
-
-  useEffect(() => {
-    console.log(notification);
-  }, [notification]);
 
   return (
     <Link
