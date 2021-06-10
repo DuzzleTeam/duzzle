@@ -61,9 +61,10 @@ function NotificationDropdown(props) {
       {/* 하나 하나의 알림들 */}
       <ul className="NotiContentsContainer">
         {/* notification이 있으면 Notification 렌더링 */}
-        {notification && <Notification notification={notification[0]} />}
-        {notification && <Notification notification={notification[1]} />}
-        {notification && <Notification notification={notification[2]} />}
+        {notification &&
+          notification.map((noti, i) => (
+            <Notification notification={notification[i]} />
+          ))}
       </ul>
     </div>
   );

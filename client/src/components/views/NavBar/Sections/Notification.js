@@ -25,12 +25,11 @@ function Notification({ notification }) {
     <Link
       onClick={() => goPost()}
       to={"/"}
-      // className={
-      //   notification.isChecked
-      //     ? "NotiContainer"
-      //     : "NotiContainer NotiNotChecked"
-      // }
-      className={"NotiContainer NotiNotChecked"}
+      className={
+        notification.isChecked
+          ? "NotiContainer"
+          : "NotiContainer NotiNotChecked"
+      }
     >
       <div className="NotiTopContainer">
         <div className="NotiLeftContainer">
