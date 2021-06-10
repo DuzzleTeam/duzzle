@@ -78,14 +78,14 @@ router.get(`/notification/:postId/:userId`, async (req, res) => {
 });
 
 // 알림 가져오기
-router.get(`/notification/:userId`, (req, res) => {
+router.get(`/notification/:userId`, async (req, res) => {
   // 알림을 담을 배열
   var notiArray = [];
   // url로 전달받은 user id 가져오기 (현재 접속중인 user)
   const userId = req.params.userId;
   // userId user가 받은 알림 가져오기
-  Notification.find({ user: userId }, async (err, notification) => {
-    if (!notification) return res.send({ err });
+  await Notification.find({ user: userId }, async (err, notification) => {
+    if (!notification) return res.send({ message: "알림 없음" });
 
     for (i = 0; i < notification.length; i++) {
       // 알림을 보낸 사람 찾기(provider)
@@ -95,88 +95,69 @@ router.get(`/notification/:userId`, (req, res) => {
           return provider;
         }
       );
+
       // 댓글 알림이면
       if (notification[i].comment != null) {
-        console.log("댓글");
         // 댓글이 달린 게시물 찾기(post)
-        Post.findOne({ _id: "" + notification[i].post }, (err, post) => {
-          if (!post) return res.send({ err });
-          // 댓글 내용 찾기(comment)
-          Comment.find({ post: post._id }, (err, comment) => {
-            if (!comment) return res.send({ err });
-            for (i = 0; i < comment.length; i++) {
-              if (comment[i].user == provider._id) {
-                console.log(comment[i]);
-              }
-            }
-          });
-          // Comment.find({ user: provider._id }, (err, comment) => {
-          //   if (!comment) return res.send({ err });
-          //   for (i = 0; i < comment.length; i++) {
-          //     if ((comment[i].post = post._id)) {
-          //       re = {
-          //         provider: provider.name,
-          //         isWezzle: post.isWezzle,
-          //         content: comment[i].text,
-          //         occurTime: notification[i].occurTime,
-          //         menuType: "comment",
-          //       };
-          //       notiArray.push(re);
-          //     }
-          //   }
-          // });
-        });
+        const post = await Post.findOne(
+          { _id: "" + notification[i].post },
+          (err, post) => {
+            return post;
+          }
+        );
+
+        // 댓글 내용 찾기(comment)
+        const comment = await Comment.findById(
+          notification[i].comment,
+          (err, comment) => {
+            return comment;
+          }
+        );
+        const re = {
+          provider: provider.name,
+          isWezzle: post.isWezzle,
+          content: comment.text,
+          post: post._id,
+          occurTime: comment.createdAt,
+          menuType: "comment",
+        };
+        notiArray.unshift(re);
+        // 좋아요나 협업해요 알림이면
       } else {
-        console.log("좋아용");
         // 좋아요나 협업 눌린 게시물 찾기(post)
-        Post.findOne({ _id: "" + notification[i].post }, (err, post) => {
-          if (!post) return res.send({ err });
-          // 협업해요 알림이면
-          // if (post.isWezzle) {
-          //   console.log(
-          //     provider.name,
-          //     post.title,
-          //     post.isWezzle,
-          //     notification[i].occurTime,
-          //     "wezzle"
-          //   );
-          //   re = {
-          //     provider: provider.name,
-          //     content: post.title,
-          //     isWezzle: post.isWezzle,
-          //     occurTime: notification[i].occurTime,
-          //     menuType: "wezzle",
-          //   };
-          //   notiArray.push(re);
-          // } else {
-          //   // 좋아요 알림이면
-          //   console.log(
-          //     provider.name,
-          //     post.title,
-          //     post.isWezzle,
-          //     // notification[i].occurTime,
-          //     "like"
-          //   );
-          //   re = {
-          //     provider: provider.name,
-          //     content: post.title,
-          //     isWezzle: post.isWezzle,
-          //     // occurTime: notification[i].occurTime,
-          //     menuType: "like",
-          //   };
-          //   notiArray.push(re);
-          // }
-        }).catch((err) => {
-          res.json({
-            message: "Post find 에러 발생",
-          });
-        });
-      }
-    }
-  }).then(() => {
-    // return res.status(200).send(notiArray);
-    console.log(notiArray);
-  });
+        const post = await Post.findOne(
+          { _id: "" + notification[i].post },
+          (err, post) => {
+            return post;
+          }
+        );
+        // 협업해요 알림이면
+        if (post.isWezzle) {
+          const re = {
+            provider: provider.name,
+            content: post.title,
+            post: post._id,
+            isWezzle: post.isWezzle,
+            occurTime: notification[i].occurTime,
+            menuType: "wezzle",
+          };
+          notiArray.unshift(re);
+        } else {
+          // 좋아요 알림이면
+          const re = {
+            provider: provider.name,
+            content: post.title,
+            post: post._id,
+            isWezzle: post.isWezzle,
+            occurTime: notification[i].occurTime,
+            menuType: "like",
+          };
+          notiArray.unshift(re);
+        }
+      } // end of if(댓글 좋아요 구분)
+    } // end of for
+    return res.status(200).send(notiArray);
+  }); // end of Notification
 });
 
 module.exports = router;
