@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { editUser } from "../../../../_actions/user_action";
 
 import Input from "./Input";
+import Loading from "../../../Loading/Loading";
 
 // CSS
 import "./EditProfile.css";
@@ -22,9 +23,14 @@ function EditProfile({ user, setUser, setIsEditing }) {
   // 프로필 이미지
   const [image, setImage] = useState(null);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   // 실제 수정 요청 보내기
   const onEditSubmit = async (e) => {
     e.preventDefault();
+
+    // 로딩
+    setIsLoading(true);
 
     // 변경했다면 변경한 이미지 URL, 아니면 null
     const imageUrl = await onProfileHandler();
@@ -43,6 +49,10 @@ function EditProfile({ user, setUser, setIsEditing }) {
 
     // 회원정보 수정
     const response = await dispatch(editUser(body));
+
+    // 로딩 완료
+    setIsLoading(false);
+
     if (response.payload.editSuccess) {
       alert("수정되었습니다!");
       // 수정된 유저 저장
@@ -187,6 +197,9 @@ function EditProfile({ user, setUser, setIsEditing }) {
           완료하기
         </button>
       </form>
+
+      {/* 로딩 중이라면 (수정 요청 보낸 후) */}
+      {isLoading && <Loading />}
     </article>
   );
 }
