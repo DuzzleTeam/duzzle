@@ -15,6 +15,8 @@ function MyPage() {
     const num = Math.floor(Math.random() * end) + 1;
     return num;
   };
+  // 배경 이미지 url
+  const [background, setBackground] = useState("");
 
   // 현재 페이지의 user
   const [user, setUser] = useState(null);
@@ -61,6 +63,9 @@ function MyPage() {
       } else {
         setCurrentMenu(1);
       }
+
+      setBackground(`/images/default/background/${getRandomNumber(5)}.png`);
+
       setLoaded(true);
     }
   }, [connectUser, user]);
@@ -74,7 +79,7 @@ function MyPage() {
       <main className="MypageContainer">
         {/* 상단배너 */}
         <section className={"MypageBanner"}>
-          <img src={`/images/myPage/${getRandomNumber(3)}.jpg`} alt="" />
+          <img src={background} alt="background" />
         </section>
 
         <section className="MypageContents">
