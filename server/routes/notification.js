@@ -113,15 +113,18 @@ router.get(`/notification/:userId`, async (req, res) => {
             return comment;
           }
         );
-        const re = {
-          provider: provider.name,
-          isWezzle: post.isWezzle,
-          content: comment.text,
-          post: post._id,
-          occurTime: comment.createdAt,
-          menuType: "comment",
-        };
-        notiArray.unshift(re);
+        // 게시글이 있다면
+        if (post != null) {
+          const re = {
+            provider: provider.name,
+            isWezzle: post.isWezzle,
+            content: comment.text,
+            post: post._id,
+            occurTime: comment.createdAt,
+            menuType: "comment",
+          };
+          notiArray.unshift(re);
+        }
         // 좋아요나 협업해요 알림이면
       } else {
         // 좋아요나 협업 눌린 게시물 찾기(post)
@@ -131,28 +134,31 @@ router.get(`/notification/:userId`, async (req, res) => {
             return post;
           }
         );
-        // 협업해요 알림이면
-        if (post.isWezzle) {
-          const re = {
-            provider: provider.name,
-            content: post.title,
-            post: post._id,
-            isWezzle: post.isWezzle,
-            occurTime: notification[i].occurTime,
-            menuType: "wezzle",
-          };
-          notiArray.unshift(re);
-        } else {
-          // 좋아요 알림이면
-          const re = {
-            provider: provider.name,
-            content: post.title,
-            post: post._id,
-            isWezzle: post.isWezzle,
-            occurTime: notification[i].occurTime,
-            menuType: "like",
-          };
-          notiArray.unshift(re);
+        //게시글이 있다면
+        if (post != null) {
+          // 협업해요 알림이면
+          if (post.isWezzle) {
+            const re = {
+              provider: provider.name,
+              content: post.title,
+              post: post._id,
+              isWezzle: post.isWezzle,
+              occurTime: notification[i].occurTime,
+              menuType: "wezzle",
+            };
+            notiArray.unshift(re);
+          } else {
+            // 좋아요 알림이면
+            const re = {
+              provider: provider.name,
+              content: post.title,
+              post: post._id,
+              isWezzle: post.isWezzle,
+              occurTime: notification[i].occurTime,
+              menuType: "like",
+            };
+            notiArray.unshift(re);
+          }
         }
       } // end of if(댓글 좋아요 구분)
     } // end of for
