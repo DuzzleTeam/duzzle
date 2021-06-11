@@ -114,8 +114,8 @@ router.get(`/notification/:userId`, async (req, res) => {
             return comment;
           }
         );
-        // 게시글이 있다면
-        if (post != null) {
+        // 게시글과 댓글이 있다면(삭제되지 않았다면)
+        if (post != null && comment != null) {
           const re = {
             provider: provider.name,
             isWezzle: post.isWezzle,
