@@ -75,11 +75,25 @@ if (process.env.NODE_ENV === "production") {
   https.createServer(options, app).listen(443, () => {
     console.log(`DUZZLE listening at port 443`);
   });
-}
 
-// production & development mode
-// http
-http.createServer(app).listen(PORT, () => {
-  // DUZZLE listening at port 80 | 5000
-  console.log(`DUZZLE listening at port ${PORT}`);
-});
+  // set up a route to redirect http to https
+  // https://stackoverflow.com/questions/7450940/automatic-https-connection-redirect-with-node-js-express
+  http
+    .createServer((req, res) => {
+      res.writeHead(301, {
+        Location: "https://" + req.headers["host"] + req.url,
+      });
+      res.end();
+    })
+    .listen(PORT, () => {
+      // DUZZLE listening at port 80
+      console.log(`DUZZLE listening at port ${PORT}`);
+    });
+} else {
+  // development mode
+  // http
+  http.createServer(app).listen(PORT, () => {
+    // DUZZLE listening at port 5000
+    console.log(`DUZZLE listening at port ${PORT}`);
+  });
+}
