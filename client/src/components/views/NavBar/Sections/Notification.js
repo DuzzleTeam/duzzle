@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import React, { useEffect } from "react";
+import React from "react";
+import axios from "axios";
 import "./Notification.css";
 
 function Notification({ notification }) {
@@ -10,9 +11,15 @@ function Notification({ notification }) {
   };
 
   const goPost = () => {
+    // 미즐 게시글이면
     if (notification.isWezzle) {
+      // isChecked값 true로 변경
+      axios.get(`/api/check/notification/${notification.notiId}`);
       document.location.href = `/wezzle/post/${notification.post}`;
+    // 위즐 게시글이면
     } else {
+      // isChecked값 true로 변경
+      axios.get(`/api/check/notification/${notification.notiId}`);
       document.location.href = `/mezzle/post/${notification.post}`;
     }
   };
