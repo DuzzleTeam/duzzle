@@ -2,7 +2,6 @@ const express = require("express");
 const { Post } = require("../models/Post");
 const { User } = require("../models/User");
 const { Comment } = require("../models/Comment");
-const { Like } = require("../models/Like");
 const { Notification } = require("../models/Notification");
 
 const router = express.Router();
@@ -92,6 +91,8 @@ router.get(`/notification/:userId`, async (req, res) => {
       const provider = await User.findOne(
         { _id: notification[i].provider },
         (err, provider) => {
+          // 탈퇴한 사용자 처리
+          if(!provider) return {name: "탈퇴한 사용자"};
           return provider;
         }
       );
@@ -121,6 +122,8 @@ router.get(`/notification/:userId`, async (req, res) => {
             content: comment.text,
             post: post._id,
             occurTime: comment.createdAt,
+            isChecked: notification[i].isChecked,
+            notiId: notification[i]._id.toString(),
             menuType: "comment",
           };
           notiArray.unshift(re);
@@ -144,6 +147,8 @@ router.get(`/notification/:userId`, async (req, res) => {
               post: post._id,
               isWezzle: post.isWezzle,
               occurTime: notification[i].occurTime,
+              isChecked: notification[i].isChecked,
+              notiId: notification[i]._id.toString(),
               menuType: "wezzle",
             };
             notiArray.unshift(re);
@@ -155,6 +160,8 @@ router.get(`/notification/:userId`, async (req, res) => {
               post: post._id,
               isWezzle: post.isWezzle,
               occurTime: notification[i].occurTime,
+              isChecked: notification[i].isChecked,
+              notiId: notification[i]._id.toString(),
               menuType: "like",
             };
             notiArray.unshift(re);
@@ -164,6 +171,20 @@ router.get(`/notification/:userId`, async (req, res) => {
     } // end of for
     return res.status(200).send(notiArray);
   }); // end of Notification
+});
+
+// 알림 확인
+router.get("/check/notification/:notiId", (req,res) => {
+  // url로 전달받은 notification id 가져오기
+  const notiId = req.params.notiId;
+  Notification.findOneAndUpdate(
+    { _id: notiId },
+    { isChecked: true },
+    (err, noti) => {
+      if(err) return res.json({checked: false, message:err})
+      return res.json({checked: true});
+    }
+  )
 });
 
 module.exports = router;
