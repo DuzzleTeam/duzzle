@@ -1,4 +1,3 @@
-// 05.26 / 이미지 업로드
 const express = require("express");
 const multer = require("multer");
 const fs = require("fs");
@@ -31,10 +30,10 @@ const upload = multer({
       cb(null, path.basename(file.originalname, ext) + timestamp + ext);
     },
   }),
-  // limits: { fileSize: 5 * 1024 * 1024 },
+  limits: { fileSize: 1026 * 1024 * 1024 },
 });
 
-// 이미지 업로드
+// 2021.05.26 / 프로필 이미지 업로드 (juhyun-noh) 
 router.post("/upload", upload.single("selectImg"), (req, res) => {
   res.json({ filename: `${req.file.filename}` });
 });

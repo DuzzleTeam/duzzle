@@ -142,7 +142,10 @@ router.get(`/notification/:userId`, async (req, res) => {
           // 협업해요 알림이면
           if (post.isWezzle) {
             const re = {
-              provider: provider.name,
+              provider : {
+                name: provider.name,
+                email: provider.email,
+              },
               content: post.title,
               post: post._id,
               isWezzle: post.isWezzle,
