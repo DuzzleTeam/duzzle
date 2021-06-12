@@ -18,7 +18,7 @@ fs.readdir("uploads/postImages", (err) => {
   }
 });
 
-// 파일 저장 방식, 경로, 파일명 설정
+// 프로필 사진용 파일 저장 방식, 경로, 파일명 설정
 const upload = multer({
   storage: multer.diskStorage({
     destination(req, file, cb) {
@@ -27,7 +27,8 @@ const upload = multer({
     filename(req, file, cb) {
       const ext = path.extname(file.originalname); // 파일 확장자
       const timestamp = new Date().getTime().valueOf();
-      cb(null, path.basename(file.originalname, ext) + timestamp + ext);
+      const filename = path.basename(file.originalname, ext) + timestamp + ext
+      cb(null, filename);
     },
   }),
   limits: { fileSize: 1026 * 1024 * 1024 },
