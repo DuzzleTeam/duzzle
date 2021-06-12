@@ -62,6 +62,8 @@ function EditProfile({ user, setUser, setIsEditing }) {
           ...body,
         };
       });
+    } else if(response.payload.name === false) {
+      alert("이름을 입력하세요!");
     } else {
       alert("수정에 실패하였습니다.");
     }
@@ -179,7 +181,7 @@ function EditProfile({ user, setUser, setIsEditing }) {
         {/* 소속, 메일, 오픈채팅 */}
         <div className="ProfileContact">
           <span>소속</span>
-          <Input value={group} setValue={setGroup} placeholder={""} />
+          <Input value={group} setValue={setGroup} placeholder={"동아리나 과를 입력하세요"} />
 
           <span>메일</span>
           <span>{user.email}</span>
