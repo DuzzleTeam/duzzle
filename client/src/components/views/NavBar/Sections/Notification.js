@@ -11,12 +11,12 @@ function Notification({ notification }) {
   };
 
   const goPost = () => {
-    // 미즐 게시글이면
+    // 위즐 게시글이면
     if (notification.isWezzle) {
       // isChecked값 true로 변경
       axios.get(`/api/check/notification/${notification.notiId}`);
-      document.location.href = `/wezzle/post/${notification.post}`;
-    // 위즐 게시글이면
+      document.location.href = `/users/${notification.provider.email}`;
+    // 미즐 게시글이면
     } else {
       // isChecked값 true로 변경
       axios.get(`/api/check/notification/${notification.notiId}`);
@@ -36,7 +36,7 @@ function Notification({ notification }) {
     >
       <div className="NotiTopContainer">
         <div className="NotiLeftContainer">
-          <span className="NotiProvider">{notification.provider}</span>
+          <span className="NotiProvider">{notification.provider.name}</span>
           <div className="NotiDesc">
             {notification.isWezzle ? "위즐" : "미즐"}
             {" │ "}
@@ -46,7 +46,7 @@ function Notification({ notification }) {
         <span className="NotiTime">{notification.occurTime.slice(0, 10)}</span>
       </div>
       <span className="NotiContent">
-        {notification.provider +
+        {notification.provider.name +
           message[notification.menuType] +
           " 확인해보세요!"}
       </span>
