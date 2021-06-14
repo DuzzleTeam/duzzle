@@ -11,21 +11,40 @@ function LikeTogetherButton({ setPost, post }) {
 
   // like or 협업 버튼 클릭 시
   const onClickLike = async (e) => {
+    // 프론트 먼저 업데이트
+    const like = post.like.slice();
+    if (post.like.includes(user.email)) {
+      // 좋아요 누른 적이 있다면
+      // 좋아요 취소
+      like.splice(post.like.indexOf(user.email), 1);
+    } else {
+      // 좋아요 등록
+      like.push(user.email);
+    }
+    setPost({
+      ...post,
+      like,
+    });
+
     // 요청 보낼 url
     const url = `/api/like/${post._id}`;
     // post 방식 요청
-    const res = await axios.post(url);
+    const res = await axios.post(url, { like });
 
     if (res.status === 200) {
       // 요청 성공 시
-      setPost({ ...post, like: res.data.like });
+      // setPost({ ...post, like: res.data.like });
 
       // (juhyun-noh) 알림 저장
       // 좋아요 저장을 했으면
-      if (res.data.save) {
+      if (res.data.create) {
         // 알림 보내기
         await axios.get(`/api/notification/${post._id}/${user._id}`);
       }
+    } else {
+      // 좋아요 or 협업해요 실패 시
+      // 초기화
+      setPost(post);
     }
   };
 
