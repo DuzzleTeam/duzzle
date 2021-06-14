@@ -29,7 +29,7 @@ function LikeTogetherButton({ setPost, post }) {
     // 요청 보낼 url
     const url = `/api/like/${post._id}`;
     // post 방식 요청
-    const res = await axios.post(url, like);
+    const res = await axios.post(url, { like });
 
     if (res.status === 200) {
       // 요청 성공 시
@@ -37,7 +37,7 @@ function LikeTogetherButton({ setPost, post }) {
 
       // (juhyun-noh) 알림 저장
       // 좋아요 저장을 했으면
-      if (res.data.save) {
+      if (res.data.create) {
         // 알림 보내기
         await axios.get(`/api/notification/${post._id}/${user._id}`);
       }
