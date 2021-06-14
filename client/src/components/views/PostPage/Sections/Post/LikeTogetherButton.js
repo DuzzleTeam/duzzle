@@ -55,37 +55,63 @@ function LikeTogetherButton({ setPost, post }) {
     setIsLiked(post.like.includes(user.email));
   }, [post, user]);
 
+  // image preload
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    // image url
+    const images = post.isWezzle
+      ? [
+          "/images/postPage/post_together_sel.png",
+          "/images/postPage/post_together.png",
+        ]
+      : [
+          "/images/postPage/post_like_sel.png",
+          "/images/postPage/post_like.png",
+        ];
+    images.forEach((src) => {
+      const image = new Image();
+      image.src = src;
+    });
+
+    // 로드 완료
+    setLoaded(true);
+  }, [post.isWezzle]);
+
   return (
-    <button
-      className={isLiked ? "PostLikeButton PostLikedButton" : "PostLikeButton"}
-      onClick={onClickLike}
-    >
-      {post.isWezzle ? (
-        <>
-          <img
-            src={
-              isLiked
-                ? "/images/postPage/post_together_sel.png"
-                : "/images/postPage/post_together.png"
-            }
-            alt="likebutton"
-          />
-          {"협업해요"}
-        </>
-      ) : (
-        <>
-          <img
-            src={
-              isLiked
-                ? "/images/postPage/post_like_sel.png"
-                : "/images/postPage/post_like.png"
-            }
-            alt="likebutton"
-          />
-          {"좋아요"}
-        </>
-      )}
-    </button>
+    loaded && (
+      <button
+        className={
+          isLiked ? "PostLikeButton PostLikedButton" : "PostLikeButton"
+        }
+        onClick={onClickLike}
+      >
+        {post.isWezzle ? (
+          <>
+            <img
+              src={
+                isLiked
+                  ? "/images/postPage/post_together_sel.png"
+                  : "/images/postPage/post_together.png"
+              }
+              alt="likebutton"
+            />
+            {"협업해요"}
+          </>
+        ) : (
+          <>
+            <img
+              src={
+                isLiked
+                  ? "/images/postPage/post_like_sel.png"
+                  : "/images/postPage/post_like.png"
+              }
+              alt="likebutton"
+            />
+            {"좋아요"}
+          </>
+        )}
+      </button>
+    )
   );
 }
 
