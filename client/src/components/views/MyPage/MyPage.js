@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../../_actions/user_action";
+import getRandomNumber from "../../../utils/getRandomNumber";
 
 import EditLayout from "./Sections/EditLayout.js";
 import PostsNav from "../../Feed/PostsNav";
@@ -9,15 +10,10 @@ import MyPosts from "./Sections/MyPosts.js";
 
 import "./Sections/MyPage.css";
 
-function MyPage() {
-  // 04.18 / 상단 배너 이미지 랜덤으로 띄우기
-  const getRandomNumber = (end) => {
-    const num = Math.floor(Math.random() * end) + 1;
-    return num;
-  };
-  // 배경 이미지 url
-  const [background, setBackground] = useState("");
+// 배경 이미지 url
+const background = `/images/default/background/${getRandomNumber(5)}.png`;
 
+function MyPage() {
   // 현재 페이지의 user
   const [user, setUser] = useState(null);
 
@@ -64,11 +60,16 @@ function MyPage() {
         setCurrentMenu(1);
       }
 
-      setBackground(`/images/default/background/${getRandomNumber(5)}.png`);
-
       setLoaded(true);
     }
   }, [connectUser, user]);
+
+  // background image preload
+  useEffect(() => {
+    new Image().src = background;
+
+    setLoaded(loaded && true);
+  }, [loaded]);
 
   const onChangeCurrentMenu = (index) => {
     setCurrentMenu(index);
