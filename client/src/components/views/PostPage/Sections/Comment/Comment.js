@@ -67,7 +67,7 @@ function Comment(props) {
   // 좋아요 요청 혹은 해제
   const handleLikeComment = (e) => {
     // 프론트 먼저 업데이트
-    let like = comment.like.slice();
+    const like = comment.like.slice();
     if (comment.like.includes(user.email)) {
       // 좋아요 누른 적이 있다면
       // 좋아요 취소
@@ -90,11 +90,7 @@ function Comment(props) {
         console.error(res.data.err);
 
         // 좋아요 취소
-        const failLike = comment.like.splice(comment.like.length - 1, 1);
-        setComment({
-          ...comment,
-          like: failLike,
-        });
+        setComment(comment);
 
         // setComment({
         //   ...comment,
