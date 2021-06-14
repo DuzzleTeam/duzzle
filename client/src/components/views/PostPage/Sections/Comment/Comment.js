@@ -67,28 +67,28 @@ function Comment(props) {
   // 좋아요 요청 혹은 해제
   const handleLikeComment = (e) => {
     // 프론트 먼저 업데이트
+    let like = comment.like.slice();
     if (comment.like.includes(user.email)) {
       // 좋아요 누른 적이 있다면
       // 좋아요 취소
-      const like = comment.like.slice();
       like.splice(comment.like.indexOf(user.email), 1);
-      setComment({
-        ...comment,
-        like,
-      });
     } else {
       // 좋아요 등록
-      setComment({
-        ...comment,
-        like: [...comment.like, user.email],
-      });
+      like.push(user.email);
     }
+    setComment({
+      ...comment,
+      like,
+    });
 
     // 현재 comment id를 보내며 patch 요청
-    axios.patch(`/api/like/${comment._id}`).then((res) => {
-      if (!res.data.updateCommentSuccess) {
+    axios.patch(`/api/like/${comment._id}`, { like }).then((res) => {
+      if (!res.status === 200) {
         // 좋아요 실패 시
         alert("좋아요를 실패했습니다.");
+        // 에러 log
+        console.error(res.data.err);
+
         // 좋아요 취소
         const failLike = comment.like.splice(comment.like.length - 1, 1);
         setComment({
