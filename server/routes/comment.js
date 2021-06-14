@@ -126,25 +126,14 @@ router.patch("/like/:commentId", auth, (req, res) => {
   // url로 넘어온 comment id 가져오기
   const { commentId } = req.params;
 
-  // 현재 접속 유저
-  const { user } = req;
   // comment id에 해당하는 댓글
   Comment.findById(commentId, async (err, comment) => {
-    if (err) return res.json({ success: false, err });
+    if (err) return res.status(400).json({ success: false, err });
 
-    const likeIndex = comment.like.indexOf(user.email);
-    // 좋아요를 누른 적이 없다면
-    if (likeIndex === -1) {
-      comment.like.push(user.email);
-    } else {
-      // 좋아요를 누른 적이 있다면 좋아요 취소
-      comment.like.splice(likeIndex, 1);
-    }
-    const newComment = await comment.save();
+    comment.like = req.body.like;
+    await comment.save();
 
-    return res
-      .status(200)
-      .send({ updateCommentSuccess: true, like: newComment.like });
+    return res.sendStatus(200);
   });
 });
 
