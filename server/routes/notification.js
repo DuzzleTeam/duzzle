@@ -117,7 +117,10 @@ router.get(`/notification/:userId`, async (req, res) => {
         // 게시글과 댓글이 있다면(삭제되지 않았다면)
         if (post != null && comment != null) {
           const re = {
-            provider: provider.name,
+            provider : {
+              name: provider.name,
+              email: provider.email,
+            },
             isWezzle: post.isWezzle,
             content: comment.text,
             post: post._id,
@@ -158,7 +161,10 @@ router.get(`/notification/:userId`, async (req, res) => {
           } else {
             // 좋아요 알림이면
             const re = {
-              provider: provider.name,
+              provider : {
+                name: provider.name,
+                email: provider.email,
+              },
               content: post.title,
               post: post._id,
               isWezzle: post.isWezzle,
