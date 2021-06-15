@@ -4,6 +4,7 @@ const router = express.Router();
 const { Post } = require("../models/Post");
 const { Like } = require("../models/Like");
 const { User } = require("../models/User");
+const { Notification } = require("../models/Notification");
 
 const { auth } = require("../middleware/auth");
 
@@ -23,6 +24,13 @@ router.post("/like/:postId", auth, async (req, res) => {
     // 있다면
     // 삭제 (좋아요 취소)
     const result = await Like.deleteOne({ user, post });
+
+    // (juhyun-noh) 현 유저가 이 게시물에 누른 좋아요 알림 삭제
+    await Notification.findOneAndDelete({
+      provider: user,
+      post: post,
+      comment: null,
+    });
 
     // post 좋아요도 설정
     const likeIndex = post.like.indexOf(user.email);
