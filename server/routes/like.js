@@ -18,6 +18,9 @@ router.post("/like/:postId", auth, async (req, res) => {
   // post id에 해당하는 댓글
   const post = await Post.findOne({ _id: postId });
 
+  // post 좋아요 설정
+  post.like = req.body.like;
+
   // 현 유저가 현 포스트에 누른 좋아요가 있는지
   const like = await Like.findOne({ user, post });
   if (like) {
@@ -46,11 +49,11 @@ router.post("/like/:postId", auth, async (req, res) => {
         return res.status(200).json({ like: post.like });
       } else {
         // 삭제 실패 시
-        return res.json({ result });
+        return res.status(500).json({ result });
       }
     } catch (e) {
       // post save 실패 시
-      return res.json({ e });
+      return res.status(500).json({ e });
     }
   } else {
     // 없다면
@@ -60,19 +63,16 @@ router.post("/like/:postId", auth, async (req, res) => {
       post,
     });
 
-    // post 좋아요도 설정
-    post.like.push(user.email);
-
     try {
       // 저장
       await like.save();
       await post.save();
 
       // 클라이언트에 전송
-      return res.status(200).json({ like: post.like, save: true });
+      return res.status(200).json({ like: post.like, create: true });
     } catch (e) {
       // 저장 실패
-      return res.json({ e });
+      return res.status(500).json({ e });
     }
   }
 });
