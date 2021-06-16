@@ -16,7 +16,6 @@
 }
 /* 레벨 바 채우기 */
 .ProfileFillLevelBar {
-  width: 60%; /* 임시 width */
   height: 10px;
   border-radius: 98px;
   background-color: #57ecbf;

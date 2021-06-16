@@ -2,10 +2,13 @@ import React from "react";
 
 import "./LevelBar.css";
 
-function LevelBar() {
+function LevelBar({ percentage }) {
   return (
     <div className="ProfileLevelBar">
-      <div className="ProfileFillLevelBar"></div>
+      <div
+        className="ProfileFillLevelBar"
+        style={{ width: `${percentage}%` }}
+      ></div>
     </div>
   );
 }

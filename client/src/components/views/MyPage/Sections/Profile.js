@@ -40,8 +40,10 @@ function Profile({ user, setIsEditing }) {
         <hr className={"hr"} />
 
         {/* 레벨 */}
-        <span className="ProfileLevel">{`Lv.${user.level} 레벨 코멘트`}</span>
-        <LevelBar />
+        <span className="ProfileLevel">{`Lv.${Math.floor(
+          user.level
+        )} 수성`}</span>
+        <LevelBar percentage={(user.level % 1) * 100} />
 
         {/* 소속, 메일, 오픈채팅 */}
         <div className="ProfileContact">

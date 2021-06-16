@@ -24,7 +24,7 @@ const userSchema = mongoose.Schema({
   },
   level: {
     type: Number,
-    default: 0,
+    default: 0.0,
   },
   group: String,
   introduction: {
