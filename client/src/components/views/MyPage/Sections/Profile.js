@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
+import LevelBar from "./LevelBar";
+
 import "./Profile.css";
 
 function Profile({ user, setIsEditing }) {
@@ -39,9 +41,7 @@ function Profile({ user, setIsEditing }) {
 
         {/* 레벨 */}
         <span className="ProfileLevel">{`Lv.${user.level} 레벨 코멘트`}</span>
-        <div className="ProfileLevelBar">
-          <div className="ProfileFillLevelBar"></div>
-        </div>
+        <LevelBar />
 
         {/* 소속, 메일, 오픈채팅 */}
         <div className="ProfileContact">
