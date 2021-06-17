@@ -11,20 +11,17 @@ function Notification({ notification }) {
   };
 
   const goPost = () => {
+    // isChecked값 true로 변경
+    axios.get(`/api/check/notification/${notification.notiId}`);
     // 협업해요 알림이면
     if (notification.menuType === "wezzle") {
-      axios.get(`/api/check/notification/${notification.notiId}`);
       // 협업해요 누른 사람의 프로필로 이동
       document.location.href = `/users/${notification.provider.email}`;
-      // 좋아요나 댓글 알림이면
     } else {
       // 위즐 or 미즐 구분
       if (notification.isWezzle) {
-        // isChecked값 true로 변경
-        axios.get(`/api/check/notification/${notification.notiId}`);
         document.location.href = `/wezzle/post/${notification.post}`;
       } else {
-        axios.get(`/api/check/notification/${notification.notiId}`);
         document.location.href = `/mezzle/post/${notification.post}`;
       }
     }
