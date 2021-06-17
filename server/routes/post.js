@@ -37,7 +37,7 @@ router.delete("/post/:postId", auth, level("post", false), (req, res) => {
   Post.deleteOne({ _id: postId }, (err) => {
     // 에러 발생 시 클라이언트에 에러 전송
     if (err) {
-      return res.json({ err });
+      return res.status(500).json({ err });
     }
 
     // 삭제 성공 시 클라이언트에 status 200 전송
@@ -56,7 +56,7 @@ router.get("/post/:postId", async (req, res) => {
   const post = await Post.findOne({ _id: postId }).lean();
   // post가 없을 시
   if (!post) {
-    return res.json({ success: false });
+    return res.status(404).json({ message: "게시글이 없습니다." });
   }
 
   // 게시글을 성공적으로 찾았다면
@@ -110,7 +110,7 @@ router.get("/posts/:email", async (req, res) => {
 
   // 유저가 없다면
   if (!user) {
-    return res.send();
+    return res.status(404).json({ message: "유저를 찾을 수 없습니다." });
   }
 
   // 유저가 있다면
