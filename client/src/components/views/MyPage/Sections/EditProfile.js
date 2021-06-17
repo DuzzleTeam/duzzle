@@ -5,6 +5,7 @@ import { editUser } from "../../../../_actions/user_action";
 
 import Input from "./Input";
 import Loading from "../../../Loading/Loading";
+import LevelBar from "./LevelBar";
 
 // CSS
 import "./EditProfile.css";
@@ -62,7 +63,7 @@ function EditProfile({ user, setUser, setIsEditing }) {
           ...body,
         };
       });
-    } else if(response.payload.name === false) {
+    } else if (response.payload.name === false) {
       alert("이름을 입력하세요!");
     } else {
       alert("수정에 실패하였습니다.");
@@ -149,7 +150,7 @@ function EditProfile({ user, setUser, setIsEditing }) {
           className="ProfileName"
           value={name}
           setValue={setName}
-          placeholder={"이름"}
+          placeholder={"이름 (실명)"}
         />
 
         {/* 분야 */}
@@ -157,7 +158,7 @@ function EditProfile({ user, setUser, setIsEditing }) {
           className="ProfileField"
           value={field}
           setValue={setField}
-          placeholder={"분야"}
+          placeholder={"분야 (개발, 디자인 등)"}
         />
 
         {/* 소개 */}
@@ -173,21 +174,24 @@ function EditProfile({ user, setUser, setIsEditing }) {
         <hr className={"hr"} />
 
         {/* 레벨 */}
-        <span className="ProfileLevel">{`Lv.${user.level} 레벨 코멘트`}</span>
-        <div className="ProfileLevelBar">
-          <div className="ProfileFillLevelBar"></div>
-        </div>
+        <LevelBar level={user.level} />
 
         {/* 소속, 메일, 오픈채팅 */}
         <div className="ProfileContact">
           <span>소속</span>
-          <Input value={group} setValue={setGroup} placeholder={"동아리나 과를 입력하세요"} />
+          <Input
+            className={"InputAlignRight"}
+            value={group}
+            setValue={setGroup}
+            placeholder={"동아리나 과를 입력하세요"}
+          />
 
           <span>메일</span>
           <span>{user.email}</span>
 
           <span>오픈채팅</span>
           <Input
+            className={"InputAlignRight"}
             value={openChating}
             setValue={setOpenChating}
             placeholder={""}
@@ -195,9 +199,18 @@ function EditProfile({ user, setUser, setIsEditing }) {
         </div>
 
         {/* 수정하기 버튼 */}
-        <button type="submit" className="ButtonEditComplete">
-          완료하기
-        </button>
+        <div className="EditButtons">
+          <button type="submit" className="ButtonEditComplete">
+            완료하기
+          </button>
+          {/* 취소하기 */}
+          <button
+            className={"ButtonEditCancel"}
+            onClick={() => setIsEditing(false)}
+          >
+            취소하기
+          </button>
+        </div>
       </form>
 
       {/* 로딩 중이라면 (수정 요청 보낸 후) */}

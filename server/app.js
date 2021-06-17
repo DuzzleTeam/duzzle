@@ -31,10 +31,8 @@ app.use(cookieParser());
 
 // static
 // PRODUCT
-if (process.env.NODE_ENV === "production") {
-  console.log("production mode");
-  app.use(express.static(path.join(__dirname, "../client/build")));
-}
+// build static 연결
+app.use(express.static(path.join(__dirname, "../client/build")));
 app.use("/", express.static(path.join(__dirname, "uploads")));
 
 // Routing
