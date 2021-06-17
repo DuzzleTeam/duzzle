@@ -113,6 +113,7 @@ textarea.ProfileIntro {
   border: solid 1px #cecece;
   padding: 6px;
   resize: none;
+  overflow: hidden;
 }
 .ProfileIntro {
   font-size: 1.9em;
@@ -171,9 +172,17 @@ textarea.ProfileIntro {
   color: #2d2d2d;
 }
 
+.InputAlignRight {
+  text-align: right;
+}
+
+/* 취소, 완료 */
+.EditButtons {
+  margin-bottom: 100px;
+}
+
 /* 완료하기 버튼 */
 .ButtonEditComplete {
-  margin-bottom: 100px;
   width: 104px;
   height: 43px;
   border-radius: 28px;
@@ -183,6 +192,22 @@ textarea.ProfileIntro {
   font-size: 1.8em;
   font-weight: bold;
   color: #707070;
+
+  border: none;
+  cursor: pointer;
+}
+
+/* 취소하기 버튼 */
+.ButtonEditCancel {
+  width: 104px;
+  height: 43px;
+  background: transparent;
+
+  margin-left: 20px;
+
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #aaa;
 
   border: none;
   cursor: pointer;
