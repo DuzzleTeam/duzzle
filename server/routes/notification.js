@@ -87,12 +87,19 @@ router.get(`/notification/:userId`, async (req, res) => {
     if (!notification) return res.send({ message: "알림 없음" });
 
     for (i = 0; i < notification.length; i++) {
+      // 30일 이상 지난 알림은 삭제
+      if (
+        new Date().getTime() - notification[i].occurTime.getTime() >=
+        2592000000
+      ) {
+        await Notification.deleteOne(notification[i]);
+      }
       // 알림을 보낸 사람 찾기(provider)
       const provider = await User.findOne(
         { _id: notification[i].provider },
         (err, provider) => {
           // 탈퇴한 사용자 처리
-          if(!provider) return {name: "탈퇴한 사용자"};
+          if (!provider) return { name: "탈퇴한 사용자" };
           return provider;
         }
       );
@@ -117,7 +124,7 @@ router.get(`/notification/:userId`, async (req, res) => {
         // 게시글과 댓글이 있다면(삭제되지 않았다면)
         if (post != null && comment != null) {
           const re = {
-            provider : {
+            provider: {
               name: provider.name,
               email: provider.email,
             },
@@ -145,7 +152,7 @@ router.get(`/notification/:userId`, async (req, res) => {
           // 협업해요 알림이면
           if (post.isWezzle) {
             const re = {
-              provider : {
+              provider: {
                 name: provider.name,
                 email: provider.email,
               },
@@ -161,7 +168,7 @@ router.get(`/notification/:userId`, async (req, res) => {
           } else {
             // 좋아요 알림이면
             const re = {
-              provider : {
+              provider: {
                 name: provider.name,
                 email: provider.email,
               },
@@ -183,17 +190,17 @@ router.get(`/notification/:userId`, async (req, res) => {
 });
 
 // 알림 확인
-router.get("/check/notification/:notiId", (req,res) => {
+router.get("/check/notification/:notiId", (req, res) => {
   // url로 전달받은 notification id 가져오기
   const notiId = req.params.notiId;
   Notification.findOneAndUpdate(
     { _id: notiId },
     { isChecked: true },
     (err, noti) => {
-      if(err) return res.json({checked: false, message:err})
-      return res.json({checked: true});
+      if (err) return res.json({ checked: false, message: err });
+      return res.json({ checked: true });
     }
-  )
+  );
 });
 
 module.exports = router;
