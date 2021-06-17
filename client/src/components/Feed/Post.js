@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import { useHistory } from "react-router-dom";
+import getRandomNumber from "../../utils/getRandomNumber";
 
 import "./Post.css";
 
@@ -19,6 +21,13 @@ function Post(props) {
   // 페이지 전환을 위한 Hook
   const history = useHistory();
   const onPostClick = (e) => {
+    // delete 버튼 눌렀으면 (마이페이지)
+    if (buttonDeleteRef.current) {
+      if (buttonDeleteRef.current.contains(e.target)) {
+        return;
+      }
+    }
+
     // 게시글 미리보기 클릭
     // wezzle 혹은 mezzle
     const postType = post.isWezzle ? "wezzle" : "mezzle";
@@ -27,19 +36,43 @@ function Post(props) {
     history.push(`/${postType}/post/${post._id}`);
   };
 
-  // 1, 2, 3, 4, 5 중 랜덤하게 하나의 숫자를 리턴함
-  // 기본 이미지를 설정
-  const getRandomNumber = () => {
-    const N = 5;
-    // 0 이상 1 미만 난수 * 5 => 0 이상 5 미만
-    // + 1 => 1 이상 6 미만
-    // parseInt => 1 이상 5 이하 정수
-    const number = parseInt(Math.random() * N + 1);
-    return number;
+  // 삭제 버튼 ref
+  const buttonDeleteRef = useRef(null);
+  // 게시글 삭제
+  const onDeletePost = async (e) => {
+    // 삭제 확인
+    if (!window.confirm("게시글을 삭제하시겠습니까?")) {
+      // 삭제 취소 시 리턴
+      return;
+    }
+
+    // 요청 url
+    const url = `/api/post/${post._id}`;
+
+    // 삭제 요청
+    const res = await axios.delete(url);
+
+    // 성공적으로 삭제되었다면
+    if (res.status === 200) {
+      // 게시글 목록 업데이트
+      props.onRemovePost(post._id);
+      alert("🗑 게시글이 삭제되었습니다!");
+    }
   };
 
   return (
     <article className={"PreviewPostContainer"} onClick={onPostClick}>
+      {/* Delete Button */}
+      {props.isMypage && (
+        <button
+          className={"ButtonMypagePostDelete"}
+          ref={buttonDeleteRef}
+          onClick={onDeletePost}
+        >
+          <img src="/images/myPage/post_delete.png" alt="delete" />
+        </button>
+      )}
+
       {/* 이미지가 있는지 없는지에 따라 기본 이미지 or 이미지 출력 */}
       {post.contents.images.length === 0 ? (
         // 이미지 없음

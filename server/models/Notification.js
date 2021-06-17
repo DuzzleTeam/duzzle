@@ -20,7 +20,7 @@ const notificationSchema = mongoose.Schema({
     ref: "Comment",
   },
   isChecked: {
-    Boolean,
+    type: Boolean,
     default: false,
   },
   occurTime: {

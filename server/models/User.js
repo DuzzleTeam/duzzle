@@ -24,7 +24,7 @@ const userSchema = mongoose.Schema({
   },
   level: {
     type: Number,
-    default: 0,
+    default: 1.0,
   },
   group: String,
   introduction: {
@@ -33,7 +33,6 @@ const userSchema = mongoose.Schema({
   },
   profileImage: {
     type: String,
-    default: "/images/defaultImg.png",
   },
   openChating: {
     type: String,

@@ -1,59 +1,38 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Notification from "./Notification";
-
 import "./NotificationDropdown.css";
 
 function NotificationDropdown(props) {
   // 현재 접속 유저 정보
   const user = useSelector((state) => state.user.authPayload);
 
-  const [notification, setNotification] = useState({
-    provider: "조하닮",
-    post: {
-      title: "테이블이 좀 이상하고 뭐시기 뭐시기",
-      isWezzle: false,
-    },
-    isChecked: false,
-    occurTime: new Date().toISOString().slice(0, 10).replace(/-/g, "."),
-    menuType: "comment",
-  });
+  // 알람 쌓이는 배열(state)
+  const [notification, setNotification] = useState();
 
-  // // 알림 가져오기 -> 가져올때마다 Item{ }에 추가
-  // const loadNoti = async () => {
-  //   axios
-  //     .get(`/api/notification/${user._id}`)
-  //     .then(({ data }) => {
-  //       const notificationList = {
-  //         provider: data.provider,
-  //         post: {
-  //           title: data.content,
-  //           isWezzle: data.isWezzle,
-  //         },
-  //         isChecked: false,
-  //         occurTime: data.occurTime.slice(0, 10).replace(/-/g, "."),
-  //         menuType: "comment",
-  //       };
-  //       setNotification([...notification, notificationList]);
-  //       console.log(notification);
-  //     })
-  //     .catch((e) => {
-  //       console.error(e);
-  //     });
-  // };
-
-  // 알림 리스트
-  // const [notiList, setNotiList] = useState([]);
+  // 알림 가져오기
+  const loadNoti = useCallback(async () => {
+    const res = await axios.get(`/api/notification/${user._id}`);
+    if (res.status === 200) {
+      setNotification(res.data);
+    }
+  }, [user]);
 
   // 메뉴 리스트
   const menus = ["댓글", "좋아요", "협업해요"];
 
   // 현재 활성화 중인 메뉴 (기본적으로 댓글)
   const [activeNotiMenu, setActiveNotiMenu] = useState(0);
+
   useEffect(() => {
-    // loadNoti();
-  }, [notification]);
+    async function fetchData() {
+      await loadNoti();
+    }
+
+    fetchData();
+  }, [loadNoti]);
+
   return (
     // 알림창 전체 컨테이너
     <div
@@ -81,8 +60,26 @@ function NotificationDropdown(props) {
       </ul>
       {/* 하나 하나의 알림들 */}
       <ul className="NotiContentsContainer">
-        <Notification notification={notification} />
-        <Notification notification={notification} />
+        {/* notification이 있으면 Notification 렌더링 */}
+        {notification ? (
+          notification.map((noti, i) => {
+            if (activeNotiMenu === 0) {
+              if (noti.menuType === "comment") {
+                return <Notification notification={notification[i]} key={i} />;
+              }
+            } else if (activeNotiMenu === 1) {
+              if (noti.menuType === "like") {
+                return <Notification notification={notification[i]} key={i} />;
+              }
+            } else {
+              if (noti.menuType === "wezzle") {
+                return <Notification notification={notification[i]} key={i} />;
+              }
+            }
+          })
+        ) : (
+          <font style={{ color: "gray" }}>알림이 없습니다</font>
+        )}
       </ul>
     </div>
   );

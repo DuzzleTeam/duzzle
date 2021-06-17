@@ -90,13 +90,24 @@ function Post({ post, setPost }) {
         <article className="PostTopContents">
           {/* 글쓴이 정보 */}
           <div className="PostUser">
-            {/* 프로필 사진 */}
-            <img src={post.user.profileImage} alt="profile" />
+            {/* 프로필 사진 (null이면 탈퇴한 사용자) */}
+            {post.user.profileImage ? (
+              <img src={post.user.profileImage} alt="profile" />
+            ) : (
+              <img src="/images/default/profile/1.png" alt="profile" />
+            )}
             {/* 이름, 게시날짜 */}
             <div className="PostUserText">
-              <Link to={`/users/${post.user.email}`} className="PostUserName">
-                {post.user.name}
-              </Link>
+              {/* _id null이면 탈퇴한 사용자 */}
+              {post.user._id ? (
+                <Link to={`/users/${post.user.email}`} className="PostUserName">
+                  {post.user.name}
+                </Link>
+              ) : (
+                // 탈퇴한 사용자
+                // name: (탈퇴한 사용자)
+                <Link className="PostUserName">{post.user.name}</Link>
+              )}
               <span>{post.createdAt.slice(0, 10)}</span>
             </div>
           </div>
@@ -137,13 +148,11 @@ function Post({ post, setPost }) {
           <span className="PostMainText">{post.contents.text}</span>
 
           {/* 이미지 있다면 */}
-          {post.contents.images.length !== 0 && (
-            <img
-              className="PostContentsImage"
-              src="/images/profile-image.jpg"
-              alt="postimage"
-            />
-          )}
+          <div className="PostContentsImage">
+            {post.contents.images.map((image, index) => (
+              <img key={index} src={image} alt="postimage" />
+            ))}
+          </div>
 
           {/* 좋아요, 공유 버튼 */}
           <div className="PostLikeShareContainer">

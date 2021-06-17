@@ -45,7 +45,7 @@ function MyPosts({ currentMenu, isAuth, email }) {
       // currentMenu가 1이거나 다른 사람의 마이페이지를 보고있다면
       // user가 작성한 모든 게시글을 가져옴
       // currentMenu가 0이면 user 관련 wezzle like만 가져옴
-      const url = `/api/${currentMenu ? "posts" : "likes"}/${email}`;
+      const url = `/api/${currentMenu || !isAuth ? "posts" : "likes"}/${email}`;
 
       // 서버 통신 로딩 중
       setIsLoading(true);
@@ -72,7 +72,7 @@ function MyPosts({ currentMenu, isAuth, email }) {
       // 로딩 완료
       setIsLoading(false);
     },
-    [history, email]
+    [history, email, isAuth]
   );
 
   // 메뉴가 바뀌었을 때 실행
@@ -107,6 +107,12 @@ function MyPosts({ currentMenu, isAuth, email }) {
     pagination.saveCurrentPage(location, setCurrentPage);
   }, [location]);
 
+  // 게시글 삭제 시 피드 업데이트
+  const onRemovePost = (postId) => {
+    const removedPosts = posts.filter((post) => post._id !== postId);
+    setPosts(removedPosts);
+  };
+
   return (
     // 글 전체 목록 컨테이너
     <section ref={scrollTargetRef} className={"MyPostsContainer"}>
@@ -125,7 +131,13 @@ function MyPosts({ currentMenu, isAuth, email }) {
                 {pagination
                   .getCurrentPosts(currentPage, postsPerPage, posts)
                   .map((post, index) => (
-                    <Post key={index} post={post} />
+                    <Post
+                      key={index}
+                      post={post}
+                      // 내 게시물일 때만 삭제 버튼 표시
+                      isMypage={currentMenu === 1 && isAuth}
+                      onRemovePost={onRemovePost}
+                    />
                   ))}
               </div>
 

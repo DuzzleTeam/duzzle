@@ -21,12 +21,20 @@
   pointer-events: none;
   transform: translateY(-20px);
   transition: all 0.4s ease;
+
+  overflow: auto;
+  width: 460px;
+  height: 55.6vh;
 }
 /* 열려 있을 때 */
 .OpeningDropdown {
   opacity: 1;
   pointer-events: all;
   transform: translateY(0px);
+
+  overflow: auto;
+  width: 460px;
+  height: 55.6vh;
 }
 
 /* 알림 Title */

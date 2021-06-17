@@ -1,6 +1,6 @@
-// 05.26 / 이미지 업로드
 const express = require("express");
 const multer = require("multer");
+const sharp = require("sharp");
 const fs = require("fs");
 const path = require("path");
 const router = express.Router();
@@ -19,7 +19,7 @@ fs.readdir("uploads/postImages", (err) => {
   }
 });
 
-// 파일 저장 방식, 경로, 파일명 설정
+// 프로필 사진용 파일 저장 방식, 경로, 파일명 설정
 const upload = multer({
   storage: multer.diskStorage({
     destination(req, file, cb) {
@@ -28,14 +28,28 @@ const upload = multer({
     filename(req, file, cb) {
       const ext = path.extname(file.originalname); // 파일 확장자
       const timestamp = new Date().getTime().valueOf();
-      cb(null, path.basename(file.originalname, ext) + timestamp + ext);
+      const filename = path.basename(file.originalname, ext) + timestamp + ext;
+      cb(null, filename);
     },
   }),
-  // limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-// 이미지 업로드
+// 2021.05.26 / 프로필 이미지 업로드 (juhyun-noh)
 router.post("/upload", upload.single("selectImg"), (req, res) => {
+  try {
+    sharp(req.file.path)
+      .resize({ width: 600 }) // 비율을 유지하며 가로 줄이기
+      .withMetadata()
+      .toBuffer((err, buffer) => {
+        if (err) throw err;
+        // 압축된 파일 새로 저장
+        fs.writeFile(req.file.path, buffer, (err) => {
+          if (err) throw err;
+        });
+      });
+  } catch (err) {
+    console.log(err);
+  }
   res.json({ filename: `${req.file.filename}` });
 });
 

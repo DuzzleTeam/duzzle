@@ -82,7 +82,9 @@
 /* 회원가입 | 비밀번호 찾기*/
 .Join a,
 .DividingLine,
-.FindPassword a {
+.FindPassword a,
+/* 비밀번호 찾기 기능 안 됨 */
+.FindPassword span {
   text-decoration: none;
   color: #aaaaaa;
   font-size: 15px;
@@ -91,6 +93,15 @@
 
 /* 회원가입과 비밀번호 찾기 사이, | 앞뒤로의 간격 */
 .DividingLine,
-.FindPassword a {
+.FindPassword a,
+/* 비밀번호 찾기 기능 안 됨 */
+.FindPassword span {
   margin-left: 15px;
+}
+
+/* 비밀번호 찾기 */
+.FindPassword span {
+  /* 현재 기능 X */
+  cursor: default;
+  opacity: 0.6;
 }

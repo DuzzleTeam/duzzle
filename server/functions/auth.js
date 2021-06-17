@@ -18,7 +18,7 @@ const getUserInfo = async (userId) => {
     // 없다면 존재하지 않는 사용자
     return {
       _id: null,
-      name: "(없는 사용자)",
+      name: "(탈퇴한 사용자)",
       email: null,
       profileImage: null,
     };

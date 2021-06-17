@@ -4,24 +4,29 @@ const router = express.Router();
 const { Post } = require("../models/Post");
 const { User } = require("../models/User");
 
-const { auth } = require("../middleware/auth");
+const { auth, level } = require("../middleware/auth");
 const { getUser } = require("../functions/auth");
 const { setPostUser } = require("../functions/post");
 
 // 게시물 작성 (dayeon-choi, 2021-04-19)
-router.post("/:type(wezzle|mezzle)/write", auth, (req, res) => {
-  // 사용자가 작성한 게시글 데이터로 Post 생성
-  const post = new Post(req.body);
-  post.user = req.user;
+router.post(
+  "/:type(wezzle|mezzle)/write",
+  auth,
+  level("post", true),
+  (req, res) => {
+    // 사용자가 작성한 게시글 데이터로 Post 생성
+    const post = new Post(req.body);
+    post.user = req.user;
 
-  post.save((err, postInfo) => {
-    if (err) {
-      return res.json({ success: false, err });
-    }
-  });
+    post.save((err, postInfo) => {
+      if (err) {
+        return res.json({ success: false, err });
+      }
+    });
 
-  return res.status(200).send({ createPostSuccess: true });
-});
+    return res.status(200).send({ createPostSuccess: true });
+  }
+);
 
 // 작성한 게시글 _id (dayeon-choi, 2021-04-25)
 router.get("/post/getId", (req, res) => {
@@ -35,14 +40,14 @@ router.get("/post/getId", (req, res) => {
 
 // 게시글 삭제 (dayeon-choi, 2021-04-25)
 // (chohadam, 2021-05)
-router.delete("/post/:postId", (req, res) => {
+router.delete("/post/:postId", auth, level("post", false), (req, res) => {
   // url에서 post id 받아오기
   const { postId } = req.params;
   // 해당 포스트 삭제
   Post.deleteOne({ _id: postId }, (err) => {
     // 에러 발생 시 클라이언트에 에러 전송
     if (err) {
-      return res.json({ err });
+      return res.status(500).json({ err });
     }
 
     // 삭제 성공 시 클라이언트에 status 200 전송
@@ -61,7 +66,7 @@ router.get("/post/:postId", async (req, res) => {
   const post = await Post.findOne({ _id: postId }).lean();
   // post가 없을 시
   if (!post) {
-    return res.json({ success: false });
+    return res.status(404).json({ message: "게시글이 없습니다." });
   }
 
   // 게시글을 성공적으로 찾았다면
@@ -115,7 +120,7 @@ router.get("/posts/:email", async (req, res) => {
 
   // 유저가 없다면
   if (!user) {
-    return res.send();
+    return res.status(404).json({ message: "유저를 찾을 수 없습니다." });
   }
 
   // 유저가 있다면

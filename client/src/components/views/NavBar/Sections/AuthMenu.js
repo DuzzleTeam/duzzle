@@ -55,6 +55,24 @@ function AuthMenu(props) {
     });
   };
 
+  // editUser 정보 가져오기 (수정 시 업데이트 위해서)
+  const editUser = useSelector((state) => state.user.editPayload);
+  useEffect(() => {
+    // editUser가 있으면 수정을 했다는 뜻
+    if (editUser) {
+      // 수정이 성공했는지
+      if (editUser.editSuccess) {
+        // 새로운 프로필 이미지로 수정
+        setUser((prevUser) => {
+          return {
+            ...prevUser,
+            profileImage: editUser.profileImage,
+          };
+        });
+      }
+    }
+  }, [editUser]);
+
   return (
     <div id="AuthMenu">
       {/* 로그인 되었는지 */}
@@ -64,13 +82,13 @@ function AuthMenu(props) {
           {/* Notification */}
           <div className="NoticiationContaier">
             <button
-              // onClick={notiDropdownHandler}
+              onClick={notiDropdownHandler}
               className="RightButton NotificationButton"
             >
               <img src="/images/notification.png" alt="notification" />
             </button>
 
-            {/* <NotificationDropdown openingNoti={openingNoti} /> */}
+            <NotificationDropdown openingNoti={openingNoti} />
           </div>
           {/* Profile */}
           <div ref={profileContainer}>
