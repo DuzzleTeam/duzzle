@@ -22,6 +22,11 @@ const level = (type, flag) => {
     // 현재 접속 유저 (요청한 유저)
     const { user } = req;
 
+    if (flag && user.level === 8) {
+      // 만렙이면
+      next();
+    }
+
     if (type === "post") {
       // 게시글 20%
       user.level += (flag ? 1 : -1) * 0.2;
