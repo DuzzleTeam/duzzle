@@ -64,30 +64,6 @@
   margin: 50px 0;
 }
 
-/* 레벨 */
-.ProfileLevel {
-  font-size: 2.1em;
-  font-weight: bold;
-  color: #2d2d2d;
-  align-self: flex-start;
-}
-
-/* 레벨 바 */
-.ProfileLevelBar {
-  margin-top: 19px;
-  width: 100%;
-  height: 10px;
-  border-radius: 98px;
-  background-color: #ececec;
-}
-/* 레벨 바 채우기 */
-.ProfileFillLevelBar {
-  width: 60%; /* 임시 width */
-  height: 10px;
-  border-radius: 98px;
-  background-color: #57ecbf;
-}
-
 /* 소속, 메일, 오픈채팅 */
 .ProfileContact {
   margin-top: 40px;
