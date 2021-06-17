@@ -258,8 +258,8 @@ router.post("/api/users/:id/password_edit", (req, res) => {
 // 04.17 / 회원정보 수정
 router.post("/api/users/edit", auth, (req, res) => {
   // 이름에 빈칸 입력되면 저장 안됨
-  if(req.body.name === "") {
-    return res.json({name: false});
+  if (req.body.name === "") {
+    return res.json({ name: false });
   } else {
     User.findOne({ _id: req.user._id }, (err, user) => {
       // 이미지 변경이 일어나면
@@ -268,7 +268,7 @@ router.post("/api/users/edit", auth, (req, res) => {
         if (req.user.profileImage != "/images/defaultImg.png") {
           const preImg = req.user.profileImage.substr(22);
           // 전의 이미지 파일 삭제
-          fs.unlink(`../server/uploads/${preImg}`, (err) => {
+          fs.unlink(`../server/uploads${req.user.profileImage}`, (err) => {
             if (err) return console.log("파일 삭제 오류");
           });
         }
@@ -293,7 +293,6 @@ router.post("/api/users/edit", auth, (req, res) => {
       );
     });
   }
-
 });
 
 // 05.29 / 유저 정보 가져오기
