@@ -23,6 +23,16 @@ router.post("/:type(wezzle|mezzle)/write", auth, (req, res) => {
   return res.status(200).send({ createPostSuccess: true });
 });
 
+// 작성한 게시글 _id (dayeon-choi, 2021-04-25)
+router.get("/post/getId", (req, res) => {
+  const postdoc = req.body;
+  const findPost = Post.find({ postdoc });
+  if (!findPost) {
+    return res.json({ success: false });
+  }
+  return res.status(200).json({ _id: findPost._id });
+});
+
 // 게시글 삭제 (dayeon-choi, 2021-04-25)
 // (chohadam, 2021-05)
 router.delete("/post/:postId", (req, res) => {

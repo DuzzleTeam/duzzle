@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { withRouter } from "react-router-dom";
+import { useHistory, withRouter } from "react-router-dom";
 
 import "../../../utils/Common.css";
 import "./Sections/PostWritingPage.css";
@@ -172,13 +172,6 @@ function PostWritingPage() {
           inputPeriods.projectPeriod[4].padStart(2, "0") +
           inputPeriods.projectPeriod[5].padStart(2, "0")
       );
-      console.log(
-        nowDay,
-        startPeriod,
-        endPeriod,
-        startProjectPeriod,
-        endProjectPeriod
-      );
       if (
         // 제목, 내용, 모집기간, 모집분야, 모집인원, 프로젝트예상기간에 값이 들어가 있을 경우
         String(inputContents.title) !== "" &&
@@ -215,7 +208,7 @@ function PostWritingPage() {
     }
   }, [inputContents, inputPeopleNum, inputPeriods]);
 
-  const handlePostSubmit = (event) => {
+  const HandlePostSubmit = (event) => {
     event.preventDefault();
     let sortPeriod =
       inputPeriods.period[0] +
@@ -259,21 +252,20 @@ function PostWritingPage() {
       };
     }
 
+    const history = useHistory();
     axios.post(`/api/${currentPageMenu}/write`, body).then((res) => {
       if (res.data.createPostSuccess) {
-        setInputContents({
-          title: "",
-          contents: { text: "" },
-        });
-        setInputPeopleNum(0);
-        setInputField({ field: ["", "디자인"] });
-        setInputPeriods({
-          period: ["", "", "", "", "", ""],
-          projectPeriod: ["", "", "", "", "", "", "미정"],
-        });
-        setIsActive(false);
+        alert("게시글 작성이 완료되었습니다.");
       } else {
         alert("게시글 작성에 실패하였습니다.");
+      }
+    });
+
+    axios.get(`/api/post/getId`, body).then((_res) => {
+      if (!_res.data._id) {
+        history.push(`${currentPageMenu}"/post/"${_res.data._id}`);
+      } else {
+        alert("게시글 이동에 실패하였습니다.");
       }
     });
   };
@@ -282,7 +274,7 @@ function PostWritingPage() {
     <div id="PageContainer">
       <main className="PostWritingPage">
         <div className="FormContentsContainer">
-          <form onSubmit={handlePostSubmit} method="post">
+          <form onSubmit={HandlePostSubmit} method="post">
             <div className="TopContainer">
               <input
                 type="text"
