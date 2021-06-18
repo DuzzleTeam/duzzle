@@ -1,4 +1,4 @@
 export const sns = {
-  facebook: "https://www.facebook.com/profile.php?id=100068791056122",
+  facebook: "https://www.facebook.com/Duzzle-102302942104398",
   instagram: "https://www.instagram.com/duzzle.2021/",
 };
