@@ -6,6 +6,8 @@ import { loginUser } from "../../../_actions/user_action";
 import "../../../utils/Common.css";
 import "./Sections/LoginPage.css";
 
+import { account } from "./Sections/test_account";
+
 function LoginPage(props) {
   const dispatch = useDispatch();
 
@@ -60,6 +62,13 @@ function LoginPage(props) {
       } else {
         alert(response.payload.message);
       }
+    });
+  };
+
+  const onLoginTestAccount = () => {
+    setInputs({
+      email: account.email,
+      password: account.password,
     });
   };
 
@@ -131,7 +140,10 @@ function LoginPage(props) {
             <div className="DividingLine">|</div>
 
             {/* test account */}
-            <button className={"ButtonTestAccount"}>
+            <button
+              className={"ButtonTestAccount"}
+              onClick={onLoginTestAccount}
+            >
               테스트 계정으로 로그인
             </button>
           </article>
