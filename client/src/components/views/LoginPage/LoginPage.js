@@ -67,66 +67,75 @@ function LoginPage(props) {
     <div id="Container">
       {/* Login Page Contents */}
       <main id="LoginPage">
-        {/* 로그인 텍스트 부분 */}
-        <article>
-          <h2 className="LoginText">로그인</h2>
-        </article>
+        <section className={"LoginSection"}>
+          {/* 로그인 텍스트 부분 */}
+          <article>
+            <h2 className="LoginText">로그인</h2>
+          </article>
 
-        {/* input (이메일, 비밀번호, 제출버튼) */}
-        <article className="LoginContainer">
-          {/* Login from */}
-          <form onSubmit={onSubmitHandler}>
-            {/* email */}
-            <div>
-              <input
-                className="InputEmail"
-                type="email"
-                placeholder="e-mail"
-                name="email"
-                value={email}
-                onChange={onChange}
-              />
+          {/* input (이메일, 비밀번호, 제출버튼) */}
+          <article className="LoginContainer">
+            {/* Login from */}
+            <form onSubmit={onSubmitHandler}>
+              {/* email */}
+              <div>
+                <input
+                  className="InputEmail"
+                  type="email"
+                  placeholder="e-mail"
+                  name="email"
+                  value={email}
+                  onChange={onChange}
+                />
+              </div>
+
+              {/* password */}
+              <div>
+                <input
+                  className="InputPassword"
+                  type="password"
+                  placeholder="PASSWORD"
+                  name="password"
+                  value={password}
+                  onChange={onChange}
+                />
+              </div>
+
+              {/* submit */}
+              <div>
+                {/* isActive가 false일 때 버튼 비활성화(disabled=true), true일 때 활성화(disabled=false)*/}
+                <button
+                  className="InputSubmit"
+                  type="submit"
+                  disabled={isActive ? false : true}
+                >
+                  LOGIN
+                </button>
+              </div>
+            </form>
+          </article>
+
+          {/* 회원가입, 비밀번호 찾기 */}
+          <article className="HelpContainer">
+            <div className="Join">
+              <Link to="/register">회원가입</Link>
             </div>
 
-            {/* password */}
-            <div>
-              <input
-                className="InputPassword"
-                type="password"
-                placeholder="PASSWORD"
-                name="password"
-                value={password}
-                onChange={onChange}
-              />
-            </div>
+            {/* <div className="DividingLine">|</div>
 
-            {/* submit */}
-            <div>
-              {/* isActive가 false일 때 버튼 비활성화(disabled=true), true일 때 활성화(disabled=false)*/}
-              <button
-                className="InputSubmit"
-                type="submit"
-                disabled={isActive ? false : true}
-              >
-                LOGIN
-              </button>
-            </div>
-          </form>
-        </article>
+            <div className="FindPassword">
+              <Link to="/account/password_reset">비밀번호 찾기</Link>
+              <span>비밀번호 찾기</span>
+            </div> */}
 
-        {/* 회원가입, 비밀번호 찾기 */}
-        <article className="HelpContainer">
-          <div className="Join">
-            <Link to="/register">회원가입</Link>
-          </div>
-          <div className="DividingLine">|</div>
-          <div className="FindPassword">
-            {/* <Link to="/account/password_reset">
-              비밀번호 찾기
-            </Link> */}
-            <span>비밀번호 찾기</span>
-          </div>
-        </article>
+            <div className="DividingLine">|</div>
+
+            {/* test account */}
+            <button className={"ButtonTestAccount"}>
+              테스트 계정으로 로그인
+            </button>
+          </article>
+        </section>
       </main>
     </div>
   );
