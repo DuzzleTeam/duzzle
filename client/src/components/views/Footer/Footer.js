@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 // CSS
 import "./Section/Footer.css";
 
+import { sns } from "../../../utils/sns";
+
 function Footer() {
   // Redux에서 접속 User 정보 가져오기
   const user = useSelector((state) => state.user.authPayload);
@@ -22,7 +24,7 @@ function Footer() {
         <div className="TopLeftFooter">
           <div className="FooterSNS">
             <a
-              href="https://www.instagram.com/duzzle.2021/"
+              href={sns.instagram}
               target="_blank"
               rel="noreferrer"
               className="InstaText"
@@ -30,7 +32,7 @@ function Footer() {
               <img src="/images/footer/instagram.png" alt="" />
             </a>
             <a
-              href="https://www.facebook.com/profile.php?id=100068791056122"
+              href={sns.facebook}
               target="_blank"
               rel="noreferrer"
               className="FacebookText"

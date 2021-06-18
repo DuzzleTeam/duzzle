@@ -4,6 +4,8 @@ import { withRouter } from "react-router";
 import "../../../utils/Common.css";
 import "./Sections/LandingPage.css";
 
+import { sns } from "../../../utils/sns";
+
 // 더 즐겁게 ~ 하라
 const textList = ["DEVELOP", "DESIGN", "WORKING", "TOGETHER"];
 
@@ -55,7 +57,7 @@ function LandingPage() {
           <div className="Instagram">
             {/* text link */}
             <a
-              href="https://www.instagram.com/duzzle.2021/"
+              href={sns.instagram}
               target="_blank"
               rel="noreferrer"
               className="InstaText"
@@ -68,7 +70,7 @@ function LandingPage() {
 
           <div className="Facebook">
             <a
-              href="https://www.facebook.com/profile.php?id=100068791056122"
+              href={sns.facebook}
               target="_blank"
               rel="noreferrer"
               className="FacebookText"
