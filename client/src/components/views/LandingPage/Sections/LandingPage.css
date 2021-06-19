@@ -24,6 +24,16 @@
   font-weight: 900;
 }
 
+/* puzzle gif */
+.PuzzleGif {
+  position: absolute;
+  right: 0;
+}
+
+.PuzzleGif img {
+  width: 50vw;
+}
+
 /* SNS Link */
 .SNSContainer {
   display: flex;

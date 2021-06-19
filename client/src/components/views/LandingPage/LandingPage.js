@@ -52,6 +52,11 @@ function LandingPage() {
           </h1>
         </article>
 
+        {/* puzzle gif */}
+        <article className={"PuzzleGif"}>
+          <img src="/images/landingPage/puzzle.gif" alt="puzzle" />
+        </article>
+
         {/* instagram, facebook */}
         <article className="SNSContainer">
           <div className="Instagram">
