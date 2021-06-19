@@ -115,7 +115,6 @@ input[type="checkbox"] + label {
   cursor: pointer;
 }
 input[type="checkbox"]:checked + label {
-  background-image: url("http://localhost:3000/images/checkbox.png");
   background-repeat: no-repeat;
   border: none;
 }

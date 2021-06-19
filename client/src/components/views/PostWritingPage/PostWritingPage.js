@@ -375,7 +375,11 @@ function PostWritingPage() {
                     onChange={onChangeField}
                     className="PostWirtingCheckbox"
                   />
-                  <label htmlFor="field0"></label>
+                  <label htmlFor="field0">
+                    {inputField.field[0] && (
+                      <img src="/images/checkbox.png" alt="checked" />
+                    )}
+                  </label>
                   <label className="ForSpaceLabel">개발</label>
 
                   <input
@@ -386,7 +390,11 @@ function PostWritingPage() {
                     onChange={onChangeField}
                     className="PostWirtingCheckbox"
                   />
-                  <label htmlFor="field1"></label>
+                  <label htmlFor="field1">
+                    {inputField.field[1] && (
+                      <img src="/images/checkbox.png" alt="checked" />
+                    )}
+                  </label>
                   <label className="ForSpaceLabel">디자인</label>
                 </div>
 
