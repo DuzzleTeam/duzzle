@@ -176,6 +176,7 @@ function PostWritingPage() {
         // 제목, 내용, 모집기간, 모집분야, 모집인원, 프로젝트예상기간에 값이 들어가 있을 경우
         String(inputContents.title) !== "" &&
         String(inputContents.contents.text) !== "" &&
+        (inputField.field[0] !== "" || inputField.field[1] !== "") &&
         inputPeopleNum > 0 &&
         inputPeriods.period.indexOf("") === -1 &&
         startPeriod >= nowDay &&
@@ -206,7 +207,7 @@ function PostWritingPage() {
         setIsActive(false);
       }
     }
-  }, [inputContents, inputPeopleNum, inputPeriods]);
+  }, [inputContents, inputPeopleNum, inputPeriods, inputField]);
 
   const history = useHistory();
   const HandlePostSubmit = (event) => {
