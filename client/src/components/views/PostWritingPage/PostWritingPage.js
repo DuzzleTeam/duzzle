@@ -208,6 +208,7 @@ function PostWritingPage() {
     }
   }, [inputContents, inputPeopleNum, inputPeriods]);
 
+  const history = useHistory();
   const HandlePostSubmit = (event) => {
     event.preventDefault();
     let sortPeriod =
@@ -252,20 +253,15 @@ function PostWritingPage() {
       };
     }
 
-    const history = useHistory();
+    console.log("실행1");
     axios.post(`/api/${currentPageMenu}/write`, body).then((res) => {
       if (res.data.createPostSuccess) {
+        console.log("실행2");
         alert("게시글 작성이 완료되었습니다.");
+        // 게시글의 생성된 id를 받아 페이지 이동
+        history.push(`/${currentPageMenu}/post/${res.data.id}`);
       } else {
         alert("게시글 작성에 실패하였습니다.");
-      }
-    });
-
-    axios.get(`/api/post/getId`, body).then((_res) => {
-      if (!_res.data._id) {
-        history.push(`${currentPageMenu}"/post/"${_res.data._id}`);
-      } else {
-        alert("게시글 이동에 실패하였습니다.");
       }
     });
   };
@@ -274,7 +270,7 @@ function PostWritingPage() {
     <div id="PageContainer">
       <main className="PostWritingPage">
         <div className="FormContentsContainer">
-          <form onSubmit={HandlePostSubmit} method="post">
+          <form method="post">
             <div className="TopContainer">
               <input
                 type="text"
@@ -291,6 +287,7 @@ function PostWritingPage() {
                   value="submit"
                   disabled={isActive ? false : true}
                   className="UploadButton"
+                  onClick={HandlePostSubmit}
                 >
                   업로드
                 </button>
