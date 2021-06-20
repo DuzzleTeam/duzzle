@@ -1,0 +1,20 @@
+/* Container */
+.LandingImage {
+  width: 40vw;
+  position: relative;
+}
+
+/* browser */
+.LandingImageBrowser {
+  width: calc(40vw - 60px);
+  height: auto;
+  object-fit: contain;
+  margin-right: 60px;
+}
+
+/* mypage */
+.LandingImageMypage {
+  position: absolute;
+  right: 0;
+  bottom: -85px;
+}
