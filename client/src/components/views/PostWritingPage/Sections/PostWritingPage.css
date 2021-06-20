@@ -14,6 +14,8 @@
   display: flex;
   justify-content: center;
   margin-top: 4.5vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 .IsWezzleContainer {
   display: flex;
@@ -35,6 +37,15 @@
   display: flex;
   margin-top: 15px;
   margin-bottom: 15px;
+}
+
+.ImageContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.ImageDiv {
+  display: flex;
 }
 
 .WritingInputTitle {
@@ -169,7 +180,7 @@ input[type="checkbox"]:checked + label {
   color: #2d2d2d;
 }
 .TextArea {
-  height: 60vh;
+  height: 50vh;
   width: 100%;
   font-family: "Noto Sans KR", sans-serif;
   color: #2d2d2d;

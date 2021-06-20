@@ -67,7 +67,6 @@ function PostWritingPage() {
         console.log(reader.result);
         fileURLs[i] = reader.result;
         setInputImages([...fileURLs]);
-        console.log(inputImages);
       };
       reader.readAsDataURL(file);
     }
@@ -117,17 +116,15 @@ function PostWritingPage() {
   let imgTag = null;
   // const [imgTag, setImageTag] = useState(``);
   useEffect(() => {
-    if (inputImages !== []) {
+    if (inputImages) {
+      console.log(inputImages);
       imgTag = inputImages.map((url) => {
-        <div>
-          <img src={url}></img>
-        </div>;
+        return <img src={url} />;
       });
     } else {
       imgTag = <div></div>;
     }
-
-    console.log(String(imgTag));
+    console.log(imgTag);
   }, [inputImages]);
 
   /* 모집 인원 state 변경 */
@@ -254,10 +251,8 @@ function PostWritingPage() {
       };
     }
 
-    console.log("실행1");
     axios.post(`/api/${currentPageMenu}/write`, body).then((res) => {
       if (res.data.createPostSuccess) {
-        console.log("실행2");
         alert("게시글 작성이 완료되었습니다.");
         // 게시글의 생성된 id를 받아 페이지 이동
         history.push(`/${currentPageMenu}/post/${res.data.id}`);
@@ -533,8 +528,14 @@ function PostWritingPage() {
               />
             </div>
 
-            <div className="Container">
-              {imgTag && imgTag.map((tag) => tag)}
+            <div className="ImageContainer">
+              {/* {imgTag && imgTag.map((tag) => tag)} */}
+              {inputImages &&
+                inputImages.map((url, index) => (
+                  <div className="ImageDiv">
+                    <img src={url} key={index} />
+                  </div>
+                ))}
             </div>
           </form>
         </div>
