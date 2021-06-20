@@ -64,12 +64,32 @@ function PostWritingPage() {
 
       let reader = new FileReader();
       reader.onload = () => {
-        console.log(reader.result);
         fileURLs[i] = reader.result;
         setInputImages([...fileURLs]);
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  /* 이미지 업로드를 위한 */
+  const onImageHandler = async () => {
+    if (inputImages !== []) {
+      const formData = new FormData();
+
+      // formData는 개체를 자원하지 않아 차례로 추가해주어야 함
+      inputImages.map((file) => formData.append("selectImages", file));
+      console.log(formData);
+
+      const imageUrls = [];
+      axios.post("/api/upload-post", formData).then((res) => {
+        console.log(res.data.fileNames);
+        res.data.fileNames.map((fn) => {
+          imageUrls.push("/postImages/" + fn.toString());
+        });
+      });
+      return imageUrls;
+    }
+    return [];
   };
 
   /* 기간 state 변경 */
@@ -112,20 +132,6 @@ function PostWritingPage() {
       console.log(inputField, inputField.field[1]);
     }
   };
-
-  let imgTag = null;
-  // const [imgTag, setImageTag] = useState(``);
-  useEffect(() => {
-    if (inputImages) {
-      console.log(inputImages);
-      imgTag = inputImages.map((url) => {
-        return <img src={url} />;
-      });
-    } else {
-      imgTag = <div></div>;
-    }
-    console.log(imgTag);
-  }, [inputImages]);
 
   /* 모집 인원 state 변경 */
   const onChangePeopleNumMinus = (e) => {
@@ -229,11 +235,13 @@ function PostWritingPage() {
         inputPeriods.projectPeriod[5].padStart(2, "0");
     }
 
+    const imageUrlArr = onImageHandler();
+
     let body = {
       title: inputContents.title,
       contents: {
         text: inputContents.contents.text,
-        images: inputContents.contents.images,
+        images: imageUrlArr,
         files: inputContents.contents.files,
       },
       isWezzle: isWezzle,

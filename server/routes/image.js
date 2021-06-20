@@ -3,6 +3,7 @@ const multer = require("multer");
 const sharp = require("sharp");
 const fs = require("fs");
 const path = require("path");
+const { toNamespacedPath } = require("path");
 const router = express.Router();
 
 // uploads 폴더 없으면 생성
@@ -71,7 +72,11 @@ const uploadPost = multer({
 // 2021.06.03 (dayeon-choi)
 //이미지 업로드 - PostWritingPage용 (게시글 작성)
 router.post("/upload-post", uploadPost.array("selectImages"), (req, res) => {
-  res.json({ filename: `${req.files.filename}` });
+  let fileNames = [];
+  console.log(req.files);
+  req.files.map((file) => fileNames.push(file.filename));
+  console.log(fileNames);
+  return res.json({ fileNames: fileNames });
 });
 
 module.exports = router;
