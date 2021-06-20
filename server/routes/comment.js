@@ -3,6 +3,7 @@ const router = express.Router();
 
 const { Comment } = require("../models/Comment");
 const { Post } = require("../models/Post");
+const { Notification } = require("../models/Notification");
 
 const { auth, level } = require("../middleware/auth");
 const { setCommentUser } = require("../functions/comment");
@@ -106,6 +107,13 @@ router.delete(
       console.log(e);
       return res.status(500).json({ message: "오류가 발생했습니다." });
     }
+
+    // (juhyun-noh) 댓글 삭제하면 해당 댓글 알림 삭제
+    Notification.deleteOne({ comment: commentId }, (err) => {
+      if (err) {
+        console.log("알림 삭제 오류", err);
+      }
+    });
 
     // comment id를 기반으로 comment 삭제
     const result = await Comment.deleteOne({ _id: commentId });
