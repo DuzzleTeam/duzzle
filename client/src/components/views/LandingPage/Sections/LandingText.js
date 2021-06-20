@@ -24,11 +24,17 @@ function LandingText({ icon, text }) {
         <span data-color={icon} className={"LandingTextAccent"}>
           {accent}
         </span>
-        {description1}
+        {description1.map((txt) => (
+          <span>{txt}</span>
+        ))}
       </p>
 
       <h2 className={"LandingTextTitle"}>{title2}</h2>
-      <p className={"LandingTextDescription"}>{description2}</p>
+      <p className={"LandingTextDescription"}>
+        {description2.map((txt) => (
+          <span>{txt}</span>
+        ))}
+      </p>
     </article>
   );
 }

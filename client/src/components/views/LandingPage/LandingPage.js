@@ -2,6 +2,7 @@ import React from "react";
 import { withRouter } from "react-router";
 
 import Duzzle from "./Sections/Duzzle";
+import Wezzle from "./Sections/Wezzle";
 import Footer from "../Footer/Footer";
 
 import "../../../utils/Common.css";
@@ -14,6 +15,9 @@ function LandingPage() {
     <main className={"LandingPageContainer"}>
       {/* Duzzle Contents */}
       <Duzzle />
+
+      {/* Wezzle */}
+      <Wezzle />
 
       {/* Footer */}
       <Footer />

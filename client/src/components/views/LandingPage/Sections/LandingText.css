@@ -1,11 +1,3 @@
-span.LandingTextAccent[data-color="blue"] {
-  --accent-color: #0043ff;
-}
-
-span.LandingTextAccent[data-color="orange"] {
-  --accent-color: #ff5200;
-}
-
 /* 위즐, 미즐 설명 텍스트 컨테이너 */
 .LandingTextContainer {
   display: flex;
@@ -46,10 +38,23 @@ h2.LandingTextTitle {
   font-size: 2.4em;
   color: #2d2d2d;
   line-height: 1.67;
+  margin: 0;
+}
+.LandingTextDescription > span {
+  display: block;
+}
+.LandingTextAccent + span {
+  display: inline;
 }
 
 /* 위즐, 미즐 */
-.LandingTextAccent {
+span.LandingTextAccent {
+  display: inline;
   font-weight: bold;
-  color: val(--accent-color);
+}
+span.LandingTextAccent[data-color="blue"] {
+  color: #0043ff;
+}
+span.LandingTextAccent[data-color="orange"] {
+  color: #ff5200;
 }
