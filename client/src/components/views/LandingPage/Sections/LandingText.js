@@ -21,7 +21,9 @@ function LandingText({ icon, text }) {
       <img src={`/images/landingPage/${icon}.png`} alt={accent} />
       <h1 className={"LandingTextTitle"}>{title1}</h1>
       <p className={"LandingTextDescription"}>
-        <span className={"LandingTextAccent"}>{accent}</span>
+        <span data-color={icon} className={"LandingTextAccent"}>
+          {accent}
+        </span>
         {description1}
       </p>
 
