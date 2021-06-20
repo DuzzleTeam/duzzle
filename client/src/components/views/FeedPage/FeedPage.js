@@ -2,12 +2,12 @@ import React from "react";
 import { withRouter } from "react-router";
 
 // Components
-import Banner from "./Section/Banner";
-import Posts from "./Section/Posts";
+import Banner from "./Sections/Banner";
+import Posts from "./Sections/Posts";
 import Footer from "../Footer/Footer";
 
 // CSS
-import "./Section/FeedPage.css";
+import "./Sections/FeedPage.css";
 
 // 메인 피드 페이지 (chohadam, 2021-05-31)
 // /mezzle or /wezzle
