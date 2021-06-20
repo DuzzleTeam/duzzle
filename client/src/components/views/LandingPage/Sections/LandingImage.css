@@ -10,11 +10,12 @@
   height: auto;
   object-fit: contain;
   margin-right: 60px;
+  margin-bottom: 85px;
 }
 
 /* mypage */
 .LandingImageMypage {
   position: absolute;
   right: 0;
-  bottom: -85px;
+  bottom: 0;
 }

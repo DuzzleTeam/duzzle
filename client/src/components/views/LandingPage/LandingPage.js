@@ -3,6 +3,7 @@ import { withRouter } from "react-router";
 
 import Duzzle from "./Sections/Duzzle";
 import Wezzle from "./Sections/Wezzle";
+import Mezzle from "./Sections/Mezzle";
 import Footer from "../Footer/Footer";
 
 import "../../../utils/Common.css";
@@ -18,6 +19,9 @@ function LandingPage() {
 
       {/* Wezzle */}
       <Wezzle />
+
+      {/* Mezzle */}
+      <Mezzle />
 
       {/* Footer */}
       <Footer />
