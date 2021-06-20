@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { withRouter } from "react-router-dom";
+import { useHistory, withRouter } from "react-router-dom";
 
 import "../../../utils/Common.css";
 import "./Sections/PostWritingPage.css";
@@ -50,15 +50,18 @@ function PostWritingPage() {
     }
   };
 
-  let imageArrayPreview = null;
   /* 이미지 미리보기를 위한 */
   const handleImageUpload = (e) => {
-    e.preventDefault();
     const fileArr = e.target.files;
+
     let fileURLs = [];
+
     let file;
-    for (let i = 0; i < fileArr.length; i++) {
+    let filesLength = fileArr.length > 10 ? 10 : fileArr.length;
+
+    for (let i = 0; i < filesLength; i++) {
       file = fileArr[i];
+
       let reader = new FileReader();
       reader.onload = () => {
         console.log(reader.result);
@@ -66,14 +69,6 @@ function PostWritingPage() {
         setInputImages([...fileURLs]);
       };
       reader.readAsDataURL(file);
-    }
-    for (let i = 0; i < inputImages.length; i++) {
-      imageArrayPreview += (
-        <div>
-          <img key={i} src={inputImages[i]} />
-        </div>
-      );
-      console.log(imageArrayPreview);
     }
   };
 
@@ -118,6 +113,20 @@ function PostWritingPage() {
     }
   };
 
+  let imgTag = null;
+  // const [imgTag, setImageTag] = useState(``);
+  useEffect(() => {
+    if (inputImages) {
+      console.log(inputImages);
+      imgTag = inputImages.map((url) => {
+        return <img src={url} />;
+      });
+    } else {
+      imgTag = <div></div>;
+    }
+    console.log(imgTag);
+  }, [inputImages]);
+
   /* 모집 인원 state 변경 */
   const onChangePeopleNumMinus = (e) => {
     e.preventDefault();
@@ -141,25 +150,30 @@ function PostWritingPage() {
           String(now.getDate()).padStart(2, "0")
       );
       let startPeriod = Number(
-        inputPeriods.period[0] + inputPeriods.period[1] + inputPeriods.period[2]
+        inputPeriods.period[0] +
+          inputPeriods.period[1].padStart(2, "0") +
+          inputPeriods.period[2].padStart(2, "0")
       );
       let endPeriod = Number(
-        inputPeriods.period[3] + inputPeriods.period[4] + inputPeriods.period[5]
+        inputPeriods.period[3] +
+          inputPeriods.period[4].padStart(2, "0") +
+          inputPeriods.period[5].padStart(2, "0")
       );
       let startProjectPeriod = Number(
         inputPeriods.projectPeriod[0] +
-          inputPeriods.projectPeriod[1] +
-          inputPeriods.projectPeriod[2]
+          inputPeriods.projectPeriod[1].padStart(2, "0") +
+          inputPeriods.projectPeriod[2].padStart(2, "0")
       );
       let endProjectPeriod = Number(
         inputPeriods.projectPeriod[3] +
-          inputPeriods.projectPeriod[4] +
-          inputPeriods.projectPeriod[5]
+          inputPeriods.projectPeriod[4].padStart(2, "0") +
+          inputPeriods.projectPeriod[5].padStart(2, "0")
       );
       if (
         // 제목, 내용, 모집기간, 모집분야, 모집인원, 프로젝트예상기간에 값이 들어가 있을 경우
         String(inputContents.title) !== "" &&
         String(inputContents.contents.text) !== "" &&
+        (inputField.field[0] !== "" || inputField.field[1] !== "") &&
         inputPeopleNum > 0 &&
         inputPeriods.period.indexOf("") === -1 &&
         startPeriod >= nowDay &&
@@ -190,28 +204,29 @@ function PostWritingPage() {
         setIsActive(false);
       }
     }
-  }, [inputContents, inputPeopleNum, inputPeriods]);
+  }, [inputContents, inputPeopleNum, inputPeriods, inputField]);
 
-  const handlePostSubmit = (event) => {
+  const history = useHistory();
+  const HandlePostSubmit = (event) => {
     event.preventDefault();
     let sortPeriod =
       inputPeriods.period[0] +
-      inputPeriods.period[1] +
-      inputPeriods.period[2] +
+      inputPeriods.period[1].padStart(2, "0") +
+      inputPeriods.period[2].padStart(2, "0") +
       "-" +
       inputPeriods.period[3] +
-      inputPeriods.period[4] +
-      inputPeriods.period[5];
+      inputPeriods.period[4].padStart(2, "0") +
+      inputPeriods.period[5].padStart(2, "0");
     let sortProjectPeriod = "미정";
     if (inputPeriods.projectPeriod[6] !== "미정") {
       sortProjectPeriod =
         inputPeriods.projectPeriod[0] +
-        inputPeriods.projectPeriod[1] +
-        inputPeriods.projectPeriod[2] +
+        inputPeriods.projectPeriod[1].padStart(2, "0") +
+        inputPeriods.projectPeriod[2].padStart(2, "0") +
         "-" +
         inputPeriods.projectPeriod[3] +
-        inputPeriods.projectPeriod[4] +
-        inputPeriods.projectPeriod[5];
+        inputPeriods.projectPeriod[4].padStart(2, "0") +
+        inputPeriods.projectPeriod[5].padStart(2, "0");
     }
 
     let body = {
@@ -238,17 +253,9 @@ function PostWritingPage() {
 
     axios.post(`/api/${currentPageMenu}/write`, body).then((res) => {
       if (res.data.createPostSuccess) {
-        setInputContents({
-          title: "",
-          contents: { text: "" },
-        });
-        setInputPeopleNum(0);
-        setInputField({ field: ["", "디자인"] });
-        setInputPeriods({
-          period: ["", "", "", "", "", ""],
-          projectPeriod: ["", "", "", "", "", "", "미정"],
-        });
-        setIsActive(false);
+        alert("게시글 작성이 완료되었습니다.");
+        // 게시글의 생성된 id를 받아 페이지 이동
+        history.push(`/${currentPageMenu}/post/${res.data.id}`);
       } else {
         alert("게시글 작성에 실패하였습니다.");
       }
@@ -259,7 +266,7 @@ function PostWritingPage() {
     <div id="PageContainer">
       <main className="PostWritingPage">
         <div className="FormContentsContainer">
-          <form onSubmit={handlePostSubmit} method="post">
+          <form method="post">
             <div className="TopContainer">
               <input
                 type="text"
@@ -276,6 +283,7 @@ function PostWritingPage() {
                   value="submit"
                   disabled={isActive ? false : true}
                   className="UploadButton"
+                  onClick={HandlePostSubmit}
                 >
                   업로드
                 </button>
@@ -363,7 +371,11 @@ function PostWritingPage() {
                     onChange={onChangeField}
                     className="PostWirtingCheckbox"
                   />
-                  <label htmlFor="field0"></label>
+                  <label htmlFor="field0">
+                    {inputField.field[0] && (
+                      <img src="/images/checkbox.png" alt="checked" />
+                    )}
+                  </label>
                   <label className="ForSpaceLabel">개발</label>
 
                   <input
@@ -374,7 +386,11 @@ function PostWritingPage() {
                     onChange={onChangeField}
                     className="PostWirtingCheckbox"
                   />
-                  <label htmlFor="field1"></label>
+                  <label htmlFor="field1">
+                    {inputField.field[1] && (
+                      <img src="/images/checkbox.png" alt="checked" />
+                    )}
+                  </label>
                   <label className="ForSpaceLabel">디자인</label>
                 </div>
 
@@ -512,7 +528,15 @@ function PostWritingPage() {
               />
             </div>
 
-            <div className="Container">{imageArrayPreview}</div>
+            <div className="ImageContainer">
+              {/* {imgTag && imgTag.map((tag) => tag)} */}
+              {inputImages &&
+                inputImages.map((url, index) => (
+                  <div className="ImageDiv">
+                    <img src={url} key={index} />
+                  </div>
+                ))}
+            </div>
           </form>
         </div>
       </main>
