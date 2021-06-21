@@ -1,6 +1,5 @@
 /* Landing Page 전체 컨테이너 */
 .LandingPageContainer {
-  height: 90.7vh;
-  overflow-y: scroll;
+  /* height: 90.7vh; */
   overflow-x: hidden;
 }
