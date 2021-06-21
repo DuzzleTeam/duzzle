@@ -6,8 +6,11 @@ const useScroll = () => {
     y: 0,
   });
 
-  const onScroll = (event) => {
-    console.log(window.scrollY);
+  const onScroll = () => {
+    setState({
+      x: window.scrollX,
+      y: window.scrollY,
+    });
   };
 
   useEffect(() => {
