@@ -97,8 +97,6 @@ function NotificationDropdown(props) {
             } else if (activeNotiMenu === 1) {
               if (noti.menuType === "like") {
                 return <Notification notification={notification[i]} key={i} />;
-              } else {
-                return <font style={{ color: "gray" }}>알림이 없습니다</font>;
               }
             } else {
               if (noti.menuType === "wezzle") {
