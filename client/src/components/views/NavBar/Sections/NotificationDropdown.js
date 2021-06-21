@@ -33,6 +33,33 @@ function NotificationDropdown(props) {
     fetchData();
   }, [loadNoti]);
 
+  const rendering = () => {
+    if (notification) {
+      for (let i = 0; i < notification.length; i++) {
+        console.log(notification[i]);
+        if (activeNotiMenu === 0) {
+          if (notification[i].menuType === "comment") {
+            return <Notification notification={notification[i]} key={i} />;
+          } else {
+            return <font>알림이 없습니다.</font>;
+          }
+        } else if (activeNotiMenu === 1) {
+          if (notification[i].menuType === "like") {
+            return <Notification notification={notification[i]} key={i} />;
+          } else {
+            return <font>알림이 없습니다.</font>;
+          }
+        } else {
+          if (notification[i].menuType === "wezzle") {
+            return <Notification notification={notification[i]} key={i} />;
+          } else {
+            return <font>알림이 없습니다.</font>;
+          }
+        }
+      }
+    }
+  };
+
   return (
     // 알림창 전체 컨테이너
     <div

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 // CSS
-import "./Section/Footer.css";
+import "./Sections/Footer.css";
 
 import { sns } from "../../../utils/sns";
 
