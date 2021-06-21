@@ -1,0 +1,157 @@
+/* Footer Container */
+footer {
+  /* height: 315px; */
+  background-color: #bcbcbc;
+
+  /* 위 | 가로방향 | 아래 */
+  padding: 43.5px 0 24px;
+  box-sizing: border-box;
+
+  font-size: 10px;
+}
+
+.TopFooter {
+  padding-right: 270px;
+  padding-left: 270px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* logo, team, email, address */
+.FooterFirst {
+  display: flex;
+  flex-direction: column;
+  margin-right: 17vw;
+}
+
+.FooterFirst > span {
+  font-size: 1.6em;
+  color: white;
+  font-weight: 500;
+}
+
+/* team */
+.FooterFirst > span:nth-child(2) {
+  margin-top: 16px;
+}
+/* address */
+.FooterFirst > span:last-child {
+  margin-top: 50px;
+}
+
+/* Duzzle Logo */
+.FooterLogo {
+  width: 93.5px;
+  height: auto;
+  margin-top: 5px;
+}
+.FooterLogo > img {
+  width: 100%;
+}
+
+/* 더즐이란 */
+.FooterSecond {
+  margin-right: 7.3vw;
+  color: white;
+}
+.FooterSecond > span:first-child {
+  display: block;
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+.FooterSecond > span:last-child {
+  font-size: 1.6em;
+  font-weight: 500;
+}
+
+/* navigation */
+.FooterMenu {
+  margin-right: 7.3vw;
+}
+
+.FooterMenu > span {
+  display: block;
+  color: white;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+/* 마이페이지, 위즐, 미즐 */
+.FooterMenuLinks {
+  display: flex;
+  flex-direction: column;
+  margin-top: 4px;
+}
+.FooterMenuLinks > a {
+  margin-top: 12px;
+  color: white;
+  text-decoration: none;
+  font-size: 1.6em;
+  font-weight: 500;
+}
+
+/* SNS */
+.FooterSNS {
+  display: flex;
+  flex-direction: column;
+}
+
+.FooterSNS > span {
+  font-size: 2em;
+  font-weight: bold;
+  color: white;
+}
+
+.FooterSNS > a {
+  color: white;
+  font-size: 1.6em;
+  font-weight: 500;
+  text-decoration: none;
+
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+}
+.FooterSNS > img {
+  width: 28px;
+  height: auto;
+}
+.FooterSNS > a > span {
+  margin-left: 10px;
+}
+
+/* hr */
+.FooterDivider {
+  width: 100vw;
+  height: 1px;
+  background-color: white;
+  border: none;
+
+  margin-top: 48px;
+  margin-bottom: 22px;
+}
+
+/* 하단 Footer (copyright, 개인정보처리방침) */
+.BottomFooter {
+  display: flex;
+  justify-content: space-between;
+
+  padding-right: 270px;
+  padding-left: 270px;
+}
+
+/* copyright */
+.BottomFooter > span {
+  font-size: 1.4em;
+  font-weight: 500;
+  color: white;
+}
+
+/* 개인정보처리방침 */
+.BottomFooter > a {
+  font-size: 1.6em;
+  font-weight: 500;
+  color: white;
+  text-decoration: none;
+}

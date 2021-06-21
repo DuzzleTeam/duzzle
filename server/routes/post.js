@@ -3,6 +3,7 @@ const router = express.Router();
 
 const { Post } = require("../models/Post");
 const { User } = require("../models/User");
+const { Notification } = require("../models/Notification");
 
 const { auth, level } = require("../middleware/auth");
 const { getUser } = require("../functions/auth");
@@ -38,6 +39,14 @@ router.post(
 router.delete("/post/:postId", auth, level("post", false), (req, res) => {
   // url에서 post id 받아오기
   const { postId } = req.params;
+
+  // (juhyun-noh) 게시글 삭제하면 해당 게시글 관련 알림 삭제
+  Notification.deleteMany({ post: postId }, (err) => {
+    if (err) {
+      console.log("알림 삭제 오류", err);
+    }
+  });
+
   // 해당 포스트 삭제
   Post.deleteOne({ _id: postId }, (err) => {
     // 에러 발생 시 클라이언트에 에러 전송
