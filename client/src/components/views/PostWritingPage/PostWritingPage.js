@@ -308,6 +308,41 @@ function PostWritingPage() {
     target.style.height = `${target.scrollHeight}px`;
   };
 
+  // images
+  const [images, setImages] = useState(null);
+
+  const onChangeImages = (e) => {
+    console.log("files", e.target.files);
+    setImages(e.target.files);
+  };
+
+  const onSubmitImages = async () => {
+    if (images) {
+      const formData = new FormData();
+      // 추가
+      for (let i = 0; i < images.length; i++) {
+        const image = images[i];
+        formData.append("selectImages", image);
+      }
+
+      // request
+      const res = await axios.post("/api/uploadposts", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log("res", res);
+      // result
+      const filenames = [];
+      res.data.filenames.forEach((filename) => {
+        filenames.push(`/postImages/${filename}`);
+      });
+      return filenames;
+    }
+    return null;
+  };
+
   const history = useHistory();
 
   // loading request
@@ -321,16 +356,22 @@ function PostWritingPage() {
     // 요청 한 번만 보내지도록 설정
     buttonSubmitRef.current.disabled = true;
 
+    // start loading
+    setLoading(true);
+
+    // image file names (array)
+    const filenames = await onSubmitImages();
+    console.log(filenames);
+
     const body = {
       title: title.value,
       contents: {
         text: text.value,
+        ...(filenames && { images: filenames }),
       },
       isWezzle: false,
     };
-
-    // start loading
-    setLoading(true);
+    console.log("body", body);
 
     const url = `/api/mezzle/write`;
     const res = await axios.post(url, body);
@@ -380,6 +421,7 @@ function PostWritingPage() {
               id="buttonAddImages"
               multiple
               accept="image/png,image/jpeg"
+              onChange={onChangeImages}
             />
           </article>
 
