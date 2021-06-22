@@ -12,3 +12,11 @@
 .LandingWezzle {
   background-color: #f9f9f9;
 }
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .LandingWezzleMezzle {
+    padding: 6.8%;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+}
