@@ -4,3 +4,12 @@
   margin-top: 20px;
   margin-bottom: -10px;
 }
+
+/* media query 모바일 세로 */
+@media (max-width:480px){
+  .CommentsContainer {
+    width: 80%;
+    margin-top: 8px;
+    margin-bottom: -10px;
+  }
+}
