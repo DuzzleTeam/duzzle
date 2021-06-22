@@ -1,0 +1,144 @@
+/* container */
+.write-form__section--wezzle {
+  padding: 50px 0;
+  border-bottom: solid 1px #cecece;
+  font-size: 16px;
+}
+
+/* ul */
+.write-form__list-container {
+  margin: 0;
+  padding: 0;
+}
+
+.write-form__list-container > li {
+  list-style: none;
+  margin-top: 32px;
+}
+.write-form__list-container > li:first-child {
+  margin-top: 0;
+}
+.write-form__list-container > li:nth-child(2),
+.write-form__list-container > li:nth-child(4) {
+  display: flex;
+  align-items: center;
+}
+
+.KeyLable {
+  margin-right: 18px;
+  font-weight: 600;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+input[type="checkbox"] + label {
+  display: inline-block;
+
+  width: 18px;
+  height: 18px;
+
+  margin-right: 12px;
+
+  border-radius: 4px;
+  border: solid 1px #707070;
+
+  box-sizing: border-box;
+
+  cursor: pointer;
+}
+input[type="checkbox"]:checked + label {
+  background-repeat: no-repeat;
+  border: none;
+}
+
+.PeriodOutline {
+  border: 1px solid #ececec;
+  display: inline-block;
+  height: 3vh;
+  padding-right: 7px;
+  border-radius: 2.5px;
+  margin-left: 1px;
+  margin-right: 1px;
+  font-family: "Noto Sans KR", sans-serif;
+}
+.InputPeriodYear,
+.InputPeriodMD {
+  border: none;
+  outline: 0;
+  padding-left: 8px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 1em;
+}
+.InputPeriodYear {
+  width: 3.4vw;
+  min-width: 25px;
+}
+.InputPeriodMD {
+  width: 2vw;
+  padding-left: 8px;
+  min-width: 15px;
+}
+.PeopleNumOutline {
+  border: 1px solid #ececec;
+  display: inline-block;
+  border-radius: 2.5px;
+  height: 3vh;
+  font-family: "Noto Sans KR", sans-serif;
+}
+.PeopleNumButton {
+  border: none;
+  background-color: white;
+  height: 2.2vh;
+  display: inline-block;
+  border-radius: 2.5px;
+}
+.PeopleNumText {
+  border: none;
+  display: inline-block;
+  background-color: white;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: #2d2d2d;
+}
+.TextArea {
+  height: 50vh;
+  width: 100%;
+  font-family: "Noto Sans KR", sans-serif;
+  color: #2d2d2d;
+  font-size: 1rem;
+  border: none;
+  outline: 0;
+}
+
+.ImagesLabel {
+  display: flex;
+  cursor: pointer;
+  text-decoration: underline;
+  color: #585858;
+  margin-left: auto;
+  font-weight: 800;
+}
+.ImagesIcon {
+  width: 22px;
+  height: 18px;
+  margin-right: 7px;
+}
+
+.ImagesButton {
+  display: none;
+}
+
+.ForSpaceCheckbox {
+  margin-left: 20px;
+}
+
+.ForSpaceLabel {
+  margin-right: 15px;
+}
+
+.ForSpaceSpan {
+  margin-right: 3px;
+  margin-left: 3px;
+}
