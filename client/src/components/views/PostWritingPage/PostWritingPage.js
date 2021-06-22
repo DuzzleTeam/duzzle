@@ -9,12 +9,6 @@ import "../../../utils/Common.css";
 import "./Sections/test.css";
 
 function PostWritingPage() {
-  // hadam
-  const title = useInput();
-  // 본문 내용
-  const text = useInput();
-
-  // ////
   /* post의 제목, 내용, 파일 (공통 항목 - 이미지 제외) */
   const [inputContents, setInputContents] = useState({
     title: "",
@@ -289,7 +283,21 @@ function PostWritingPage() {
     });
   };
 
+  // ////
+
+  // hadam
+  const title = useInput("");
+  // 본문 내용
+  const text = useInput("");
+
   const [allChecked, setAllChecked] = useState(false);
+  useEffect(() => {
+    if (title.value !== "" && text.value !== "") {
+      setAllChecked(true);
+    } else {
+      setAllChecked(false);
+    }
+  }, [title, text]);
 
   // set textarea height to fit contents
   const setSizeTextarea = (e) => {
@@ -338,12 +346,10 @@ function PostWritingPage() {
           <textarea
             className={"write-form__textarea"}
             placeholder={"친구들과 나누고 싶은 이야기를 자유롭게 작성해주세요!"}
-            onChange={text.onChange}
+            {...text}
             onInput={setSizeTextarea}
             cols="80"
-          >
-            {text.value}
-          </textarea>
+          ></textarea>
         </section>
 
         <section className="write-form__section--images">
