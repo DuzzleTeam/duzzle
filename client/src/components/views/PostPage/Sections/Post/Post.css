@@ -279,12 +279,6 @@ span.PostMainText {
   .PostTitleContainer {
     display: flex;
     flex-direction: column;
-    /*
-    justify-content: space-between;
-
-    margin-left: 4vw;
-    margin-right: 4vw;
-    */
   }
   /* 제목 */
   .PostTitleContainer > span.PostTitle {
