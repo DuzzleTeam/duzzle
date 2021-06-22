@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
+// hooks
+import useAnimation from "../../../../hooks/useAnimation";
 
 import LandingText from "./LandingText";
 import LandingImage from "./LandingImage";
 
 import "./WezzleMezzle.css";
 
-function Mezzle() {
+function Mezzle({ startAnimation }) {
   const text = {
     title1: "소통은 더 유익하게",
     accent: "미즐",
@@ -21,8 +23,21 @@ function Mezzle() {
     ],
   };
 
+  const [mezzleRef, onStartMezzle] = useAnimation({ opacity: true }, 1);
+  useEffect(() => {
+    if (!mezzleRef.ref.current) return;
+
+    if (startAnimation) {
+      onStartMezzle();
+    } else {
+      // reset style
+      const style = JSON.stringify(mezzleRef.style).replace(/{|}|"/g, "");
+      mezzleRef.ref.current.style = style;
+    }
+  }, [startAnimation, mezzleRef, onStartMezzle]);
+
   return (
-    <section className={"LandingWezzleMezzle"}>
+    <section {...mezzleRef} className={"LandingWezzleMezzle"}>
       <LandingImage browser={"mezzle-browser"} mypage={"mezzle-mypage"} />
 
       <LandingText icon={"orange"} text={text} />
