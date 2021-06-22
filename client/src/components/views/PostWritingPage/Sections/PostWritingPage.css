@@ -1,240 +1,127 @@
-/* 최상위 컨테이너 */
-#PostWritingPageContainer {
-  height: 90.7vh;
+.write-container__main * {
+  box-sizing: border-box;
+}
 
-  padding-left: 300px;
-  padding-right: 300px;
+/* main container */
+.write-container__main {
+  padding: 90px 22vw;
+  font-size: 10px;
+}
 
-  flex-direction: column;
-  justify-content: center;
+.write-form {
+  position: relative;
+}
+
+/* warning */
+.write__text--warning {
+  display: flex;
   align-items: center;
 
-  overflow-y: scroll;
-  overflow-x: hidden;
+  color: #ff6565;
+  font-size: 1.2em;
+
+  margin: 0;
+  position: absolute;
+  right: 0;
+  top: calc(-12px - 18px);
+}
+.write__text--warning img {
+  margin-right: 8px;
 }
 
-.PostWritingPage {
+/* title box */
+.write-form__section--title {
   display: flex;
-  width: 100%;
-  align-items: center;
-}
+  justify-content: space-between;
 
-.FormContentsContainer {
-  display: flex;
-  width: 100%;
-  margin-top: 4.5vh;
+  padding-bottom: 30px;
+  border-bottom: solid 1px #cecece;
 }
-
-.FormContainer {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-}
-
-.IsWezzleContainer {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-}
-.TopContainer {
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-}
-.Container {
-  display: flex;
-  width: 100%;
-  justify-content: flex-start;
-  flex-direction: row;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  background-color: white;
-}
-.LineContainer {
-  width: 100%;
-  display: flex;
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
-
-.ImageDiv {
-  display: flex;
-  width: 100%;
-}
-
-.postImage {
-  display: flex;
-  width: 100%;
-}
-
-.WritingInputTitle {
-  display: flex;
-  margin-right: auto;
-  margin-right: 15px;
-
-  width: 45vw;
-  font-size: 1.2rem;
-  font-weight: 800;
-
-  outline: 0;
+/* title input */
+.write-form__section--title > input[type="text"] {
+  font-size: 2.8em;
+  font-weight: bold;
+  color: #2d2d2d;
+  padding: 2px 0;
   border: none;
+  outline: none;
 }
-.WritingInputTitle::placeholder {
+.write-form__section--title > input[type="text"]::placeholder {
+  color: #cecece;
+}
+/* submit button */
+.write-form__section--title > button[type="submit"] {
+  width: 100px;
+  height: 44px;
+
+  font-size: 2em;
+  color: white;
+  font-weight: bold;
+
+  background-color: #57ecbf;
+  border: none;
+  border-radius: 28px;
+  box-shadow: 0 1px 6px 0 rgba(112, 112, 112, 0.24);
+
+  cursor: pointer;
+}
+.write-form__section--title > button[type="submit"]:disabled {
+  background-color: #cecece;
+  box-shadow: none;
+  cursor: default;
+}
+
+/* contents */
+.write-form__section--contents {
+  margin-bottom: 90px;
+}
+
+/* 사진 추가 */
+.write-form__button--images {
+  text-align: end;
+  margin-top: 28px;
+  margin-bottom: 42px;
+}
+.write-form__button--images > label {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #585858;
+  text-decoration: underline;
+}
+.write-form__button--images > label > img {
+  margin-right: 14px;
+}
+.write-form__button--images > input[type="file"] {
+  display: none;
+}
+
+/* 본문 */
+.write-form__textarea {
+  width: 100%;
+
+  font-size: 2em;
+  line-height: 1.45;
+  font-weight: 500;
+
+  border: none;
+  resize: none;
+  outline: none;
+}
+.write-form__textarea::placeholder {
   color: #cecece;
 }
 
-.UploadButtonContainer {
-  display: flex;
-  margin-left: auto;
+/* images */
+.write-form__section--images {
+  display: grid;
+  grid-template-columns: 1;
+  row-gap: 25px;
 }
 
-.UploadButton {
-  display: flex;
-  height: 3vh;
-  width: 4.5vw;
-  min-height: 28px;
-  min-width: 75px;
-
-  border: none;
-  outline: 0;
-  background-color: #57ecbf;
-  color: white;
-  border-radius: 28px;
-
-  display: inline-block;
-  text-align: center;
-  font-weight: 600;
-  font-size: 1rem;
-
-  cursor: pointer;
-}
-.UploadButton:disabled {
-  background-color: #ececec;
-  cursor: default;
-}
-.Line {
-  display: flex;
-  height: 0.5px;
-  background-color: #cecece;
-  border: none;
-  width: 100%;
-}
-
-.KeyLable {
-  margin-right: 18px;
-  font-weight: 600;
-  font-family: "Noto Sans KR", sans-serif;
-}
-
-input[type="checkbox"] {
-  display: none;
-}
-input[type="checkbox"] + label {
-  display: inline-block;
-
-  width: 18px;
-  height: 18px;
-
-  margin-right: 12px;
-
-  border-radius: 4px;
-  border: solid 1px #707070;
-
-  box-sizing: border-box;
-
-  cursor: pointer;
-}
-input[type="checkbox"]:checked + label {
-  background-repeat: no-repeat;
-  border: none;
-}
-
-.PeriodOutline {
-  border: 1px solid #ececec;
-  display: inline-block;
-  height: 2.3vh;
-  padding-right: 7px;
-  border-radius: 2.5px;
-  margin-left: 1px;
-  margin-right: 1px;
-  font-family: "Noto Sans KR", sans-serif;
-}
-.InputPeriodYear,
-.InputPeriodMD {
-  border: none;
-  outline: 0;
-  padding-left: 8px;
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 0.7rem;
-}
-.InputPeriodYear {
-  width: 1.5vw;
-  min-width: 25px;
-}
-.InputPeriodMD {
-  width: 1vw;
-  padding-left: 8px;
-  min-width: 15px;
-}
-.PeopleNumOutline {
-  border: 1px solid #ececec;
-  display: inline-block;
-  border-radius: 2.5px;
-  height: 2.3vh;
-  font-family: "Noto Sans KR", sans-serif;
-}
-.PeopleNumButton {
-  border: none;
-  background-color: white;
-  height: 2.2vh;
-  display: inline-block;
-  border-radius: 2.5px;
-}
-.PeopleNumText {
-  border: none;
-  display: inline-block;
-  background-color: white;
-  padding-left: 8px;
-  padding-right: 8px;
-  color: #2d2d2d;
-}
-.TextArea {
-  height: 50vh;
-  width: 100%;
-  font-family: "Noto Sans KR", sans-serif;
-  color: #2d2d2d;
-  font-size: 1rem;
-  border: none;
-  outline: 0;
-}
-
-.ImagesLabel {
-  display: flex;
-  cursor: pointer;
-  text-decoration: underline;
-  color: #585858;
-  margin-left: auto;
-  font-weight: 800;
-}
-.ImagesIcon {
-  width: 22px;
-  height: 18px;
-  margin-right: 7px;
-}
-
-.ImagesButton {
-  display: none;
-}
-
-.ForSpaceCheckbox {
-  margin-left: 20px;
-}
-
-.ForSpaceLabel {
-  margin-right: 15px;
-}
-
-.ForSpaceSpan {
-  margin-right: 3px;
-  margin-left: 3px;
+.write-form__section--images > img {
+  max-width: 100%;
 }

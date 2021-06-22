@@ -214,7 +214,7 @@ textarea.ProfileIntro {
 }
 
 /* (juhyun-noh) 모바일용 미디어쿼리 */
-@media only screen and (max-width: 480px) {
+@media (max-width: 480px) {
   /* 왼쪽 프로필 컨테이너 */
   .MypageEditProfile {
     font-size: 8px;

@@ -133,3 +133,46 @@
   height: 0;
   border: solid 1px #ececec;
 }
+
+@media (min-width: 320px) and (max-width: 480px) {
+  #AuthMenu {
+    font-size: 10px;
+  }
+  /* 로그인 */
+  #AuthMenu a {
+    font-size: 1.6em;
+  }
+  .ProfileDropdown button {
+    font-size: 1.6em;
+  }
+
+  /* Notification & Profile Image */
+  .RightMenuContainer {
+    width: 65%;
+  }
+
+  .NotificationButton {
+    width: 28px;
+    height: 30px;
+  }
+  .NotificationButton img {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Profile Image Button */
+  .ProfileButton {
+    width: 30px;
+    height: 30px;
+  }
+
+  /* Profile Dropdown (mypage, logout) */
+  .ProfileDropdown {
+    /* -dropdown width + profile image */
+    margin-left: calc(-180px + 30px);
+    margin-top: 20px;
+
+    width: 180px;
+    height: 130px;
+  }
+}
