@@ -22,7 +22,7 @@ function LandingImage({ browser, mypage, startAnimation }) {
   const [mypageRef, onStartMypage, resetStyleMypage] = useAnimation(
     { transform: translateX },
     duration,
-    delay * 4
+    delay * 2
   );
 
   useEffect(() => {

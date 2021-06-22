@@ -19,3 +19,26 @@
   right: 0;
   bottom: 0;
 }
+
+@media (min-width: 320px) and (max-width: 480px) {
+  /* Container */
+  .LandingImage {
+    width: 100%;
+    position: relative;
+  }
+
+  /* browser */
+  .LandingImageBrowser {
+    width: 95%;
+    margin-right: 5%;
+    margin-bottom: 30px;
+  }
+
+  /* mypage */
+  .LandingImageMypage {
+    width: 40%;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+}
