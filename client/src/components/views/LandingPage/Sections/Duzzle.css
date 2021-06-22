@@ -75,3 +75,40 @@
 .Text2Container {
   margin-top: -20px;
 }
+
+@media (min-width: 320px) and (max-width: 480px) {
+  /* container */
+  .LandingDuzzle {
+    font-size: 10px;
+    flex-direction: column-reverse;
+  }
+  .PuzzleGif {
+    margin-top: -25vh;
+    margin-left: -6.8%;
+    position: static;
+  }
+  .PuzzleGif img {
+    width: 100vw;
+  }
+  /* 더 즐겁게, */
+  .MainText {
+    font-size: 4em;
+  }
+  /* 간격 */
+  .Text2Container {
+    margin-top: 0px;
+  }
+  .SNSContainer {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  .SNSContainer img {
+    width: 8px;
+  }
+  .SNSContainer a {
+    margin-right: 10px;
+  }
+  .Instagram {
+    margin-right: 10vw;
+  }
+}
