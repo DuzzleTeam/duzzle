@@ -3,6 +3,7 @@ const multer = require("multer");
 const sharp = require("sharp");
 const fs = require("fs");
 const path = require("path");
+const { toNamespacedPath } = require("path");
 const router = express.Router();
 
 // uploads 폴더 없으면 생성
@@ -34,6 +35,22 @@ const upload = multer({
   }),
 });
 
+// 2021.06.03 (dayeon-choi)
+// PostWritingPage용 (게시글 작성) 파일 저장 방식, 경로, 파일명 설정
+const uploadpost = multer({
+  storage: multer.diskStorage({
+    destination(req, file, cb) {
+      cb(null, "uploads/postImages/");
+    },
+    filename(req, file, cb) {
+      const ext = path.extname(file.originalname);
+      const timestamp = new Date().getTime().valueOf();
+      const filename = path.basename(file.originalname, ext) + timestamp + ext;
+      cb(null, filename);
+    },
+  }),
+});
+
 // 2021.05.26 / 프로필 이미지 업로드 (juhyun-noh)
 router.post("/upload", upload.single("selectImg"), (req, res) => {
   try {
@@ -54,24 +71,29 @@ router.post("/upload", upload.single("selectImg"), (req, res) => {
 });
 
 // 2021.06.03 (dayeon-choi)
-// PostWritingPage용 (게시글 작성) 파일 저장 방식, 경로, 파일명 설정
-const uploadPost = multer({
-  storage: multer.diskStorage({
-    destination(req, file, cb) {
-      cb(null, "uploads/postImages");
-    },
-    filename(req, file, cb) {
-      const ext = path.extname(file.originalname);
-      const timestamp = new Date().getTime().valueOf();
-      cb(null, path.basename(file.originalname, ext) + timestamp + ext);
-    },
-  }),
-});
-
-// 2021.06.03 (dayeon-choi)
 //이미지 업로드 - PostWritingPage용 (게시글 작성)
+/*
 router.post("/upload-post", uploadPost.array("selectImages"), (req, res) => {
-  res.json({ filename: `${req.files.filename}` });
+  let fileNames = [];
+  req.files.map((file) => fileNames.push(file.filename));
+  return res.json({ fileNames: fileNames });
 });
+*/
 
+// 2021.06.20 (dayeon-choi)
+// 이미지 업로드 - postWritingPage 이미지 하나용 (게시글 작성)
+// router.post(
+//   "/upload/postImage",
+//   uploadPost.single("selectImage"),
+//   (req, res) => {
+//     if (req.file.filename) {
+//       res.json({ filename: `${req.file.filename}` });
+//     } else {
+//       res.json({ filename: null });
+//     }
+//   }
+// );
+router.post("/uploadpost", uploadpost.single("selectImage"), (req, res) => {
+  res.json({ filename: `${req.file.filename}` });
+});
 module.exports = router;

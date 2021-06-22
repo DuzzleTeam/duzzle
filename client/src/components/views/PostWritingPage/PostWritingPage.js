@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory, withRouter } from "react-router-dom";
 
@@ -13,7 +13,8 @@ function PostWritingPage() {
   });
 
   /* 이미지 */
-  const [inputImages, setInputImages] = useState([]);
+  // const [inputImages, setInputImages] = useState([]);
+  const [inputImage, setInputImage] = useState(null);
 
   /* 모집 인원 */
   const [inputPeopleNum, setInputPeopleNum] = useState(0);
@@ -51,7 +52,9 @@ function PostWritingPage() {
   };
 
   /* 이미지 미리보기를 위한 */
+  const postImageRef = useRef();
   const handleImageUpload = (e) => {
+    /*
     const fileArr = e.target.files;
 
     let fileURLs = [];
@@ -64,12 +67,47 @@ function PostWritingPage() {
 
       let reader = new FileReader();
       reader.onload = () => {
-        console.log(reader.result);
         fileURLs[i] = reader.result;
-        setInputImages([...fileURLs]);
+        setInputImage([...fileURLs]);
       };
+      */
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    setInputImage(file);
+
+    reader.onload = () => {
+      postImageRef.current.src = reader.result;
+    };
+    if (file) {
       reader.readAsDataURL(file);
     }
+  };
+
+  /* 이미지 업로드를 위한 */
+  const onImageHandler = async () => {
+    if (inputImage) {
+      let formData = new FormData();
+      let imageUrl = null;
+
+      // formData는 개체를 자원하지 않아 차례로 추가해주어야 함
+      /* inputImage.map((file) => formData.append("selectImages", file));
+
+      const imageUrls = [];
+      axios.post("/api/upload-post", formData).then((res) => {
+        res.data.fileNames.map((fn) => {
+          imageUrls.push("/postImages/" + fn.toString());
+        });
+      });
+      return imageUrls;
+      */
+
+      formData.append("selectImage", inputImage);
+      const res = await axios.post("/api/uploadpost", formData);
+      imageUrl = "/postImages/" + res.data.filename.toString();
+
+      return imageUrl;
+    }
+    return null;
   };
 
   /* 기간 state 변경 */
@@ -104,28 +142,12 @@ function PostWritingPage() {
       let fieldArr = inputField.field;
       fieldArr[0] = fieldArr[0] ? "" : "개발";
       setInputField({ field: fieldArr });
-      console.log(inputField, inputField.field);
     } else if (parseInt(e.target.id.replace("field", "")) === 1) {
       let fieldArr = inputField.field;
       fieldArr[1] = fieldArr[1] ? "" : "디자인";
       setInputField({ field: fieldArr });
-      console.log(inputField, inputField.field[1]);
     }
   };
-
-  let imgTag = null;
-  // const [imgTag, setImageTag] = useState(``);
-  useEffect(() => {
-    if (inputImages) {
-      console.log(inputImages);
-      imgTag = inputImages.map((url) => {
-        return <img src={url} />;
-      });
-    } else {
-      imgTag = <div></div>;
-    }
-    console.log(imgTag);
-  }, [inputImages]);
 
   /* 모집 인원 state 변경 */
   const onChangePeopleNumMinus = (e) => {
@@ -207,7 +229,7 @@ function PostWritingPage() {
   }, [inputContents, inputPeopleNum, inputPeriods, inputField]);
 
   const history = useHistory();
-  const HandlePostSubmit = (event) => {
+  const HandlePostSubmit = async (event) => {
     event.preventDefault();
     let sortPeriod =
       inputPeriods.period[0] +
@@ -229,11 +251,17 @@ function PostWritingPage() {
         inputPeriods.projectPeriod[5].padStart(2, "0");
     }
 
+    const imageUrl = await onImageHandler();
+    let imageUrlArr = [];
+    if (imageUrl) {
+      imageUrlArr.push(imageUrl);
+    }
+
     let body = {
       title: inputContents.title,
       contents: {
         text: inputContents.contents.text,
-        images: inputContents.contents.images,
+        images: imageUrlArr,
         files: inputContents.contents.files,
       },
       isWezzle: isWezzle,
@@ -263,10 +291,10 @@ function PostWritingPage() {
   };
 
   return (
-    <div id="PageContainer">
+    <div id="PostWritingPageContainer">
       <main className="PostWritingPage">
         <div className="FormContentsContainer">
-          <form method="post">
+          <form method="post" className="FormContainer">
             <div className="TopContainer">
               <input
                 type="text"
@@ -528,14 +556,24 @@ function PostWritingPage() {
               />
             </div>
 
-            <div className="ImageContainer">
+            <div className="Container">
               {/* {imgTag && imgTag.map((tag) => tag)} */}
-              {inputImages &&
-                inputImages.map((url, index) => (
+              {/*inputImage &&
+                inputImage.map((url, index) => (
                   <div className="ImageDiv">
                     <img src={url} key={index} />
                   </div>
-                ))}
+                ))*/}
+              {inputImage && (
+                <div className="ImageDiv">
+                  <img
+                    src={inputImage}
+                    key="postImage"
+                    ref={postImageRef}
+                    className="postImage"
+                  />
+                </div>
+              )}
             </div>
           </form>
         </div>
