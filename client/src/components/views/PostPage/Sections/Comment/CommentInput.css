@@ -100,8 +100,6 @@
     padding-top: 3px;
 
     font-size: 0.9rem;
-
-    outline: none;
   }
 
   .CommentInputContainer > input[type="text"]::placeholder {
@@ -113,9 +111,6 @@
     width: 24px;
     height: 24px;
 
-    cursor: pointer;
-    outline: none;
-
     margin-left: 5px;
     margin-right: 5px;
   }
@@ -123,8 +118,5 @@
   .CommentInputContainer > button img {
     width: 24px;
     height: 24px;
-
-    object-fit: contain;
-
   }
 }

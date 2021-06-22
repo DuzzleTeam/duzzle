@@ -274,7 +274,6 @@ button.CancelEditCommentButton > img {
   /* 좋아요 갯수 */
   span.CommentLike {
     font-size: 1rem;
-
     margin-bottom: 10px;
   }
 
@@ -288,44 +287,37 @@ button.CancelEditCommentButton > img {
   /* 댓글 수정 input */
   .UpdateCommentInput {
     width: 100%;
-    height: auto;
-    border-radius: 30px;
+    height: 50px;
+    border-radius: 22px;
 
-    padding-right: 20px;
-    padding-left: 20px;
     padding-top: 10px;
     /* 위|아래 오른쪽|왼쪽 */
-    padding: 10px 20px;
+    padding: 5px 5px;
 
-    font-size: 1.15rem;
-
-    resize: none;
-
-    outline: none;
+    font-size: 0.9rem;
   }
 
   /* 댓글 수정 완료 버튼 */
   .EditButton {
-    width: 8%;
+    width: 40%;
     display: flex;
     justify-content: space-between;
-    margin-left: 50px;
+    margin-left: 5px;
   }
 
   button.ConfirmEditCommentButton {
-    height: 30px;
+    height: 16px;
     padding: 0;
   }
   button.ConfirmEditCommentButton > img {
-    width: 100%;
+    width: 80%;
   }
 
   button.CancelEditCommentButton {
-    height: 30px;
-    background: transparent;
+    height: 16px;
   }
   button.CancelEditCommentButton > img {
-    width: 100%;
+    width: 80%;
   }
 
 }
