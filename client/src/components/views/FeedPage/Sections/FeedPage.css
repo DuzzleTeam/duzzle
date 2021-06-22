@@ -5,3 +5,10 @@
   overflow-y: scroll;
   overflow-x: hidden;
 }
+
+/* media query 모바일 세로 */
+@media (max-width:480px){
+  .FeedContainer {
+    height: 100%;
+  }
+}

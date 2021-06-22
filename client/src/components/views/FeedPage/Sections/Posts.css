@@ -111,3 +111,52 @@
     grid-template-columns: repeat(auto-fill, minmax(391px, auto));
   }
 }
+
+/* media query 모바일 세로 */
+@media (max-width:480px){
+  /* Main Post List Container */
+  .FeedPostsContainer {
+    /* 위 | 오른쪽 | 아래 | 왼쪽 */
+    padding: 40px 10px 100px 10px;
+  }
+
+  /* 개발, 디자인 버튼 */
+  .PostsCategory > button {
+    width: 80px;
+    height: 40px;
+    border-radius: 24px;
+    font-size: 1.8em;
+  }
+
+  /* 개발 버튼 */
+  .PostsCategory > button:first-child {
+    margin-right: 12px;
+  }
+
+  /* 글 작성 버튼 */
+  .ButtonWritePost {
+    width: 120px;
+    height: 40px;
+
+    border-radius: 60px;
+    font-size: 2em;
+
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  /* + 이미지 */
+  .ButtonWritePost > img {
+    height: 16px;
+    margin-right: 5px;
+  }
+
+  /* Post 피드 컴포넌트들 컨테이너 */
+  .PostsPostContainer {
+    grid-template-columns: repeat(1, 1fr);
+    column-gap: 32px;
+    row-gap: 72px;
+    margin-top: 80px;
+    margin-bottom: 100px;
+  }
+
+}
