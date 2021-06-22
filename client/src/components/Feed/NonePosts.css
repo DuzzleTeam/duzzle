@@ -40,3 +40,18 @@
   font-size: 1.8em;
   text-decoration: none;
 }
+
+/* (juhyun-noh) 모바일용 미디어쿼리 */
+@media only screen and (max-width: 480px) {
+  /* 없다는 설명 글 */
+  .NonePostsContainer span {
+    font-size: 3em;
+  }
+
+  /* 글 작성하기 버튼 */
+  .NonePostsContainer a {
+    width: 170px;
+    height: 55px;
+    font-size: 2.2em;
+  }
+}
