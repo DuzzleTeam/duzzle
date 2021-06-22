@@ -73,6 +73,7 @@ router.post("/upload", upload.single("selectImg"), (req, res) => {
 // 2021.06.03 (dayeon-choi)
 //이미지 업로드 - PostWritingPage용 이미지 여러개용 (게시글 작성)
 router.post("/uploadposts", uploadpost.array("selectImages"), (req, res) => {
+  console.log(req.file);
   let fileNames = [];
   req.files.map((file) => fileNames.push(file.filename));
   res.json({ fileNames: fileNames });

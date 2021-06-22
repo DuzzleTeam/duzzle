@@ -53,24 +53,35 @@ function PostWritingPage() {
 
   /* 이미지 미리보기를 위한 */
   const postImageRef = useRef([]);
+  const imageContainerRef = useRef();
+  const [images, setImages] = useState([])
   // const postImageRef = useRef();
   const handleImageUpload = (e) => {
     const fileArr = e.target.files;
     const reader = new FileReader();
 
-    console.log(fileArr);
     setInputImage(fileArr);
+    console.log(inputImage);
     let file;
 
+    const images = []
     for (let i = 0; i < fileArr.length; i++) {
       ((file) => {
         let reader = new FileReader();
         reader.onload = () => {
-          postImageRef.current.push(reader.result);
+          console.log(reader.result);
+          const image = <img
+                          src={reader.result}
+                          key={i}
+                          className="postImage"
+                        />
+
+          images.push(image);
         };
         reader.readAsDataURL(file);
       })(fileArr[i]);
     }
+    setImages(images);
 
     //싱글용
     /* 
@@ -94,10 +105,16 @@ function PostWritingPage() {
       // let imageUrl = null; //single용
 
       // formData는 개체를 자원하지 않아 차례로 추가해주어야 함
-      inputImage.map((file) => formData.append("selectImages", file));
+      // inputImage.map((file) => formData.append("selectImages", file));
+      formData.append('selectImages', inputImage)
 
       const imageUrls = [];
-      const res = await axios.post("/api/uploadposts", formData);
+      const res = await axios.post("/api/uploadposts", {
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      });
       res.data.fileNames.map((fn) => {
         imageUrls.push("/postImages/" + fn.toString());
       });
@@ -568,13 +585,14 @@ function PostWritingPage() {
               {/* {imgTag && imgTag.map((tag) => tag)} */}
               {inputImage &&
                 [inputImage].map((url, index) => (
-                  <div className="ImageDiv">
-                    <img
+                  <div className="ImageDiv" ref={imageContainerRef}>
+                    {images}
+                    {/* <img
                       src={url}
                       key={index}
                       ref={postImageRef.current[index]}
                       className="postImage"
-                    />
+                    /> */}
                   </div>
                 ))}
               {/*inputImage && (
