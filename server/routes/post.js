@@ -14,7 +14,6 @@ const { setPostUser } = require("../functions/post");
 router.post(
   "/:type(wezzle|mezzle)/write",
   auth,
-
   level("post", true),
   (req, res) => {
     // 사용자가 작성한 게시글 데이터로 Post 생성
@@ -23,12 +22,10 @@ router.post(
 
     post.save((err, postInfo) => {
       if (err) {
-        return res.json({ success: false, err });
+        return res.status(500).json({ success: false, err });
       } else {
         // 콜백의 postInfo를 통해 생성된 _id 얻음
-        return res
-          .status(200)
-          .send({ createPostSuccess: true, id: postInfo._id });
+        return res.status(200).send({ post: { _id: postInfo._id } });
       }
     });
   }
