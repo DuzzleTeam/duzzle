@@ -5,6 +5,9 @@ import Notification from "./Notification";
 import "./NotificationDropdown.css";
 
 function NotificationDropdown(props) {
+  // 알림 없음 확인
+  let chk = [false, false, false];
+
   // 현재 접속 유저 정보
   const user = useSelector((state) => state.user.authPayload);
 
@@ -25,40 +28,25 @@ function NotificationDropdown(props) {
   // 현재 활성화 중인 메뉴 (기본적으로 댓글)
   const [activeNotiMenu, setActiveNotiMenu] = useState(0);
 
+  // 알림 없는 메뉴 확인
+  const notiCh = () => {
+    for (let i = 0; i < notification.length; i++) {
+      if (notification[i].menuType === "comment") {
+        chk[0] = true;
+      } else if (notification[i].menuType === "like") {
+        chk[1] = true;
+      } else if (notification[i].menuType === "wezzle") {
+        chk[2] = true;
+      }
+    }
+  };
+
   useEffect(() => {
     async function fetchData() {
       await loadNoti();
     }
-
     fetchData();
   }, [loadNoti]);
-
-  const rendering = () => {
-    if (notification) {
-      for (let i = 0; i < notification.length; i++) {
-        console.log(notification[i]);
-        if (activeNotiMenu === 0) {
-          if (notification[i].menuType === "comment") {
-            return <Notification notification={notification[i]} key={i} />;
-          } else {
-            return <font>알림이 없습니다.</font>;
-          }
-        } else if (activeNotiMenu === 1) {
-          if (notification[i].menuType === "like") {
-            return <Notification notification={notification[i]} key={i} />;
-          } else {
-            return <font>알림이 없습니다.</font>;
-          }
-        } else {
-          if (notification[i].menuType === "wezzle") {
-            return <Notification notification={notification[i]} key={i} />;
-          } else {
-            return <font>알림이 없습니다.</font>;
-          }
-        }
-      }
-    }
-  };
 
   return (
     // 알림창 전체 컨테이너
@@ -87,26 +75,40 @@ function NotificationDropdown(props) {
       </ul>
       {/* 하나 하나의 알림들 */}
       <ul className="NotiContentsContainer">
+        {/* 알림이 없는 메뉴 확인 */}
+        {notification && notiCh()}
         {/* notification이 있으면 Notification 렌더링 */}
-        {notification ? (
+        {notification &&
           notification.map((noti, i) => {
             if (activeNotiMenu === 0) {
               if (noti.menuType === "comment") {
-                return <Notification notification={notification[i]} key={i} />;
+                return <Notification key={i} notification={notification[i]} />;
+              } else if (chk[0] === false) {
+                chk[0] = true;
+                return (
+                  <font style={{ color: "gray" }}>댓글 알림이 없습니다</font>
+                );
               }
             } else if (activeNotiMenu === 1) {
               if (noti.menuType === "like") {
-                return <Notification notification={notification[i]} key={i} />;
+                return <Notification key={i} notification={notification[i]} />;
+              } else if (chk[1] === false) {
+                chk[1] = true;
+                return (
+                  <font style={{ color: "gray" }}>좋아요 알림이 없습니다</font>
+                );
               }
             } else {
               if (noti.menuType === "wezzle") {
-                return <Notification notification={notification[i]} key={i} />;
+                return <Notification key={i} notification={notification[i]} />;
+              } else if (chk[2] === false) {
+                chk[2] = true;
+                return (
+                  <font style={{ color: "gray" }}>협업 알림이 없습니다</font>
+                );
               }
             }
-          })
-        ) : (
-          <font style={{ color: "gray" }}>알림이 없습니다</font>
-        )}
+          })}
       </ul>
     </div>
   );
