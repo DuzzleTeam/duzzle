@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+// hooks
+import useScroll from "../../../../hooks/useScroll";
+import useAnimation from "../../../../hooks/useAnimation";
 
 import LandingText from "./LandingText";
 import LandingImage from "./LandingImage";
@@ -22,8 +26,19 @@ function Wezzle() {
     ],
   };
 
+  const { y } = useScroll();
+  const [wezzleRef, onStartWezzle] = useAnimation({ opacity: true });
+  useEffect(() => {
+    if (!wezzleRef.ref.current) return;
+    const { offsetTop } = wezzleRef.ref.current;
+    if (y > offsetTop - 500) {
+      // animation
+      onStartWezzle();
+    }
+  }, [wezzleRef, y, onStartWezzle]);
+
   return (
-    <section className={"LandingWezzleMezzle LandingWezzle"}>
+    <section {...wezzleRef} className={"LandingWezzleMezzle LandingWezzle"}>
       <LandingText icon={"blue"} text={text} />
       <LandingImage browser={"wezzle-browser"} mypage={"wezzle-mypage"} />
     </section>
