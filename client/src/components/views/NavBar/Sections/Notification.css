@@ -63,3 +63,31 @@ span.NotiContent {
   color: #bcbcbc;
   font-weight: normal;
 }
+
+@media (min-width: 320px) and (max-width: 480px) {
+  /* 알림 제공자 & 분류, 포스트 제목 & 날짜 */
+  .NotiTopContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* 알림 제공자 & 분류, 포스트 제목 */
+  .NotiLeftContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .NotiDesc {
+    font-size: 14px;
+  }
+
+  .NotiTime {
+    font-size: 12px;
+  }
+
+  span.NotiContent {
+    font-size: 14px;
+  }
+}
