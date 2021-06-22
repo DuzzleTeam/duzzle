@@ -8,3 +8,9 @@
   border: solid 1px #57ecbf;
   color: white;
 }
+
+@media (max-width:480px){
+  .ButtonSharePost {
+    margin-right: 0px;
+  }
+}
