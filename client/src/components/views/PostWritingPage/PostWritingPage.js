@@ -13,8 +13,8 @@ function PostWritingPage() {
   });
 
   /* 이미지 */
-  // const [inputImages, setInputImages] = useState([]);
-  const [inputImage, setInputImage] = useState(null);
+  const [inputImage, setInputImage] = useState([]);
+  // const [inputImage, setInputImage] = useState(null);
 
   /* 모집 인원 */
   const [inputPeopleNum, setInputPeopleNum] = useState(0);
@@ -52,25 +52,28 @@ function PostWritingPage() {
   };
 
   /* 이미지 미리보기를 위한 */
-  const postImageRef = useRef();
+  const postImageRef = useRef([]);
+  // const postImageRef = useRef();
   const handleImageUpload = (e) => {
-    /*
     const fileArr = e.target.files;
+    const reader = new FileReader();
 
-    let fileURLs = [];
-
+    console.log(fileArr);
+    setInputImage(fileArr);
     let file;
-    let filesLength = fileArr.length > 10 ? 10 : fileArr.length;
 
-    for (let i = 0; i < filesLength; i++) {
-      file = fileArr[i];
+    for (let i = 0; i < fileArr.length; i++) {
+      ((file) => {
+        let reader = new FileReader();
+        reader.onload = () => {
+          postImageRef.current.push(reader.result);
+        };
+        reader.readAsDataURL(file);
+      })(fileArr[i]);
+    }
 
-      let reader = new FileReader();
-      reader.onload = () => {
-        fileURLs[i] = reader.result;
-        setInputImage([...fileURLs]);
-      };
-      */
+    //싱글용
+    /* 
     const file = e.target.files[0];
     const reader = new FileReader();
     setInputImage(file);
@@ -81,33 +84,35 @@ function PostWritingPage() {
     if (file) {
       reader.readAsDataURL(file);
     }
+    */
   };
 
   /* 이미지 업로드를 위한 */
   const onImageHandler = async () => {
     if (inputImage) {
       let formData = new FormData();
-      let imageUrl = null;
+      // let imageUrl = null; //single용
 
       // formData는 개체를 자원하지 않아 차례로 추가해주어야 함
-      /* inputImage.map((file) => formData.append("selectImages", file));
+      inputImage.map((file) => formData.append("selectImages", file));
 
       const imageUrls = [];
-      axios.post("/api/upload-post", formData).then((res) => {
-        res.data.fileNames.map((fn) => {
-          imageUrls.push("/postImages/" + fn.toString());
-        });
+      const res = await axios.post("/api/uploadposts", formData);
+      res.data.fileNames.map((fn) => {
+        imageUrls.push("/postImages/" + fn.toString());
       });
       return imageUrls;
-      */
 
+      /*
+      //single용
       formData.append("selectImage", inputImage);
       const res = await axios.post("/api/uploadpost", formData);
       imageUrl = "/postImages/" + res.data.filename.toString();
 
       return imageUrl;
+      */
     }
-    return null;
+    return [];
   };
 
   /* 기간 state 변경 */
@@ -251,11 +256,14 @@ function PostWritingPage() {
         inputPeriods.projectPeriod[5].padStart(2, "0");
     }
 
+    /*
     const imageUrl = await onImageHandler();
     let imageUrlArr = [];
     if (imageUrl) {
       imageUrlArr.push(imageUrl);
     }
+    */
+    const imageUrlArr = await onImageHandler();
 
     let body = {
       title: inputContents.title,
@@ -558,13 +566,18 @@ function PostWritingPage() {
 
             <div className="Container">
               {/* {imgTag && imgTag.map((tag) => tag)} */}
-              {/*inputImage &&
-                inputImage.map((url, index) => (
+              {inputImage &&
+                [inputImage].map((url, index) => (
                   <div className="ImageDiv">
-                    <img src={url} key={index} />
+                    <img
+                      src={url}
+                      key={index}
+                      ref={postImageRef.current[index]}
+                      className="postImage"
+                    />
                   </div>
-                ))*/}
-              {inputImage && (
+                ))}
+              {/*inputImage && (
                 <div className="ImageDiv">
                   <img
                     src={inputImage}
@@ -573,7 +586,7 @@ function PostWritingPage() {
                     className="postImage"
                   />
                 </div>
-              )}
+              )*/}
             </div>
           </form>
         </div>
