@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory, withRouter } from "react-router-dom";
+// custom hooks
+import useInput from "../../../hooks/useInput";
 
 import "../../../utils/Common.css";
-import "./Sections/PostWritingPage.css";
+// import "./Sections/PostWritingPage.css";
+import "./Sections/test.css";
 
 function PostWritingPage() {
+  // hadam
+  const title = useInput();
+  // 본문 내용
+  const text = useInput();
+
+  // ////
   /* post의 제목, 내용, 파일 (공통 항목 - 이미지 제외) */
   const [inputContents, setInputContents] = useState({
     title: "",
@@ -280,286 +289,347 @@ function PostWritingPage() {
     });
   };
 
+  const [allChecked, setAllChecked] = useState(false);
+
+  // set textarea height to fit contents
+  const setSizeTextarea = (e) => {
+    const { target } = e;
+    target.style.height = "";
+    target.style.height = `${target.scrollHeight}px`;
+  };
+
+  // render
   return (
-    <div id="PostWritingPageContainer">
-      <main className="PostWritingPage">
-        <div className="FormContentsContainer">
-          <form method="post" className="FormContainer">
-            <div className="TopContainer">
-              <input
-                type="text"
-                id="title"
-                placeholder="제목"
-                defaultValue={inputContents.title}
-                onChange={onChangeCommon}
-                className="WritingInputTitle"
-              />
-              {/* isActive가 false일 때 버튼 비활성화(disabled=true) */}
-              <div className="UploadButtonContainer">
-                <button
-                  type="submit"
-                  value="submit"
-                  disabled={isActive ? false : true}
-                  className="UploadButton"
-                  onClick={HandlePostSubmit}
-                >
-                  업로드
-                </button>
-              </div>
-            </div>
+    <main className={"write-container__main"}>
+      <form className="write-form">
+        {/* 검증 warning 메시지 */}
+        {!allChecked && (
+          <p className={"write__text--warning"}>
+            <img src="/images/warning.png" alt="warning" />
+            {"모든 부분을 입력해주셔야 업로드 가능합니다."}
+          </p>
+        )}
 
-            <div className="LineContainer">
-              <hr className="Line" />
-            </div>
+        <section className="write-form__section--title">
+          {/* 제목 input */}
+          <input type="text" {...title} placeholder={"제목"} maxLength={40} />
+          {/* submit button */}
+          <button type="submit" disabled={!allChecked}>
+            {"업로드"}
+          </button>
+        </section>
 
-            {/* wezzle 일때만 보임 */}
-            {isWezzle ? (
-              <div className="IsWezzleContainer">
-                <div className="Container">
-                  <label className="KeyLable">모집기간</label>
-                  <span className="PeriodOutline">
-                    <input
-                      maxLength="4"
-                      id="period"
-                      name="0"
-                      defaultValue={inputPeriods.period[0]}
-                      onChange={onChangePeriod}
-                      className="InputPeriodYear"
-                    />
-                    <label>년</label>
-                    <input
-                      maxLength="2"
-                      id="period"
-                      name="1"
-                      defaultValue={inputPeriods.period[1]}
-                      onChange={onChangePeriod}
-                      className="InputPeriodMD"
-                    />
-                    <label>월</label>
-                    <input
-                      maxLength="2"
-                      id="period"
-                      name="2"
-                      defaultValue={inputPeriods.period[2]}
-                      onChange={onChangePeriod}
-                      className="InputPeriodMD"
-                    />
-                    <label>일</label>
-                  </span>
-                  <span className="ForSpaceSpan"> - </span>
-                  <span className="PeriodOutline">
-                    <input
-                      maxLength="4"
-                      id="period"
-                      name="3"
-                      defaultValue={inputPeriods.period[3]}
-                      onChange={onChangePeriod}
-                      className="InputPeriodYear"
-                    />
-                    <label>년</label>
-                    <input
-                      maxLength="2"
-                      id="period"
-                      name="4"
-                      defaultValue={inputPeriods.period[4]}
-                      onChange={onChangePeriod}
-                      className="InputPeriodMD"
-                    />
-                    <label>월</label>
-                    <input
-                      maxLength="2"
-                      id="period"
-                      name="5"
-                      defaultValue={inputPeriods.period[5]}
-                      onChange={onChangePeriod}
-                      className="InputPeriodMD"
-                    />
-                    <label>일</label>
-                  </span>
-                </div>
+        <section className="write-form__section--contents">
+          {/* 사진 추가 button */}
+          <article className="write-form__button--images">
+            <label htmlFor="buttonAddImages">
+              <img src="/images/camera.png" alt="icon" />
+              사진 추가
+            </label>
+            <input
+              type="file"
+              id="buttonAddImages"
+              multiple
+              accept="image/png,image/jpeg"
+            />
+          </article>
 
-                <div className="Container">
-                  <label className="KeyLable">모집분야</label>
+          {/* 본문 내용 textarea */}
+          <textarea
+            className={"write-form__textarea"}
+            placeholder={"친구들과 나누고 싶은 이야기를 자유롭게 작성해주세요!"}
+            onChange={text.onChange}
+            onInput={setSizeTextarea}
+            cols="80"
+          >
+            {text.value}
+          </textarea>
+        </section>
 
-                  <input
-                    type="checkbox"
-                    id="field0"
-                    name="field"
-                    checked={inputField.field[0] ? true : false}
-                    onChange={onChangeField}
-                    className="PostWirtingCheckbox"
-                  />
-                  <label htmlFor="field0">
-                    {inputField.field[0] && (
-                      <img src="/images/checkbox.png" alt="checked" />
-                    )}
-                  </label>
-                  <label className="ForSpaceLabel">개발</label>
+        <section className="write-form__section--images">
+          {/* images */}
+        </section>
+      </form>
+    </main>
+    // <div id="PostWritingPageContainer">
+    //   <main className="PostWritingPage">
+    //     <div className="FormContentsContainer">
+    //       <form method="post" className="FormContainer">
+    //         <div className="TopContainer">
+    //           <input
+    //             type="text"
+    //             id="title"
+    //             placeholder="제목"
+    //             defaultValue={inputContents.title}
+    //             onChange={onChangeCommon}
+    //             className="WritingInputTitle"
+    //           />
+    //           {/* isActive가 false일 때 버튼 비활성화(disabled=true) */}
+    //           <div className="UploadButtonContainer">
+    //             <button
+    //               type="submit"
+    //               value="submit"
+    //               disabled={isActive ? false : true}
+    //               className="UploadButton"
+    //               onClick={HandlePostSubmit}
+    //             >
+    //               업로드
+    //             </button>
+    //           </div>
+    //         </div>
 
-                  <input
-                    type="checkbox"
-                    id="field1"
-                    name="field"
-                    checked={inputField.field[1] ? true : false}
-                    onChange={onChangeField}
-                    className="PostWirtingCheckbox"
-                  />
-                  <label htmlFor="field1">
-                    {inputField.field[1] && (
-                      <img src="/images/checkbox.png" alt="checked" />
-                    )}
-                  </label>
-                  <label className="ForSpaceLabel">디자인</label>
-                </div>
+    //         <div className="LineContainer">
+    //           <hr className="Line" />
+    //         </div>
 
-                <div className="Container">
-                  <label className="KeyLable">모집인원</label>
-                  <span className="PeopleNumOutline">
-                    <button
-                      onClick={onChangePeopleNumMinus}
-                      id="peopleNum"
-                      className="PeopleNumButton"
-                    >
-                      -
-                    </button>
-                    <span className="PeopleNumText">{inputPeopleNum}</span>
-                    <button
-                      onClick={onChangePeopleNumPlus}
-                      id="peopleNum"
-                      className="PeopleNumButton"
-                    >
-                      +
-                    </button>
-                  </span>
-                </div>
+    //         {/* wezzle 일때만 보임 */}
+    //         {isWezzle ? (
+    //           <div className="IsWezzleContainer">
+    //             <div className="Container">
+    //               <label className="KeyLable">모집기간</label>
+    //               <span className="PeriodOutline">
+    //                 <input
+    //                   maxLength="4"
+    //                   id="period"
+    //                   name="0"
+    //                   defaultValue={inputPeriods.period[0]}
+    //                   onChange={onChangePeriod}
+    //                   className="InputPeriodYear"
+    //                 />
+    //                 <label>년</label>
+    //                 <input
+    //                   maxLength="2"
+    //                   id="period"
+    //                   name="1"
+    //                   defaultValue={inputPeriods.period[1]}
+    //                   onChange={onChangePeriod}
+    //                   className="InputPeriodMD"
+    //                 />
+    //                 <label>월</label>
+    //                 <input
+    //                   maxLength="2"
+    //                   id="period"
+    //                   name="2"
+    //                   defaultValue={inputPeriods.period[2]}
+    //                   onChange={onChangePeriod}
+    //                   className="InputPeriodMD"
+    //                 />
+    //                 <label>일</label>
+    //               </span>
+    //               <span className="ForSpaceSpan"> - </span>
+    //               <span className="PeriodOutline">
+    //                 <input
+    //                   maxLength="4"
+    //                   id="period"
+    //                   name="3"
+    //                   defaultValue={inputPeriods.period[3]}
+    //                   onChange={onChangePeriod}
+    //                   className="InputPeriodYear"
+    //                 />
+    //                 <label>년</label>
+    //                 <input
+    //                   maxLength="2"
+    //                   id="period"
+    //                   name="4"
+    //                   defaultValue={inputPeriods.period[4]}
+    //                   onChange={onChangePeriod}
+    //                   className="InputPeriodMD"
+    //                 />
+    //                 <label>월</label>
+    //                 <input
+    //                   maxLength="2"
+    //                   id="period"
+    //                   name="5"
+    //                   defaultValue={inputPeriods.period[5]}
+    //                   onChange={onChangePeriod}
+    //                   className="InputPeriodMD"
+    //                 />
+    //                 <label>일</label>
+    //               </span>
+    //             </div>
 
-                <div className="Container">
-                  <label className="KeyLable">프로젝트 예상 기간</label>
-                  <span className="PeriodOutline">
-                    <input
-                      maxLength="4"
-                      id="projectPeriod"
-                      name="0"
-                      defaultValue={inputPeriods.projectPeriod[0]}
-                      onChange={onChangePeriod}
-                      className="InputPeriodYear"
-                    />
-                    <label>년</label>
-                    <input
-                      maxLength="2"
-                      id="projectPeriod"
-                      name="1"
-                      defaultValue={inputPeriods.projectPeriod[1]}
-                      onChange={onChangePeriod}
-                      className="InputPeriodMD"
-                    />
-                    <label>월</label>
-                    <input
-                      maxLength="2"
-                      id="projectPeriod"
-                      name="2"
-                      defaultValue={inputPeriods.projectPeriod[2]}
-                      onChange={onChangePeriod}
-                      className="InputPeriodMD"
-                    />
-                    <label>일</label>
-                  </span>
-                  <span className="ForSpaceSpan"> - </span>
-                  <span className="PeriodOutline">
-                    <input
-                      maxLength="4"
-                      id="projectPeriod"
-                      name="3"
-                      defaultValue={inputPeriods.projectPeriod[3]}
-                      onChange={onChangePeriod}
-                      className="InputPeriodYear"
-                    />
-                    <label>년</label>
-                    <input
-                      maxLength="2"
-                      id="projectPeriod"
-                      name="4"
-                      defaultValue={inputPeriods.projectPeriod[4]}
-                      onChange={onChangePeriod}
-                      className="InputPeriodMD"
-                    />
-                    <label>월</label>
-                    <input
-                      maxLength="2"
-                      id="projectPeriod"
-                      name="5"
-                      defaultValue={inputPeriods.projectPeriod[5]}
-                      onChange={onChangePeriod}
-                      className="InputPeriodMD"
-                    />
-                    <label>일</label>
-                  </span>
-                  <input
-                    type="checkbox"
-                    id="projectPeriod"
-                    name="6"
-                    checked={inputPeriods.projectPeriod[6] ? true : false}
-                    onChange={onChangePeriod}
-                    className="PostWirtingCheckbox"
-                  />
-                  <label htmlFor="6" className="ForSpaceCheckbox"></label>
-                  <label className="ForSpaceLabel">미정</label>
-                </div>
+    //             <div className="Container">
+    //               <label className="KeyLable">모집분야</label>
 
-                <div className="LineContainer">
-                  <hr className="Line" />
-                </div>
-              </div>
-            ) : (
-              <></>
-            )}
+    //               <input
+    //                 type="checkbox"
+    //                 id="field0"
+    //                 name="field"
+    //                 checked={inputField.field[0] ? true : false}
+    //                 onChange={onChangeField}
+    //                 className="PostWirtingCheckbox"
+    //               />
+    //               <label htmlFor="field0">
+    //                 {inputField.field[0] && (
+    //                   <img src="/images/checkbox.png" alt="checked" />
+    //                 )}
+    //               </label>
+    //               <label className="ForSpaceLabel">개발</label>
 
-            <div className="Container">
-              <label htmlFor="images" className="ImagesLabel">
-                <img
-                  src="/images/camera.png"
-                  className="ImagesIcon"
-                  alt="icon"
-                />
-                사진 추가
-              </label>
-              <input
-                type="file"
-                id="images"
-                multiple
-                accept="image/png,image/jpeg"
-                defaultValue={inputContents.contents.images}
-                className="ImagesButton"
-                onChange={handleImageUpload}
-              />
-            </div>
+    //               <input
+    //                 type="checkbox"
+    //                 id="field1"
+    //                 name="field"
+    //                 checked={inputField.field[1] ? true : false}
+    //                 onChange={onChangeField}
+    //                 className="PostWirtingCheckbox"
+    //               />
+    //               <label htmlFor="field1">
+    //                 {inputField.field[1] && (
+    //                   <img src="/images/checkbox.png" alt="checked" />
+    //                 )}
+    //               </label>
+    //               <label className="ForSpaceLabel">디자인</label>
+    //             </div>
 
-            <div className="Container">
-              <textarea
-                rows="7"
-                cols="80"
-                id="text"
-                defaultValue={inputContents.contents.text}
-                onChange={onChangeCommon}
-                placeholder={
-                  isWezzle
-                    ? "프로젝트에 대한 설명과 합류 시 담당하게 될 업무에 대해 자세히 작성해주세요!"
-                    : "친구들과 나누고 싶은 이야기를 자유롭게 작성해주세요!"
-                }
-                className="TextArea"
-              />
-            </div>
+    //             <div className="Container">
+    //               <label className="KeyLable">모집인원</label>
+    //               <span className="PeopleNumOutline">
+    //                 <button
+    //                   onClick={onChangePeopleNumMinus}
+    //                   id="peopleNum"
+    //                   className="PeopleNumButton"
+    //                 >
+    //                   -
+    //                 </button>
+    //                 <span className="PeopleNumText">{inputPeopleNum}</span>
+    //                 <button
+    //                   onClick={onChangePeopleNumPlus}
+    //                   id="peopleNum"
+    //                   className="PeopleNumButton"
+    //                 >
+    //                   +
+    //                 </button>
+    //               </span>
+    //             </div>
 
-            <div className="Container">
-              {inputImage &&
-                [inputImage].map((url, index) => (
-                  <div className="ImageDiv">{images}</div>
-                ))}
-            </div>
-          </form>
-        </div>
-      </main>
-    </div>
+    //             <div className="Container">
+    //               <label className="KeyLable">프로젝트 예상 기간</label>
+    //               <span className="PeriodOutline">
+    //                 <input
+    //                   maxLength="4"
+    //                   id="projectPeriod"
+    //                   name="0"
+    //                   defaultValue={inputPeriods.projectPeriod[0]}
+    //                   onChange={onChangePeriod}
+    //                   className="InputPeriodYear"
+    //                 />
+    //                 <label>년</label>
+    //                 <input
+    //                   maxLength="2"
+    //                   id="projectPeriod"
+    //                   name="1"
+    //                   defaultValue={inputPeriods.projectPeriod[1]}
+    //                   onChange={onChangePeriod}
+    //                   className="InputPeriodMD"
+    //                 />
+    //                 <label>월</label>
+    //                 <input
+    //                   maxLength="2"
+    //                   id="projectPeriod"
+    //                   name="2"
+    //                   defaultValue={inputPeriods.projectPeriod[2]}
+    //                   onChange={onChangePeriod}
+    //                   className="InputPeriodMD"
+    //                 />
+    //                 <label>일</label>
+    //               </span>
+    //               <span className="ForSpaceSpan"> - </span>
+    //               <span className="PeriodOutline">
+    //                 <input
+    //                   maxLength="4"
+    //                   id="projectPeriod"
+    //                   name="3"
+    //                   defaultValue={inputPeriods.projectPeriod[3]}
+    //                   onChange={onChangePeriod}
+    //                   className="InputPeriodYear"
+    //                 />
+    //                 <label>년</label>
+    //                 <input
+    //                   maxLength="2"
+    //                   id="projectPeriod"
+    //                   name="4"
+    //                   defaultValue={inputPeriods.projectPeriod[4]}
+    //                   onChange={onChangePeriod}
+    //                   className="InputPeriodMD"
+    //                 />
+    //                 <label>월</label>
+    //                 <input
+    //                   maxLength="2"
+    //                   id="projectPeriod"
+    //                   name="5"
+    //                   defaultValue={inputPeriods.projectPeriod[5]}
+    //                   onChange={onChangePeriod}
+    //                   className="InputPeriodMD"
+    //                 />
+    //                 <label>일</label>
+    //               </span>
+    //               <input
+    //                 type="checkbox"
+    //                 id="projectPeriod"
+    //                 name="6"
+    //                 checked={inputPeriods.projectPeriod[6] ? true : false}
+    //                 onChange={onChangePeriod}
+    //                 className="PostWirtingCheckbox"
+    //               />
+    //               <label htmlFor="6" className="ForSpaceCheckbox"></label>
+    //               <label className="ForSpaceLabel">미정</label>
+    //             </div>
+
+    //             <div className="LineContainer">
+    //               <hr className="Line" />
+    //             </div>
+    //           </div>
+    //         ) : (
+    //           <></>
+    //         )}
+
+    //         <div className="Container">
+    //           <label htmlFor="images" className="ImagesLabel">
+    //             <img
+    //               src="/images/camera.png"
+    //               className="ImagesIcon"
+    //               alt="icon"
+    //             />
+    //             사진 추가
+    //           </label>
+    //           <input
+    //             type="file"
+    //             id="images"
+    //             multiple
+    //             accept="image/png,image/jpeg"
+    //             defaultValue={inputContents.contents.images}
+    //             className="ImagesButton"
+    //             onChange={handleImageUpload}
+    //           />
+    //         </div>
+
+    //         <div className="Container">
+    //           <textarea
+    //             rows="7"
+    //             cols="80"
+    //             id="text"
+    //             defaultValue={inputContents.contents.text}
+    //             onChange={onChangeCommon}
+    //             placeholder={
+    //               isWezzle
+    //                 ? "프로젝트에 대한 설명과 합류 시 담당하게 될 업무에 대해 자세히 작성해주세요!"
+    //                 : "친구들과 나누고 싶은 이야기를 자유롭게 작성해주세요!"
+    //             }
+    //             className="TextArea"
+    //           />
+    //         </div>
+
+    //         <div className="Container">
+    //           {inputImage &&
+    //             [inputImage].map((url, index) => (
+    //               <div className="ImageDiv">{images}</div>
+    //             ))}
+    //         </div>
+    //       </form>
+    //     </div>
+    //   </main>
+    // </div>
   );
 }
 

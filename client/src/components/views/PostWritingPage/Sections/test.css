@@ -1,0 +1,123 @@
+.write-container__main * {
+  box-sizing: border-box;
+}
+
+/* main container */
+.write-container__main {
+  padding: 90px 22vw;
+  font-size: 10px;
+}
+
+.write-form {
+  position: relative;
+}
+
+/* warning */
+.write__text--warning {
+  display: flex;
+  align-items: center;
+
+  color: #ff6565;
+  font-size: 1.2em;
+
+  margin: 0;
+  position: absolute;
+  right: 0;
+  top: calc(-12px - 18px);
+}
+.write__text--warning img {
+  margin-right: 8px;
+}
+
+/* title box */
+.write-form__section--title {
+  display: flex;
+  justify-content: space-between;
+
+  padding-bottom: 30px;
+  border-bottom: solid 1px #cecece;
+}
+/* title input */
+.write-form__section--title > input[type="text"] {
+  font-size: 2.8em;
+  font-weight: bold;
+  color: #2d2d2d;
+  padding: 2px 0;
+  border: none;
+  outline: none;
+}
+.write-form__section--title > input[type="text"]::placeholder {
+  color: #cecece;
+}
+/* submit button */
+.write-form__section--title > button[type="submit"] {
+  width: 100px;
+  height: 44px;
+
+  font-size: 2em;
+  color: white;
+  font-weight: bold;
+
+  background-color: #57ecbf;
+  border: none;
+  border-radius: 28px;
+  box-shadow: 0 1px 6px 0 rgba(112, 112, 112, 0.24);
+
+  cursor: pointer;
+}
+.write-form__section--title > button[type="submit"]:disabled {
+  background-color: #cecece;
+  box-shadow: none;
+  cursor: default;
+}
+
+/* contents */
+.write-form__section--contents {
+  margin-bottom: 90px;
+}
+
+/* 사진 추가 */
+.write-form__button--images {
+  text-align: end;
+  margin-top: 28px;
+  margin-bottom: 42px;
+}
+.write-form__button--images > label {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #585858;
+  text-decoration: underline;
+}
+.write-form__button--images > label > img {
+  margin-right: 14px;
+}
+.write-form__button--images > input[type="file"] {
+  display: none;
+}
+
+/* 본문 */
+.write-form__textarea {
+  width: 100%;
+
+  font-size: 2em;
+  line-height: 1.45;
+  font-weight: 500;
+
+  border: none;
+  resize: none;
+  outline: none;
+}
+.write-form__textarea::placeholder {
+  color: #cecece;
+}
+
+/* images */
+.write-form__section--images {
+  display: grid;
+  grid-template-columns: 1;
+  row-gap: 20px;
+}
