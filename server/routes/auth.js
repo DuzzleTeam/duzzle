@@ -191,8 +191,8 @@ router.post("/api/users/:id/delete", (req, res) => {
 });
 
 // 04.16 / 비밀번호 찾기
-router.get("/api/account/password_reset", auth, (req, res) => {
-  const email = req.user.email;
+router.post("/api/account/password_reset", (req, res) => {
+  const email = req.body.email;
   User.findOne({ email: email }, async (err, user) => {
     if (!user) {
       return res.json({ passwordReset: false, message: "사용자 찾을 수 없음" });

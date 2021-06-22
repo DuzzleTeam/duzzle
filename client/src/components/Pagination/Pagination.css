@@ -42,3 +42,22 @@
 .Pagination > button:last-child {
   margin-left: calc(80px - 47px);
 }
+
+/* (juhyun-noh) 모바일용 미디어쿼리 */
+@media only screen and (max-width: 480px) {
+  /* 컨테이너 */
+  .Pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 첫 번째 Arrow Button */
+  .Pagination > button:first-child {
+    margin-right: 45px;
+  }
+  /* 마지막 Arrow Button */
+  .Pagination > button:last-child {
+    margin-left: calc(45px - 47px);
+  }
+}

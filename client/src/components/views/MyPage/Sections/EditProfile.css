@@ -212,3 +212,48 @@ textarea.ProfileIntro {
   border: none;
   cursor: pointer;
 }
+
+/* (juhyun-noh) 모바일용 미디어쿼리 */
+@media only screen and (max-width: 480px) {
+  /* 왼쪽 프로필 컨테이너 */
+  .MypageEditProfile {
+    font-size: 8px;
+  }
+
+  /* 프로필 이미지 */
+  /* 프로필 이미지 수정 */
+  .EditProfileImageContainer {
+    width: 150px;
+    height: 150px;
+    /* 배너에 반 걸치도록 위치 조정 */
+    transform: translateY(-75px);
+  }
+
+  /* 프로필 사진 외 텍스트들 */
+  .EditProfileForm {
+    width: 75%;
+  }
+
+  /* 입력 텍스트들 */
+  .InputAlignRight {
+    text-align: left;
+    overflow: scroll;
+  }
+
+  /* 취소, 완료 */
+  .EditButtons {
+    display: flex;
+  }
+
+  /* 완료하기 버튼 */
+  .ButtonEditComplete {
+    width: 84px;
+    height: 40px;
+  }
+
+  /* 취소하기 버튼 */
+  .ButtonEditCancel {
+    width: 84px;
+    height: 40px;
+  }
+}

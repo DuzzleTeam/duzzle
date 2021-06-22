@@ -36,3 +36,20 @@ h1 {
 .MypageRightPosts {
   font-size: 10px;
 }
+
+/* (juhyun-noh) 모바일용 미디어쿼리 */
+@media only screen and (max-width: 480px) {
+  /* 마이페이지 배너 */
+  .MypageBanner {
+    width: 100vw;
+    height: 110px;
+  }
+  /* 왼쪽 프로필 & 게시글 */
+  .MypageContents {
+    display: block;
+  }
+  /* 오른쪽 게시글 */
+  .MypageRightPosts {
+    font-size: 9px;
+  }
+}
