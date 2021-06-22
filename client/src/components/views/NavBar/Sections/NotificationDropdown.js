@@ -76,10 +76,10 @@ function NotificationDropdown(props) {
       {/* 하나 하나의 알림들 */}
       <ul className="NotiContentsContainer">
         {/* 알림이 없는 메뉴 확인 */}
-        {notification && notiCh()}
         {/* notification이 있으면 Notification 렌더링 */}
-        {notification &&
+        {notification && notification[0] ? (
           notification.map((noti, i) => {
+            notiCh();
             if (activeNotiMenu === 0) {
               if (noti.menuType === "comment") {
                 return <Notification key={i} notification={notification[i]} />;
@@ -108,7 +108,10 @@ function NotificationDropdown(props) {
                 );
               }
             }
-          })}
+          })
+        ) : (
+          <font style={{ color: "gray" }}>알림이 없습니다</font>
+        )}
       </ul>
     </div>
   );
