@@ -291,10 +291,10 @@ function PostWritingPage() {
   };
 
   return (
-    <div id="PageContainer">
+    <div id="PostWritingPageContainer">
       <main className="PostWritingPage">
         <div className="FormContentsContainer">
-          <form method="post">
+          <form method="post" className="FormContainer">
             <div className="TopContainer">
               <input
                 type="text"
@@ -556,7 +556,7 @@ function PostWritingPage() {
               />
             </div>
 
-            <div className="ImageContainer">
+            <div className="Container">
               {/* {imgTag && imgTag.map((tag) => tag)} */}
               {/*inputImage &&
                 inputImage.map((url, index) => (
@@ -566,7 +566,12 @@ function PostWritingPage() {
                 ))*/}
               {inputImage && (
                 <div className="ImageDiv">
-                  <img src={inputImage} key="postImage" ref={postImageRef} />
+                  <img
+                    src={inputImage}
+                    key="postImage"
+                    ref={postImageRef}
+                    className="postImage"
+                  />
                 </div>
               )}
             </div>

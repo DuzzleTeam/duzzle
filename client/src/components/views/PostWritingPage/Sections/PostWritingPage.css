@@ -1,32 +1,49 @@
 /* 최상위 컨테이너 */
-#PostWritingPage {
-  width: 100%;
-  height: 100%;
+#PostWritingPageContainer {
+  height: 90.7vh;
 
-  /* navbar 높이만큼 줄임 */
-  margin-top: -9.3vh;
-  display: flex;
+  padding-left: 300px;
+  padding-right: 300px;
+
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-.FormContentsContainer {
-  display: flex;
-  justify-content: center;
-  margin-top: 4.5vh;
+
   overflow-y: scroll;
   overflow-x: hidden;
 }
+
+.PostWritingPage {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.FormContentsContainer {
+  display: flex;
+  width: 100%;
+  margin-top: 4.5vh;
+}
+
+.FormContainer {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
 .IsWezzleContainer {
   display: flex;
+  width: 100%;
   flex-direction: column;
 }
 .TopContainer {
   display: flex;
+  width: 100%;
   flex-direction: row;
 }
 .Container {
   display: flex;
+  width: 100%;
   justify-content: flex-start;
   flex-direction: row;
   margin-top: 15px;
@@ -34,18 +51,20 @@
   background-color: white;
 }
 .LineContainer {
+  width: 100%;
   display: flex;
   margin-top: 15px;
   margin-bottom: 15px;
 }
 
-.ImageContainer {
-  display: flex;
-  flex-direction: column;
-}
-
 .ImageDiv {
   display: flex;
+  width: 100%;
+}
+
+.postImage {
+  display: flex;
+  width: 100%;
 }
 
 .WritingInputTitle {
