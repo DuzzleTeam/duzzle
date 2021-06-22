@@ -71,28 +71,16 @@ router.post("/upload", upload.single("selectImg"), (req, res) => {
 });
 
 // 2021.06.03 (dayeon-choi)
-//이미지 업로드 - PostWritingPage용 (게시글 작성)
-/*
-router.post("/upload-post", uploadPost.array("selectImages"), (req, res) => {
+//이미지 업로드 - PostWritingPage용 이미지 여러개용 (게시글 작성)
+router.post("/uploadposts", uploadpost.array("selectImages"), (req, res) => {
+  console.log(req.file);
   let fileNames = [];
   req.files.map((file) => fileNames.push(file.filename));
-  return res.json({ fileNames: fileNames });
+  res.json({ fileNames: fileNames });
 });
-*/
 
 // 2021.06.20 (dayeon-choi)
 // 이미지 업로드 - postWritingPage 이미지 하나용 (게시글 작성)
-// router.post(
-//   "/upload/postImage",
-//   uploadPost.single("selectImage"),
-//   (req, res) => {
-//     if (req.file.filename) {
-//       res.json({ filename: `${req.file.filename}` });
-//     } else {
-//       res.json({ filename: null });
-//     }
-//   }
-// );
 router.post("/uploadpost", uploadpost.single("selectImage"), (req, res) => {
   res.json({ filename: `${req.file.filename}` });
 });
