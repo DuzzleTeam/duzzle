@@ -146,13 +146,13 @@ span.PostMainText {
 
 /* 글 이미지 */
 .PostContentsImage {
-  width: 80%;
+  /* width: 80%; */
   align-self: center;
 
   margin-bottom: 80px;
 }
 .PostContentsImage > img {
-  width: 100%;
+  max-width: 100%;
   height: auto;
   margin-bottom: 20px;
   object-fit: contain;
@@ -187,8 +187,7 @@ span.PostMainText {
 }
 
 /* media query 모바일 세로 */
-@media (max-width:480px){
-
+@media (max-width: 480px) {
   .PostContainer {
     width: 80%;
   }
@@ -198,7 +197,7 @@ span.PostMainText {
     height: 100px;
     align-items: center;
   }
-  
+
   /* 글쓴이 프로필 사진 */
   .PostUser > img {
     width: 62px;
@@ -278,7 +277,7 @@ span.PostMainText {
     height: 42px;
     margin-left: 12px;
   }
-  .PostTitleContainer .PostControl button:last-child > img{
+  .PostTitleContainer .PostControl button:last-child > img {
     width: 24px;
     height: 24px;
   }
@@ -326,6 +325,4 @@ span.PostMainText {
     height: 20px;
     width: auto;
   }
-
 }
-
