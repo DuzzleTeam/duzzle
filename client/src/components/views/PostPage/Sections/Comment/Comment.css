@@ -186,3 +186,139 @@ button.CancelEditCommentButton {
 button.CancelEditCommentButton > img {
   width: 100%;
 }
+
+/* media query 모바일 세로 */
+@media (max-width:480px){
+  /* 댓글 한 개 컨테이너 */
+  .CommentContainer {
+    /* 위 오른쪽 아래 왼쪽 */
+    padding: 20px 15px 28px 15px;
+  }
+
+  /* 댓글 유저 사진, 이름, 날짜, 내용 */
+  /* 댓글 유저 사진 */
+  img.CommentUserProfileImage {
+    width: 36px;
+    height: 36px;
+
+    margin-right: 15px;
+  }
+
+  /* 댓글 유저 이름, 게시날짜, 내용 */
+  .CommentMainContents {
+    width: 65%;
+    margin-right: auto;
+  }
+  /* 유저 이름 */
+  a.CommentUser {
+    font-size: 1rem;
+    margin-right: 10px;
+  }
+
+  /* 댓글 게시 날짜 */
+  span.CommentDate {
+    font-size: 0.9rem;
+  }
+
+  /* 댓글 내용 */
+  span.CommentText {
+    margin-top: 15px;
+    margin-left: -56px;
+
+    font-size: 0.8rem;
+
+    word-break: break-all;
+  }
+
+  /* 댓글 수정, 삭제 */
+  .CommentAuthContainer {
+    display: flex;
+    margin-right: auto;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* 댓글 수정 버튼 */
+  button.EditCommentButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 48px;
+    height: 34px;
+
+    margin-right: 0px;
+
+    font-size: 0.9rem;
+  }
+
+  /* 댓글 삭제 버튼 */
+  button.DeleteCommentButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 34px;
+    height: 34px;
+
+    margin-top: 5px;
+  }
+
+  /* 좋아요 버튼 */
+  .CommentLikeContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* 좋아요 갯수 */
+  span.CommentLike {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  /* 댓글 좋아요 버튼 */
+  .CommentLikeContainer > img {
+    width: 25px;
+    height: 22px;
+    object-fit: contain;
+  }
+
+  /* 댓글 수정 input */
+  .UpdateCommentInput {
+    width: 100%;
+    height: 50px;
+    border-radius: 22px;
+
+    padding-top: 10px;
+    /* 위|아래 오른쪽|왼쪽 */
+    padding: 5px 5px;
+
+    font-size: 0.9rem;
+  }
+
+  /* 댓글 수정 완료 버튼 */
+  .EditButton {
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 5px;
+  }
+
+  button.ConfirmEditCommentButton {
+    height: 16px;
+    padding: 0;
+  }
+  button.ConfirmEditCommentButton > img {
+    width: 80%;
+  }
+
+  button.CancelEditCommentButton {
+    height: 16px;
+  }
+  button.CancelEditCommentButton > img {
+    width: 80%;
+  }
+
+}
+

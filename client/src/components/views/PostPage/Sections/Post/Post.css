@@ -185,3 +185,147 @@ span.PostMainText {
 .PostLikeShareContainer > button > img {
   margin-right: 10px;
 }
+
+/* media query 모바일 세로 */
+@media (max-width:480px){
+
+  .PostContainer {
+    width: 80%;
+  }
+
+  /* 글쓴이, 게시글 정보 */
+  .PostTopContents {
+    height: 100px;
+    align-items: center;
+  }
+  
+  /* 글쓴이 프로필 사진 */
+  .PostUser > img {
+    width: 62px;
+    height: 62px;
+  }
+  /* 글쓴이 이름, 게시 날짜 */
+  .PostUserText {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    margin-left: 20px;
+  }
+  /* 이름 */
+  .PostUserText > a.PostUserName {
+    font-size: 1.2rem;
+  }
+  /* 게시날짜 */
+  .PostUserText > span {
+    font-size: 1rem;
+  }
+
+  /* 좋아요, 댓글 글씨 및 요소 하나 컨테이너 */
+  ul.PostInfo > li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 25px;
+
+    font-size: 0.9rem;
+  }
+  /* 좋아요, 댓글 숫자 */
+  ul.PostInfo span.PostInfoData {
+    color: #656565;
+    font-size: 1.2rem;
+  }
+
+  /* 실제 본문 내용들 */
+  .PostMainContents {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding-top: 50px;
+    padding-bottom: 70px;
+  }
+
+  /* 제목, 수정, 삭제 */
+  .PostTitleContainer {
+    flex-direction: column;
+  }
+  /* 제목 */
+  .PostTitleContainer > span.PostTitle {
+    font-size: 1.5rem;
+  }
+
+  /* 글 수정, 삭제 버튼 */
+  .PostControl {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .PostTitleContainer .PostControl button {
+    border-radius: 23px;
+    margin-left: 0px;
+    font-size: 0.9rem;
+  }
+  /* 수정 버튼 */
+  .PostTitleContainer .PostControl button:first-child {
+    width: 80px;
+    height: 42px;
+  }
+  /* 삭제 버튼 */
+  .PostTitleContainer .PostControl button:last-child {
+    width: 42px;
+    height: 42px;
+    margin-left: 12px;
+  }
+  .PostTitleContainer .PostControl button:last-child > img{
+    width: 24px;
+    height: 24px;
+  }
+
+  /* 실제 본문 글 */
+  span.PostMainText {
+    margin-top: 32px;
+    margin-bottom: 30px;
+    margin-left: 4.2vw;
+    margin-right: 4.2vw;
+
+    font-size: 1.1rem;
+    word-spacing: 1px;
+    word-break: break-all;
+  }
+
+  /* 글 이미지 */
+  .PostContentsImage {
+    width: 90%;
+    align-self: center;
+
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+  .PostContentsImage > img {
+    margin-bottom: 20px;
+  }
+
+  /* 좋아요, 공유 버튼 */
+  .PostLikeShareContainer {
+    display: flex;
+    align-self: center;
+  }
+  .PostLikeShareContainer > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 15px;
+    padding: 12px 18px;
+
+    font-size: 0.9rem;
+  }
+  .PostLikeShareContainer > button > img {
+    height: 20px;
+    width: auto;
+  }
+
+}
+

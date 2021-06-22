@@ -8,3 +8,9 @@
   border: solid 1px #57ecbf !important;
   color: white !important;
 }
+
+@media (max-width:480px){
+  .PostLikeButton {
+    margin-right: 32px;
+  }
+}
