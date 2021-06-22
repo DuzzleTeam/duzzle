@@ -82,17 +82,17 @@ function PostWritingPage() {
     );
     if (
       // 제목, 내용, 모집기간, 모집분야, 모집인원, 프로젝트예상기간에 값이 들어가 있을 경우
-      String(title) !== "" &&
-      String(text) !== "" &&
+      title.value !== "" &&
+      text.value !== "" &&
       (field[0] !== "" || field[1] !== "") &&
       peopleNum > 0 &&
       period.indexOf("") === -1 &&
-      startPeriod >= nowDay &&
+      startPeriod >= 20210101 &&
       endPeriod >= startPeriod &&
       String(startPeriod).length === 8 &&
       String(endPeriod).length === 8 &&
       (projectPeriod[6] === "미정" ||
-        (startProjectPeriod >= nowDay &&
+        (startProjectPeriod >= 20210101 &&
           endProjectPeriod >= startProjectPeriod &&
           String(startProjectPeriod).length === 8 &&
           String(endProjectPeriod).length === 8))

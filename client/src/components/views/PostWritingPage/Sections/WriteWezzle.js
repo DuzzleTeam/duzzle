@@ -15,7 +15,6 @@ function WriteWezzle({
   // 다연 위즐
   /* 기간 state 변경 */
   const onChangePeriod = (e) => {
-    console.log("sfsds");
     if (e.target.id === "period") {
       const periodArr = period.slice();
       periodArr[e.target.name] = e.target.value;
