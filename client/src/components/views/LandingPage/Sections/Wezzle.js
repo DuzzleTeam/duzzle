@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 
 // hooks
-import useScroll from "../../../../hooks/useScroll";
 import useAnimation from "../../../../hooks/useAnimation";
 
 import LandingText from "./LandingText";
@@ -9,7 +8,7 @@ import LandingImage from "./LandingImage";
 
 import "./WezzleMezzle.css";
 
-function Wezzle() {
+function Wezzle({ startAnimation }) {
   const text = {
     title1: "협업은 더 쉽게",
     accent: "위즐",
@@ -26,21 +25,27 @@ function Wezzle() {
     ],
   };
 
-  const { y } = useScroll();
-  const [wezzleRef, onStartWezzle] = useAnimation({ opacity: true });
+  const [wezzleRef, onStartWezzle] = useAnimation({ opacity: true }, 1);
   useEffect(() => {
     if (!wezzleRef.ref.current) return;
-    const { offsetTop } = wezzleRef.ref.current;
-    if (y > offsetTop - 500) {
-      // animation
+
+    if (startAnimation) {
       onStartWezzle();
+    } else {
+      // reset style
+      const style = JSON.stringify(wezzleRef.style).replace(/{|}|"/g, "");
+      wezzleRef.ref.current.style = style;
     }
-  }, [wezzleRef, y, onStartWezzle]);
+  }, [startAnimation, wezzleRef, onStartWezzle]);
 
   return (
     <section {...wezzleRef} className={"LandingWezzleMezzle LandingWezzle"}>
-      <LandingText icon={"blue"} text={text} />
-      <LandingImage browser={"wezzle-browser"} mypage={"wezzle-mypage"} />
+      <LandingText icon={"blue"} text={text} {...startAnimation} />
+      <LandingImage
+        browser={"wezzle-browser"}
+        mypage={"wezzle-mypage"}
+        {...startAnimation}
+      />
     </section>
   );
 }

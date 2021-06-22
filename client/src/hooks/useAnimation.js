@@ -34,7 +34,7 @@ const useAnimation = (effect, duration = 3, delay = 0) => {
 
   const style = {
     ...(effect.opacity && { opacity: 0 }),
-    ...(effect.transform !== "" && { transform: effect.transform }),
+    ...(effect.transform && { transform: effect.transform }),
   };
   return [{ ref: element, style }, onStart];
 };
