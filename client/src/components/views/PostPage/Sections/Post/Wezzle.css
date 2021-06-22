@@ -32,3 +32,46 @@
 .WezzleRecruitField {
   margin-right: 27px;
 }
+
+@media (max-width:480px){
+  /* 위즐 */
+  .PostWezzleContainer {
+    /* 위 | 오른쪽 | 아래 | 왼쪽 */
+    margin: 52px 4.2vw 32px 4.2vw;
+    font-size: 0.9rem;
+    color: #2d2d2d;
+  }
+
+  .PostTextPeriod > span {
+    word-spacing: 5px;
+  }
+  .PostTextPeriod > span:first-child {
+    margin-right: 10px;
+  }
+  .PostTextPeriod > span:last-child {
+    margin-left: 10px;
+  }
+
+  .PostWezzleContainer > div > span:first-child {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+
+  .PostWezzleContainer > div {
+    margin-top: 32px;
+    flex-direction: column;
+  }
+
+  .PostWezzleContainer > div > span {
+    display: flex;
+  }
+
+  .PostWezzleContainer > div:first-child {
+    margin-top: 0;
+  }
+
+  .WezzleRecruitField {
+    margin-right: 27px;
+  }
+}
