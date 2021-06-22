@@ -12,7 +12,7 @@ import "../../../utils/Common.css";
 import "./Sections/LandingPage.css";
 
 // preload value
-const OFFSET_PRE = 700;
+const OFFSET_PRE = 500;
 
 // 처음 웹페이지 접속시 보이는 화면
 // (chohadam, 2021-03-30)

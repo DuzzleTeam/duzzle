@@ -40,9 +40,13 @@ function Mezzle({ startAnimation }) {
 
   return (
     <section {...mezzleRef} className={"LandingWezzleMezzle"}>
-      <LandingImage browser={"mezzle-browser"} mypage={"mezzle-mypage"} />
+      <LandingImage
+        browser={"mezzle-browser"}
+        mypage={"mezzle-mypage"}
+        {...startAnimation}
+      />
 
-      <LandingText icon={"orange"} text={text} />
+      <LandingText icon={"orange"} text={text} {...startAnimation} />
     </section>
   );
 }
