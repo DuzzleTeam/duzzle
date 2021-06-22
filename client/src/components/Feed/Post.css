@@ -98,7 +98,7 @@
 }
 
 /* (juhyun-noh) 모바일용 미디어쿼리 */
-@media only screen and (max-width: 480px) {
+@media (max-width: 480px) {
   /* 마이페이지 컨테이너 */
   .MypagePostsPostContainer > .PreviewPostContainer {
     width: 220px;
