@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
   font-size: 10px;
 }
 
@@ -104,4 +103,38 @@
 
   border: none;
   cursor: pointer;
+}
+
+/* (juhyun-noh) 모바일용 미디어쿼리 */
+@media only screen and (max-width: 480px) {
+  /* 왼쪽 프로필 컨테이너 */
+  .MypageLeftProfile {
+    display: flex;
+    font-size: 8px;
+  }
+
+  /* 프로필 이미지 */
+  .MypageLeftProfile img {
+    width: 150px;
+    height: 150px;
+    /* 배너에 반 걸치도록 위치 조정 */
+    transform: translateY(-75px);
+  }
+
+  /* 프로필 사진 외 텍스트들 */
+  .MypageTextContainer {
+    width: 75%;
+  }
+
+  /* 실제 데이터 */
+  .ProfileContact > span:nth-child(2n) {
+    text-align: left;
+    overflow: scroll;
+  }
+
+  /* 수정하기 버튼 */
+  .ButtonProfileEdit {
+    width: 84px;
+    height: 40px;
+  }
 }

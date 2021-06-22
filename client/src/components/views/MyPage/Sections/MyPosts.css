@@ -23,3 +23,16 @@
     grid-template-columns: repeat(auto-fill, minmax(350px, auto));
   }
 }
+
+/* (juhyun-noh) 모바일용 미디어쿼리 */
+@media only screen and (max-width: 480px) {
+  /* 게시글 + 페이지네이션 컨테이너 */
+  .MyPostsContainer {
+    margin: 10vh 10vh 10vh 10vh;
+  }
+
+  /* 게시글들 컨테이너 */
+  .MypagePostsPostContainer {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

@@ -46,3 +46,22 @@
   color: #2d2d2d;
   font-weight: bold;
 }
+
+@media (min-width: 320px) and (max-width: 480px) {
+  #NavContainer {
+    font-size: 10px;
+  }
+  /* Logo */
+  .NavLeftContainer img {
+    width: 80px;
+    margin-top: 8px;
+  }
+  .NavLeftContainer {
+    min-width: 200px;
+  }
+  .NavList {
+    margin-top: 0;
+    min-width: 80px;
+    font-size: 1.6em;
+  }
+}

@@ -31,10 +31,6 @@
   opacity: 1;
   pointer-events: all;
   transform: translateY(0px);
-
-  overflow: auto;
-  width: 460px;
-  height: 55.6vh;
 }
 
 /* 알림 Title */
@@ -75,4 +71,26 @@ li.ActiveNotiMenu {
   padding: 0;
 
   font-size: 0.8rem;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  /* 전체 알림창 컨테이너 */
+  .NotiDropContainer {
+    width: 250px;
+    height: 40vh;
+
+    /* - 알림 컨테이너 크기 + 알림 아이콘 크기 */
+    margin-left: calc(-250px + 30px);
+
+    overflow: auto;
+  }
+
+  /* 댓글, 좋아요, 협업해요 */
+  .NotiMenu li {
+    margin-right: 15px;
+  }
+
+  .NotiContentsContainer {
+    margin-top: 15px;
+  }
 }

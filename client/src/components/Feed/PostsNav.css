@@ -46,3 +46,28 @@
 
   cursor: default;
 }
+
+/* (juhyun-noh) 모바일용 미디어쿼리 */
+@media only screen and (max-width: 480px) {
+  /* 버튼 컨테이너 */
+  .PostsNav {
+    font-size: 8px;
+  }
+
+  /* 지원목록, 내 게시물 기본 디자인 */
+  .ButtonPostsNav {
+    width: 100px;
+    height: 48px;
+  }
+
+  /* 첫 번째 버튼 */
+  .PostsNav > button:first-child {
+    margin-left: 10px;
+  }
+
+  /* 선택 되었을 때 */
+  .ActiveButtonPostsNav {
+    width: 100px;
+    height: 48px;
+  }
+}
