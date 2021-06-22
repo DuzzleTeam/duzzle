@@ -214,7 +214,7 @@ textarea.ProfileIntro {
 }
 
 /* (juhyun-noh) 모바일용 미디어쿼리 */
-@media only screen and (max-width: 480px) {
+@media (max-width: 480px) {
   /* 왼쪽 프로필 컨테이너 */
   .MypageEditProfile {
     font-size: 8px;
@@ -223,10 +223,11 @@ textarea.ProfileIntro {
   /* 프로필 이미지 */
   /* 프로필 이미지 수정 */
   .EditProfileImageContainer {
-    width: 150px;
-    height: 150px;
+    width: 130px;
+    height: 130px;
     /* 배너에 반 걸치도록 위치 조정 */
-    transform: translateY(-75px);
+    transform: translateY(-55px);
+    margin-bottom: 4vh;
   }
 
   /* 프로필 사진 외 텍스트들 */
@@ -236,7 +237,7 @@ textarea.ProfileIntro {
 
   /* 입력 텍스트들 */
   .InputAlignRight {
-    text-align: left;
+    text-align: right;
     overflow: scroll;
   }
 

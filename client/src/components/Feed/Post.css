@@ -98,14 +98,14 @@
 }
 
 /* (juhyun-noh) 모바일용 미디어쿼리 */
-@media only screen and (max-width: 480px) {
+@media (max-width: 480px) {
   /* 마이페이지 컨테이너 */
   .MypagePostsPostContainer > .PreviewPostContainer {
-    width: 220px;
+    width: 235px;
   }
   .MypagePostsPostContainer .PreviewPostImage,
   .MypagePostsPostContainer .PostDefaultImage {
-    width: 220px;
-    height: 155px;
+    width: 235px;
+    height: 170px;
   }
 }
