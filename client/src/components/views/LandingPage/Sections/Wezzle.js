@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+// hooks
+import useAnimation from "../../../../hooks/useAnimation";
 
 import LandingText from "./LandingText";
 import LandingImage from "./LandingImage";
 
 import "./WezzleMezzle.css";
 
-function Wezzle() {
+function Wezzle({ startAnimation }) {
   const text = {
     title1: "협업은 더 쉽게",
     accent: "위즐",
@@ -22,10 +25,28 @@ function Wezzle() {
     ],
   };
 
+  const [wezzleRef, onStartWezzle, resetStyle] = useAnimation(
+    { opacity: true },
+    1
+  );
+  useEffect(() => {
+    if (!wezzleRef.ref.current) return;
+
+    if (startAnimation) {
+      onStartWezzle();
+    } else {
+      resetStyle();
+    }
+  }, [startAnimation, wezzleRef, onStartWezzle, resetStyle]);
+
   return (
-    <section className={"LandingWezzleMezzle LandingWezzle"}>
-      <LandingText icon={"blue"} text={text} />
-      <LandingImage browser={"wezzle-browser"} mypage={"wezzle-mypage"} />
+    <section {...wezzleRef} className={"LandingWezzleMezzle LandingWezzle"}>
+      <LandingText icon={"blue"} text={text} {...startAnimation} />
+      <LandingImage
+        browser={"wezzle-browser"}
+        mypage={"wezzle-mypage"}
+        {...startAnimation}
+      />
     </section>
   );
 }
