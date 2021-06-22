@@ -336,9 +336,10 @@ span.PostMainText {
 
   /* 글 이미지 */
   .PostContentsImage {
-    width: 80%;
+    width: 90%;
     align-self: center;
 
+    margin-top: 10px;
     margin-bottom: 40px;
   }
   .PostContentsImage > img {
