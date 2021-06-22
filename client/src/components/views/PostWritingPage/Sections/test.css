@@ -119,5 +119,9 @@
 .write-form__section--images {
   display: grid;
   grid-template-columns: 1;
-  row-gap: 20px;
+  row-gap: 25px;
+}
+
+.write-form__section--images > img {
+  max-width: 100%;
 }
