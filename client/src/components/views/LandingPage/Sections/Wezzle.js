@@ -25,18 +25,19 @@ function Wezzle({ startAnimation }) {
     ],
   };
 
-  const [wezzleRef, onStartWezzle] = useAnimation({ opacity: true }, 1);
+  const [wezzleRef, onStartWezzle, resetStyle] = useAnimation(
+    { opacity: true },
+    1
+  );
   useEffect(() => {
     if (!wezzleRef.ref.current) return;
 
     if (startAnimation) {
       onStartWezzle();
     } else {
-      // reset style
-      const style = JSON.stringify(wezzleRef.style).replace(/{|}|"/g, "");
-      wezzleRef.ref.current.style = style;
+      resetStyle();
     }
-  }, [startAnimation, wezzleRef, onStartWezzle]);
+  }, [startAnimation, wezzleRef, onStartWezzle, resetStyle]);
 
   return (
     <section {...wezzleRef} className={"LandingWezzleMezzle LandingWezzle"}>

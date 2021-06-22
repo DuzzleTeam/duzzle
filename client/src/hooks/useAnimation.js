@@ -16,9 +16,9 @@ const useAnimation = (effect, duration = 3, delay = 0) => {
       current.style.opacity = 1;
     }
     if (effect.transform !== "") {
-      current.style.transform = `transform(0)`;
+      current.style.transform = `translate(0)`;
     }
-    current.style.transition = `all ${duration}s ease-in ${delay}s`;
+    current.style.transition = `all ${duration}s ease-out ${delay}s`;
   };
 
   const event = new CustomEvent("animation");
@@ -36,7 +36,13 @@ const useAnimation = (effect, duration = 3, delay = 0) => {
     ...(effect.opacity && { opacity: 0 }),
     ...(effect.transform && { transform: effect.transform }),
   };
-  return [{ ref: element, style }, onStart];
+
+  const resetStyle = () => {
+    // reset style
+    const originalStyle = JSON.stringify(style).replace(/{|}|"/g, "");
+    element.current.style = originalStyle;
+  };
+  return [{ ref: element, style }, onStart, resetStyle];
 };
 
 export default useAnimation;

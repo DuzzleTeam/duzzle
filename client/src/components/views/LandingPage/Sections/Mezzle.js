@@ -23,7 +23,10 @@ function Mezzle({ startAnimation }) {
     ],
   };
 
-  const [mezzleRef, onStartMezzle] = useAnimation({ opacity: true }, 1);
+  const [mezzleRef, onStartMezzle, resetStyle] = useAnimation(
+    { opacity: true },
+    1
+  );
   useEffect(() => {
     if (!mezzleRef.ref.current) return;
 
@@ -31,10 +34,9 @@ function Mezzle({ startAnimation }) {
       onStartMezzle();
     } else {
       // reset style
-      const style = JSON.stringify(mezzleRef.style).replace(/{|}|"/g, "");
-      mezzleRef.ref.current.style = style;
+      resetStyle();
     }
-  }, [startAnimation, mezzleRef, onStartMezzle]);
+  }, [startAnimation, mezzleRef, onStartMezzle, resetStyle]);
 
   return (
     <section {...mezzleRef} className={"LandingWezzleMezzle"}>
