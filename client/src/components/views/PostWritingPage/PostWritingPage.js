@@ -6,7 +6,8 @@ import useInput from "../../../hooks/useInput";
 
 import Loading from "../../Loading/Loading";
 import WriteWezzle from "./Sections/WriteWezzle";
-import ShowImage from "./Sections/ShowImage";
+import PreviewImages from "../../Preview/PreviewImages";
+import ShowImage from "../../Preview/ShowImage";
 
 import "../../../utils/Common.css";
 import "./Sections/PostWritingPage.css";
@@ -181,7 +182,6 @@ function PostWritingPage() {
   const onChangeImages = (e) => {
     const { files } = e.target;
     setImages((prev) => [...prev, ...files]);
-    console.log(files);
 
     // preview images
     const previewImages = [];
@@ -381,21 +381,18 @@ function PostWritingPage() {
           ></textarea>
         </section>
 
-        <section className="write-form__section--images">
-          {/* original images */}
-          {originalPost &&
-            originalPost.contents.images.map((url, index) => (
-              <img
-                className={"write-form__image--preview"}
-                src={url}
-                key={index}
-                alt={"upload"}
-              />
-            ))}
+        {/* original images */}
+        {originalPost && (
+          <PreviewImages
+            images={originalPost.contents.images}
+            setShowImage={setShowImage}
+          />
+        )}
 
-          {/* images */}
-          {previewImages &&
-            previewImages.map((img, index) => (
+        {/* images */}
+        {previewImages && (
+          <section className="write-form__section--images">
+            {previewImages.map((img, index) => (
               <button
                 key={index}
                 className={"image-preview__button--show"}
@@ -421,7 +418,8 @@ function PostWritingPage() {
                 />
               </button>
             ))}
-        </section>
+          </section>
+        )}
 
         {/* 이미지 모달 */}
         {showImage !== "" && (

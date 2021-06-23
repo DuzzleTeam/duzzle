@@ -138,13 +138,9 @@
   margin-bottom: 10px;
 }
 
-.image-preview__button--show > .write-form__image--preview {
-  width: 100%;
-}
-
 .write-form__image--preview {
   height: 100%;
-  width: calc(50% - 5px);
+  width: 100%;
   object-fit: cover;
   border: 1px solid #cecece;
 }
