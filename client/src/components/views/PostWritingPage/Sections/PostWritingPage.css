@@ -118,13 +118,47 @@
 
 /* images */
 .write-form__section--images {
-  display: grid;
-  grid-template-columns: 1;
-  row-gap: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  /* 100vw - 44vw / 2 */
+  height: calc((100vw - 22vw * 2) / 2 - 5px);
+}
+
+.image-preview__button--show {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+  position: relative;
+
+  width: calc(50% - 5px);
+  height: 100%;
+  margin-bottom: 10px;
+}
+
+.image-preview__button--show > .write-form__image--preview {
+  width: 100%;
 }
 
 .write-form__image--preview {
-  max-width: 100%;
+  height: 100%;
+  width: calc(50% - 5px);
+  object-fit: cover;
+  border: 1px solid #cecece;
+}
+
+.image-preview__button--cancel {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+
+  background: none;
+  border: none;
+  padding: 0;
+
+  cursor: pointer;
 }
 
 /* (juhyun-noh) 모바일용 미디어쿼리 */
