@@ -9,6 +9,8 @@ import Wezzle from "./Wezzle";
 import LikeTogetherButton from "./LikeTogetherButton";
 import ShareButton from "./ShareButton";
 import Loading from "../../../../Loading/Loading";
+import PreviewImages from "../../../../Preview/PreviewImages";
+import ShowImage from "../../../../Preview/ShowImage";
 
 // CSS
 import "./Post.css";
@@ -78,6 +80,9 @@ function Post({ post, setPost }) {
       state: { isEdit: true, post },
     });
   };
+
+  // 이미지 모달 보기
+  const [showImage, setShowImage] = useState("");
 
   return (
     post &&
@@ -161,9 +166,15 @@ function Post({ post, setPost }) {
 
           {/* 이미지 있다면 */}
           <div className="PostContentsImage">
-            {post.contents.images.map((image, index) => (
-              <img key={index} src={image} alt="postimage" />
-            ))}
+            {post.contents.images.length !== 0 && (
+              <PreviewImages
+                images={post.contents.images}
+                setShowImage={setShowImage}
+              />
+            )}
+            {showImage && (
+              <ShowImage src={showImage} setShowImage={setShowImage} />
+            )}
           </div>
 
           {/* 좋아요, 공유 버튼 */}
