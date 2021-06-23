@@ -70,10 +70,10 @@
 }
 
 /* media query 모바일 세로 */
-@media (max-width:480px){
+@media (max-width: 480px) {
   /* 댓글 입력 */
   .CommentInputContainer {
-    width: 80%;
+    width: 100%;
 
     margin-top: 40px;
     margin-bottom: 90px;
@@ -91,12 +91,12 @@
 
   /* 댓글 입력 input */
   .CommentInputContainer > input[type="text"] {
-    width: 90%;
+    width: 70%;
     height: 40px;
     border-radius: 25px;
 
     padding-right: 5px;
-    padding-left: 7px;
+    padding-left: 15px;
     padding-top: 3px;
 
     font-size: 0.9rem;
