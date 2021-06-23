@@ -69,3 +69,38 @@
   cursor: pointer;
   outline: none;
 }
+
+@media (max-width: 480px) {
+  #CertificationMain {
+    width: 80vw;
+    height: 55vh;
+    font-size: 10px;
+  }
+
+  #CertificationMain > img {
+    width: 100px;
+  }
+
+  .EmailSendDesc h1 {
+    font-size: 1.8em;
+  }
+  span.TextEmail {
+    display: block;
+    margin-top: 0;
+  }
+  .EmailSendDesc > span {
+    margin-top: 21px;
+  }
+
+  .CertificationWarnings h3 {
+    font-size: 1.4em;
+  }
+  .CertificationWarnings span {
+    font-size: 1.2em;
+  }
+  .CertificationWarnings button {
+    width: 120px;
+    height: 35px;
+    font-size: 1.2em;
+  }
+}
