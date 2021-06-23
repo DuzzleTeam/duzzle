@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, withRouter } from "react-router-dom";
+import axios from "axios";
 import getRandomNumber from "../../../utils/getRandomNumber";
 
 import Popup from "./Sections/Popup";
@@ -75,16 +76,23 @@ function RegisterPage() {
     // 회원가입 버튼 클릭 시
     e.preventDefault();
 
-    let body = {
-      email,
-      password,
-      profileImage: `/images/default/profile/${getRandomNumber()}.png`,
-    };
+    // (juhyun-noh)이미 가입된 계정인지
+    const result = axios.get(`/api/register/check/${email}`);
+    if (!result.register) {
+      alert("😓이미 가입된 계정입니다!");
+      window.location.reload();
+    } else {
+      let body = {
+        email,
+        password,
+        profileImage: `/images/default/profile/${getRandomNumber()}.png`,
+      };
 
-    history.push({
-      pathname: "/certificationEmail",
-      state: { body },
-    });
+      history.push({
+        pathname: "/certificationEmail",
+        state: { body },
+      });
+    }
   };
 
   // image preload

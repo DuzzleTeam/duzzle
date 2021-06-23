@@ -114,6 +114,17 @@ router.post("/api/confirmRegister/:id", (req, res) => {
   });
 });
 
+// 06.24 / 이메일 중복 체크(중복 가입)
+router.get("/api/register/check/:email", (req, res) => {
+  const email = req.params.email;
+  User.findOne({ email: email }, (err, user) => {
+    if (err) return res.send(err);
+    // 이미 가입된 유저가 있다면
+    if (user) return res.json({ register: true });
+    else return res.json({ register: false });
+  });
+});
+
 // 03.30 / 로그인
 router.post("/api/login", (req, res) => {
   User.findOne({ email: req.body.email }, (err, user) => {
