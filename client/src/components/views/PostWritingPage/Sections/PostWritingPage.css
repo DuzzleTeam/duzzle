@@ -121,10 +121,12 @@
   display: grid;
   grid-template-columns: 1;
   row-gap: 25px;
+  justify-items: center;
 }
 
 .write-form__image--preview {
   max-width: 100%;
+  max-height: 80vh;
 }
 
 /* (juhyun-noh) 모바일용 미디어쿼리 */
