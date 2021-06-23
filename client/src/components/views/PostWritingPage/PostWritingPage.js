@@ -65,6 +65,8 @@ function PostWritingPage() {
     }
   };
   const location = useLocation();
+  const [isEdit, setIsEdit] = useState(false);
+  const [originalPost, setOriginalPost] = useState(null);
   useEffect(() => {
     if (location.state) {
       const { isEdit, post } = location.state;
@@ -72,7 +74,9 @@ function PostWritingPage() {
         // 원래 포스트 내용으로 셋팅
         title.onChange({ target: { value: post.title } });
         text.onChange({ target: { value: post.contents.text } });
-        setPreviewImages(post.contents.images);
+
+        setOriginalPost(post);
+        setIsEdit(isEdit);
 
         if (post.isWezzle) {
           // set period, project period
@@ -203,6 +207,9 @@ function PostWritingPage() {
 
       // result
       const filenames = [];
+      if (originalPost) {
+        filenames.push(...originalPost.contents.images);
+      }
       res.data.filenames.forEach((filename) => {
         filenames.push(`/postImages/${filename}`);
       });
@@ -234,7 +241,7 @@ function PostWritingPage() {
       title: title.value,
       contents: {
         text: text.value,
-        ...(filenames && { images: filenames }),
+        images: filenames || [],
       },
       isWezzle: false,
     };
@@ -274,12 +281,21 @@ function PostWritingPage() {
       };
     }
 
-    const url = `/api/${POST_TYPE}/write`;
-    const res = await axios.post(url, body);
-    if (res.status === 200) {
-      const { _id } = res.data.post;
-      alert("✍🏻 게시글 작성이 완료되었습니다!");
-      history.push(`/${POST_TYPE}/post/${_id}`);
+    if (isEdit) {
+      const url = `/api/post/${originalPost._id}`;
+      const res = await axios.patch(url, body);
+      if (res.status === 200) {
+        alert("💚 게시글 수정이 완료되었습니다!");
+        history.push(`/${POST_TYPE}/post/${originalPost._id}`);
+      }
+    } else {
+      const url = `/api/${POST_TYPE}/write`;
+      const res = await axios.post(url, body);
+      if (res.status === 200) {
+        const { _id } = res.data.post;
+        alert("✍🏻 게시글 작성이 완료되었습니다!");
+        history.push(`/${POST_TYPE}/post/${_id}`);
+      }
     }
 
     // stop loading
@@ -348,6 +364,16 @@ function PostWritingPage() {
         </section>
 
         <section className="write-form__section--images">
+          {/* original images */}
+          {originalPost &&
+            originalPost.contents.images.map((img, index) => (
+              <img
+                className={"write-form__image--preview"}
+                src={img}
+                key={index}
+                alt={"upload"}
+              />
+            ))}
           {/* images */}
           {previewImages.length !== 0 &&
             previewImages.map((url, index) => (
