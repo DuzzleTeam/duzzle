@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useReducer } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -32,6 +32,13 @@ function AuthMenu(props) {
   // 메뉴 밖 클릭 시 드롭다운 접기
   useOutsideClick(profileContainer, () => {
     setOpeningDropdown(false);
+  });
+
+  // NoticiationContaier 참조
+  const noticiationContaier = useRef();
+  // 메뉴 밖 클릭 시 알림 드롭다운 접기
+  useOutsideClick(noticiationContaier, () => {
+    setOpeningNoti(false);
   });
 
   // user info
@@ -80,7 +87,7 @@ function AuthMenu(props) {
         // notification and profile image
         <div className="RightMenuContainer">
           {/* Notification */}
-          <div className="NoticiationContaier">
+          <div className="NoticiationContaier" ref={noticiationContaier}>
             <button
               onClick={notiDropdownHandler}
               className="RightButton NotificationButton"

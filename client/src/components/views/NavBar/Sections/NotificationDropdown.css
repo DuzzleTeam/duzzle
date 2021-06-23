@@ -46,7 +46,6 @@
   display: flex;
   margin: 0;
   margin-top: 28px;
-  margin-left: 4px;
   padding: 0;
 }
 .NotiMenu li {
@@ -79,18 +78,32 @@ li.ActiveNotiMenu {
     width: 250px;
     height: 40vh;
 
+    /* 위 오른쪽 아래 왼쪽 */
+    padding: 26px 20px 19px 20px;
+
     /* - 알림 컨테이너 크기 + 알림 아이콘 크기 */
-    margin-left: calc(-250px + 30px);
+    margin-left: calc(-250px + 75px);
 
     overflow: auto;
   }
 
+  /* 알림 Title */
+  .NotiDropContainer > h3 {
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+
+  /* 댓글, 좋아요, 협업해요 */
+  .NotiMenu {
+    margin-top: 20px;
+  }
   /* 댓글, 좋아요, 협업해요 */
   .NotiMenu li {
-    margin-right: 15px;
+    font-size: 0.95rem;
+    margin-right: 20px;
   }
 
   .NotiContentsContainer {
-    margin-top: 15px;
+    margin-top: 12px;
   }
 }

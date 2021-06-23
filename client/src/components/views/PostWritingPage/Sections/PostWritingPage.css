@@ -126,3 +126,38 @@
 .write-form__image--preview {
   max-width: 100%;
 }
+
+/* (juhyun-noh) 모바일용 미디어쿼리 */
+@media (max-width: 480px) {
+  /* main container */
+  .write-container__main {
+    padding: 8vh 5vh 0 5vh;
+    font-size: 8px;
+  }
+
+  /* warning */
+  .write__text--warning {
+    position: relative;
+  }
+
+  /* submit button */
+  .write-form__section--title > button[type="submit"] {
+    position: absolute;
+    bottom: 5vh;
+    width: 100%;
+    height: 40px;
+    font-size: 2em;
+    margin-top: 3vh;
+  }
+
+  /* title box */
+  .write-form__section--title {
+    display: block;
+  }
+
+  /* images */
+  .write-form__section--images {
+    display: inline-block;
+    margin-bottom: 15vh;
+  }
+}

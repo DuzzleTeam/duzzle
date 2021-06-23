@@ -142,3 +142,29 @@ input[type="checkbox"]:checked + label {
   margin-right: 3px;
   margin-left: 3px;
 }
+
+/* (juhyun-noh) 모바일용 미디어쿼리 */
+@media (max-width: 480px) {
+  .PeriodOutline {
+    height: 3.5vh;
+    margin-top: 1.5vh;
+  }
+  .write-form__list-container > li:first-child > .KeyLable {
+    display: block;
+  }
+  .InputPeriodYear,
+  .InputPeriodMD {
+    width: 50px;
+    text-align: center;
+  }
+
+  .write-form__list-container > li:nth-child(2),
+  .write-form__list-container > li:nth-child(4) {
+    display: block;
+  }
+
+  .ForSpaceCheckbox {
+    display: flex;
+    margin: 10px 0 0 0;
+  }
+}

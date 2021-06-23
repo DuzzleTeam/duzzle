@@ -81,6 +81,7 @@ span.NotiContent {
 
   .NotiDesc {
     font-size: 14px;
+    color: #656565;
   }
 
   .NotiTime {
@@ -88,6 +89,16 @@ span.NotiContent {
   }
 
   span.NotiContent {
-    font-size: 14px;
+    display: block;
+    font-size: 13.5px;
+    line-height: 20px;
+  }
+
+  .NotiLeftContainer {
+    flex-direction: row;
+  }
+  .NotiLeftContainer span,
+  .NotiLeftContainer div {
+    font-size: 13px;
   }
 }
