@@ -135,14 +135,18 @@
 
   width: calc(50% - 5px);
   height: 100%;
-  border: 1px solid #cecece;
   margin-bottom: 10px;
+}
+
+.image-preview__button--show > .write-form__image--preview {
+  width: 100%;
 }
 
 .write-form__image--preview {
   height: 100%;
-  width: 100%;
+  width: calc(50% - 5px);
   object-fit: cover;
+  border: 1px solid #cecece;
 }
 
 .image-preview__button--cancel {

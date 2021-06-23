@@ -6,6 +6,7 @@ import useInput from "../../../hooks/useInput";
 
 import Loading from "../../Loading/Loading";
 import WriteWezzle from "./Sections/WriteWezzle";
+import ShowImage from "./Sections/ShowImage";
 
 import "../../../utils/Common.css";
 import "./Sections/PostWritingPage.css";
@@ -302,6 +303,9 @@ function PostWritingPage() {
     setLoading(false);
   };
 
+  // show image modal
+  const [showImage, setShowImage] = useState("");
+
   // render
   return (
     <main className={"write-container__main"}>
@@ -366,35 +370,41 @@ function PostWritingPage() {
         <section className="write-form__section--images">
           {/* original images */}
           {originalPost &&
-            originalPost.contents.images.map((img, index) => (
-              <button className={"image-preview__button--show"}>
+            originalPost.contents.images.map((url, index) => (
+              <img
+                className={"write-form__image--preview"}
+                src={url}
+                key={index}
+                alt={"upload"}
+              />
+            ))}
+
+          {/* images */}
+          {previewImages &&
+            previewImages.map((img, index) => (
+              <button
+                key={index}
+                className={"image-preview__button--show"}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowImage(img);
+                }}
+              >
                 <button className={"image-preview__button--cancel"}>
                   <img src="/images/image_cancel.png" alt="cancel" />
                 </button>
                 <img
                   className={"write-form__image--preview"}
                   src={img}
-                  key={index}
                   alt={"upload"}
                 />
               </button>
             ))}
-          {/* images */}
-          {previewImages.length !== 0 &&
-            previewImages.map((url, index) => (
-              <>
-                <button>
-                  <img src="/images/image_cancel.png" alt="cancel" />
-                </button>
-                <img
-                  className={"write-form__image--preview"}
-                  src={url}
-                  key={index}
-                  alt={"upload"}
-                />
-              </>
-            ))}
         </section>
+
+        {showImage !== "" && (
+          <ShowImage src={showImage} setShowImage={setShowImage} />
+        )}
       </form>
     </main>
   );
