@@ -31,6 +31,27 @@ router.post(
   }
 );
 
+router.patch("/post/:postId", async (req, res) => {
+  // url로 넘어온 comment id 가져오기
+  const { postId } = req.params;
+
+  // 수정하려고 하는 정보
+  const data = req.body;
+
+  try {
+    // post id에 해당하는 게시글을 수정
+    const result = await Post.updateOne({ _id: postId }, data);
+
+    if (result.ok) {
+      return res.sendStatus(200);
+    } else {
+      return res.sendStatus(500);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 // 게시글 삭제 (dayeon-choi, 2021-04-25)
 // (chohadam, 2021-05)
 router.delete("/post/:postId", auth, level("post", false), (req, res) => {
