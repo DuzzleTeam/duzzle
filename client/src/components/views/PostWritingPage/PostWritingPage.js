@@ -377,12 +377,14 @@ function PostWritingPage() {
           {/* images */}
           {previewImages.length !== 0 &&
             previewImages.map((url, index) => (
-              <img
-                className={"write-form__image--preview"}
-                src={url}
-                key={index}
-                alt={"upload"}
-              />
+              <>
+                <img
+                  className={"write-form__image--preview"}
+                  src={url}
+                  key={index}
+                  alt={"upload"}
+                />
+              </>
             ))}
         </section>
       </form>
