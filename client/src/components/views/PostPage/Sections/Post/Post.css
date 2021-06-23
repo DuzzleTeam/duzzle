@@ -146,6 +146,8 @@ span.PostMainText {
 
 /* 글 이미지 */
 .PostContentsImage {
+  display: flex;
+  flex-direction: column;
   /* width: 80%; */
   align-self: center;
 
