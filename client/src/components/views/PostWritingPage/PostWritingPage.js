@@ -339,7 +339,9 @@ function PostWritingPage() {
             {...text}
             onInput={setSizeTextarea}
             style={{
-              height: Math.ceil(text.value.length / 50) * 30,
+              ...(location.state && {
+                height: Math.ceil(text.value.length / 50) * 30,
+              }),
             }}
             cols="80"
           ></textarea>
