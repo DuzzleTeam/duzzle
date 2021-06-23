@@ -52,6 +52,10 @@ input[type="checkbox"]:checked + label {
   background-repeat: no-repeat;
   border: none;
 }
+.yet-container__checkbox {
+  display: flex;
+  align-items: center;
+}
 
 .PeriodOutline {
   border: 1px solid #ececec;
@@ -149,6 +153,9 @@ input[type="checkbox"]:checked + label {
     height: 3.5vh;
     margin-top: 1.5vh;
   }
+  .PeopleNumOutline {
+    height: 3.5vh;
+  }
   .write-form__list-container > li:first-child > .KeyLable {
     display: block;
   }
@@ -158,13 +165,24 @@ input[type="checkbox"]:checked + label {
     text-align: center;
   }
 
-  .write-form__list-container > li:nth-child(2),
   .write-form__list-container > li:nth-child(4) {
-    display: block;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .yet-container__checkbox {
+    margin-top: 15px;
+  }
+  .yet-container__checkbox label {
+    margin: 0;
   }
 
   .ForSpaceCheckbox {
     display: flex;
     margin: 10px 0 0 0;
+  }
+
+  .ForSpaceSpan {
+    display: none;
   }
 }
