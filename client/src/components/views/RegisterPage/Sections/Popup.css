@@ -94,3 +94,44 @@
   font-size: 1.6em;
   font-weight: normal;
 }
+
+@media (max-width: 480px) {
+  /* 메인 컨텐츠 */
+  .PopupCard {
+    width: 80%;
+    height: 75%;
+
+    padding: 20px;
+
+    border-radius: 10px;
+  }
+
+  .TopContents h3 {
+    font-size: 1.6em;
+  }
+
+  .PopupDescription {
+    font-size: 1.2em;
+  }
+
+  /* 캔슬 버튼 */
+  .ExitButton {
+    padding: 0;
+    width: 16px;
+    height: 16px;
+  }
+  .ExitButton img {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* 개인정보취급방침 텍스트 */
+  /* 스크롤 컨테이너 */
+  .AgreeTextContainer {
+    padding: 10px 15px;
+  }
+
+  .AgreeText {
+    font-size: 1em;
+  }
+}
