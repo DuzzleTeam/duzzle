@@ -130,8 +130,7 @@
 @media (max-width: 480px) {
   /* main container */
   .write-container__main {
-    padding: 8vh 4vh 0 4vh;
-    margin: 0 4px 0 4px;
+    padding: 8vh 5vh 0 5vh;
     font-size: 8px;
   }
 

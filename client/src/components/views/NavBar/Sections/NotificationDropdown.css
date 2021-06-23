@@ -46,7 +46,6 @@
   display: flex;
   margin: 0;
   margin-top: 28px;
-  margin-left: 4px;
   padding: 0;
 }
 .NotiMenu li {
@@ -97,7 +96,6 @@ li.ActiveNotiMenu {
   /* 댓글, 좋아요, 협업해요 */
   .NotiMenu {
     margin-top: 20px;
-    margin-left: 2px;
   }
   /* 댓글, 좋아요, 협업해요 */
   .NotiMenu li {

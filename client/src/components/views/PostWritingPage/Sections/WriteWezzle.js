@@ -225,29 +225,30 @@ function WriteWezzle({
             />
             <label>일</label>
           </span>
-
-          <input
-            type="checkbox"
-            id="projectPeriod"
-            name="6"
-            checked={projectPeriod[6] === "미정" ? true : false}
-            onChange={onChangePeriod}
-            className="PostWirtingCheckbox"
-          />
-          <label
-            htmlFor="6"
-            className="ForSpaceCheckbox"
-            onClick={() => {
-              const projectPeriodArr = projectPeriod.slice();
-              projectPeriodArr[6] = projectPeriod[6] === "미정" ? "" : "미정";
-              setProjectPeriod(projectPeriodArr);
-            }}
-          >
-            {projectPeriod[6] === "미정" && (
-              <img src={"/images/checkbox.png"} alt={"yet"} />
-            )}
-          </label>
-          <label className="ForSpaceLabel">미정</label>
+          <div className="checkbox">
+            <input
+              type="checkbox"
+              id="projectPeriod"
+              name="6"
+              checked={projectPeriod[6] === "미정" ? true : false}
+              onChange={onChangePeriod}
+              className="PostWirtingCheckbox"
+            />
+            <label
+              htmlFor="6"
+              className="ForSpaceCheckbox"
+              onClick={() => {
+                const projectPeriodArr = projectPeriod.slice();
+                projectPeriodArr[6] = projectPeriod[6] === "미정" ? "" : "미정";
+                setProjectPeriod(projectPeriodArr);
+              }}
+            >
+              {projectPeriod[6] === "미정" && (
+                <img src={"/images/checkbox.png"} alt={"yet"} />
+              )}
+            </label>
+            <label className="ForSpaceLabel">미정</label>
+          </div>
         </li>
       </ul>
     </section>
