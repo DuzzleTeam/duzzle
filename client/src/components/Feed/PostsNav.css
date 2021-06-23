@@ -52,6 +52,7 @@
   /* 버튼 컨테이너 */
   .PostsNav {
     font-size: 8px;
+    margin-left: 10vh;
   }
 
   /* 지원목록, 내 게시물 기본 디자인 */
