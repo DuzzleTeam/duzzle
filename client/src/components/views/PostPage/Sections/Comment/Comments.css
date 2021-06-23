@@ -6,9 +6,9 @@
 }
 
 /* media query 모바일 세로 */
-@media (max-width:480px){
+@media (max-width: 480px) {
   .CommentsContainer {
     width: 80%;
-    margin-top: 8px;
+    margin-top: 0;
   }
 }

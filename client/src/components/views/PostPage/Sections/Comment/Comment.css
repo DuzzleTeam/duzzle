@@ -188,11 +188,11 @@ button.CancelEditCommentButton > img {
 }
 
 /* media query 모바일 세로 */
-@media (max-width:480px){
+@media (max-width: 480px) {
   /* 댓글 한 개 컨테이너 */
   .CommentContainer {
-    /* 위 오른쪽 아래 왼쪽 */
-    padding: 20px 15px 28px 15px;
+    margin: 0;
+    padding: 25px 15px;
   }
 
   /* 댓글 유저 사진, 이름, 날짜, 내용 */
@@ -209,6 +209,11 @@ button.CancelEditCommentButton > img {
     width: 65%;
     margin-right: auto;
   }
+
+  .CommentMainContents > div {
+    margin-top: 5px;
+  }
+
   /* 유저 이름 */
   a.CommentUser {
     font-size: 1rem;
@@ -217,13 +222,13 @@ button.CancelEditCommentButton > img {
 
   /* 댓글 게시 날짜 */
   span.CommentDate {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 
   /* 댓글 내용 */
   span.CommentText {
     margin-top: 15px;
-    margin-left: -56px;
+    margin-left: calc(-32px - 15px);
 
     font-size: 0.8rem;
 
@@ -232,85 +237,73 @@ button.CancelEditCommentButton > img {
 
   /* 댓글 수정, 삭제 */
   .CommentAuthContainer {
-    display: flex;
-    margin-right: auto;
     flex-direction: column;
     align-items: center;
+    margin-right: 10px;
   }
 
   /* 댓글 수정 버튼 */
   button.EditCommentButton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 48px;
-    height: 34px;
+    width: 40px;
+    height: 26px;
 
     margin-right: 0px;
 
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 
   /* 댓글 삭제 버튼 */
   button.DeleteCommentButton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 34px;
-    height: 34px;
+    width: 38px;
+    height: 24px;
 
     margin-top: 5px;
   }
-
-  /* 좋아요 버튼 */
-  .CommentLikeContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .DeleteCommentButton > img {
+    width: auto;
+    height: 80%;
   }
 
   /* 좋아요 갯수 */
   span.CommentLike {
-    font-size: 1rem;
+    font-size: 0.8rem;
     margin-bottom: 10px;
   }
 
   /* 댓글 좋아요 버튼 */
   .CommentLikeContainer > img {
-    width: 25px;
-    height: 22px;
-    object-fit: contain;
+    width: 20px;
+    height: auto;
   }
 
   /* 댓글 수정 input */
   .UpdateCommentInput {
     width: 100%;
-    height: 50px;
+    height: 36px;
     border-radius: 22px;
 
     padding-top: 10px;
     /* 위|아래 오른쪽|왼쪽 */
-    padding: 5px 5px;
+    padding: 7px 10px;
 
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 
   /* 댓글 수정 완료 버튼 */
   .EditButton {
-    width: 40%;
-    display: flex;
-    justify-content: space-between;
-    margin-left: 5px;
+    width: 30%;
+    margin-left: 10px;
   }
 
   button.ConfirmEditCommentButton {
     height: 16px;
+    margin-right: 5px;
+    margin-top: 1px;
     padding: 0;
   }
   button.ConfirmEditCommentButton > img {
     width: 80%;
+    object-fit: contain;
   }
 
   button.CancelEditCommentButton {
@@ -318,7 +311,6 @@ button.CancelEditCommentButton > img {
   }
   button.CancelEditCommentButton > img {
     width: 80%;
+    object-fit: contain;
   }
-
 }
-
