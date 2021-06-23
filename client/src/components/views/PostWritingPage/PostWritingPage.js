@@ -6,6 +6,7 @@ import useInput from "../../../hooks/useInput";
 
 import Loading from "../../Loading/Loading";
 import WriteWezzle from "./Sections/WriteWezzle";
+import ShowImage from "./Sections/ShowImage";
 
 import "../../../utils/Common.css";
 import "./Sections/PostWritingPage.css";
@@ -180,6 +181,7 @@ function PostWritingPage() {
   const onChangeImages = (e) => {
     const { files } = e.target;
     setImages((prev) => [...prev, ...files]);
+    console.log(files);
 
     // preview images
     const previewImages = [];
@@ -302,6 +304,22 @@ function PostWritingPage() {
     setLoading(false);
   };
 
+  // show image modal
+  const [showImage, setShowImage] = useState("");
+
+  // remove image
+  const onRemoveImage = (index) => {
+    // remove preview
+    const removedPreview = previewImages.slice();
+    removedPreview.splice(index, 1);
+    setPreviewImages(removedPreview);
+
+    // remove input filelist
+    const removedImages = images.slice();
+    removedImages.splice(index, 1);
+    setImages(removedImages);
+  };
+
   // render
   return (
     <main className={"write-container__main"}>
@@ -366,27 +384,49 @@ function PostWritingPage() {
         <section className="write-form__section--images">
           {/* original images */}
           {originalPost &&
-            originalPost.contents.images.map((img, index) => (
+            originalPost.contents.images.map((url, index) => (
               <img
                 className={"write-form__image--preview"}
-                src={img}
+                src={url}
                 key={index}
                 alt={"upload"}
               />
             ))}
+
           {/* images */}
-          {previewImages.length !== 0 &&
-            previewImages.map((url, index) => (
-              <>
+          {previewImages &&
+            previewImages.map((img, index) => (
+              <button
+                key={index}
+                className={"image-preview__button--show"}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowImage(img);
+                }}
+              >
+                <button
+                  className={"image-preview__button--cancel"}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onRemoveImage(index);
+                  }}
+                >
+                  <img src="/images/image_cancel.png" alt="cancel" />
+                </button>
                 <img
                   className={"write-form__image--preview"}
-                  src={url}
-                  key={index}
+                  src={img}
                   alt={"upload"}
                 />
-              </>
+              </button>
             ))}
         </section>
+
+        {/* 이미지 모달 */}
+        {showImage !== "" && (
+          <ShowImage src={showImage} setShowImage={setShowImage} />
+        )}
       </form>
     </main>
   );
