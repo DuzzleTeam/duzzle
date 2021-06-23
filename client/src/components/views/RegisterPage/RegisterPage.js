@@ -72,13 +72,14 @@ function RegisterPage() {
   };
 
   const history = useHistory();
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     // 회원가입 버튼 클릭 시
     e.preventDefault();
 
     // (juhyun-noh)이미 가입된 계정인지
-    const result = axios.get(`/api/register/check/${email}`);
-    if (!result.register) {
+    const result = await axios.get(`/api/register/check/${email}`);
+
+    if (result.data.register) {
       alert("😓이미 가입된 계정입니다!");
       window.location.reload();
     } else {
