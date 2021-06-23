@@ -163,7 +163,8 @@ input[type="checkbox"]:checked + label {
     display: block;
   }
 
-  .ForSpaceSpan {
-    display: none;
+  .ForSpaceCheckbox {
+    display: flex;
+    margin: 10px 0 0 0;
   }
 }
