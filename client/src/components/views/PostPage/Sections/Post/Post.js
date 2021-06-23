@@ -74,7 +74,7 @@ function Post({ post, setPost }) {
   const history = useHistory();
   const onEditPost = (e) => {
     history.push({
-      path: `/${post.isWezzle ? "wezzle" : "mezzle"}/write`,
+      pathname: `/${post.isWezzle ? "wezzle" : "mezzle"}/write`,
       state: { isEdit: true, post },
     });
   };

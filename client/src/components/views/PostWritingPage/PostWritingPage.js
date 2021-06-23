@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { useHistory, withRouter } from "react-router-dom";
+import { useHistory, useLocation, withRouter } from "react-router-dom";
 // custom hooks
 import useInput from "../../../hooks/useInput";
 
@@ -51,6 +51,60 @@ function PostWritingPage() {
       setAllChecked(false);
     }
   }, [title, text]);
+
+  // 수정 시
+  const getDate = (date, type) => {
+    if (type === "yyyy") {
+      return date.substring(0, 4);
+    } else if (type === "mm") {
+      return date.substring(4, 6);
+    } else if (type === "dd") {
+      return date.substring(6, 8);
+    } else {
+      return "check type";
+    }
+  };
+  const location = useLocation();
+  useEffect(() => {
+    if (location.state) {
+      const { isEdit, post } = location.state;
+      if (isEdit && post) {
+        // 원래 포스트 내용으로 셋팅
+        title.onChange({ target: { value: post.title } });
+        text.onChange({ target: { value: post.contents.text } });
+        setPreviewImages(post.contents.images);
+
+        if (post.isWezzle) {
+          // set period, project period
+          [post.recruit.period, post.projectPeriod].forEach(
+            (entirePeriod, index) => {
+              const period = [];
+              if (entirePeriod === "미정") {
+                setProjectPeriod("미정");
+              } else {
+                entirePeriod.split("-").forEach((yyyymmdd) => {
+                  period.push(getDate(yyyymmdd, "yyyy"));
+                  period.push(getDate(yyyymmdd, "mm"));
+                  period.push(getDate(yyyymmdd, "dd"));
+                });
+                if (index === 0) {
+                  setPeriod(period);
+                } else {
+                  setProjectPeriod(period);
+                }
+              }
+            }
+          );
+
+          // set field
+          setField(post.recruit.field);
+
+          // set people num
+          setPeopleNum(post.recruit.peopleNum);
+        }
+      }
+    }
+  }, [location]);
 
   /* 업로드 버튼 활성화를 위한 (모든 내용이 작성되어 있으면 활성화) */
   // 다연 위즐
