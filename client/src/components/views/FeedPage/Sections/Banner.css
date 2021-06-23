@@ -1,8 +1,6 @@
 /* Banner Main Container */
 .FeedBannerContainer {
   width: 100vw;
-  height: 574px;
-  overflow-x: hidden;
 }
 
 /* 실제 배너 이미지 */
@@ -14,6 +12,8 @@
 
 /* ul */
 .BannerSlide {
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
   /* 이미지 가로 배치 */
