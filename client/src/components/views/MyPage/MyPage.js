@@ -26,7 +26,7 @@ function MyPage() {
       // 가져오기에 성공했다면 유저 셋팅
       setUser(res.payload.data.user);
       // 배경 바꾸기
-      setBackground(`/images/default/background/${getRandomNumber(5)}.png`);
+      setBackground(`/images/default/background/${getRandomNumber(5)}.gif`);
     }
   }, [dispatch, email]);
 
@@ -65,7 +65,7 @@ function MyPage() {
 
   // 배경 이미지 url
   const [background, setBackground] = useState(
-    `/images/default/background/${getRandomNumber(5)}.png`
+    `/images/default/background/${getRandomNumber(5)}.gif`
   );
   // background image preload
   useEffect(() => {
