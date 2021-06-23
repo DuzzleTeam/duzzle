@@ -136,144 +136,31 @@
 }
 
 /* media query 모바일 세로 */
-@media (max-width:480px){
-  /* 최상위 컨테이너 */
-  #LoginPage {
-    width: 100%;
-    height: 100%;
-
-    /* navbar 높이만큼 줄임 */
-    /* margin-top: -9.3vh; */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
+@media (max-width: 480px) {
   .LoginSection {
     width: 80vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     margin-bottom: 15vh;
   }
-  
+
   /* 로그인 */
   .LoginText {
-    margin-bottom: 45px;
-    text-align: center;
     font-size: 1.3rem;
   }
-  
-  /* input, button 부분 컨테이너 */
-  .LoginContainer {
-    display: flex;
-    width: 100%;
-  }
-  
-  .LoginContainer > form {
-    width: 100%;
-  }
-  
+
   /* e-mail, password */
   .InputEmail,
   .InputPassword {
-    width: 100%;
-    height: 5.6vh;
     min-width: 260px;
-    margin-bottom: 15px;
-  
-    padding-left: 15px;
-    border: 1px solid #bcbcbc;
-    border-radius: 5px;
-  
-    outline: 0;
-  
-    padding-top: 4px;
-    box-sizing: border-box;
+    min-height: 40px;
   }
-  
-  .InputEmail::placeholder,
-  .InputPassword::placeholder {
-    color: #bcbcbc;
-    font-size: 1.1rem;
-  }
-  
+
   /* LOGIN 제출 버튼 */
   .InputSubmit {
     width: 100%;
-    height: 5.6vh;
     min-width: 260px;
     margin-bottom: 50px;
-  
-    border: none;
-    outline: 0;
-    background-color: #57ecbf;
-    color: white;
-    border-radius: 5px;
-  
+
     font-weight: 900;
     font-size: 1rem;
-  
-    cursor: pointer;
   }
-  
-  /* LOGIN 제출 버튼 비활성화 시 */
-  .InputSubmit:disabled {
-    background-color: #2d2d2d;
-    color: white;
-    cursor: default;
-  }
-  
-  /* 회원가입, |, 비밀번호 찾기 부분 컨테이너*/
-  .HelpContainer {
-    display: flex;
-    flex-direction: row;
-    /* margin-right: 53px; */
-    /* margin-left: 53px; */
-    width: 250px;
-    justify-content: space-between;
-  }
-  
-  /* 회원가입 | 비밀번호 찾기*/
-  .Join a,
-  .DividingLine,
-  .FindPassword a,
-  /* 비밀번호 찾기 기능 안 됨 */
-  .FindPassword span {
-    text-decoration: none;
-    color: #aaaaaa;
-    font-size: 15px;
-    font-weight: 100;
-  }
-  
-  /* 회원가입과 비밀번호 찾기 사이, | 앞뒤로의 간격
-  .DividingLine,
-  .FindPassword a,
-  비밀번호 찾기 기능 안 됨
-  .FindPassword span {
-    margin-left: 15px;
-  } */
-  
-  /* 비밀번호 찾기 */
-  .FindPassword span {
-    /* 현재 기능 X */
-    cursor: default;
-    opacity: 0.6;
-  }
-  
-  /* 테스트 계정으로 로그인 */
-  .ButtonTestAccount {
-    background: none;
-    border: none;
-    padding: 0;
-  
-    font-family: "Noto Sans KR";
-    color: #aaaaaa;
-    font-size: 15px;
-    font-weight: 100;
-  
-    cursor: pointer;
-  }
-
 }
