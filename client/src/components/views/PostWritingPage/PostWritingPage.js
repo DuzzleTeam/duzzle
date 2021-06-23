@@ -170,23 +170,23 @@ function PostWritingPage() {
   };
 
   // images
-  const [images, setImages] = useState(null);
-  const [previewImages, setPreviewImages] = useState(null);
+  const [images, setImages] = useState([]);
+  const [previewImages, setPreviewImages] = useState([]);
 
   const onChangeImages = (e) => {
     const { files } = e.target;
-    setImages(files);
+    setImages((prev) => [...prev, ...files]);
 
     // preview images
     const previewImages = [];
     for (let i = 0; i < files.length; i++) {
       previewImages.push(URL.createObjectURL(files[i]));
     }
-    setPreviewImages(previewImages);
+    setPreviewImages((prev) => [...prev, ...previewImages]);
   };
 
   const onSubmitImages = async () => {
-    if (images) {
+    if (images.length !== 0) {
       const formData = new FormData();
       // 추가
       for (let i = 0; i < images.length; i++) {
@@ -349,9 +349,14 @@ function PostWritingPage() {
 
         <section className="write-form__section--images">
           {/* images */}
-          {previewImages &&
+          {previewImages.length !== 0 &&
             previewImages.map((url, index) => (
-              <img src={url} key={index} alt={"upload"} />
+              <img
+                className={"write-form__image--preview"}
+                src={url}
+                key={index}
+                alt={"upload"}
+              />
             ))}
         </section>
       </form>
