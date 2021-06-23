@@ -1,0 +1,28 @@
+/* images */
+.write-form__section--images {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  /* 100vw - 44vw / 2 */
+  height: calc((100vw - 22vw * 2) / 2 - 5px);
+}
+
+.image-preview__button--show {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+  position: relative;
+
+  width: calc(50% - 5px);
+  height: 100%;
+  margin-bottom: 10px;
+}
+
+.write-form__image--preview {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border: 1px solid #cecece;
+}

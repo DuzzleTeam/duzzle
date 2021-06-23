@@ -149,12 +149,14 @@ span.PostMainText {
   display: flex;
   flex-direction: column;
   /* width: 80%; */
+  width: 100%;
   align-self: center;
 
   margin-bottom: 80px;
 }
 .PostContentsImage > img {
   max-width: 100%;
+  max-height: 80vh;
   height: auto;
   margin-bottom: 20px;
   object-fit: contain;

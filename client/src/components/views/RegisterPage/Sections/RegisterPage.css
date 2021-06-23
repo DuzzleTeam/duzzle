@@ -222,3 +222,106 @@ input[id="agree"] {
 .RegisterSubmit:focus {
   outline: none;
 }
+
+@media (max-width: 480px) {
+  /* 카드 영역 */
+  .CardContainer {
+    width: 75vw;
+    height: 80vh;
+    flex-direction: column;
+    font-size: 10px;
+  }
+
+  /* 왼쪽 영역 */
+  .Description {
+    width: 100%;
+  }
+
+  /* 왼쪽 영역 텍스트들 */
+  .TextContainer {
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 10px;
+    margin-left: 0;
+    margin-bottom: 10px;
+  }
+
+  /* 더즐과 함께 더 즐겨보세요! */
+  .Accent {
+    font-size: 1.6em;
+    margin-bottom: 10px;
+  }
+
+  /* 퍼즐 이미지 */
+  .Puzzle {
+    display: none;
+  }
+
+  /* 오른쪽 영역 */
+  .SignUpContainer {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* 회원가입 form */
+  .SignUpForm {
+    width: 80%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* 회원가입 */
+  .SignUpForm h1 {
+    font-size: 1.6em;
+  }
+
+  /* 이메일, 비밀번호, 비밀번호 확인 */
+  .SignUpForm > label:nth-child(-n + 4) {
+    width: 100%;
+    flex-direction: column;
+
+    font-size: 1.4em;
+    margin-top: 10px;
+  }
+
+  .SignUpForm > label > div {
+    margin-top: 5px;
+    width: 100%;
+  }
+
+  /* 이메일, 비밀번호, 비밀번호 확인, submit button */
+  .RegisterInput {
+    padding-left: 15px;
+    font-size: 12px;
+  }
+
+  .RegisterInput::placeholder {
+    font-size: 12px;
+  }
+
+  /* 경고 문구 */
+  .WarningContainer img {
+    width: 13px;
+  }
+
+  /* 개인정보 수집 및 이용 동의 체크박스 */
+  .AgreeContainer {
+    margin-top: 10px;
+  }
+  .AgreeLink {
+    font-size: 14px;
+  }
+
+  /* Button JOIN */
+  .RegisterSubmit {
+    width: 100%;
+    height: 35px;
+    margin-top: 15px;
+
+    font-size: 14px;
+    font-weight: bold;
+  }
+}
