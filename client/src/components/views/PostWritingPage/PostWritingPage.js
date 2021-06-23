@@ -367,17 +367,25 @@ function PostWritingPage() {
           {/* original images */}
           {originalPost &&
             originalPost.contents.images.map((img, index) => (
-              <img
-                className={"write-form__image--preview"}
-                src={img}
-                key={index}
-                alt={"upload"}
-              />
+              <button className={"image-preview__button--show"}>
+                <button className={"image-preview__button--cancel"}>
+                  <img src="/images/image_cancel.png" alt="cancel" />
+                </button>
+                <img
+                  className={"write-form__image--preview"}
+                  src={img}
+                  key={index}
+                  alt={"upload"}
+                />
+              </button>
             ))}
           {/* images */}
           {previewImages.length !== 0 &&
             previewImages.map((url, index) => (
               <>
+                <button>
+                  <img src="/images/image_cancel.png" alt="cancel" />
+                </button>
                 <img
                   className={"write-form__image--preview"}
                   src={url}
