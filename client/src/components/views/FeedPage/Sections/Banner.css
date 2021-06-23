@@ -24,3 +24,12 @@
 .BannerSlide > li {
   transition: transform 0.3s linear;
 }
+
+/* media query 모바일 세로 */
+@media (max-width:480px){
+  /* Banner Main Container */
+  .FeedBannerContainer {
+    height: auto;
+  }
+
+}
