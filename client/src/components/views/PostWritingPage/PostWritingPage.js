@@ -79,9 +79,7 @@ function PostWritingPage() {
           [post.recruit.period, post.projectPeriod].forEach(
             (entirePeriod, index) => {
               const period = [];
-              if (entirePeriod === "미정") {
-                setProjectPeriod("미정");
-              } else {
+              if (index === 0 || !entirePeriod[6] === "미정") {
                 entirePeriod.split("-").forEach((yyyymmdd) => {
                   period.push(getDate(yyyymmdd, "yyyy"));
                   period.push(getDate(yyyymmdd, "mm"));
@@ -124,16 +122,25 @@ function PostWritingPage() {
     const endPeriod = Number(
       period[3] + period[4].padStart(2, "0") + period[5].padStart(2, "0")
     );
-    const startProjectPeriod = Number(
-      projectPeriod[0] +
-        projectPeriod[1].padStart(2, "0") +
-        projectPeriod[2].padStart(2, "0")
-    );
-    const endProjectPeriod = Number(
-      projectPeriod[3] +
-        projectPeriod[4].padStart(2, "0") +
-        projectPeriod[5].padStart(2, "0")
-    );
+    let passedProjectPeriod = false;
+    if (projectPeriod !== "미정") {
+      const startProjectPeriod = Number(
+        projectPeriod[0] +
+          projectPeriod[1].padStart(2, "0") +
+          projectPeriod[2].padStart(2, "0")
+      );
+      const endProjectPeriod = Number(
+        projectPeriod[3] +
+          projectPeriod[4].padStart(2, "0") +
+          projectPeriod[5].padStart(2, "0")
+      );
+
+      passedProjectPeriod =
+        startProjectPeriod >= 20210101 &&
+        endProjectPeriod >= startProjectPeriod &&
+        String(startProjectPeriod).length === 8 &&
+        String(endProjectPeriod).length === 8;
+    }
     if (
       // 제목, 내용, 모집기간, 모집분야, 모집인원, 프로젝트예상기간에 값이 들어가 있을 경우
       title.value !== "" &&
@@ -145,11 +152,7 @@ function PostWritingPage() {
       endPeriod >= startPeriod &&
       String(startPeriod).length === 8 &&
       String(endPeriod).length === 8 &&
-      (projectPeriod[6] === "미정" ||
-        (startProjectPeriod >= 20210101 &&
-          endProjectPeriod >= startProjectPeriod &&
-          String(startProjectPeriod).length === 8 &&
-          String(endProjectPeriod).length === 8))
+      (projectPeriod[6] === "미정" || passedProjectPeriod)
     ) {
       // isActive가 true -> 버튼 활성화
       setAllChecked(true);
