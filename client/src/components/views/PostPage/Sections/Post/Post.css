@@ -247,7 +247,7 @@ span.PostMainText {
 
   /* 제목, 수정, 삭제 */
   .PostTitleContainer {
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
   /* 제목 */
   .PostTitleContainer > span.PostTitle {
@@ -257,9 +257,10 @@ span.PostMainText {
   /* 글 수정, 삭제 버튼 */
   .PostControl {
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-items: center;
-    margin-top: 20px;
+    margin-bottom: 40px;
+    margin-top: -20px;
   }
   .PostTitleContainer .PostControl button {
     border-radius: 23px;
