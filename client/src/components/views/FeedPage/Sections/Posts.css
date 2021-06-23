@@ -113,11 +113,11 @@
 }
 
 /* media query 모바일 세로 */
-@media (max-width:480px){
+@media (max-width: 480px) {
   /* Main Post List Container */
   .FeedPostsContainer {
     /* 위 | 오른쪽 | 아래 | 왼쪽 */
-    padding: 40px 10px 100px 10px;
+    padding: 40px 0px 100px 0px;
   }
 
   /* 개발, 디자인 버튼 */
@@ -158,5 +158,4 @@
     margin-top: 80px;
     margin-bottom: 100px;
   }
-
 }
