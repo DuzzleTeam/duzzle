@@ -181,7 +181,6 @@ function PostWritingPage() {
   const onChangeImages = (e) => {
     const { files } = e.target;
     setImages((prev) => [...prev, ...files]);
-    console.log(files);
 
     // preview images
     const previewImages = [];
@@ -385,12 +384,21 @@ function PostWritingPage() {
           {/* original images */}
           {originalPost &&
             originalPost.contents.images.map((url, index) => (
-              <img
-                className={"write-form__image--preview"}
-                src={url}
+              <button
                 key={index}
-                alt={"upload"}
-              />
+                className={"image-preview__button--show"}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowImage(url);
+                }}
+              >
+                <img
+                  className={"write-form__image--preview"}
+                  src={url}
+                  key={index}
+                  alt={"upload"}
+                />
+              </button>
             ))}
 
           {/* images */}
