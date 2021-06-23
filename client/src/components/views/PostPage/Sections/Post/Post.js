@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import axios from "axios";
 
 import { useSelector } from "react-redux";
@@ -70,6 +70,15 @@ function Post({ post, setPost }) {
     }
   };
 
+  // 수정
+  const history = useHistory();
+  const onEditPost = (e) => {
+    history.push({
+      pathname: `/${post.isWezzle ? "wezzle" : "mezzle"}/write`,
+      state: { isEdit: true, post },
+    });
+  };
+
   return (
     post &&
     (isRemovedPost ? (
@@ -114,7 +123,10 @@ function Post({ post, setPost }) {
 
           {/* 좋아요, 댓글 */}
           <ul className="PostInfo">
-            <PostInfo infoName={"좋아요"} info={post.like.length} />
+            <PostInfo
+              infoName={post.isWezzle ? "협업해요" : "좋아요"}
+              info={post.like.length}
+            />
             <PostInfo infoName={"댓글"} info={post.commentCount} />
           </ul>
         </article>
@@ -126,7 +138,7 @@ function Post({ post, setPost }) {
             {/* 게시글 수정, 삭제 버튼 작성자여야 보이기 */}
             {user !== undefined && user._id === post.user._id && (
               <div className="PostControl">
-                <button>수정하기</button>
+                <button onClick={onEditPost}>수정하기</button>
                 <button onClick={onRemovePost}>
                   <img src="/images/postPage/post_delete.png" alt="delete" />
                 </button>

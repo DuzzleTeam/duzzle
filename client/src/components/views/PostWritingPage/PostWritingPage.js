@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { useHistory, withRouter } from "react-router-dom";
+import { useHistory, useLocation, withRouter } from "react-router-dom";
 // custom hooks
 import useInput from "../../../hooks/useInput";
 
@@ -52,6 +52,62 @@ function PostWritingPage() {
     }
   }, [title, text]);
 
+  // 수정 시
+  const getDate = (date, type) => {
+    if (type === "yyyy") {
+      return date.substring(0, 4);
+    } else if (type === "mm") {
+      return date.substring(4, 6);
+    } else if (type === "dd") {
+      return date.substring(6, 8);
+    } else {
+      return "check type";
+    }
+  };
+  const location = useLocation();
+  const [isEdit, setIsEdit] = useState(false);
+  const [originalPost, setOriginalPost] = useState(null);
+  useEffect(() => {
+    if (location.state) {
+      const { isEdit, post } = location.state;
+      if (isEdit && post) {
+        // 원래 포스트 내용으로 셋팅
+        title.onChange({ target: { value: post.title } });
+        text.onChange({ target: { value: post.contents.text } });
+
+        setOriginalPost(post);
+        setIsEdit(isEdit);
+
+        if (post.isWezzle) {
+          // set period, project period
+          [post.recruit.period, post.projectPeriod].forEach(
+            (entirePeriod, index) => {
+              const period = [];
+              if (index === 0 || !entirePeriod[6] === "미정") {
+                entirePeriod.split("-").forEach((yyyymmdd) => {
+                  period.push(getDate(yyyymmdd, "yyyy"));
+                  period.push(getDate(yyyymmdd, "mm"));
+                  period.push(getDate(yyyymmdd, "dd"));
+                });
+                if (index === 0) {
+                  setPeriod(period);
+                } else {
+                  setProjectPeriod(period);
+                }
+              }
+            }
+          );
+
+          // set field
+          setField(post.recruit.field);
+
+          // set people num
+          setPeopleNum(post.recruit.peopleNum);
+        }
+      }
+    }
+  }, [location]);
+
   /* 업로드 버튼 활성화를 위한 (모든 내용이 작성되어 있으면 활성화) */
   // 다연 위즐
   useEffect(() => {
@@ -70,16 +126,25 @@ function PostWritingPage() {
     const endPeriod = Number(
       period[3] + period[4].padStart(2, "0") + period[5].padStart(2, "0")
     );
-    const startProjectPeriod = Number(
-      projectPeriod[0] +
-        projectPeriod[1].padStart(2, "0") +
-        projectPeriod[2].padStart(2, "0")
-    );
-    const endProjectPeriod = Number(
-      projectPeriod[3] +
-        projectPeriod[4].padStart(2, "0") +
-        projectPeriod[5].padStart(2, "0")
-    );
+    let passedProjectPeriod = false;
+    if (projectPeriod !== "미정") {
+      const startProjectPeriod = Number(
+        projectPeriod[0] +
+          projectPeriod[1].padStart(2, "0") +
+          projectPeriod[2].padStart(2, "0")
+      );
+      const endProjectPeriod = Number(
+        projectPeriod[3] +
+          projectPeriod[4].padStart(2, "0") +
+          projectPeriod[5].padStart(2, "0")
+      );
+
+      passedProjectPeriod =
+        startProjectPeriod >= 20210101 &&
+        endProjectPeriod >= startProjectPeriod &&
+        String(startProjectPeriod).length === 8 &&
+        String(endProjectPeriod).length === 8;
+    }
     if (
       // 제목, 내용, 모집기간, 모집분야, 모집인원, 프로젝트예상기간에 값이 들어가 있을 경우
       title.value !== "" &&
@@ -91,11 +156,7 @@ function PostWritingPage() {
       endPeriod >= startPeriod &&
       String(startPeriod).length === 8 &&
       String(endPeriod).length === 8 &&
-      (projectPeriod[6] === "미정" ||
-        (startProjectPeriod >= 20210101 &&
-          endProjectPeriod >= startProjectPeriod &&
-          String(startProjectPeriod).length === 8 &&
-          String(endProjectPeriod).length === 8))
+      (projectPeriod[6] === "미정" || passedProjectPeriod)
     ) {
       // isActive가 true -> 버튼 활성화
       setAllChecked(true);
@@ -113,23 +174,23 @@ function PostWritingPage() {
   };
 
   // images
-  const [images, setImages] = useState(null);
-  const [previewImages, setPreviewImages] = useState(null);
+  const [images, setImages] = useState([]);
+  const [previewImages, setPreviewImages] = useState([]);
 
   const onChangeImages = (e) => {
     const { files } = e.target;
-    setImages(files);
+    setImages((prev) => [...prev, ...files]);
 
     // preview images
     const previewImages = [];
     for (let i = 0; i < files.length; i++) {
       previewImages.push(URL.createObjectURL(files[i]));
     }
-    setPreviewImages(previewImages);
+    setPreviewImages((prev) => [...prev, ...previewImages]);
   };
 
   const onSubmitImages = async () => {
-    if (images) {
+    if (images.length !== 0) {
       const formData = new FormData();
       // 추가
       for (let i = 0; i < images.length; i++) {
@@ -146,6 +207,9 @@ function PostWritingPage() {
 
       // result
       const filenames = [];
+      if (originalPost) {
+        filenames.push(...originalPost.contents.images);
+      }
       res.data.filenames.forEach((filename) => {
         filenames.push(`/postImages/${filename}`);
       });
@@ -177,7 +241,7 @@ function PostWritingPage() {
       title: title.value,
       contents: {
         text: text.value,
-        ...(filenames && { images: filenames }),
+        images: filenames || [],
       },
       isWezzle: false,
     };
@@ -217,12 +281,21 @@ function PostWritingPage() {
       };
     }
 
-    const url = `/api/${POST_TYPE}/write`;
-    const res = await axios.post(url, body);
-    if (res.status === 200) {
-      const { _id } = res.data.post;
-      alert("✍🏻 게시글 작성이 완료되었습니다!");
-      history.push(`/${POST_TYPE}/post/${_id}`);
+    if (isEdit) {
+      const url = `/api/post/${originalPost._id}`;
+      const res = await axios.patch(url, body);
+      if (res.status === 200) {
+        alert("💚 게시글 수정이 완료되었습니다!");
+        history.push(`/${POST_TYPE}/post/${originalPost._id}`);
+      }
+    } else {
+      const url = `/api/${POST_TYPE}/write`;
+      const res = await axios.post(url, body);
+      if (res.status === 200) {
+        const { _id } = res.data.post;
+        alert("✍🏻 게시글 작성이 완료되었습니다!");
+        history.push(`/${POST_TYPE}/post/${_id}`);
+      }
     }
 
     // stop loading
@@ -281,15 +354,35 @@ function PostWritingPage() {
             }
             {...text}
             onInput={setSizeTextarea}
+            style={{
+              ...(location.state && {
+                height: Math.ceil(text.value.length / 50) * 30,
+              }),
+            }}
             cols="80"
           ></textarea>
         </section>
 
         <section className="write-form__section--images">
+          {/* original images */}
+          {originalPost &&
+            originalPost.contents.images.map((img, index) => (
+              <img
+                className={"write-form__image--preview"}
+                src={img}
+                key={index}
+                alt={"upload"}
+              />
+            ))}
           {/* images */}
-          {previewImages &&
+          {previewImages.length !== 0 &&
             previewImages.map((url, index) => (
-              <img src={url} key={index} alt={"upload"} />
+              <img
+                className={"write-form__image--preview"}
+                src={url}
+                key={index}
+                alt={"upload"}
+              />
             ))}
         </section>
       </form>

@@ -18,7 +18,10 @@ const postSchema = mongoose.Schema({
       type: String,
       required: true,
     },
-    images: [String],
+    images: {
+      type: [String],
+      default: [],
+    },
     files: [String],
   },
   like: {

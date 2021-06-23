@@ -171,7 +171,7 @@ function WriteWezzle({
               maxLength="4"
               id="projectPeriod"
               name="0"
-              defaultValue={projectPeriod[0]}
+              value={projectPeriod[0]}
               onChange={onChangePeriod}
               className="InputPeriodYear"
             />
@@ -180,7 +180,7 @@ function WriteWezzle({
               maxLength="2"
               id="projectPeriod"
               name="1"
-              defaultValue={projectPeriod[1]}
+              value={projectPeriod[1]}
               onChange={onChangePeriod}
               className="InputPeriodMD"
             />
@@ -189,7 +189,7 @@ function WriteWezzle({
               maxLength="2"
               id="projectPeriod"
               name="2"
-              defaultValue={projectPeriod[2]}
+              value={projectPeriod[2]}
               onChange={onChangePeriod}
               className="InputPeriodMD"
             />
@@ -201,7 +201,7 @@ function WriteWezzle({
               maxLength="4"
               id="projectPeriod"
               name="3"
-              defaultValue={projectPeriod[3]}
+              value={projectPeriod[3]}
               onChange={onChangePeriod}
               className="InputPeriodYear"
             />
@@ -210,7 +210,7 @@ function WriteWezzle({
               maxLength="2"
               id="projectPeriod"
               name="4"
-              defaultValue={projectPeriod[4]}
+              value={projectPeriod[4]}
               onChange={onChangePeriod}
               className="InputPeriodMD"
             />
@@ -219,36 +219,42 @@ function WriteWezzle({
               maxLength="2"
               id="projectPeriod"
               name="5"
-              defaultValue={projectPeriod[5]}
+              value={projectPeriod[5]}
               onChange={onChangePeriod}
               className="InputPeriodMD"
             />
             <label>일</label>
           </span>
-          <div className="checkbox">
-            <input
-              type="checkbox"
-              id="projectPeriod"
-              name="6"
-              checked={projectPeriod[6] === "미정" ? true : false}
-              onChange={onChangePeriod}
-              className="PostWirtingCheckbox"
-            />
-            <label
-              htmlFor="6"
-              className="ForSpaceCheckbox"
-              onClick={() => {
-                const projectPeriodArr = projectPeriod.slice();
-                projectPeriodArr[6] = projectPeriod[6] === "미정" ? "" : "미정";
-                setProjectPeriod(projectPeriodArr);
-              }}
-            >
-              {projectPeriod[6] === "미정" && (
-                <img src={"/images/checkbox.png"} alt={"yet"} />
-              )}
-            </label>
-            <label className="ForSpaceLabel">미정</label>
-          </div>
+
+          <input
+            type="checkbox"
+            id="projectPeriod"
+            name="6"
+            checked={projectPeriod[6] === "미정" ? true : false}
+            onChange={onChangePeriod}
+            className="PostWirtingCheckbox"
+          />
+          <label
+            htmlFor="6"
+            className="ForSpaceCheckbox"
+            onClick={() => {
+              const projectPeriodArr = [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                projectPeriod[6] === "미정" ? "" : "미정",
+              ];
+              setProjectPeriod(projectPeriodArr);
+            }}
+          >
+            {projectPeriod[6] === "미정" && (
+              <img src={"/images/checkbox.png"} alt={"yet"} />
+            )}
+          </label>
+          <label className="ForSpaceLabel">미정</label>
         </li>
       </ul>
     </section>
