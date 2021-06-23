@@ -58,3 +58,37 @@ span.LandingTextAccent[data-color="blue"] {
 span.LandingTextAccent[data-color="orange"] {
   color: #ff5200;
 }
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .LandingTextContainer {
+    width: 90%;
+  }
+
+  /* icon */
+  .LandingTextContainer > img {
+    width: 30px;
+  }
+
+  /* title1 */
+  h1.LandingTextTitle {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    font-size: 2.4em;
+  }
+  /* title2 */
+  h2.LandingTextTitle {
+    margin-top: 35px;
+    margin-bottom: 15px;
+    font-size: 1.8em;
+  }
+
+  /* description */
+  .LandingTextDescription {
+    font-size: 1.2em;
+  }
+
+  .LandingTextDescription > span {
+    display: inline;
+    margin-right: 4px;
+  }
+}
