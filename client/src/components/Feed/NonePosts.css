@@ -43,15 +43,30 @@
 
 /* (juhyun-noh) 모바일용 미디어쿼리 */
 @media (max-width: 480px) {
+  /* 컨테이너 */
+  .NonePostsContainer {
+    padding-top: 145px;
+    padding-bottom: 45px;
+  }
+
+  /* 빈 폴더 아이콘 */
+  .NonePostsContainer img {
+    width: 100px;
+    margin-bottom: 40px;
+  }
+
   /* 없다는 설명 글 */
   .NonePostsContainer span {
-    font-size: 3em;
+    font-size: 2em;
+    line-height: 1.45;
   }
 
   /* 글 작성하기 버튼 */
   .NonePostsContainer a {
-    width: 200px;
-    height: 55px;
-    font-size: 2.2em;
+    width: 180px;
+    height: 60px;
+    margin-top: 60px;
+
+    font-size: 1.6em;
   }
 }
