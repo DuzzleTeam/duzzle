@@ -10,23 +10,23 @@ import ReduxThunk from "redux-thunk";
 import Reducer from "./_reducers";
 
 const createStoreWithMiddleware = applyMiddleware(
-	promiseMiddleware,
-	ReduxThunk
+  promiseMiddleware,
+  ReduxThunk
 )(createStore);
 
 ReactDOM.render(
-	<React.StrictMode>
-		<Provider
-			store={createStoreWithMiddleware(
-				Reducer,
-				window.__REDUX_DEVTOOLS_EXTENSION__ &&
-					window.__REDUX_DEVTOOLS_EXTENSION__()
-			)}
-		>
-			<App />
-		</Provider>
-	</React.StrictMode>,
-	document.getElementById("root")
+  <React.StrictMode>
+    <Provider
+      store={createStoreWithMiddleware(
+        Reducer,
+        window.__REDUX_DEVTOOLS_EXTENSION__ &&
+          window.__REDUX_DEVTOOLS_EXTENSION__()
+      )}
+    >
+      <App />
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

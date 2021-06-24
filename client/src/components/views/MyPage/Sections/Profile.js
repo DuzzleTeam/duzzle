@@ -24,7 +24,7 @@ function Profile({ user, setIsEditing }) {
   return (
     <article className={"MypageLeftProfile"}>
       {/* 프로필 사진 */}
-      <img src={user.profileImage} alt="" />
+      <img className="ProfileImg" src={user.profileImage} alt="" />
 
       {/* 프로필 사진 외 텍스트들 */}
       <div className="MypageTextContainer">

@@ -1,6 +1,8 @@
 import React from "react";
+import { Popover, OverlayTrigger, Image } from "react-bootstrap";
 
 import "./LevelBar.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 // level comment
 const levels = [
@@ -15,11 +17,31 @@ const levels = [
 ];
 
 function LevelBar({ level }) {
+  // popover 메시지
+  const popover = (
+    <Popover className="popover">
+      <Popover.Content>
+        레벨은 글 작성시 20%, 댓글 작성시 5% 상승합니다!
+      </Popover.Content>
+    </Popover>
+  );
+
   return (
     <>
-      <span className="ProfileLevel">{`Lv.${Math.floor(level)} ${
-        levels[Math.floor(level) - 1]
-      }`}</span>
+      <span className="ProfileLevel">
+        {`Lv.${Math.floor(level)} ${levels[Math.floor(level) - 1]}`}
+        <OverlayTrigger
+          trigger={["hover", "hover"]}
+          placement="bottom"
+          overlay={popover}
+        >
+          <Image
+            className="QuestionPopover"
+            src="/images/question.png"
+            alt="question"
+          />
+        </OverlayTrigger>
+      </span>
       <div className="ProfileLevelBar">
         <div
           className="ProfileFillLevelBar"

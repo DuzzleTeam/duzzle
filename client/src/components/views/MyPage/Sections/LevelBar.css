@@ -20,3 +20,21 @@
   border-radius: 98px;
   background-color: #57ecbf;
 }
+/* 물음표 이미지 */
+.ProfileLevel .QuestionPopover {
+  margin-left: 5px;
+  width: 10px;
+  height: auto;
+}
+/* popover과 사진 사이 간격 */
+.popover {
+  margin-top: 7px;
+}
+
+/* (juhyun-noh) 모바일용 미디어쿼리 */
+@media (max-width: 480px) {
+  /* 물음표 이미지 */
+  .ProfileLevel .QuestionPopover {
+    display: none;
+  }
+}
