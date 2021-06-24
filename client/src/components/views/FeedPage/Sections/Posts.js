@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useHistory, useLocation } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
 import pagination from "../../../Pagination/functions";
 
 import Pagination from "../../../Pagination/Pagination";
@@ -10,6 +11,7 @@ import Loading from "../../../Loading/Loading";
 
 // CSS
 import "./Posts.css";
+import { updatedPost } from "../../../../_actions/post_action";
 
 // cache
 const cache = {};
@@ -110,6 +112,23 @@ function Posts({ postType }) {
   //   // 전체 게시글 가져오기
   //   await getPosts();
   // };
+
+  // 새 게시물 작성 시 업데이트
+  const dispatch = useDispatch();
+  const newPost = useSelector((state) => state.post.newPostPayload);
+  useEffect(() => {
+    if (newPost && cache[postType]) {
+      const { post } = newPost;
+
+      const newPosts = [post, ...cache[postType]];
+      // 업데이트
+      cache[postType] = newPosts;
+      setPosts(newPosts);
+
+      // redux reset
+      dispatch(updatedPost());
+    }
+  }, [newPost, postType, dispatch]);
 
   // 게시물이 지워졌을 때 업데이트
   const onRemovePost = useCallback(

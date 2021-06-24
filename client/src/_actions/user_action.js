@@ -6,7 +6,6 @@ import {
   AUTH_USER,
   EDIT_USER,
   GET_USER,
-  NEW_POST,
 } from "./types";
 
 export function loginUser(dataToSubmit) {
@@ -67,17 +66,6 @@ export function getUser(email) {
 
   return {
     type: GET_USER,
-    payload: request,
-  };
-}
-
-export function newPost(postType, dataToSubmit) {
-  const request = axios
-    .post(`/api/${postType}/write`, dataToSubmit)
-    .then((res) => res.data);
-
-  return {
-    type: NEW_POST,
     payload: request,
   };
 }
