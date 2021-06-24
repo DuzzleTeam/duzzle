@@ -25,7 +25,7 @@ router.post(
         return res.status(500).json({ success: false, err });
       } else {
         // 콜백의 postInfo를 통해 생성된 _id 얻음
-        return res.status(200).send({ post: { _id: postInfo._id } });
+        return res.status(200).send({ post: postInfo });
       }
     });
   }
