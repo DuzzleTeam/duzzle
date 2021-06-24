@@ -11,6 +11,8 @@ import ShowImage from "../../Preview/ShowImage";
 
 import "../../../utils/Common.css";
 import "./Sections/PostWritingPage.css";
+import { useDispatch } from "react-redux";
+import { newPost } from "../../../_actions/user_action";
 
 function PostWritingPage() {
   // wezzle or mezzle
@@ -221,6 +223,7 @@ function PostWritingPage() {
   };
 
   const history = useHistory();
+  const dispatch = useDispatch();
 
   // loading request
   const [loading, setLoading] = useState(false);
@@ -291,10 +294,9 @@ function PostWritingPage() {
         history.push(`/${POST_TYPE}/post/${originalPost._id}`);
       }
     } else {
-      const url = `/api/${POST_TYPE}/write`;
-      const res = await axios.post(url, body);
-      if (res.status === 200) {
-        const { _id } = res.data.post;
+      const response = await dispatch(newPost(POST_TYPE, body));
+      if (response.payload.post) {
+        const { _id } = response.payload.post;
         alert("✍🏻 게시글 작성이 완료되었습니다!");
         history.push(`/${POST_TYPE}/post/${_id}`);
       }
