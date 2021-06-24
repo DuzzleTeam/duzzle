@@ -79,7 +79,7 @@
 /* Scroll container */
 .ScrollContainer {
   position: absolute;
-  bottom: 9.3vh;
+  bottom: calc(9.3vh - 5px);
   right: 40%;
 
   font-size: 1.1rem;
@@ -101,7 +101,7 @@
   margin-right: auto;
 }
 .ScrollText {
-  color: #ececec;
+  color: #cecece;
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
@@ -144,6 +144,7 @@
   .ScrollContainer {
     left: 32vh;
     font-size: 1rem;
+    bottom: calc(9.3vh - 9px);
   }
   .ScrollContainer img {
     display: block;

@@ -83,7 +83,7 @@ function Duzzle() {
       {/* scroll*/}
       <article className="ScrollContainer">
         <div className="ScrollText">scroll</div>
-        <img src="/images/arrow_scroll.png" alt="scroll" />
+        <img src="/images/landingPage/scroll.png" alt="scroll" />
       </article>
     </section>
   );
