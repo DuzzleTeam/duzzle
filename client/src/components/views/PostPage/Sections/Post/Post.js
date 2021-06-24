@@ -12,6 +12,8 @@ import Loading from "../../../../Loading/Loading";
 import PreviewImages from "../../../../Preview/PreviewImages";
 import ShowImage from "../../../../Preview/ShowImage";
 
+import useOutsideClick from "../../../NavBar/Sections/useOutsideClick";
+
 // CSS
 import "./Post.css";
 
@@ -172,6 +174,7 @@ function Post({ post, setPost }) {
                 setShowImage={setShowImage}
               />
             )}
+            {/* 이미지 모달 */}
             {showImage && (
               <ShowImage src={showImage} setShowImage={setShowImage} />
             )}
