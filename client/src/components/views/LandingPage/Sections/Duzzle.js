@@ -79,6 +79,12 @@ function Duzzle() {
           <img src="/images/arrow.png" alt="facebook" />
         </div>
       </article>
+
+      {/* scroll*/}
+      <article className="ScrollContainer">
+        <div className="ScrollText">scroll</div>
+        <img src="/images/arrow_scroll.png" alt="scroll" />
+      </article>
     </section>
   );
 }
