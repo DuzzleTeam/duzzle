@@ -76,6 +76,34 @@
   margin-top: -20px;
 }
 
+/* Scroll container */
+.ScrollContainer {
+  position: absolute;
+  bottom: 9.3vh;
+  right: 40%;
+
+  font-size: 1.1rem;
+
+  /* 위아래 움직이는 효과 */
+  animation: motion 0.5s linear 0s infinite alternate;
+}
+@keyframes motion {
+  0% {
+    margin-bottom: 0px;
+  }
+  100% {
+    margin-bottom: 10px;
+  }
+}
+.ScrollContainer img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.ScrollText {
+  color: #ececec;
+}
+
 @media (min-width: 320px) and (max-width: 480px) {
   /* container */
   .LandingDuzzle {
@@ -110,5 +138,15 @@
   }
   .Instagram {
     margin-right: 10vw;
+  }
+
+  /* Scroll container */
+  .ScrollContainer {
+    left: 32vh;
+    font-size: 1rem;
+  }
+  .ScrollContainer img {
+    display: block;
+    margin-left: 10px;
   }
 }
