@@ -193,7 +193,7 @@ span.PostMainText {
 /* media query 모바일 세로 */
 @media (max-width: 480px) {
   .PostContainer {
-    width: 80%;
+    width: 100%;
   }
 
   /* 글쓴이, 게시글 정보 */

@@ -224,10 +224,14 @@ input[id="agree"] {
 }
 
 @media (max-width: 480px) {
+  .RegisterContainer {
+    overflow-y: auto;
+  }
+
   /* 카드 영역 */
   .CardContainer {
     width: 75vw;
-    height: 80vh;
+    height: 650px;
     flex-direction: column;
     font-size: 10px;
   }
@@ -294,6 +298,7 @@ input[id="agree"] {
 
   /* 이메일, 비밀번호, 비밀번호 확인, submit button */
   .RegisterInput {
+    height: 45px;
     padding-left: 15px;
     font-size: 12px;
   }

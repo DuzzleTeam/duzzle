@@ -11,3 +11,10 @@
 .Toastify {
   font-size: 1rem;
 }
+
+@media (max-width: 480px) {
+  .PostPageContainer {
+    padding: 0 6.8%;
+    box-sizing: border-box;
+  }
+}
