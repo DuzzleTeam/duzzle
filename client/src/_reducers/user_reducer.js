@@ -5,6 +5,7 @@ import {
   AUTH_USER,
   EDIT_USER,
   GET_USER,
+  NEW_POST,
 } from "../_actions/types";
 
 export default function _(state = {}, action) {
@@ -32,6 +33,9 @@ export default function _(state = {}, action) {
 
     case GET_USER:
       return { ...state, getPayload: action.payload };
+
+    case NEW_POST:
+      return { ...state, newPostPayload: action.payload };
 
     default:
       return state;
