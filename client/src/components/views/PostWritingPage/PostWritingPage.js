@@ -384,7 +384,7 @@ function PostWritingPage() {
         </section>
 
         {/* original images */}
-        {originalPost && (
+        {originalPost && originalPost.contents.images.length !== 0 && (
           <PreviewImages
             images={originalPost.contents.images}
             setShowImage={setShowImage}
@@ -392,7 +392,7 @@ function PostWritingPage() {
         )}
 
         {/* images */}
-        {previewImages && (
+        {previewImages && previewImages.length !== 0 && (
           <section className="write-form__section--images">
             {previewImages.map((img, index) => (
               <button
