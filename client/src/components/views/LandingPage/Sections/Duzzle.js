@@ -80,7 +80,7 @@ function Duzzle() {
         </div>
       </article>
 
-      {/* scroll*/}
+      {/* (juhyun-noh) scroll*/}
       <article className="ScrollContainer">
         <div className="ScrollText">scroll</div>
         <img src="/images/arrow_scroll.png" alt="scroll" />
