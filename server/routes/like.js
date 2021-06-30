@@ -18,9 +18,6 @@ router.post("/like/:postId", auth, async (req, res) => {
   // post id에 해당하는 댓글
   const post = await Post.findOne({ _id: postId });
 
-  // post 좋아요 설정
-  post.like = req.body.like;
-
   // 현 유저가 현 포스트에 누른 좋아요가 있는지
   const like = await Like.findOne({ user, post });
   if (like) {
@@ -62,6 +59,9 @@ router.post("/like/:postId", auth, async (req, res) => {
       user,
       post,
     });
+
+    // post에도 좋아요 추가
+    post.like.push(user.email);
 
     try {
       // 저장
