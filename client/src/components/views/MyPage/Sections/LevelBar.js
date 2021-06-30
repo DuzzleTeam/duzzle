@@ -21,7 +21,11 @@ function LevelBar({ level }) {
   const popover = (
     <Popover className="popover">
       <Popover.Content>
-        레벨은 글 작성시 20%, 댓글 작성시 5% 상승합니다!
+        <div className="popover-container">
+          <strong>Level을 올리려면?</strong>
+          <span>글 작성 시 20% 상승</span>
+          <span>댓글 작성 시 5% 상승</span>
+        </div>
       </Popover.Content>
     </Popover>
   );
@@ -32,12 +36,12 @@ function LevelBar({ level }) {
         {`Lv.${Math.floor(level)} ${levels[Math.floor(level) - 1]}`}
         <OverlayTrigger
           trigger={["hover", "hover"]}
-          placement="bottom"
+          placement="top"
           overlay={popover}
         >
           <Image
             className="QuestionPopover"
-            src="/images/question.png"
+            src="/images/tooltip.png"
             alt="question"
           />
         </OverlayTrigger>
