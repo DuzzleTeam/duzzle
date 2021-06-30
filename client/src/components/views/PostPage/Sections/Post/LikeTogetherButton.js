@@ -29,7 +29,7 @@ function LikeTogetherButton({ setPost, post }) {
     // 요청 보낼 url
     const url = `/api/like/${post._id}`;
     // post 방식 요청
-    const res = await axios.post(url, { like });
+    const res = await axios.post(url);
 
     if (res.status === 200) {
       // 요청 성공 시
