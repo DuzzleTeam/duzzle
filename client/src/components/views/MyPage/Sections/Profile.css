@@ -7,7 +7,7 @@
 }
 
 /* 프로필 이미지 */
-.MypageLeftProfile img {
+.MypageLeftProfile .ProfileImg {
   width: 200px;
   height: 200px;
 
