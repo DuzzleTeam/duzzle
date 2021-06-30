@@ -3,8 +3,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  /* 100vw - 44vw / 2 */
-  height: calc((100vw - 22vw * 2) / 2 - 5px);
+  height: 100%;
 }
 
 .image-preview__button--show {
@@ -16,7 +15,8 @@
   position: relative;
 
   width: calc(50% - 5px);
-  height: 100%;
+  /* 100vw - 44vw / 2 */
+  height: calc((100vw - 22vw * 2) / 2 - 5px);
   margin-bottom: 10px;
 }
 
