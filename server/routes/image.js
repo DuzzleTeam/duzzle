@@ -20,7 +20,7 @@ fs.readdir("uploads/postImages", (err) => {
   }
 });
 
-// 프로필 사진용 파일 저장 방식, 경로, 파일명 설정
+// (juhyun-noh) 프로필 사진용 파일 저장 방식, 경로, 파일명 설정
 const upload = multer({
   storage: multer.diskStorage({
     destination(req, file, cb) {
