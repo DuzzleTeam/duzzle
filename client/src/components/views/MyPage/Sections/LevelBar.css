@@ -4,6 +4,8 @@
   font-weight: bold;
   color: #2d2d2d;
   align-self: flex-start;
+  display: flex;
+  align-items: center;
 }
 
 /* 레벨 바 */
@@ -22,13 +24,33 @@
 }
 /* 물음표 이미지 */
 .ProfileLevel .QuestionPopover {
-  margin-left: 5px;
-  width: 10px;
-  height: auto;
+  margin-left: 13px;
+  width: 20px;
+  height: 20px;
+  opacity: 0.5;
+}
+.ProfileLevel .QuestionPopover:hover {
+  opacity: 1;
 }
 /* popover과 사진 사이 간격 */
 .popover {
-  margin-top: 7px;
+  width: 300px;
+  border-radius: 25px !important;
+  margin-bottom: 20px;
+}
+
+.popover-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-family: "Noto Sans KR";
+  color: #707070;
+}
+.popover-container > strong {
+  margin-bottom: 10px;
+  color: #57ecbf;
+  font-weight: 900;
 }
 
 /* (juhyun-noh) 모바일용 미디어쿼리 */

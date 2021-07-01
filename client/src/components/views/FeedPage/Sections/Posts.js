@@ -118,15 +118,16 @@ function Posts({ postType }) {
   const newPost = useSelector((state) => state.post.newPostPayload);
   useEffect(() => {
     if (newPost && cache[postType]) {
-      const { post } = newPost;
+      // const { post } = newPost;
 
-      const newPosts = [post, ...cache[postType]];
-      // 업데이트
-      cache[postType] = newPosts;
-      setPosts(newPosts);
+      // const newPosts = [post, ...cache[postType]];
+      // // 업데이트
+      // cache[postType] = newPosts;
+      // setPosts(newPosts);
 
-      // redux reset
-      dispatch(updatedPost());
+      // // redux reset
+      // dispatch(updatedPost());
+      window.location.reload();
     }
   }, [newPost, postType, dispatch]);
 
