@@ -32,39 +32,39 @@
 실제 프론트엔드 화면 구성 컴포넌트 소스들
 
 ### _actions
-- post_action.js
-새 게시물 작성
-피드 업데이트
-- user_action.js
-회원가입 인증
-로그인
-회원가입
-회원정보
-회원정보 수정
-유저 정보
-- types.js
-action 타입 상수들
+- post_action.js   
+새 게시물 작성   
+피드 업데이트   
+- user_action.js   
+회원가입 인증   
+로그인   
+회원가입   
+회원정보   
+회원정보 수정   
+유저 정보   
+- types.js   
+action 타입 상수들   
 
 ### _reducers
-- index.js
-root reducer
+- index.js   
+root reducer   
 - post_reducer.js
 - user_reducer.js
 
 ### components
-- Feed
-게시글 목록
-- Loading
-무한 회전 로딩
-- Pagination
-페이지네이션
-- Preview
-게시글 보기, 작성에서 이미지 프리뷰
-- **views**
-  - 각종 페이지 별 폴더
-    - Sections
-      - css
-      - 페이지 종속 컴포넌트
+- Feed   
+게시글 목록   
+- Loading   
+무한 회전 로딩   
+- Pagination   
+페이지네이션   
+- Preview   
+게시글 보기, 작성에서 이미지 프리뷰   
+- **views**   
+  - 각종 페이지 별 폴더   
+    - Sections   
+      - css   
+      - 페이지 종속 컴포넌트   
 
 ### hoc
 로그인 여부 관련 접근 제한
@@ -73,9 +73,9 @@ root reducer
 custom hooks
 
 ### utils
-공통 적용 css
-공통 함수
-SNS 관련 정보
+공통 적용 css   
+공통 함수   
+SNS 관련 정보   
 
 ### App.js
 
