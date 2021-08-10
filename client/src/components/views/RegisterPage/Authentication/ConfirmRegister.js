@@ -4,7 +4,6 @@ import { useParams, withRouter } from "react-router";
 import { Link } from "react-router-dom";
 import { confirmRegister } from "../../../../_actions/user_action";
 
-import "../../../../utils/Common.css";
 import "./ConfirmRegister.css";
 
 function ConfirmRegister() {

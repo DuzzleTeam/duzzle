@@ -12,8 +12,6 @@ import Loading from "../../../../Loading/Loading";
 import PreviewImages from "../../../../Preview/PreviewImages";
 import ShowImage from "../../../../Preview/ShowImage";
 
-import useOutsideClick from "../../../NavBar/Sections/useOutsideClick";
-
 // CSS
 import "./Post.css";
 

@@ -5,7 +5,6 @@ import getRandomNumber from "../../../utils/getRandomNumber";
 
 import Popup from "./Sections/Popup";
 
-import "../../../utils/Common.css";
 import "./Sections/RegisterPage.css";
 
 // 회원가입 페이지 (chohadam, 2021-04-05)

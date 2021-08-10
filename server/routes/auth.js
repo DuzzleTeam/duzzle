@@ -42,36 +42,6 @@ function decrypt(encryptEmail) {
 
 // 04.07 / 회원가입 인증 메일 보내기
 router.post("/api/register", saveData, async (req, res) => {
-  // const smtpTransport = nodemailer.createTransport({
-  //   host: "smtp.gmail.com",
-  //   port: 465,
-  //   secure: true,
-  //   auth: {
-  //     user: "DuzzleManager@gmail.com",
-  //     pass: config.googlePwd,
-  //   },
-  // });
-
-  // var hash = encrypt(req.body.email);
-  // var link = URL + "/confirmRegister/" + encodeURIComponent(hash);
-
-  // const mailOptions = {
-  //   from: "DuzzleManager@gmail.com",
-  //   to: req.body.email,
-  //   subject: "Duzzle 회원가입 인증 메일",
-  //   html: `<h1>Duzzle 회원가입 인증</h1><p><a href=${link}>${link}</a>`,
-  // };
-
-  // await smtpTransport.sendMail(mailOptions, (err, responses) => {
-  //   if (err) {
-  //     res.json(err);
-  //     console.log(err);
-  //   } else {
-  //     res.json({ emailSendingSuccess: true });
-  //   }
-  //   smtpTransport.close();
-  // });
-
   const BASE_URL = "https://duzzle-mailer.herokuapp.com";
 
   const { email } = req.body;
@@ -81,11 +51,9 @@ router.post("/api/register", saveData, async (req, res) => {
 
     if (result.status === 200) {
       console.log("success", result.data);
-      // return res.status(200).json({ emailSendingSuccess: true, result });
     }
   } catch (e) {
     console.log("Error", e);
-    // return res.json({ e });
   }
 });
 
@@ -173,7 +141,7 @@ router.get("/api/auth", auth, (req, res) => {
     group: req.user.group,
     openChating: req.user.openChating,
     isAdmin: req.user.role === 0 ? false : true,
-    isAuth: true,
+    isAuthenticated: true,
   });
 });
 

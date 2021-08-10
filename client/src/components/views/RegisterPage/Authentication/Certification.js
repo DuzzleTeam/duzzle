@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { useLocation, withRouter } from "react-router";
 import { registerUser } from "../../../../_actions/user_action";
 
-import "../../../../utils/Common.css";
 import "./Certification.css";
 
 function Certification() {

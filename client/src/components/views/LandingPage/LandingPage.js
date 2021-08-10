@@ -8,7 +8,6 @@ import Wezzle from "./Sections/Wezzle";
 import Mezzle from "./Sections/Mezzle";
 import Footer from "../Footer/Footer";
 
-import "../../../utils/Common.css";
 import "./Sections/LandingPage.css";
 
 // preload value

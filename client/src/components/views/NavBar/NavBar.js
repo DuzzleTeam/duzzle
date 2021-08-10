@@ -1,20 +1,22 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import AuthMenu from "./Sections/AuthMenu";
-import "./Sections/NavBar.css";
+import UserMenu from "./Sections/UserMenu";
+import styles from "./Sections/nav-bar.module.css";
 
-function NavBar() {
+function Navbar() {
+  // user info
+  const user = useSelector((state) => state.user.authPayload);
+
   return (
     // Nav 최상위 컨테이너
-    <nav id="NavContainer">
-      {/* Logo */}
-      <div className="NavLeftContainer">
+    <nav className={styles.navigation}>
+      <div className={styles.defaultMenu}>
         <Link to="/">
           <img src="/logo.png" alt="Duzzle Logo" />
         </Link>
-        {/* Menu */}
-        <ul className="NavList">
+        <ul className={styles.list}>
           <li>
             <Link to="/wezzle">위즐</Link>
           </li>
@@ -23,10 +25,20 @@ function NavBar() {
           </li>
         </ul>
       </div>
-      {/* 로그인 or 프로필 사진 & 알림 */}
-      <AuthMenu />
+
+      {isExistUser(user) && user.isAuthenticated ? (
+        <UserMenu />
+      ) : (
+        <Link to="/login" className={styles.login}>
+          로그인
+        </Link>
+      )}
     </nav>
   );
 }
 
-export default NavBar;
+const isExistUser = (user) => {
+  return user !== undefined;
+};
+
+export default Navbar;

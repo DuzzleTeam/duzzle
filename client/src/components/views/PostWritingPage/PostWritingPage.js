@@ -9,7 +9,6 @@ import WriteWezzle from "./Sections/WriteWezzle";
 import PreviewImages from "../../Preview/PreviewImages";
 import ShowImage from "../../Preview/ShowImage";
 
-import "../../../utils/Common.css";
 import "./Sections/PostWritingPage.css";
 import { useDispatch } from "react-redux";
 import { newPost } from "../../../_actions/post_action";

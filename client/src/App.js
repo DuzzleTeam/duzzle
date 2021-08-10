@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
-import NavBar from "./components/views/NavBar/NavBar";
+import Navbar from "./components/views/Navbar/Navbar";
 import LandingPage from "./components/views/LandingPage/LandingPage";
 import LoginPage from "./components/views/LoginPage/LoginPage";
 import RegisterPage from "./components/views/RegisterPage/RegisterPage";
@@ -10,13 +9,13 @@ import PostPage from "./components/views/PostPage/PostPage";
 import MyPage from "./components/views/MyPage/MyPage";
 import PostWritingPage from "./components/views/PostWritingPage/PostWritingPage";
 import FeedPage from "./components/views/FeedPage/FeedPage";
-
 import Auth from "./hoc/auth";
+import "./utils/global.css";
 
 function App() {
   return (
     <Router>
-      <NavBar />
+      <Navbar />
 
       <Switch>
         {/* 아무나 출입이 가능한 페이지 */}

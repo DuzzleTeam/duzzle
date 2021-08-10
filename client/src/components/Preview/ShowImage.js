@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 
 import "./ShowImage.css";
-import useOutsideClick from "../views/NavBar/Sections/useOutsideClick";
+import useOutsideClick from "../../hooks/useOutsideClick";
 
 function ShowImage({ src, setShowImage }) {
   // show-image__container 참조

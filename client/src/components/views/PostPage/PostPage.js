@@ -12,7 +12,6 @@ import CommentInput from "./Sections/Comment/CommentInput";
 
 // CSS
 import "./Sections/PostPage.css";
-import "../../../utils/Common.css";
 
 // 글 보기 페이지 (chohadam)
 function PostPage() {

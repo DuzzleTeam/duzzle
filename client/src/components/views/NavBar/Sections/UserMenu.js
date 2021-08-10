@@ -1,16 +1,12 @@
-import React, { useState, useRef, useEffect, useReducer } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
-
-import axios from "axios";
-
 import NotificationDropdown from "./NotificationDropdown";
+import useOutsideClick from "../../../../hooks/useOutsideClick";
+import styles from "./user-menu.module.css";
 
-import useOutsideClick from "./useOutsideClick";
-import "./AuthMenu.css";
-
-// login button or user profile (chohadam, 2021-03-31)
-function AuthMenu(props) {
+function UserMenu() {
   // 드롭다운 열려있는지
   const [openingDropdown, setOpeningDropdown] = useState(false);
   // 프로필 사진 눌리면
@@ -49,6 +45,7 @@ function AuthMenu(props) {
       setUser(reduxUser);
     }
   }, [reduxUser]);
+  console.log(reduxUser);
 
   const history = useHistory();
   const handleLogout = (e) => {
@@ -81,57 +78,39 @@ function AuthMenu(props) {
   }, [editUser]);
 
   return (
-    <div id="AuthMenu">
-      {/* 로그인 되었는지 */}
-      {user.isAuth ? (
-        // notification and profile image
-        <div className="RightMenuContainer">
-          {/* Notification */}
-          <div className="NoticiationContaier" ref={noticiationContaier}>
-            <button
-              onClick={notiDropdownHandler}
-              className="RightButton NotificationButton"
-            >
-              <img src="/images/notification.png" alt="notification" />
-            </button>
+    <div className={styles.userMenu}>
+      <div className={styles.notification} ref={noticiationContaier}>
+        <button onClick={notiDropdownHandler}>
+          <img src="/images/notification.png" alt="notification" />
+        </button>
 
-            <NotificationDropdown openingNoti={openingNoti} />
-          </div>
-          {/* Profile */}
-          <div ref={profileContainer}>
-            {/* Circle Profile Image */}
-            <button
-              className="RightButton ProfileButton"
-              onClick={profileDropdownHandler}
-            >
-              <img src={user.profileImage} alt="profileImage" />
-            </button>
-            {/* Dropdown Menu (My page, Logout) */}
-            <ul
-              className={`ProfileDropdown ${
-                openingDropdown ? "OpeningDropdown" : ""
-              }`}
-              // 페이지 이동 시 드롭다운 접기
-              onClick={() => {
-                setOpeningDropdown(false);
-              }}
-            >
-              <li>
-                <Link to={`/users/${user.email}`}>마이페이지</Link>
-              </li>
-              <div className="divider"></div>
-              <li>
-                <button onClick={handleLogout}>로그아웃</button>
-              </li>
-            </ul>
-          </div>
-        </div>
-      ) : (
-        // login button
-        <Link to="/login">로그인</Link>
-      )}
+        <NotificationDropdown openingNoti={openingNoti} />
+      </div>
+
+      {/* Profile */}
+      <div className={styles.profile} ref={profileContainer}>
+        {/* Circle Profile Image */}
+        <button onClick={profileDropdownHandler}>
+          <img src={user.profileImage} alt="profileImage" />
+        </button>
+        <ul
+          className={openingDropdown && styles.opening}
+          // 페이지 이동 시 드롭다운 접기
+          onClick={() => {
+            setOpeningDropdown(false);
+          }}
+        >
+          <li>
+            <Link to={`/users/${user.email}`}>마이페이지</Link>
+          </li>
+          <div className={styles.divider}></div>
+          <li>
+            <button onClick={handleLogout}>로그아웃</button>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 }
 
-export default AuthMenu;
+export default UserMenu;
