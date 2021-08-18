@@ -9,7 +9,7 @@ export default function _(SpecificComponent, option, adminRoute = null) {
 
     useEffect(() => {
       dispatch(auth()).then((response) => {
-        if (!response.payload.isAuth) {
+        if (!response.payload.isAuthenticated) {
           //로그인 하지 않은 상태
           if (option) {
             props.history.push("/login");
