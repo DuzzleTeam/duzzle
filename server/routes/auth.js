@@ -62,6 +62,7 @@ router.post("/api/confirmRegister/:id", (req, res) => {
   const email = decodeURIComponent(decrypt(req.params.id));
   User.findOne({ email: email }, (err, user) => {
     if (!user) return res.json({ registerSuccess: false });
+    // 유저의 isCertified를 true로 변경
     User.findOneAndUpdate(
       { email: email },
       { isCertified: true },
@@ -111,9 +112,11 @@ router.post("/api/login", (req, res) => {
             message: "비밀번호가 틀렸습니다.",
           });
         }
+        // 토큰 생성
         user.generateToken((err, user) => {
           if (err) return res.status(400).send(err);
 
+          // x_auth 쿠키에 토큰 저장
           res
             .cookie("x_auth", user.token, { httpOnly: true })
             .status(200)
@@ -147,6 +150,7 @@ router.get("/api/auth", auth, (req, res) => {
 
 // 03.30 / 로그아웃
 router.get("/api/logout", auth, (req, res) => {
+  // 로그아웃 시 토큰 제거
   User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
     if (err) return res.json({ logoutSuccess: false, err });
     return res.status(200).send({
@@ -172,10 +176,12 @@ router.post("/api/users/:id/delete", (req, res) => {
 // 04.16 / 비밀번호 찾기
 router.post("/api/account/password_reset", (req, res) => {
   const email = req.body.email;
+  // 이메일로 유저를 찾음
   User.findOne({ email: email }, async (err, user) => {
     if (!user) {
       return res.json({ passwordReset: false, message: "사용자 찾을 수 없음" });
     } else {
+      // 메일 전송
       const smtpTransport = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 465,
