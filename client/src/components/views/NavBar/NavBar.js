@@ -14,7 +14,7 @@ function Navbar() {
     <nav className={styles.navigation}>
       <div className={styles.defaultMenu}>
         <Link to="/">
-          <img src="/logo.png" alt="Duzzle Logo" />
+          <img src="/logo.svg" alt="Duzzle Logo" />
         </Link>
         <ul className={styles.list}>
           <li>
