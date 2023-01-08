@@ -5,110 +5,73 @@ import getRandomNumber from "../../utils/getRandomNumber";
 
 import "./Post.css";
 
-// 피드에 있는 게시글 미리보기 하나 하나의 컴포넌트
-function Post(props) {
-  // 현재 게시글
-  const [post, setPost] = useState(props.post);
+const DeleteButton = ({ ref, onClick }) => (
+  <button className={"ButtonMypagePostDelete"} ref={ref} onClick={onClick}>
+    <img src="/images/myPage/post_delete.png" alt="delete" />
+  </button>
+);
 
-  // post가 달라지면 실행
+const Post = (props) => {
+  const [post, setPost] = useState(props.post);
+  const history = useHistory();
+  const buttonDeleteRef = useRef(null);
+  const isDefaultThumbnail = post.contents.images.length === 0;
+
   useEffect(() => {
-    // post 자체가 다른 것이면 새로 post 셋팅
     if (post._id !== props.post._id) {
       setPost(props.post);
     }
   }, [props.post, post._id]);
 
-  // 페이지 전환을 위한 Hook
-  const history = useHistory();
   const onPostClick = (e) => {
-    // delete 버튼 눌렀으면 (마이페이지)
     if (buttonDeleteRef.current) {
       if (buttonDeleteRef.current.contains(e.target)) {
         return;
       }
     }
 
-    // 게시글 미리보기 클릭
-    // wezzle 혹은 mezzle
     const postType = post.isWezzle ? "wezzle" : "mezzle";
-
-    // 해당 게시글로 화면 전환
     history.push(`/${postType}/post/${post._id}`);
   };
 
-  // 삭제 버튼 ref
-  const buttonDeleteRef = useRef(null);
-  // 게시글 삭제
-  const onDeletePost = async (e) => {
-    // 삭제 확인
-    if (!window.confirm("게시글을 삭제하시겠습니까?")) {
-      // 삭제 취소 시 리턴
-      return;
-    }
+  const onDeletePost = async (_e) => {
+    if (window.confirm("게시글을 삭제하시겠습니까?")) {
+      const url = `/api/post/${post._id}`;
 
-    // 요청 url
-    const url = `/api/post/${post._id}`;
+      const res = await axios.delete(url);
 
-    // 삭제 요청
-    const res = await axios.delete(url);
-
-    // 성공적으로 삭제되었다면
-    if (res.status === 200) {
-      // 게시글 목록 업데이트
-      props.onRemovePost(post._id);
-      alert("🗑 게시글이 삭제되었습니다!");
+      if (res.status === 200) {
+        props.onRemovePost(post._id);
+        alert("🗑 게시글이 삭제되었습니다!");
+      }
     }
   };
 
   return (
-    <article className={"PreviewPostContainer"} onClick={onPostClick}>
-      {/* Delete Button */}
-      {props.isMypage && (
-        <button
-          className={"ButtonMypagePostDelete"}
-          ref={buttonDeleteRef}
-          onClick={onDeletePost}
-        >
-          <img src="/images/myPage/post_delete.png" alt="delete" />
-        </button>
-      )}
+    <article className="PreviewPostContainer" onClick={onPostClick}>
+      {props.isMypage && <DeleteButton ref={buttonDeleteRef} onClick={onDeletePost} />}
 
-      {/* 이미지가 있는지 없는지에 따라 기본 이미지 or 이미지 출력 */}
-      {post.contents.images.length === 0 ? (
-        // 이미지 없음
+      {isDefaultThumbnail ? (
         <div className="PostDefaultImage">
-          <img
-            src={`/images/default/post/${getRandomNumber()}.png`}
-            alt="default"
-          />
+          <img src={`/images/default/post/${getRandomNumber()}.png`} alt="default" />
         </div>
       ) : (
-        // 이미지 있음
-        <img
-          className={"PreviewPostImage"}
-          src={post.contents.images[0]}
-          alt="post-contents"
-        />
+        <img className={"PreviewPostImage"} src={post.contents.images[0]} alt="post-contents" />
       )}
 
-      {/* 타이틀 */}
-      <span className={"FeedPostTitle"}>{post.title}</span>
+      <span className="FeedPostTitle">{post.title}</span>
 
       <div className="PostInformation">
-        {/* 작성자 */}
         <span className={"PreviewPostUser"}>{post.user.name}</span>
-        {/* 하트, 댓글 수 preview */}
         <div className={"PreviewLikeComment"}>
-          {/* 하트 수 */}
           <img src="/images/feedPage/like_preview.png" alt="like" />
           <span>{post.like.length}</span>
-          {/* 댓글 수 */}
           <img src="/images/feedPage/comment_preview.png" alt="like" />
           <span>{post.commentCount}</span>
         </div>
       </div>
     </article>
   );
-}
+};
 
 export default Post;
