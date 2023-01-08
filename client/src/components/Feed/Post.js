@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import getRandomNumber from "../../utils/getRandomNumber";
@@ -11,17 +11,10 @@ const DeleteButton = ({ ref, onClick }) => (
   </button>
 );
 
-const Post = (props) => {
-  const [post, setPost] = useState(props.post);
+const Post = ({ post, onRemovePost, isMypage }) => {
   const history = useHistory();
   const buttonDeleteRef = useRef(null);
   const isDefaultThumbnail = post.contents.images.length === 0;
-
-  useEffect(() => {
-    if (post._id !== props.post._id) {
-      setPost(props.post);
-    }
-  }, [props.post, post._id]);
 
   const onPostClick = (e) => {
     if (buttonDeleteRef.current) {
@@ -41,7 +34,7 @@ const Post = (props) => {
       const res = await axios.delete(url);
 
       if (res.status === 200) {
-        props.onRemovePost(post._id);
+        onRemovePost(post._id);
         alert("🗑 게시글이 삭제되었습니다!");
       }
     }
@@ -49,7 +42,7 @@ const Post = (props) => {
 
   return (
     <article className="PreviewPostContainer" onClick={onPostClick}>
-      {props.isMypage && <DeleteButton ref={buttonDeleteRef} onClick={onDeletePost} />}
+      {isMypage && <DeleteButton ref={buttonDeleteRef} onClick={onDeletePost} />}
 
       {isDefaultThumbnail ? (
         <div className="PostDefaultImage">
