@@ -27,7 +27,8 @@ const Post = ({ post, onRemovePost, isMypage }) => {
     history.push(`/${postType}/post/${post._id}`);
   };
 
-  const onDeletePost = async (_e) => {
+  const onDeletePost = async (e) => {
+    e.stopPropagation();
     if (window.confirm("게시글을 삭제하시겠습니까?")) {
       const url = `/api/post/${post._id}`;
 
