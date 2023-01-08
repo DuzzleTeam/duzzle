@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -6,46 +6,28 @@ import NotificationDropdown from "./NotificationDropdown";
 import useOutsideClick from "../../../../hooks/useOutsideClick";
 import styles from "./user-menu.module.css";
 
-function UserMenu() {
-  // 드롭다운 열려있는지
-  const [openingDropdown, setOpeningDropdown] = useState(false);
-  // 프로필 사진 눌리면
-  const profileDropdownHandler = (e) => {
-    // 열림 여부 반전
-    setOpeningDropdown(!openingDropdown);
-  };
+const UserMenu = () => {
+  const user = useSelector((state) => state.user.authPayload);
 
-  // 알림창 열려있는지
-  const [openingNoti, setOpeningNoti] = useState(false);
-  // 알림 아이콘 눌리면
-  const notiDropdownHandler = (e) => {
-    // 열림 여부 반전
-    setOpeningNoti(!openingNoti);
-  };
+  const [isOpeningDropdown, setIsOpeningDropdown] = useState(false);
+  const [isOpeningNoti, setIsOpeningNoti] = useState(false);
 
-  // ProfileContainer 참조
   const profileContainer = useRef();
-  // 메뉴 밖 클릭 시 드롭다운 접기
-  useOutsideClick(profileContainer, () => {
-    setOpeningDropdown(false);
-  });
-
-  // NoticiationContaier 참조
   const noticiationContaier = useRef();
-  // 메뉴 밖 클릭 시 알림 드롭다운 접기
+
+  useOutsideClick(profileContainer, () => {
+    setIsOpeningDropdown(false);
+  });
   useOutsideClick(noticiationContaier, () => {
-    setOpeningNoti(false);
+    setIsOpeningNoti(false);
   });
 
-  // user info
-  const [user, setUser] = useState({});
-  const reduxUser = useSelector((state) => state.user.authPayload);
-  useEffect(() => {
-    if (reduxUser !== undefined) {
-      setUser(reduxUser);
-    }
-  }, [reduxUser]);
-  console.log(reduxUser);
+  const onToggleProfileDropdown = (e) => {
+    setIsOpeningDropdown(!isOpeningDropdown);
+  };
+  const onToggleNotiDropdown = (e) => {
+    setIsOpeningNoti(!isOpeningNoti);
+  };
 
   const history = useHistory();
   const handleLogout = (e) => {
@@ -59,45 +41,24 @@ function UserMenu() {
     });
   };
 
-  // editUser 정보 가져오기 (수정 시 업데이트 위해서)
-  const editUser = useSelector((state) => state.user.editPayload);
-  useEffect(() => {
-    // editUser가 있으면 수정을 했다는 뜻
-    if (editUser) {
-      // 수정이 성공했는지
-      if (editUser.editSuccess) {
-        // 새로운 프로필 이미지로 수정
-        setUser((prevUser) => {
-          return {
-            ...prevUser,
-            profileImage: editUser.profileImage,
-          };
-        });
-      }
-    }
-  }, [editUser]);
-
   return (
     <div className={styles.userMenu}>
       <div className={styles.notification} ref={noticiationContaier}>
-        <button onClick={notiDropdownHandler}>
+        <button onClick={onToggleNotiDropdown}>
           <img src="/images/notification.png" alt="notification" />
         </button>
 
-        <NotificationDropdown openingNoti={openingNoti} />
+        <NotificationDropdown openingNoti={isOpeningNoti} />
       </div>
 
-      {/* Profile */}
       <div className={styles.profile} ref={profileContainer}>
-        {/* Circle Profile Image */}
-        <button onClick={profileDropdownHandler}>
-          <img src={user.profileImage} alt="profileImage" />
+        <button onClick={onToggleProfileDropdown}>
+          <img src={user ? user.profileImage : "/images/default/profile/1.png"} alt="profileImage" />
         </button>
         <ul
-          className={openingDropdown && styles.opening}
-          // 페이지 이동 시 드롭다운 접기
+          className={isOpeningDropdown && styles.opening}
           onClick={() => {
-            setOpeningDropdown(false);
+            setIsOpeningDropdown(false);
           }}
         >
           <li>
@@ -111,6 +72,6 @@ function UserMenu() {
       </div>
     </div>
   );
-}
+};
 
 export default UserMenu;

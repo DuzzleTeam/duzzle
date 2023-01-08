@@ -11,25 +11,20 @@ const { setPostUser } = require("../functions/post");
 
 // 게시물 작성 (dayeon-choi, 2021-04-19)
 // 게시물의 생성된 id 얻기 (dayeon-choi, 2021-06-17)
-router.post(
-  "/:type(wezzle|mezzle)/write",
-  auth,
-  level("post", true),
-  (req, res) => {
-    // 사용자가 작성한 게시글 데이터로 Post 생성
-    const post = new Post(req.body);
-    post.user = req.user;
+router.post("/:type(wezzle|mezzle)/write", auth, level("post", true), (req, res) => {
+  // 사용자가 작성한 게시글 데이터로 Post 생성
+  const post = new Post(req.body);
+  post.user = req.user;
 
-    post.save((err, postInfo) => {
-      if (err) {
-        return res.status(500).json({ success: false, err });
-      } else {
-        // 콜백의 postInfo를 통해 생성된 _id 얻음
-        return res.status(200).send({ post: postInfo });
-      }
-    });
-  }
-);
+  post.save((err, postInfo) => {
+    if (err) {
+      return res.status(500).json({ success: false, err });
+    } else {
+      // 콜백의 postInfo를 통해 생성된 _id 얻음
+      return res.status(200).send({ post: postInfo });
+    }
+  });
+});
 
 router.patch("/post/:postId", async (req, res) => {
   // url로 넘어온 comment id 가져오기
@@ -147,9 +142,7 @@ router.get("/posts/:email", async (req, res) => {
 
   // 유저가 있다면
   // user와 관련된 post들 찾기 (POJO)
-  const posts = await Post.find({ user: user._id })
-    .sort({ createdAt: -1 })
-    .lean();
+  const posts = await Post.find({ user: user._id }).sort({ createdAt: -1 }).lean();
   // 게시글이 없다면
   if (posts.length === 0) return res.send({ posts: null });
 
