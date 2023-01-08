@@ -57,7 +57,7 @@ mongoose
     useFindAndModify: false,
   })
   .then(() => console.log("MongoDB Connected..."))
-  .catch((err) => console.log(err));
+  .catch((err) => console.log("DB 연결 에러:", err));
 
 if (process.env.NODE_ENV === "production") {
   // production mode

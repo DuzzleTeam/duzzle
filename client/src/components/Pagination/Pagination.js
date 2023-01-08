@@ -1,20 +1,17 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import "./Pagination.css";
 
-function Pagination({ postsPerPage, totalPosts, currentPage, setCurrentPage }) {
-  const [numbers, setNumbers] = useState([]);
+function* range(start, end) {
+  for (let i = start; i <= end; i++) {
+    yield i;
+  }
+}
+
+const Pagination = ({ postsPerPage, totalPosts, currentPage, setCurrentPage }) => {
   const history = useHistory();
   const lastPage = useMemo(() => Math.ceil(totalPosts / postsPerPage), [totalPosts, postsPerPage]);
-
-  useEffect(() => {
-    const numbers = [];
-    for (let i = 1; i <= lastPage; i++) {
-      numbers.push(i);
-    }
-    setNumbers(numbers);
-  }, [lastPage]);
 
   const onNextClick = (_e) => {
     setCurrentPage(currentPage + 1);
@@ -45,11 +42,11 @@ function Pagination({ postsPerPage, totalPosts, currentPage, setCurrentPage }) {
         />
       </button>
 
-      {numbers.map((number) => (
+      {[...range(1, lastPage)].map((number) => (
         <span
           key={number}
           className={"PaginationNumber " + (number === currentPage ? "ActivePaginationNumber" : "")}
-          onClick={currentPage !== number && setCurrentPage(number)}
+          onClick={currentPage !== number ? () => setCurrentPage(number) : undefined}
         >
           <Link
             to={{
@@ -74,6 +71,6 @@ function Pagination({ postsPerPage, totalPosts, currentPage, setCurrentPage }) {
       </button>
     </div>
   );
-}
+};
 
 export default Pagination;

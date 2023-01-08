@@ -32,6 +32,9 @@ const WezzleCategorySelector = ({ postType, currentField, onButtonFieldClick }) 
   </div>
 );
 
+const filterCurrentCategory = (current) =>
+  cache["wezzle"].filter((post) => post.recruit.field.includes(fields[current]));
+
 const Posts = ({ postType }) => {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -45,11 +48,6 @@ const Posts = ({ postType }) => {
 
   const postsPerPage = 12;
 
-  const onChangeWezzleField = useCallback(() => {
-    const filteredPosts = cache["wezzle"].filter((post) => post.recruit.field.includes(fields[currentField]));
-    setPosts(filteredPosts);
-  }, [currentField]);
-
   const onButtonFieldClick = (field) => {
     if (field !== fields[currentField]) {
       if (field === "개발") {
@@ -61,36 +59,23 @@ const Posts = ({ postType }) => {
   };
 
   const getPosts = useCallback(async () => {
-    setIsLoading(true);
-    setCurrentPage(1);
-
-    if (cache[postType]) {
-      setIsLoading(false);
-      if (postType === "wezzle") {
-        return onChangeWezzleField();
-      }
-      return setPosts(cache[postType]);
-    }
-
-    const url = `/api/${postType}`;
-    const res = await axios.get(url);
-
-    if (res.status === 200) {
-      cache[postType] = res.data.posts;
-
-      if (postType === "wezzle") {
-        onChangeWezzleField();
-      } else {
-        setPosts(res.data.posts);
+    if (!cache[postType]) {
+      const url = `/api/${postType}`;
+      const res = await axios.get(url);
+      if (res.status === 200) {
+        cache[postType] = res.data.posts;
       }
     }
-
-    setIsLoading(false);
-  }, [postType, onChangeWezzleField]);
+    return postType === "wezzle" ? filterCurrentCategory(currentField) : cache[postType];
+  }, [postType, currentField]);
 
   useEffect(() => {
     (async () => {
-      await getPosts();
+      setCurrentPage(1);
+      setIsLoading(true);
+      const newPosts = await getPosts();
+      setIsLoading(false);
+      setPosts(newPosts);
     })();
   }, [getPosts]);
 
@@ -169,13 +154,11 @@ const Posts = ({ postType }) => {
       {posts.length !== 0 ? (
         <>
           <div className="PostsPostContainer">
-            {pagination.getCurrentPosts(currentPage, postsPerPage, posts).map((post, index) => (
-              <Post key={index} post={post} />
+            {pagination.getCurrentPosts(currentPage, postsPerPage, posts).map((post) => (
+              <Post key={post._id} post={post} />
             ))}
           </div>
 
-          {/* 숫자 목록 */}
-          {/* 전체 페이지 번호 수, 현재 페이지 번호, 현재 페이지 번호 Setter */}
           <Pagination
             postsPerPage={postsPerPage}
             totalPosts={posts.length}
@@ -184,13 +167,7 @@ const Posts = ({ postType }) => {
           />
         </>
       ) : (
-        // 글이 없음
-        <NonePosts
-          link={`/${postType}/write`}
-          type={postType === "wezzle" ? "협업" : "컨펌"}
-          description={`${postType === "wezzle" ? "협업" : "컨펌"} 글을 작성하러 가볼까요?`}
-          go={`${postType === "wezzle" ? "협업" : "컨펌"} 글 작성`}
-        />
+        <NonePosts type={postType} />
       )}
     </section>
   );
