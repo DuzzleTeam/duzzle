@@ -29,7 +29,7 @@ export default function _(state = {}, action) {
       return { ...state, authPayload: action.payload };
 
     case EDIT_USER:
-      return { ...state, editPayload: action.payload };
+      return { ...state, authPayload: { ...state.authPayload, profileImage: action.payload.profileImage } };
 
     case GET_USER:
       return { ...state, getPayload: action.payload };
